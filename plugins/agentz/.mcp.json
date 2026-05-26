@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "ifinity-imis": {
+    "agentz": {
       "command": "sh",
       "args": ["-c", "if node --use-env-proxy --version >/dev/null 2>&1; then exec node --use-env-proxy --use-system-ca \"${CLAUDE_PLUGIN_ROOT}/dist/index.js\"; else exec node \"${CLAUDE_PLUGIN_ROOT}/dist/index.js\"; fi"]
     },

@@ -7,9 +7,9 @@
   },
   "plugins": [
     {
-      "name": "ifinity-imis",
-      "source": "./plugins/ifinity-imis",
-      "description": "Complete iMIS EMS Cloud integration — membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration for associations and nonprofits",
+      "name": "agentz",
+      "source": "./plugins/agentz",
+      "description": "iFINITY AgentZ — AI working companion for association teams using iMIS. Membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration.",
       "version": "0.3.23"
     }
   ]

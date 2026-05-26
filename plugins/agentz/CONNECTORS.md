@@ -2,7 +2,7 @@
 
 The plugin ships with three connectors that give Claude access to your iMIS data and the iMIS documentation library.
 
-## iMIS (ifinity-imis)
+## iMIS (agentz)
 
 The core connector. Provides read and write access to your iMIS EMS Cloud instance.
 

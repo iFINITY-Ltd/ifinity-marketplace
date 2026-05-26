@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "ifinity-imis",
+  "name": "agentz",
   "version": "0.3.23",
-  "description": "iFINITY AgentZ iMIS agent plugin — membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration for associations and nonprofits",
+  "description": "iFINITY AgentZ — AI working companion for association teams using iMIS. Membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration.",
   "author": {
     "name": "iFINITY",
     "url": "https://github.com/iFINITY-Ltd"

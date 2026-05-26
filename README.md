@@ -22,7 +22,7 @@ https://github.com/iFINITY-Ltd/ifinity-marketplace
 
 ### Step 3 — Find the plugin
 
-Click **Browse plugins**, then select the **Personal** tab. The iFINITY marketplace appears as a source. Click the **Ifinity imis** plugin card.
+Click **Browse plugins**, then select the **Personal** tab. The iFINITY marketplace appears as a source. Click the **Agentz** plugin card.
 
 ![Browse plugins](docs/install/03-browse-marketplace.png)
 
@@ -42,7 +42,7 @@ Open the **iFINITY AgentZ** desktop app and sign in to your iMIS instance. Agent
 
 ```bash
 claude plugin marketplace add iFINITY-Ltd/ifinity-marketplace
-claude plugin install ifinity-imis@ifinity
+claude plugin install agentz@ifinity
 ```
 
 ## Install via iFINITY AgentZ
@@ -53,7 +53,7 @@ Open AgentZ, go to **Settings > Agent Plugin — Claude Code**, and click **Inst
 
 | Plugin | Description |
 |--------|-------------|
-| [ifinity-imis](plugins/ifinity-imis/) | iMIS EMS Cloud integration — membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration |
+| [agentz](plugins/agentz/) | iMIS EMS Cloud integration — membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration |
 
 ## Source
 

@@ -26,7 +26,7 @@ Yes, via the Claude Code CLI:
 
 ```bash
 claude plugin marketplace add iFINITY-Ltd/ifinity-marketplace
-claude plugin install ifinity-imis@ifinity
+claude plugin install agentz@ifinity
 ```
 
 You will still need AgentZ running to authenticate with iMIS.
