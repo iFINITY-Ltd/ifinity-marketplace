@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__ifinity_imis__imis_entity_delete",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "The user is about to DELETE an iMIS record. This is destructive and cannot be undone. Confirm: is this deletion intentional and has the user explicitly requested it? If not clearly requested, respond with BLOCK to prevent the deletion."
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__ifinity_imis__imis_iqd_query",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "The user is about to use the IQD query writer. If the action is create, this writes an IQA query document into iMIS. Confirm the user explicitly requested IQA creation, the design was inspected/validated, and a limited preview will be run after create. If this is exploratory or not clearly authorized, respond with BLOCK."
+          }
+        ]
+      }
+    ]
+  }
+}

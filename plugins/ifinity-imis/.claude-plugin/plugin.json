@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "ifinity-imis",
+  "version": "0.3.23",
+  "description": "iFINITY AgentZ iMIS agent plugin — membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration for associations and nonprofits",
+  "author": {
+    "name": "iFINITY",
+    "url": "https://github.com/William-iFINITY"
+  },
+  "homepage": "https://github.com/William-iFINITY/ifinity-mcp",
+  "repository": "https://github.com/William-iFINITY/ifinity-mcp",
+  "license": "MIT",
+  "keywords": [
+    "imis",
+    "ams",
+    "ems",
+    "association",
+    "membership",
+    "nonprofit",
+    "crm",
+    "fundraising",
+    "events",
+    "billing",
+    "rise",
+    "iqa",
+    "reporting",
+    "website"
+  ]
+}

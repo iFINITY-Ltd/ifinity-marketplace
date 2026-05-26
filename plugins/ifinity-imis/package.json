@@ -1,0 +1,72 @@
+{
+  "name": "@ifinity/imis-mcp",
+  "version": "0.3.23",
+  "description": "iFINITY AgentZ iMIS agent plugin for Claude-compatible runtimes",
+  "type": "module",
+  "bin": {
+    "ifinity-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx src/index.ts",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "explore:iqd-templates": "tsx tests/live/iqd-template-archaeology.ts",
+    "prove:iqd-builder": "tsx tests/live/iqd-builder.proof.ts",
+    "showcase:iqd-builder": "tsx tests/live/iqd-builder-showcase.ts",
+    "frontier:iqd-builder": "tsx tests/live/iqd-builder-frontier.ts",
+    "frontier:iqd-operators": "tsx tests/live/iqd-builder-operator-matrix.ts",
+    "frontier:iqd-prompts": "tsx tests/live/iqd-builder-prompt-frontier.ts",
+    "frontier:iqd-booleans": "tsx tests/live/iqd-builder-boolean-frontier.ts",
+    "frontier:iqd-relations": "tsx tests/live/iqd-builder-relation-frontier.ts",
+    "frontier:iqd-aggregates": "tsx tests/live/iqd-builder-aggregation-frontier.ts",
+    "frontier:iqd-stress": "tsx tests/live/iqd-builder-stress-frontier.ts",
+    "frontier:iqd-raw-codes": "tsx tests/live/iqd-builder-raw-code-frontier.ts",
+    "probe:iqa-runtime-filters": "tsx tests/live/iqa-runtime-filter-probe.ts",
+    "probe:party360-staff-profile": "tsx tests/live/party360-staff-profile-parity.ts",
+    "report:autopay-inert-mandate": "tsx tests/live/autopay-inert-mandate-report.ts",
+    "report:autopay-surface": "tsx tests/live/autopay-surface-report.ts",
+    "report:party360-custom-panels": "tsx tests/live/party360-custom-panel-populated-report.ts",
+    "report:organization360-baseline": "tsx tests/live/organization360-baseline-report.ts",
+    "report:donor360-baseline": "tsx tests/live/donor360-baseline-report.ts",
+    "report:fundraising-gift-workflow": "tsx tests/live/fundraising-gift-workflow-report.ts",
+    "report:fundraising-receipt-boundary": "tsx tests/live/fundraising-receipt-boundary-report.ts",
+    "report:fundraising-recurring-gift-inert": "tsx tests/live/fundraising-recurring-gift-inert-report.ts",
+    "report:fundraising-pledge-installment": "tsx tests/live/fundraising-pledge-installment-report.ts",
+    "report:commerce-cart-payment-surface": "tsx tests/live/commerce-cart-payment-surface-report.ts",
+    "report:commerce-payment-reversal": "tsx tests/live/commerce-payment-reversal-report.ts",
+    "diagnose:iqd-failed-deletes": "tsx tests/live/iqd-builder-delete-diagnostics.ts",
+    "frontier:iqd-inventory": "tsx tests/live/iqd-binaryformatter-inventory.ts",
+    "frontier:iqd-oracle": "tsx tests/live/iqd-binaryformatter-oracle.ts",
+    "frontier:iqd-seedless": "tsx tests/live/iqd-seedless-mono-frontier.ts",
+    "cleanup:iqd-codex": "tsx tests/live/iqd-builder-cleanup.ts",
+    "cleanup:local-artifacts": "bash scripts/cleanup-local-artifacts.sh",
+    "report:endpoint-coverage": "tsx tests/live/endpoint-coverage-report.ts",
+    "lint": "eslint src/",
+    "format": "prettier --write src/",
+    "package": "bash scripts/package-plugin.sh",
+    "verify:package": "bash scripts/verify-plugin-package.sh",
+    "release:check": "npm run build && npm run test:run && npm run lint && npm run package && npm run verify:package",
+    "bump": "bash scripts/bump-version.sh"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.4.0",
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.59.2",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

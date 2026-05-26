@@ -1,0 +1,16 @@
+{
+  "name": "ifinity",
+  "description": "iFINITY plugins for iMIS EMS Cloud implementation, operations, reporting, and RiSE content work.",
+  "owner": {
+    "name": "iFINITY",
+    "url": "https://github.com/William-iFINITY"
+  },
+  "plugins": [
+    {
+      "name": "ifinity-imis",
+      "source": "./plugins/ifinity-imis",
+      "description": "Complete iMIS EMS Cloud integration — membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration for associations and nonprofits",
+      "version": "0.3.23"
+    }
+  ]
+}
