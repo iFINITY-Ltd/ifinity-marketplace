@@ -5,10 +5,10 @@
   "description": "iFINITY AgentZ iMIS agent plugin — membership, events, fundraising, billing, content management, reporting, website design, query building, and system configuration for associations and nonprofits",
   "author": {
     "name": "iFINITY",
-    "url": "https://github.com/William-iFINITY"
+    "url": "https://github.com/iFINITY-Ltd"
   },
-  "homepage": "https://github.com/William-iFINITY/ifinity-mcp",
-  "repository": "https://github.com/William-iFINITY/ifinity-mcp",
+  "homepage": "https://github.com/iFINITY-Ltd/ifinity-mcp",
+  "repository": "https://github.com/iFINITY-Ltd/ifinity-mcp",
   "license": "MIT",
   "keywords": [
     "imis",

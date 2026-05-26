@@ -3,7 +3,7 @@
   "description": "iFINITY plugins for iMIS EMS Cloud implementation, operations, reporting, and RiSE content work.",
   "owner": {
     "name": "iFINITY",
-    "url": "https://github.com/William-iFINITY"
+    "url": "https://github.com/iFINITY-Ltd"
   },
   "plugins": [
     {

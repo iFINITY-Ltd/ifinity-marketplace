@@ -15,7 +15,7 @@ In Claude, click **Customize** then click the **+** button next to Personal plug
 Enter the marketplace URL and click **Sync**:
 
 ```
-https://github.com/William-iFINITY/ifinity-marketplace
+https://github.com/iFINITY-Ltd/ifinity-marketplace
 ```
 
 ![Enter marketplace URL](docs/install/02-add-marketplace-url.png)
@@ -41,7 +41,7 @@ Open the **iFINITY AgentZ** desktop app and sign in to your iMIS instance. Agent
 ## Install via Claude Code CLI
 
 ```bash
-claude plugin marketplace add William-iFINITY/ifinity-marketplace
+claude plugin marketplace add iFINITY-Ltd/ifinity-marketplace
 claude plugin install ifinity-imis@ifinity
 ```
 
@@ -57,4 +57,4 @@ Open AgentZ, go to **Settings > Agent Plugin — Claude Code**, and click **Inst
 
 ## Source
 
-Plugin source code lives in [ifinity-mcp](https://github.com/William-iFINITY/ifinity-mcp). This marketplace repo contains only release distributions, updated automatically by the release workflow.
+Plugin source code lives in [ifinity-mcp](https://github.com/iFINITY-Ltd/ifinity-mcp). This marketplace repo contains only release distributions, updated automatically by the release workflow.

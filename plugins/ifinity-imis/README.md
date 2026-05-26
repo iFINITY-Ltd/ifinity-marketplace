@@ -40,7 +40,7 @@ AgentZ handles plugin installation and updates automatically.
 ### Install via Claude Code CLI
 
 ```bash
-claude plugin marketplace add William-iFINITY/ifinity-marketplace
+claude plugin marketplace add iFINITY-Ltd/ifinity-marketplace
 claude plugin install ifinity-imis@ifinity
 ```
 
@@ -106,4 +106,4 @@ AgentZ is careful about the difference between "we found evidence", "we created 
 
 ## Support
 
-For help with the plugin, contact iFINITY support through your organisation's support channel or visit the [iFINITY community](https://github.com/William-iFINITY).
+For help with the plugin, contact iFINITY support through your organisation's support channel or visit the [iFINITY community](https://github.com/iFINITY-Ltd).

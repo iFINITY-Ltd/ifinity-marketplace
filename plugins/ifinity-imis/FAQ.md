@@ -25,7 +25,7 @@ Install the **iFINITY AgentZ** desktop app, sign in to your iMIS instance, and g
 Yes, via the Claude Code CLI:
 
 ```bash
-claude plugin marketplace add William-iFINITY/ifinity-marketplace
+claude plugin marketplace add iFINITY-Ltd/ifinity-marketplace
 claude plugin install ifinity-imis@ifinity
 ```
 
