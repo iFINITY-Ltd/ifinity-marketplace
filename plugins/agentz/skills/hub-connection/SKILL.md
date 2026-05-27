@@ -17,7 +17,7 @@ manual credential entry in Claude, Cowork, or Claude Code.
 The AgentZ desktop app is downloaded from the iFINITY licensing download page:
 
 ```text
-https://ifinity-licensing.hrhxyyydnw.workers.dev/download
+https://ifinityagentz.co.uk/download
 ```
 
 That page is gated by the organisation auth code or a magic-link email unlock,
@@ -36,7 +36,7 @@ If connected, report:
 
 Guide the user through AgentZ path:
 
-1. If AgentZ is not installed, download it from `https://ifinity-licensing.hrhxyyydnw.workers.dev/download`.
+1. If AgentZ is not installed, download it from `https://ifinityagentz.co.uk/download`.
 2. Open iFINITY AgentZ on the local machine.
 3. Sign in with the iFINITY licence magic link.
 4. Save iMIS credentials in Settings > iMIS Account.
