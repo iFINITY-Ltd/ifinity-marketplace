@@ -45,6 +45,14 @@ claude plugin marketplace add iFINITY-Ltd/ifinity-marketplace
 claude plugin install agentz@ifinity
 ```
 
+## Install via Codex CLI
+
+```bash
+codex plugin marketplace add iFINITY-Ltd/ifinity-marketplace
+```
+
+Then open the plugin directory in Codex, select the **iFINITY** marketplace, and install **iFINITY AgentZ**.
+
 ## Install via iFINITY AgentZ
 
 Open AgentZ, go to **Settings > Agent Plugin — Claude Code**, and click **Install Plugin**. AgentZ handles marketplace registration, installation, and updates automatically.
