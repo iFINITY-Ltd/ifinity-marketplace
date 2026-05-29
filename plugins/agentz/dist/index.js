@@ -23698,6 +23698,19 @@ function isCapturePageResult(value) {
   const record2 = value;
   return typeof record2.filePath === "string" && typeof record2.url === "string" && typeof record2.width === "number" && typeof record2.height === "number" && typeof record2.bytes === "number";
 }
+function detectBridgeRuntime(env = process.env, cwd = process.cwd()) {
+  const root = [env.PLUGIN_ROOT, env.CLAUDE_PLUGIN_ROOT, env.PWD, cwd].filter(Boolean).join(" ").replace(/\\/g, "/");
+  if (root.includes("cowork_plugins") || root.includes(".remote-plugins") || root.includes(".local-plugins") || root.includes("local-agent-mode-sessions") || root.includes("/sessions/")) {
+    return "cowork";
+  }
+  if (root.includes(".codex/plugins") || root.includes(".codex/") || env.PLUGIN_ROOT) {
+    return "codex";
+  }
+  if (root.includes(".claude/plugins") || root.includes(".claude/marketplaces") || Boolean(env.CLAUDE_PLUGIN_ROOT)) {
+    return "claude-code";
+  }
+  return "unknown";
+}
 var CompanionBridge = class {
   socket = null;
   port;
@@ -23729,22 +23742,7 @@ var CompanionBridge = class {
     this.onTokenCleared = handler;
   }
   detectRuntime() {
-    const root = [
-      process.env.PLUGIN_ROOT,
-      process.env.CLAUDE_PLUGIN_ROOT,
-      process.env.PWD,
-      process.cwd()
-    ].filter(Boolean).join(" ");
-    if (root.includes("cowork_plugins") || root.includes(".remote-plugins") || root.includes(".local-plugins") || root.includes("local-agent-mode-sessions") || root.includes("/sessions/")) {
-      return "cowork";
-    }
-    if (root.includes(".codex/plugins") || root.includes(".codex/") || process.env.PLUGIN_ROOT) {
-      return "codex";
-    }
-    if (root.includes(".claude/plugins/cache") || root.includes(".claude/plugins/marketplaces")) {
-      return "claude-code";
-    }
-    return "unknown";
+    return detectBridgeRuntime();
   }
   getRuntimeLabel() {
     if (this.runtime === "claude-code") return "Claude Code";
