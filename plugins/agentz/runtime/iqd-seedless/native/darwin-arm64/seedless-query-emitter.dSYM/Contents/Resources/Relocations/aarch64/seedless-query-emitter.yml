@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/floridaserver/actions-runners/ifinity-org/_work/ifinity-mcp/ifinity-mcp/.codex/native-runtimes/darwin-arm64/seedless-query-emitter'
+relocations:     []
+...

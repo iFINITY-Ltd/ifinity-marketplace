@@ -8566,15 +8566,15 @@ var $ZodObject = /* @__PURE__ */ $constructor("$ZodObject", (inst, def) => {
       return `shape[${k}]._zod.run({ value: input[${k}], issues: [] }, ctx)`;
     };
     doc.write(`const input = payload.value;`);
-    const ids = /* @__PURE__ */ Object.create(null);
+    const ids2 = /* @__PURE__ */ Object.create(null);
     let counter = 0;
     for (const key of normalized.keys) {
-      ids[key] = `key_${counter++}`;
+      ids2[key] = `key_${counter++}`;
     }
     doc.write(`const newResult = {}`);
     for (const key of normalized.keys) {
       if (normalized.optionalKeys.has(key)) {
-        const id = ids[key];
+        const id = ids2[key];
         doc.write(`const ${id} = ${parseStr(key)};`);
         const k = esc(key);
         doc.write(`
@@ -8598,7 +8598,7 @@ var $ZodObject = /* @__PURE__ */ $constructor("$ZodObject", (inst, def) => {
         }
         `);
       } else {
-        const id = ids[key];
+        const id = ids2[key];
         doc.write(`const ${id} = ${parseStr(key)};`);
         doc.write(`
           if (${id}.issues.length) payload.issues = payload.issues.concat(${id}.issues.map(iss => ({
@@ -9810,10 +9810,10 @@ function _toLowerCase() {
 function _toUpperCase() {
   return _overwrite((input) => input.toUpperCase());
 }
-function _array(Class2, element, params) {
+function _array(Class2, element2, params) {
   return new Class2({
     type: "array",
-    element,
+    element: element2,
     // get element() {
     //   return element;
     // },
@@ -10965,8 +10965,8 @@ var ZodArray = /* @__PURE__ */ $constructor("ZodArray", (inst, def) => {
   inst.length = (len, params) => inst.check(_length(len, params));
   inst.unwrap = () => inst.element;
 });
-function array(element, params) {
-  return _array(ZodArray, element, params);
+function array(element2, params) {
+  return _array(ZodArray, element2, params);
 }
 var ZodObject = /* @__PURE__ */ $constructor("ZodObject", (inst, def) => {
   $ZodObject.init(inst, def);
@@ -13401,15 +13401,15 @@ var makeIssue = (params) => {
       message: issueData.message
     };
   }
-  let errorMessage6 = "";
+  let errorMessage10 = "";
   const maps = errorMaps.filter((m) => !!m).slice().reverse();
   for (const map of maps) {
-    errorMessage6 = map(fullIssue, { data, defaultError: errorMessage6 }).message;
+    errorMessage10 = map(fullIssue, { data, defaultError: errorMessage10 }).message;
   }
   return {
     ...issueData,
     path: fullPath,
-    message: errorMessage6
+    message: errorMessage10
   };
 };
 var EMPTY_PATH = [];
@@ -13445,15 +13445,15 @@ var ParseStatus = class _ParseStatus {
       this.value = "aborted";
   }
   static mergeArray(status, results) {
-    const arrayValue = [];
+    const arrayValue2 = [];
     for (const s of results) {
       if (s.status === "aborted")
         return INVALID;
       if (s.status === "dirty")
         status.dirty();
-      arrayValue.push(s.value);
+      arrayValue2.push(s.value);
     }
-    return { status: status.value, value: arrayValue };
+    return { status: status.value, value: arrayValue2 };
   }
   static async mergeObjectAsync(status, pairs) {
     const syncPairs = [];
@@ -16132,12 +16132,12 @@ var ZodSet = class _ZodSet extends ZodType2 {
     const valueType = this._def.valueType;
     function finalizeSet(elements2) {
       const parsedSet = /* @__PURE__ */ new Set();
-      for (const element of elements2) {
-        if (element.status === "aborted")
+      for (const element2 of elements2) {
+        if (element2.status === "aborted")
           return INVALID;
-        if (element.status === "dirty")
+        if (element2.status === "dirty")
           status.dirty();
-        parsedSet.add(element.value);
+        parsedSet.add(element2.value);
       }
       return { status: status.value, value: parsedSet };
     }
@@ -17202,19 +17202,19 @@ var getRefs = (options) => {
 };
 
 // node_modules/zod-to-json-schema/dist/esm/errorMessages.js
-function addErrorMessage(res, key, errorMessage6, refs) {
+function addErrorMessage(res, key, errorMessage10, refs) {
   if (!refs?.errorMessages)
     return;
-  if (errorMessage6) {
+  if (errorMessage10) {
     res.errorMessage = {
       ...res.errorMessage,
-      [key]: errorMessage6
+      [key]: errorMessage10
     };
   }
 }
-function setResponseValueAndErrors(res, key, value, errorMessage6, refs) {
+function setResponseValueAndErrors(res, key, value, errorMessage10, refs) {
   res[key] = value;
-  addErrorMessage(res, key, errorMessage6, refs);
+  addErrorMessage(res, key, errorMessage10, refs);
 }
 
 // node_modules/zod-to-json-schema/dist/esm/getRelativePath.js
@@ -18525,8 +18525,8 @@ var Protocol = class {
                   if (queuedMessage.type === "response") {
                     resolver(message);
                   } else {
-                    const errorMessage6 = message;
-                    const error2 = new McpError(errorMessage6.error.code, errorMessage6.error.message, errorMessage6.error.data);
+                    const errorMessage10 = message;
+                    const error2 = new McpError(errorMessage10.error.code, errorMessage10.error.message, errorMessage10.error.data);
                     resolver(error2);
                   }
                 } else {
@@ -18777,7 +18777,7 @@ var Protocol = class {
       if (abortController.signal.aborted) {
         return;
       }
-      const response = {
+      const response2 = {
         result,
         jsonrpc: "2.0",
         id: request.id
@@ -18785,11 +18785,11 @@ var Protocol = class {
       if (relatedTaskId && this._taskMessageQueue) {
         await this._enqueueTaskMessage(relatedTaskId, {
           type: "response",
-          message: response,
+          message: response2,
           timestamp: Date.now()
         }, capturedTransport?.sessionId);
       } else {
-        await capturedTransport?.send(response);
+        await capturedTransport?.send(response2);
       }
     }, async (error2) => {
       if (abortController.signal.aborted) {
@@ -18840,29 +18840,29 @@ var Protocol = class {
     }
     handler(params);
   }
-  _onresponse(response) {
-    const messageId = Number(response.id);
+  _onresponse(response2) {
+    const messageId = Number(response2.id);
     const resolver = this._requestResolvers.get(messageId);
     if (resolver) {
       this._requestResolvers.delete(messageId);
-      if (isJSONRPCResultResponse(response)) {
-        resolver(response);
+      if (isJSONRPCResultResponse(response2)) {
+        resolver(response2);
       } else {
-        const error2 = new McpError(response.error.code, response.error.message, response.error.data);
+        const error2 = new McpError(response2.error.code, response2.error.message, response2.error.data);
         resolver(error2);
       }
       return;
     }
     const handler = this._responseHandlers.get(messageId);
     if (handler === void 0) {
-      this._onerror(new Error(`Received a response for an unknown message ID: ${JSON.stringify(response)}`));
+      this._onerror(new Error(`Received a response for an unknown message ID: ${JSON.stringify(response2)}`));
       return;
     }
     this._responseHandlers.delete(messageId);
     this._cleanupTimeout(messageId);
     let isTaskResponse = false;
-    if (isJSONRPCResultResponse(response) && response.result && typeof response.result === "object") {
-      const result = response.result;
+    if (isJSONRPCResultResponse(response2) && response2.result && typeof response2.result === "object") {
+      const result = response2.result;
       if (result.task && typeof result.task === "object") {
         const task = result.task;
         if (typeof task.taskId === "string") {
@@ -18874,10 +18874,10 @@ var Protocol = class {
     if (!isTaskResponse) {
       this._progressHandlers.delete(messageId);
     }
-    if (isJSONRPCResultResponse(response)) {
-      handler(response);
+    if (isJSONRPCResultResponse(response2)) {
+      handler(response2);
     } else {
-      const error2 = McpError.fromError(response.error.code, response.error.message, response.error.data);
+      const error2 = McpError.fromError(response2.error.code, response2.error.message, response2.error.data);
       handler(error2);
     }
   }
@@ -19049,15 +19049,15 @@ var Protocol = class {
         const error2 = reason instanceof McpError ? reason : new McpError(ErrorCode.RequestTimeout, String(reason));
         reject(error2);
       };
-      this._responseHandlers.set(messageId, (response) => {
+      this._responseHandlers.set(messageId, (response2) => {
         if (options?.signal?.aborted) {
           return;
         }
-        if (response instanceof Error) {
-          return reject(response);
+        if (response2 instanceof Error) {
+          return reject(response2);
         }
         try {
-          const parseResult = safeParse3(resultSchema, response.result);
+          const parseResult = safeParse3(resultSchema, response2.result);
           if (!parseResult.success) {
             reject(parseResult.error);
           } else {
@@ -19075,10 +19075,10 @@ var Protocol = class {
       this._setupTimeout(messageId, timeout, options?.maxTotalTimeout, timeoutHandler, options?.resetTimeoutOnProgress ?? false);
       const relatedTaskId = relatedTask?.taskId;
       if (relatedTaskId) {
-        const responseResolver = (response) => {
+        const responseResolver = (response2) => {
           const handler = this._responseHandlers.get(messageId);
           if (handler) {
-            handler(response);
+            handler(response2);
           } else {
             this._onerror(new Error(`Response handler missing for side-channeled request ${messageId}`));
           }
@@ -19679,23 +19679,23 @@ var Server = class extends Protocol {
       const wrappedHandler = async (request, extra) => {
         const validatedRequest = safeParse3(CallToolRequestSchema, request);
         if (!validatedRequest.success) {
-          const errorMessage6 = validatedRequest.error instanceof Error ? validatedRequest.error.message : String(validatedRequest.error);
-          throw new McpError(ErrorCode.InvalidParams, `Invalid tools/call request: ${errorMessage6}`);
+          const errorMessage10 = validatedRequest.error instanceof Error ? validatedRequest.error.message : String(validatedRequest.error);
+          throw new McpError(ErrorCode.InvalidParams, `Invalid tools/call request: ${errorMessage10}`);
         }
         const { params } = validatedRequest.data;
         const result = await Promise.resolve(handler(request, extra));
         if (params.task) {
           const taskValidationResult = safeParse3(CreateTaskResultSchema, result);
           if (!taskValidationResult.success) {
-            const errorMessage6 = taskValidationResult.error instanceof Error ? taskValidationResult.error.message : String(taskValidationResult.error);
-            throw new McpError(ErrorCode.InvalidParams, `Invalid task creation result: ${errorMessage6}`);
+            const errorMessage10 = taskValidationResult.error instanceof Error ? taskValidationResult.error.message : String(taskValidationResult.error);
+            throw new McpError(ErrorCode.InvalidParams, `Invalid task creation result: ${errorMessage10}`);
           }
           return taskValidationResult.data;
         }
         const validationResult = safeParse3(CallToolResultSchema, result);
         if (!validationResult.success) {
-          const errorMessage6 = validationResult.error instanceof Error ? validationResult.error.message : String(validationResult.error);
-          throw new McpError(ErrorCode.InvalidParams, `Invalid tools/call result: ${errorMessage6}`);
+          const errorMessage10 = validationResult.error instanceof Error ? validationResult.error.message : String(validationResult.error);
+          throw new McpError(ErrorCode.InvalidParams, `Invalid tools/call result: ${errorMessage10}`);
         }
         return validationResult.data;
       };
@@ -20411,12 +20411,12 @@ var McpServer = class {
    * @param errorMessage - The error message.
    * @returns The tool error result.
    */
-  createToolError(errorMessage6) {
+  createToolError(errorMessage10) {
     return {
       content: [
         {
           type: "text",
-          text: errorMessage6
+          text: errorMessage10
         }
       ],
       isError: true
@@ -20434,8 +20434,8 @@ var McpServer = class {
     const parseResult = await safeParseAsync3(schemaToParse, args);
     if (!parseResult.success) {
       const error2 = "error" in parseResult ? parseResult.error : "Unknown error";
-      const errorMessage6 = getParseErrorMessage(error2);
-      throw new McpError(ErrorCode.InvalidParams, `Input validation error: Invalid arguments for tool ${toolName}: ${errorMessage6}`);
+      const errorMessage10 = getParseErrorMessage(error2);
+      throw new McpError(ErrorCode.InvalidParams, `Input validation error: Invalid arguments for tool ${toolName}: ${errorMessage10}`);
     }
     return parseResult.data;
   }
@@ -20459,8 +20459,8 @@ var McpServer = class {
     const parseResult = await safeParseAsync3(outputObj, result.structuredContent);
     if (!parseResult.success) {
       const error2 = "error" in parseResult ? parseResult.error : "Unknown error";
-      const errorMessage6 = getParseErrorMessage(error2);
-      throw new McpError(ErrorCode.InvalidParams, `Output validation error: Invalid structured content for tool ${toolName}: ${errorMessage6}`);
+      const errorMessage10 = getParseErrorMessage(error2);
+      throw new McpError(ErrorCode.InvalidParams, `Output validation error: Invalid structured content for tool ${toolName}: ${errorMessage10}`);
     }
   }
   /**
@@ -20672,8 +20672,8 @@ var McpServer = class {
         const parseResult = await safeParseAsync3(argsObj, request.params.arguments);
         if (!parseResult.success) {
           const error2 = "error" in parseResult ? parseResult.error : "Unknown error";
-          const errorMessage6 = getParseErrorMessage(error2);
-          throw new McpError(ErrorCode.InvalidParams, `Invalid arguments for prompt ${request.params.name}: ${errorMessage6}`);
+          const errorMessage10 = getParseErrorMessage(error2);
+          throw new McpError(ErrorCode.InvalidParams, `Invalid arguments for prompt ${request.params.name}: ${errorMessage10}`);
         }
         const args = parseResult.data;
         const cb = prompt.callback;
@@ -21200,7 +21200,7 @@ var ImisApiClient = class {
   async request(method, path3, options) {
     if (this.externalToken && this.externalBaseUrl) {
       const url2 = this.buildUrl(this.externalBaseUrl, path3, options?.params);
-      const response2 = await this.doFetchOrThrow(
+      const response3 = await this.doFetchOrThrow(
         method,
         url2,
         this.externalToken,
@@ -21208,17 +21208,17 @@ var ImisApiClient = class {
         "iFINITY AgentZ OAuth token",
         options?.body
       );
-      if (response2.status === 401) {
+      if (response3.status === 401) {
         throw new ImisAuthError(
           "AgentZ-provided token expired. AgentZ will refresh it automatically."
         );
       }
-      return this.handleResponse(response2, path3);
+      return this.handleResponse(response3, path3);
     }
     const instance = this.activeInstance;
     const url = this.buildUrl(instance.baseUrl, path3, options?.params);
     const token = await this.auth.getToken(instance);
-    const response = await this.doFetchOrThrow(
+    const response2 = await this.doFetchOrThrow(
       method,
       url,
       token,
@@ -21226,7 +21226,7 @@ var ImisApiClient = class {
       `configured instance "${instance.name}"`,
       options?.body
     );
-    if (response.status === 401) {
+    if (response2.status === 401) {
       const freshToken = await this.auth.refreshToken(instance);
       const retryResponse = await this.doFetchOrThrow(
         method,
@@ -21238,7 +21238,7 @@ var ImisApiClient = class {
       );
       return this.handleResponse(retryResponse, path3);
     }
-    return this.handleResponse(response, path3);
+    return this.handleResponse(response2, path3);
   }
   async doFetch(method, url, token, body) {
     const headers = {
@@ -21285,16 +21285,16 @@ var ImisApiClient = class {
       );
     }
   }
-  async handleResponse(response, path3) {
-    const text = await response.text().catch(() => "");
-    if (response.ok) {
-      if (response.status === 204 || !text) return null;
+  async handleResponse(response2, path3) {
+    const text = await response2.text().catch(() => "");
+    if (response2.ok) {
+      if (response2.status === 204 || !text) return null;
       try {
         return JSON.parse(text);
       } catch {
         throw new ImisApiError(
           `iMIS returned non-JSON response for ${path3}: ${text.slice(0, 200)}`,
-          response.status,
+          response2.status,
           text
         );
       }
@@ -21305,7 +21305,7 @@ var ImisApiClient = class {
     } catch {
       body = text;
     }
-    switch (response.status) {
+    switch (response2.status) {
       case 400: {
         const fieldErrors = this.parseValidationErrors(body);
         throw new ImisValidationError(
@@ -21320,20 +21320,22 @@ var ImisApiClient = class {
         throw new ImisNotFoundError(parts[0] ?? path3, parts[1] ?? "");
       }
       case 429: {
-        const retryAfter = response.headers.get("Retry-After");
+        const retryAfter = response2.headers.get("Retry-After");
         const retryMs = retryAfter ? parseInt(retryAfter, 10) * 1e3 : 5e3;
         throw new ImisRateLimitError(retryMs);
       }
       default:
         throw new ImisApiError(
-          `iMIS API error ${response.status}: ${text}`,
-          response.status,
+          `iMIS API error ${response2.status}: ${text}`,
+          response2.status,
           body
         );
     }
   }
   buildUrl(baseUrl, path3, params) {
-    const url = new URL(`/api/${path3}`, baseUrl);
+    const trimmedBase = baseUrl.replace(/\/+$/, "");
+    const normalizedPath = path3.replace(/^\/+/, "");
+    const url = new URL(`${trimmedBase}/api/${normalizedPath}`);
     if (params) {
       for (const [key, value] of Object.entries(params)) {
         if (value === void 0) continue;
@@ -21383,7 +21385,7 @@ function buildNetworkErrorMessage({
 function sanitizedEndpoint(url, path3) {
   try {
     const parsed = new URL(url);
-    return `${parsed.origin}/api/${path3}`;
+    return `${parsed.origin}${parsed.pathname}`;
   } catch {
     return `/api/${path3}`;
   }
@@ -21439,19 +21441,19 @@ var AuthManager = class {
     if (instance.clientSecret) {
       body.set("client_secret", instance.clientSecret);
     }
-    const response = await fetch(tokenUrl, {
+    const response2 = await fetch(tokenUrl, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: body.toString()
     });
-    if (!response.ok) {
-      const text = await response.text().catch(() => "");
+    if (!response2.ok) {
+      const text = await response2.text().catch(() => "");
       throw new ImisAuthError(
-        `Authentication failed for instance "${instance.name}": ${response.status} ${text}`,
+        `Authentication failed for instance "${instance.name}": ${response2.status} ${text}`,
         text
       );
     }
-    const data = await response.json();
+    const data = await response2.json();
     const expiresInMs = (data.expires_in ?? 3600) * 1e3;
     const tokenData = {
       accessToken: data.access_token,
@@ -21514,6 +21516,13 @@ async function* paginateAll(client, path3, options) {
       offset += items.length;
     }
     if (items.length < requestLimit) break;
+    if (totalFetched >= maxRecords) {
+      const moreRecordsExist = page.HasNext === true || typeof page.TotalCount === "number" && offset < page.TotalCount;
+      process.stderr.write(
+        `[agentz-mcp] pagination cap (maxRecords=${maxRecords}) reached for "${path3}"; result is ${moreRecordsExist ? "TRUNCATED" : "possibly truncated"}.
+`
+      );
+    }
   }
 }
 async function fetchAll(client, path3, options) {
@@ -21936,9 +21945,10 @@ var ENTITY_REGISTRY = [
   {
     name: "Cart",
     category: "Cart",
-    description: "Shopping cart with nested order/invoice data",
+    description: "Shopping cart with nested order/invoice data. Raw generic writes are reserved; use purpose-built commerce tools.",
     idField: "CartId",
-    supportedOperations: { ...FULL_CRUD, changelog: false },
+    supportedOperations: LIST_GET_ONLY,
+    readOnly: true,
     tags: ["cart", "shopping", "commerce"]
   },
   // ─── Certification ─────────────────────────────────────────
@@ -22891,18 +22901,20 @@ var ENTITY_REGISTRY = [
   {
     name: "Subscription",
     category: "Invoice",
-    description: "Membership subscription records. Uses composite key (PartyId + ItemId). Get by pipe-delimited ID: PartyId~ItemId",
+    description: "Membership subscription records. Uses composite key (PartyId + ItemId). Raw generic mutations are reserved; use imis_manage_subscription for the purpose-built lifecycle workflow.",
     idField: "PartyId",
     compositeKeyFields: ["PartyId", "ItemId"],
-    supportedOperations: FULL_CRUD,
+    supportedOperations: READ_ONLY,
+    readOnly: true,
     tags: ["invoice", "subscription", "membership", "billing"]
   },
   {
     name: "ScheduledPayment",
     category: "Invoice",
-    description: "Scheduled payment definitions",
+    description: "Scheduled payment definitions. Raw mutations are reserved until payment-plan workflows are proven.",
     idField: "ScheduledPaymentId",
-    supportedOperations: FULL_CRUD,
+    supportedOperations: READ_ONLY,
+    readOnly: true,
     tags: ["invoice", "payment", "scheduled"]
   },
   {
@@ -23207,17 +23219,19 @@ var ENTITY_REGISTRY = [
   {
     name: "ComboOrder",
     category: "OrderProcessing",
-    description: "Combined order with invoice and payment data. Create only \u2014 POST to submit.",
+    description: "Combined order with invoice and payment data. Raw generic writes are reserved; use purpose-built commerce tools.",
     idField: "ComboOrderId",
-    supportedOperations: { ...READ_ONLY, list: false, get: false, create: true, execute: true },
+    supportedOperations: { ...READ_ONLY, list: false, get: false },
+    readOnly: true,
     tags: ["order", "invoice", "payment", "combo"]
   },
   {
     name: "Order",
     category: "OrderProcessing",
-    description: "Order records. Create only \u2014 POST to submit.",
+    description: "Order records. Raw generic writes are reserved; use purpose-built commerce tools.",
     idField: "OrderNumber",
-    supportedOperations: { ...READ_ONLY, list: false, get: false, create: true, execute: true },
+    supportedOperations: { ...READ_ONLY, list: false, get: false },
+    readOnly: true,
     tags: ["order"]
   },
   {
@@ -23278,41 +23292,64 @@ var ENTITY_REGISTRY = [
   {
     name: "AutoPayAccount",
     category: "Payments",
-    description: "Auto-pay account configurations",
+    description: "Auto-pay account configurations. Raw mutations are reserved until gateway-token workflows are proven.",
     idField: "AutoPayAccountId",
-    supportedOperations: { list: true, create: true, get: true, update: true, delete: true, validate: false, execute: true, changelog: false, metadata: true },
+    supportedOperations: READ_ONLY,
+    readOnly: true,
     tags: ["payment", "auto-pay", "account"]
   },
   {
     name: "AutoPayInstruction",
     category: "Payments",
-    description: "Auto-pay instruction records",
+    description: "Auto-pay instruction records. Raw mutations are reserved until recurring/gateway workflows are proven.",
     idField: "InstructionId",
-    supportedOperations: FULL_CRUD,
+    supportedOperations: READ_ONLY,
+    readOnly: true,
     tags: ["payment", "auto-pay", "instruction"]
   },
   {
     name: "AutoPayProcessor",
     category: "Payments",
-    description: "Auto-pay processor operations. Execute-only \u2014 use _execute endpoint for processor actions.",
+    description: "Auto-pay processor operations. Raw execute is reserved until processor workflows are proven.",
     idField: "AutoPayProcessorId",
-    supportedOperations: { ...READ_ONLY, list: false, get: false, execute: true },
+    supportedOperations: { ...READ_ONLY, list: false, get: false },
+    readOnly: true,
     tags: ["payment", "auto-pay", "processor"]
   },
   {
     name: "DataVaultLog",
     category: "Payments",
-    description: "Payment data vault access logs",
+    description: "Payment data vault access logs. Raw mutations are reserved; use purpose-built AutoPay collection processing.",
     idField: "DataVaultLogId",
-    supportedOperations: FULL_CRUD,
+    supportedOperations: READ_ONLY,
+    readOnly: true,
     tags: ["payment", "data-vault", "log", "security"]
+  },
+  {
+    name: "DataVaultLogDetail",
+    category: "Payments",
+    description: "Read-only Pay Central/DataVault AutoPay invoice batch details used to diagnose recurring collection status.",
+    idField: "DataVaultLogDetailId",
+    supportedOperations: READ_ONLY,
+    readOnly: true,
+    tags: ["payment", "data-vault", "auto-pay", "diagnostic"]
+  },
+  {
+    name: "DataVaultAttempt",
+    category: "Payments",
+    description: "Read-only Pay Central/DataVault AutoPay processing attempts and gateway messages.",
+    idField: "DataVaultAttemptId",
+    supportedOperations: READ_ONLY,
+    readOnly: true,
+    tags: ["payment", "data-vault", "auto-pay", "diagnostic"]
   },
   {
     name: "InvoicePayment",
     category: "Payments",
-    description: "Payments applied to invoices. Create only \u2014 POST to apply payment.",
+    description: "Payments applied to invoices. Raw payment create is reserved; use purpose-built settlement tools.",
     idField: "InvoicePaymentId",
-    supportedOperations: { ...READ_ONLY, list: false, get: false, create: true },
+    supportedOperations: { ...READ_ONLY, list: false, get: false },
+    readOnly: true,
     tags: ["payment", "invoice"]
   },
   {
@@ -23327,9 +23364,10 @@ var ENTITY_REGISTRY = [
   {
     name: "Payment",
     category: "Payments",
-    description: "Payment records. Note: credit card data cannot be submitted via API. No creation via POST \u2014 payments are created through order processing.",
+    description: "Payment records. Raw mutation and execute paths are reserved; purpose-built workflows own reversal/readback semantics.",
     idField: "PaymentId",
-    supportedOperations: { ...FULL_CRUD, create: false },
+    supportedOperations: READ_ONLY,
+    readOnly: true,
     tags: ["payment"]
   },
   {
@@ -23386,9 +23424,10 @@ var ENTITY_REGISTRY = [
   {
     name: "Receipt",
     category: "Payments",
-    description: "Payment receipt records",
+    description: "Payment receipt records. Raw mutations are reserved; use imis_issue_gift_receipt for the proven one-payment issue-not-send workflow.",
     idField: "ReceiptId",
-    supportedOperations: FULL_CRUD,
+    supportedOperations: READ_ONLY,
+    readOnly: true,
     tags: ["payment", "receipt"]
   },
   // ─── User Security ─────────────────────────────────────────
@@ -23547,13 +23586,13 @@ var IqaService = class {
       QueryName: queryPath
     };
     this.addQueryOptions(params, options);
-    const response = await this.client.get("IQA", params);
-    const items = this.extractItems(response);
+    const response2 = await this.client.get("IQA", params);
+    const items = this.extractItems(response2);
     return {
       items,
-      totalCount: this.readNumber(response.TotalCount ?? response.Count),
-      offset: this.readNumber(response.Offset),
-      limit: this.readNumber(response.Limit)
+      totalCount: this.readNumber(response2.TotalCount ?? response2.Count),
+      offset: this.readNumber(response2.Offset),
+      limit: this.readNumber(response2.Limit)
     };
   }
   /**
@@ -23573,13 +23612,13 @@ var IqaService = class {
     }
     this.addQueryOptions(params, options);
     try {
-      const response = await this.client.get("Query", params);
-      const items = this.extractItems(response);
+      const response2 = await this.client.get("Query", params);
+      const items = this.extractItems(response2);
       return {
         items,
-        totalCount: this.readNumber(response.TotalCount ?? response.Count),
-        offset: this.readNumber(response.Offset),
-        limit: this.readNumber(response.Limit)
+        totalCount: this.readNumber(response2.TotalCount ?? response2.Count),
+        offset: this.readNumber(response2.Offset),
+        limit: this.readNumber(response2.Limit)
       };
     } catch (error2) {
       if (!queryPath) {
@@ -23602,8 +23641,8 @@ var IqaService = class {
       params.queryUrlParameters = options.queryUrlParameters;
     }
   }
-  extractItems(response) {
-    const items = this.extractCollection(response.Items) ?? this.extractCollection(response.Results) ?? this.extractCollection(response.$values) ?? (Array.isArray(response) ? response : void 0);
+  extractItems(response2) {
+    const items = this.extractCollection(response2.Items) ?? this.extractCollection(response2.Results) ?? this.extractCollection(response2.$values) ?? (Array.isArray(response2) ? response2 : void 0);
     if (items) {
       return items.filter((item) => !!item && typeof item === "object").map((item) => this.normalizeItem(item));
     }
@@ -23691,12 +23730,16 @@ var CompanionBridge = class {
   }
   detectRuntime() {
     const root = [
+      process.env.PLUGIN_ROOT,
       process.env.CLAUDE_PLUGIN_ROOT,
       process.env.PWD,
       process.cwd()
     ].filter(Boolean).join(" ");
     if (root.includes("cowork_plugins") || root.includes(".remote-plugins") || root.includes(".local-plugins") || root.includes("local-agent-mode-sessions") || root.includes("/sessions/")) {
       return "cowork";
+    }
+    if (root.includes(".codex/plugins") || root.includes(".codex/") || process.env.PLUGIN_ROOT) {
+      return "codex";
     }
     if (root.includes(".claude/plugins/cache") || root.includes(".claude/plugins/marketplaces")) {
       return "claude-code";
@@ -23706,18 +23749,21 @@ var CompanionBridge = class {
   getRuntimeLabel() {
     if (this.runtime === "claude-code") return "Claude Code";
     if (this.runtime === "cowork") return "Cowork";
+    if (this.runtime === "codex") return "Codex";
     return "MCP";
   }
   createSessionId() {
-    if (this.runtime !== "cowork") return randomUUID();
+    if (this.runtime !== "cowork" && this.runtime !== "codex") return randomUUID();
     const root = [
+      process.env.PLUGIN_ROOT,
       process.env.CLAUDE_PLUGIN_ROOT,
       process.env.PWD,
       process.cwd()
     ].filter(Boolean).join("|");
     if (!root) return randomUUID();
+    const prefix = this.runtime === "codex" ? "codex" : "cowork";
     const digest = createHash("sha256").update(root).digest("hex").slice(0, 32);
-    return `cowork-${digest}`;
+    return `${prefix}-${digest}`;
   }
   async connect() {
     try {
@@ -23755,7 +23801,7 @@ var CompanionBridge = class {
         socket.on("data", (chunk) => {
           this.handleSocketData(chunk, expectedAccept, () => {
             this.connected = true;
-            console.log("[mcp] Connected to iFINITY AgentZ desktop bridge");
+            process.stderr.write("[mcp] Connected to iFINITY AgentZ desktop bridge\n");
             this.sendHello();
             finish(true);
           });
@@ -23769,6 +23815,11 @@ var CompanionBridge = class {
           this.connected = false;
           this.handshakeComplete = false;
           if (this.socket === socket) this.socket = null;
+          for (const [, pending] of this.pendingRequests) {
+            clearTimeout(pending.timer);
+            pending.resolve({ success: false, error: "Bridge connection closed" });
+          }
+          this.pendingRequests.clear();
           if (shouldReconnect) this.scheduleReconnect();
           finish(false);
         });
@@ -23864,7 +23915,7 @@ var CompanionBridge = class {
   sendHello() {
     this.sendFrame(JSON.stringify({
       type: "hello",
-      plugin: "ifinity-imis",
+      plugin: "agentz",
       sessionId: this.sessionId,
       runtime: this.runtime,
       label: this.getRuntimeLabel(),
@@ -25417,6 +25468,27 @@ function applyDescendingSort(items, descending) {
   if (!descending || items.length <= 1) return items;
   return [...items].reverse();
 }
+var DEFAULT_SORT_PAGE = 100;
+async function fetchSortedWindow(list, opts) {
+  const params = { ...opts.params };
+  if (opts.field) params.OrderBy = opts.field;
+  const offset = opts.offset ?? 0;
+  if (!opts.descending) {
+    return list({ limit: opts.limit, offset, params });
+  }
+  const limit = opts.limit ?? DEFAULT_SORT_PAGE;
+  const probe = await list({ limit: 1, offset: 0, params });
+  const total = probe.totalCount;
+  if (total === void 0) {
+    const page2 = await list({ limit, offset, params });
+    return { items: applyDescendingSort(page2.items, true), totalCount: page2.totalCount };
+  }
+  const ascLimit = Math.min(limit, Math.max(0, total - offset));
+  if (ascLimit <= 0) return { items: [], totalCount: total };
+  const ascOffset = Math.max(0, total - offset - limit);
+  const page = await list({ limit: ascLimit, offset: ascOffset, params });
+  return { items: applyDescendingSort(page.items, true), totalCount: page.totalCount ?? total };
+}
 
 // src/tools/entity-tools.ts
 function registerEntityTools(server, entityService) {
@@ -25441,13 +25513,17 @@ function registerEntityTools(server, entityService) {
         }
       }
       let descending = false;
+      let field;
       if (orderBy) {
         const parsed = parseOrderBy(orderBy);
-        params.OrderBy = parsed.field;
+        field = parsed.field;
         descending = parsed.descending;
       }
-      const result = await entityService.list(entityType, { limit, offset, params });
-      const items = applyDescendingSort(result.items, descending);
+      const result = await fetchSortedWindow(
+        (o) => entityService.list(entityType, o),
+        { limit, offset, params, field, descending }
+      );
+      const items = result.items;
       return {
         content: [
           {
@@ -25478,7 +25554,7 @@ function registerEntityTools(server, entityService) {
   );
   server.tool(
     "imis_entity_create",
-    "Create a new entity in iMIS. IMPORTANT: When creating a Party, you MUST include '$type' field \u2014 use 'Asi.Soa.Core.DataContracts.PersonData, Asi.Contracts' for individuals or 'Asi.Soa.Core.DataContracts.InstitutionData, Asi.Contracts' for organizations. For EventRegistration, use imis_register_for_event instead (it uses the _execute endpoint).",
+    "Create a new entity in iMIS when the registry declares create support. IMPORTANT: When creating a Party, you MUST include '$type' field \u2014 use 'Asi.Soa.Core.DataContracts.PersonData, Asi.Contracts' for individuals or 'Asi.Soa.Core.DataContracts.InstitutionData, Asi.Contracts' for organizations. For EventRegistration, use imis_register_for_event instead (it uses the _execute endpoint). Raw finance/order/subscription/payment creates are reserved for purpose-built tools.",
     {
       entityType: external_exports.string().describe("The entity type name"),
       data: external_exports.string().describe("JSON string of the entity data to create")
@@ -26077,7 +26153,7 @@ var CAPABILITY_AREAS = [
   "lookup-configuration",
   "automation-tasks"
 ];
-var UPDATED_AT = "2026-05-21";
+var UPDATED_AT = "2026-05-28";
 var CAPABILITY_GUIDE = [
   {
     id: "entity-discovery-and-read",
@@ -26158,30 +26234,38 @@ var CAPABILITY_GUIDE = [
       "imis_document_get",
       "imis_document_create",
       "imis_document_update",
+      "imis_client_ipart_package",
       "imis_content_layouts"
     ],
     canDo: [
       "Browse, create, update, snapshot, and restore RiSE content documents through the Document API.",
+      "Deploy static client-based iPart ZIP packages under $/iPartSource and register their client content type documents.",
       "Create or reuse content layouts and bind pages to explicit layout contracts.",
       "Return backup snapshot references before mutating existing content by default."
     ],
     cannotDo: [
       "Claim a page is published or live from a Working content write.",
-      "Treat REST document save as proof that native editor rendering or public/member route behavior works."
+      "Treat REST document save as proof that native editor rendering or public/member route behavior works.",
+      "Deploy ASCX, DLL, AppCode, or other server-side custom iPart binaries to iMIS Cloud through the Document System."
     ],
     requiresApproval: [
       "Restoring snapshots over existing content.",
-      "Replacing or modifying non-benchmark client content."
+      "Replacing or modifying non-benchmark client content.",
+      "Replacing an existing client iPart package or registered content type."
     ],
     requiresNativeHandoff: [
-      "Publishing content, folders, and NAV records until the native publish workflow is automated."
+      "Publishing content, folders, and NAV records until the native publish workflow is automated.",
+      "Server-side/AppCode iPart file deployment; use native Files Manager/AppCode handling when a package contains ASCX/DLL files."
     ],
     verificationRequired: [
       "Read back the saved Document record.",
+      "For client iPart packages, verify the ZIP document under $/iPartSource, the RCT content type URLs, page placement, and rendered route behavior.",
       "For live claims, verify Published status and rendered route behavior separately."
     ],
     engineeringBasis: [
       "src/tools/content-tools.ts",
+      "src/tools/client-ipart-tools.ts",
+      "src/services/client-ipart-package.service.ts",
       "src/services/content-backup.service.ts",
       "tests/unit/tools/tool-registration.test.ts"
     ]
@@ -26189,30 +26273,50 @@ var CAPABILITY_GUIDE = [
   {
     id: "page-iparts",
     area: "iparts",
-    tools: ["imis_page_iparts"],
+    tools: ["imis_client_ipart_package", "imis_page_iparts", "imis_cart_checkout_pages", "imis_recurring_donation_pages"],
     canDo: [
+      "Upload cloud-safe client-based iPart ZIP packages and create their registered content type before placement.",
       "Inspect page iPart XML.",
       "Add ContentHtml, QueryMenu, QueryTemplateDisplay, QueryChartViewer, typed iParts, and raw iPart XML to content pages.",
+      "Plan or create a matched Working cart checkout page and order confirmation page with the native iMIS checkout iPart set through imis_cart_checkout_pages.",
+      "Plan or create a Working Give Now page with the native iMIS recurring donation iPart chain through imis_recurring_donation_pages; this is content/page assembly, not a custom checkout implementation.",
       "Remove iParts by ContentItemKey.",
       "Place iParts by layout zone and sort order when a real layout is bound."
     ],
     cannotDo: [
+      "Treat checkout page assembly as proof of cart/order/payment, gateway, receipt, return, refund, or AutoPay collection behavior.",
+      "Treat recurring donation page assembly as proof of recurring mandate creation, initial payment capture, invoice generation, or Pay Central collection.",
       "Guarantee rendered behavior for every typed iPart from XML writeback alone.",
       "Place iParts in non-default zones on pages without a bound layout.",
-      "Replace query execution proof; query-backed iParts still need a verified IQD/query."
+      "Replace query execution proof; query-backed iParts still need a verified IQD/query.",
+      "Deploy server-side ASCX/AppCode custom iParts through the Document System."
     ],
     requiresApproval: [
       "Removing existing client iParts.",
-      "Raw XML insertion into non-benchmark pages."
+      "Raw XML insertion into non-benchmark pages.",
+      "Replacing existing custom client iPart binaries or content type registrations."
     ],
     requiresNativeHandoff: [
-      "Native editor visual verification for unfamiliar typed iParts."
+      "Native editor visual verification for unfamiliar typed iParts and hosted donor checkout runs for recurring-donation enrollment.",
+      "Files Manager/AppCode deployment for legacy server-side iPart packages."
     ],
     verificationRequired: [
       "Inspect the page after write and confirm expected iPart type, ContentItemKey, layout zone, and sort order.",
+      "For custom client iParts: validate/deploy with imis_client_ipart_package, then place the returned contentTypeKey and render a page before claiming behavior.",
+      "For checkout page sets, verify both returned pages remain in the intended content root, have the expected layouts and native iPart types, and are published/routed/rendered separately before claiming member-facing checkout is live.",
+      "For recurring donation pages, verify the tenant recurring-donation Pay Central setting, published/routed rendered page behavior, and AutoPayInstruction/payment/DataVault readback before claiming recurring enrollment.",
       "For user-facing claims, verify rendered page behavior."
     ],
-    engineeringBasis: ["src/tools/content-tools.ts", "tests/unit/tools/tool-registration.test.ts"]
+    engineeringBasis: [
+      "src/tools/content-tools.ts",
+      "src/tools/client-ipart-tools.ts",
+      "src/services/client-ipart-package.service.ts",
+      "tests/live/checkout-page-iparts-report.ts",
+      "tests/live/recurring-donation-page-iparts-report.ts",
+      ".codex/checkout-page-iparts-20260527195044.json",
+      ".codex/recurring-donation-page-iparts-20260527210403.json",
+      "tests/unit/tools/tool-registration.test.ts"
+    ]
   },
   {
     id: "navigation-placement",
@@ -26345,70 +26449,145 @@ var CAPABILITY_GUIDE = [
     tools: [
       "imis_billing_summary",
       "imis_create_order",
+      "imis_create_billme_order",
       "imis_manage_subscription",
       "imis_autopay_summary",
       "imis_manage_autopay",
+      "imis_process_autopay_collection",
       "imis_scheduled_payments",
       "imis_gateway_accounts",
       "imis_payment_methods",
+      "imis_gateway_checkout_readiness",
+      "imis_automatic_payment_settings",
+      "imis_create_pledge_installment_schedule",
+      "imis_submit_paycentral_gift",
+      "imis_recurring_donation_checkout",
+      "imis_pay_pledge_installment",
+      "imis_pay_open_invoice",
+      "imis_return_order_invoice",
+      "imis_refund_returned_order_payment",
       "imis_vat_rules",
       "imis_uk_direct_debit"
     ],
     canDo: [
       "Read billing summaries, subscriptions, invoices, payments, scheduled payments, gateways, payment methods, VAT rules, and Direct Debit state.",
       "Summarize auto-pay state through read-only account, instruction, scheduled-payment, gateway, and payment-method records.",
-      "Show existing ecommerce/order/payment evidence through billing summaries, order headers/lines, invoices, payments, and payment applications."
+      "Check Pay Central SDK card-checkout readiness for a supplied external page domain and party identifier, including domain whitelist status, configured CreditCard/DataVault payment methods, active AutoPay counts, and recurring-processing task visibility.",
+      "Read and validate CommerceSettings automatic-payment posture for native Pay Central recurring donations and auto-renewing memberships, and with exact confirmation save those switches through the native Staff Pay Central settings form when a companion browser is connected.",
+      "Preview and, with exact confirmation, send already-due membership AutoPay invoices, run the native recurring-donation generate/send task chain, and retrieve processed AutoPay payments through imis_process_autopay_collection, with DataVaultLog, DataVaultLogDetail, DataVaultAttempt, invoice, and payment-application readback.",
+      "Show existing ecommerce/order/payment evidence through billing summaries, order headers/lines, invoices, payments, and payment applications.",
+      "Preview and, with exact confirmation, create single- or multi-line BillMe product orders through imis_create_billme_order, with order number and invoice readback.",
+      "Preview and, with exact confirmation, create, update, renew, cancel, reinstate, or delete subscriptions through imis_manage_subscription, including billed subscription invoice readback and attaching additional billed subscriptions to an existing subscription invoice with invoiceId.",
+      "Preview and, with exact confirmation, create a posted fundraising pledge installment schedule through imis_create_pledge_installment_schedule, with one invoice and PartyPledgeScheduledPayment row readback.",
+      "Preview and, with exact confirmation plus a fresh DataVaultPaymentIntentId from a client-hosted Pay Central SDK control, submit a one-time fundraising gift through imis_submit_paycentral_gift, with invoice/payment readback and no raw card handling or MCP-owned payment UI.",
+      "Prepare tenant-specific native hosted recurring-donation checkout URLs through imis_recurring_donation_checkout, then verify completed hosted submissions by Party ID or email with Party, AutoPayAccount, AutoPayInstruction, invoice, and PaymentSummary readback.",
+      "Preview and, with exact confirmation, submit a CASH payment against an existing pledge scheduled payment using the purpose-built pledge installment tool.",
+      "Preview and, with exact confirmation, submit a CASH payment against an existing open invoice through imis_pay_open_invoice, using the fixed ComboOrder invoice-payment workflow and payment/application/balance readback.",
+      "Preview and, with exact confirmation, return a paid order invoice through imis_return_order_invoice, using ProcessOrderReversal and invoice credit/adjustment readback.",
+      "Preview and, with exact confirmation, refund a returned order invoice through imis_refund_returned_order_payment, using Payment/_execute Refund against the original positive payment and invoice balance readback; Pay Central gateway refunds are supported when refundMethod is original_payment_method and the original payment has gateway readback."
     ],
     cannotDo: [
       "Handle raw card data or submit credit card payment details through the API.",
-      "Create orders, submit carts, manage subscriptions, mutate AutoPay instructions, record invoice payments, or move money through generic JSON payloads.",
-      "Claim refund, credit, reversal, GL export, proration, or batch lifecycle support unless a purpose-built verified workflow exists.",
+      "Return unredacted Pay Central SDK AuthTokens, render the payment UI, generate/capture hosted payment tokens inside the MCP, automate card-entry browsers as production, or expose raw gateway/card checkout JSON as a public tool.",
+      "Assume demo donor pages, sample item codes, or MARSH/Give to a Cause sample routes exist on every tenant; hosted recurring checkout requires the tenant's actual donor URL.",
+      "Create generic orders, submit generic carts, mutate subscriptions through generic JSON, mutate AutoPay accounts/instructions, record arbitrary invoice payments, or move money through generic JSON payloads.",
+      "Treat the BillMe order, invoice-payment, order-return, subscription-invoice, Pay Central one-time gift, or returned-order-refund tools as proof of raw cart-based subscription checkout, arbitrary credits, inventory-affecting return, generic/mixed carts, tax/shipping override, or gateway support outside each purpose-built Pay Central route.",
+      "Claim settled AutoPay collection, including recurring-donation collections, unless retrieve processing produces PaymentApplication/PaymentSummary or invoice-balance readback; DataVaultAttempt gateway messages such as date-window rejection mean the invoice is not settled.",
+      "Claim generic refund, credit, reversal, GL export, gateway collection, or batch lifecycle support unless a purpose-built verified workflow exists.",
       "Treat a created order/subscription as financially reconciled without readback and downstream balance checks.",
-      "Treat the shared demo tenant's inactive AutoPay records as proof that Stripe/PayCentral-style client gateway setups are unsupported."
+      "Treat active AutoPay account/instruction setup as proof of end-to-end recurring collection unless a due invoice is attached to the AutoPay remittance restriction and payment/readback completes.",
+      "Treat enabling CommerceSettings automatic-payment switches as proof that any donor/member enrolled, any mandate exists, or any payment/invoice/collection completed."
     ],
     requiresApproval: [
-      "Approval is required for any money movement, and for any future purpose-built order creation, subscription create/update/cancel, auto-pay change, VAT rule change, payment recording, refund, credit, or reversal after it is separately implemented."
+      "Approval is required for BillMe order creation, pledge schedule creation, any money movement, subscription create/update/cancel, open-invoice payment, order return, returned-order refund, automatic-payment setting updates, auto-pay due-invoice processing, auto-pay account/instruction change, VAT rule change, credit, or reversal."
     ],
     requiresNativeHandoff: [
-      "Gateway-side card entry, Direct Debit mandate creation, GL/batch operations, and finance workflows not exposed through verified API tools."
+      "Gateway-side card entry and recurring-donation enrollment through hosted iMIS/Pay Central controls, Direct Debit mandate creation, GL/batch operations, and finance workflows not exposed through verified API tools."
     ],
     verificationRequired: [
       "Read back the order/subscription/auto-pay record and re-check Party billing summary or scheduled payment state.",
-      "For AutoPay/recurring work, verify active account/instruction state and gateway token references on the target tenant before claiming a recurring mandate is created or usable.",
+      "For AutoPay/recurring work, verify active account/instruction state, gateway token references, native task/query shape, due-invoice remittance restriction, processing task outcome, and invoice/payment readback before claiming collection.",
+      "For automatic-payment settings, require exact confirmation, validate CommerceSettings, save through the native Staff form when companion-connected, and verify durable state through CommerceSettings/0 readback; do not treat REST PUT echo as persistence proof.",
+      "For pledge schedule creation, verify a new invoice and the requested number of PartyPledgeScheduledPayment rows on that one invoice.",
+      "For Pay Central work, verify the exact external page domain is whitelisted and that the domain-scoped SDK token succeeds before claiming gateway checkout is ready.",
+      "For one-time Pay Central gifts, verify the hosted token was captured outside the MCP and confirm new Invoice/PaymentSummary rows from the same operation before claiming payment success.",
+      "For recurring donation checkout, require a tenant-specific hosted donor URL for prepare/domain readiness and verify completion only from AutoPayAccount, AutoPayInstruction, invoice, and payment readback.",
       "For cart/order/payment work, verify Invoice/InvoiceSummary, PaymentSummary, PaymentApplication, and Party billing summary changes from the same operation before calling it successful.",
       "For financial diagnosis, preserve source records and avoid claiming causality without invoice/payment/subscription evidence."
     ],
     engineeringBasis: [
       "src/tools/workflow-tools.ts",
+      "src/tools/commerce-tools.ts",
+      "src/services/fundraising-pledge.service.ts",
+      "src/services/fundraising-paycentral-gift.service.ts",
+      "src/services/recurring-donation-hosted-checkout.service.ts",
+      "src/services/commerce-return-refund.service.ts",
       "src/tools/autopay-tools.ts",
+      "src/services/autopay-processing.service.ts",
       "src/tools/gateway-tools.ts",
-      "src/tools/uk-tools.ts"
+      "src/services/automatic-payment-settings.service.ts",
+      "src/services/gateway-readiness.service.ts",
+      "src/tools/uk-tools.ts",
+      "tests/live/commerce-return-refund-report.ts",
+      "tests/live/commerce-gateway-refund-report.ts",
+      "tests/live/autopay-surface-report.ts",
+      "tests/live/automatic-payment-settings-report.ts",
+      "tests/live/autopay-active-mandate-report.ts",
+      "tests/live/autopay-collection-processing-report.ts",
+      "tests/live/paycentral-sdk-checkout-report.ts",
+      "tests/live/recurring-donation-hosted-checkout-report.ts",
+      ".codex/fundraising-pledge-installment-20260527184000.json",
+      ".codex/paycentral-sdk-checkout-20260527203344.json",
+      ".codex/recurring-donation-hosted-checkout-20260527231134.json",
+      ".codex/subscription-lifecycle-frontier-20260527190045.json",
+      ".codex/commerce-mixed-cart-boundary-20260527191145.json"
     ]
   },
   {
     id: "event-operations",
     area: "events",
-    tools: ["imis_register_for_event", "imis_entity_list", "imis_entity_get", "imis_query"],
+    tools: ["imis_manage_event_registration", "imis_register_for_event", "imis_pay_open_invoice", "imis_refund_returned_order_payment", "imis_entity_list", "imis_entity_get", "imis_query"],
     canDo: [
       "Read event, function, registration, attendance, availability, cancellation eligibility, waitlist messages, and event balance source records where endpoints or IQAs are available.",
       "Use imis_member_360 events to retrieve Party registration rows, CsRegistration order/balance rows, PartyEventAvailability availability/cancel/waitlist status, and LegacyEventFunctionAttendance function rows where the tenant supports them.",
-      "Register a contact for an event through the EventRegistration _execute workflow."
+      "Preview and submit event registration through the documented EventRegistration RegisterEvent operation, with readback from EventRegistration, PartyEventAvailability, and CsRegistration.",
+      "Request native iMIS waitlisting through RegisterEvent Waitlist=true and report whether readback actually shows a waitlisted registration; if iMIS registers/overbooks instead, the tool says so.",
+      "Block repeat RegisterEvent as a change-registration method when an active registration already exists; live readback proved it can be accepted without changing the registered option/functions.",
+      "Expose linked event invoices from status readback and route open balances to imis_pay_open_invoice for the shared guarded CASH invoice-payment workflow.",
+      "Preview and submit event check-in/attendance credit by resolving the exact LegacyEventFunctionAttendance row, updating CreditUnitsEarned, and verifying readback.",
+      "Preview and submit event cancellation through the documented CancelEventRegistration operation using the required cancellation-fee provider payload.",
+      "For cancellation-fee requests, use only the native EventId/_CANCEL item, read fee readiness from Item, PartyItemPrice, and ItemPrice, and verify whether iMIS created an actual fee invoice line after cancellation.",
+      "Expose event cancellation credits and settle proven CASH refunds through imis_refund_returned_order_payment after paid cancellation readback.",
+      "Preview change-registration, waitlist-promotion, and attendee-transfer plans honestly: the MCP owns readback plus cancel/register/payment/refund legs where proven, while exact in-place itinerary changes, native Complete Registration from waitlist, and cross-contact open-credit application are native cart handoffs until source-credit selection/promotion writers are REST-proven."
     ],
     cannotDo: [
-      "Create or edit event setup, functions, pricing, capacity, waitlists, cancellations, refunds, transfers, check-in, or event microsites as full-service workflows yet.",
-      "Process event credit card payments through the API."
+      "Create or edit event setup, functions, pricing, capacity, direct REST waitlist promotion, native cancellation-fee setup/import, exact in-place itinerary changes, exact cross-contact open-credit transfers, scanner/badge kiosk check-in UX, or event microsites as full-service MCP-owned workflows yet.",
+      "Apply arbitrary cancellation-fee item ids or override a cancellation fee amount through the CancelEventRegistration payload; iMIS requires native event cancellation-fee setup.",
+      "Treat repeat RegisterEvent or direct EventRegistration PUT as a proven change-registration writer; live probes accepted those requests without changing the registration.",
+      "Process event credit card payments, original-card refunds, or exact event transfer/open-credit application through a dedicated public tool yet."
     ],
     requiresApproval: [
       "Event registration writes, cancellation/transfer/refund workflows, and any attendee data changes."
     ],
     requiresNativeHandoff: [
-      "Native event setup, pricing, capacity/waitlist, check-in, and payment workflows until verified writers exist."
+      "Native event setup, pricing, capacity/waitlist, check-in, in-place registration changes, exact open-credit transfer application, and card-payment workflows until verified writers exist."
     ],
     verificationRequired: [
-      "Read back the EventRegistration and relevant EventFunction registrations.",
+      "Read back the EventRegistration and relevant EventFunction registrations, and for cancellation verify Status=Canceled or equivalent status code.",
+      "For event balances, verify linked Invoice line items match the EventId and use imis_pay_open_invoice preview before any CASH settlement submit.",
+      "For requested cancellation fees, verify a matching EventId/_CANCEL invoice line was created; if not, report the native setup warning instead of claiming the fee was applied.",
+      "For waitlist requests, verify EventRegistration quantity/status readback before saying the contact is waitlisted.",
+      "For check-in, verify LegacyEventFunctionAttendance.CreditUnitsEarned readback for the exact function attendance row.",
+      "For paid cancellation, verify the linked event invoice credit before refund and verify the refund payment clears that credit.",
       "For event reports, verify counts through list/query output and state any required filters."
     ],
-    engineeringBasis: ["src/tools/workflow-tools.ts", ".codex/endpoint-coverage-20260521123243.json"]
+    engineeringBasis: [
+      "src/services/event-registration-lifecycle.service.ts",
+      "src/tools/workflow-tools.ts",
+      "tests/live/event-registration-lifecycle-report.ts",
+      ".codex/event-registration-lifecycle-20260528122951.json",
+      ".codex/endpoint-coverage-20260521123243.json"
+    ]
   },
   {
     id: "certification-operations",
@@ -26443,6 +26622,14 @@ var CAPABILITY_GUIDE = [
     area: "fundraising-gift-aid",
     tools: [
       "imis_process_gift",
+      "imis_submit_paycentral_gift",
+      "imis_create_pledge_installment_schedule",
+      "imis_pay_pledge_installment",
+      "imis_issue_gift_receipt",
+      "imis_adjust_receipted_gift",
+      "imis_manage_gift_receipt",
+      "imis_gift_receipt_delivery_status",
+      "imis_recurring_donation_checkout",
       "imis_gift_aid_declaration",
       "imis_gift_aid_claim",
       "imis_campaigns",
@@ -26453,12 +26640,21 @@ var CAPABILITY_GUIDE = [
       "Read campaign, appeal, source, solicitation, gift, and Gift Aid information where endpoints or IQAs are available.",
       "Read a Donor 360 view that combines donor giving, pledge schedule, Gift Aid source status, campaign/source context, and communication history.",
       "Create and post CASH gifts for fundraising GiftItemData items through GiftInformationBatch plus ImportBatch posting, with PaymentSummary readback and source-code, soft-credit, and tribute subrecords when those live records resolve.",
+      "Submit one-time non-CASH Pay Central fundraising gifts through hosted-token ComboOrder GiftOrderLineData, with invoice and PaymentSummary readback.",
+      "Prepare tenant-specific native hosted recurring-donation checkout handoff and verify completed hosted recurring enrollment through Party, AutoPayAccount, AutoPayInstruction, invoice, and PaymentSummary readback.",
+      "Create posted pledge installment schedules through ComboOrder line payment terms, then settle individual scheduled payments through the pledge installment payment tool.",
+      "Issue one-payment fundraising receipts in issue_only mode through the service-owned PaymentId IQD, or request native iMIS receipt email communication in email mode when the native Issue receipts IQA can be scoped to exactly one matching PaymentId; both modes require preview confirmation text and receipt/readback proof.",
+      "Read post-send delivery status for one gift receipt by following Receipt.AttachedToCommunicationLogRecipientId to CommunicationLogRecipient, CommunicationLogEvent, TaskActionLog, TaskLogDetail, and TaskActionLogDetail readback, including failure reasons, iMIS remediation text, and attachment/event summaries without exposing PDF content.",
+      "Adjust the gift date on a receipted fundraising gift through the native GiftAdjustmentBatch plus ImportBatch workflow, void/replaced readback on the original receipt, and optional issue-only replacement receipt creation.",
+      "Void and reissue individual gift receipts without changing the underlying gift through Receipt/_execute plus the native Reissue void receipts IQA and TaskDefinition action, with exact confirmation, replacement association, communication, and task-log readback.",
       "Create/update Gift Aid declaration panel records when the tenant-specific panel source is supplied or detected.",
       "Generate Gift Aid claim previews for review."
     ],
     cannotDo: [
       "Submit HMRC Gift Aid claims.",
-      "Create pledge installment schedules, recurring gift mandates, non-CASH gift payments, acknowledgments, or campaign/fund setup yet.",
+      "Create recurring gift mandates through direct API/GiftInformationBatch calls, own a custom card form, assume demo donor pages/sample item codes, resend the same existing receipt communication, regenerate/download receipt PDFs through a REST production path, arbitrarily edit receipted gifts, or perform campaign/fund setup yet.",
+      "Treat hosted recurring-donation checkout prepare as enrollment proof; enrollment is proven only by AutoPayAccount, AutoPayInstruction, invoice, and payment readback after the donor completes the native iMIS/Pay Central page.",
+      "Treat unposted recurring GiftInformationBatch acceptance or token-batch posting as posted recurring-gift support; recurring token posts are blocked by iMIS, and one-time token-batch posts are not payment equivalency.",
       "Use commerce product items as gift items; gift creation requires an Item record that resolves as Fundraising GiftItemData.",
       "Treat Gift Aid eligibility as final without declaration, gift, date, and taxpayer evidence."
     ],
@@ -26466,13 +26662,45 @@ var CAPABILITY_GUIDE = [
       "Gift creation, Gift Aid declaration creation/update, acknowledgments, production communications, and any donor financial write."
     ],
     requiresNativeHandoff: [
-      "HMRC submission, unsupported fundraising setup, and gateway-side recurring gift mandates."
+      "HMRC submission, unsupported fundraising setup, and hosted iMIS/Pay Central donor card entry for recurring gift mandates."
     ],
     verificationRequired: [
       "Read back the GiftInformationBatch entry before posting, then verify the posted payment through PaymentSummary by donor Party ID and reference.",
+      "For one-time Pay Central gifts, verify the caller supplies a fresh hosted SDK DataVaultPaymentIntentId and read back the new invoice plus PaymentSummary row.",
+      "For recurring hosted checkout, require a tenant-specific hosted donor URL for prepare/domain readiness and prove completion only through AutoPayAccount, AutoPayInstruction, invoice, and PaymentSummary readback.",
+      "For receipt issue_only, prove the service-owned candidate IQD is one-payment scoped, then read back Receipt and TaskActionLog. For receipt email, also prove native Issue receipts query scoping and read back Receipt.AttachedToCommunicationLogRecipientId plus CommunicationLogRecipient and TaskActionLog after TaskDefinition/_execute.",
+      "For receipt delivery status, prove Receipt readback, attached CommunicationLogRecipient readback, direct CommunicationLogEvent rows filtered by CommunicationLogRecipientId, and linked receipt TaskActionLog/TaskLogDetail/TaskActionLogDetail readback when a communication log is attached.",
+      "For receipted gift adjustment, prove GiftAdjustmentLog creation, original receipt status 2/4, and replacement receipt AssociatedReceiptId/readback when replacement issuing is requested.",
+      "For pure receipt void/reissue, prove Receipt status 2/4 on the original, exactly scoped native Reissue void receipt candidate, replacement Receipt.AssociatedReceiptId, CommunicationLogRecipient, and TaskActionLog readback.",
       "Read back declaration records and show claim previews as previews only."
     ],
-    engineeringBasis: ["src/tools/workflow-tools.ts", "src/tools/uk-tools.ts", "src/tools/communications-tools.ts", "tests/live/fundraising-gift-workflow-report.ts"]
+    engineeringBasis: [
+      "src/tools/workflow-tools.ts",
+      "src/tools/commerce-tools.ts",
+      "src/services/fundraising-pledge.service.ts",
+      "src/services/fundraising-paycentral-gift.service.ts",
+      "src/services/fundraising-receipt.service.ts",
+      "src/services/recurring-donation-hosted-checkout.service.ts",
+      "src/tools/uk-tools.ts",
+      "src/tools/communications-tools.ts",
+      "tests/live/fundraising-gift-workflow-report.ts",
+      "tests/live/fundraising-receipt-programmatic-report.ts",
+      "tests/live/fundraising-receipt-lifecycle-report.ts",
+      "tests/live/fundraising-receipt-void-reissue-report.ts",
+      "tests/live/fundraising-receipt-delivery-status-report.ts",
+      "tests/live/fundraising-recurring-gift-active-report.ts",
+      "tests/live/paycentral-sdk-checkout-report.ts",
+      "tests/live/recurring-donation-hosted-checkout-report.ts",
+      ".codex/fundraising-pledge-installment-20260527184000.json",
+      ".codex/fundraising-recurring-gift-active-20260527201146.json",
+      ".codex/fundraising-recurring-gift-active-20260527201203.json",
+      ".codex/fundraising-recurring-gift-active-20260527201547.json",
+      ".codex/fundraising-receipt-lifecycle-20260528015739.json",
+      ".codex/fundraising-receipt-void-reissue-20260528092319.json",
+      ".codex/fundraising-receipt-delivery-status-20260528102115.json",
+      ".codex/paycentral-sdk-checkout-20260527203344.json",
+      ".codex/recurring-donation-hosted-checkout-20260527231134.json"
+    ]
   },
   {
     id: "communications-operations",
@@ -26874,13 +27102,17 @@ function registerSearchTools(server, entityService, metadataService) {
         }
       }
       let descending = false;
+      let field;
       if (orderBy) {
         const parsed = parseOrderBy(orderBy);
-        params.OrderBy = parsed.field;
+        field = parsed.field;
         descending = parsed.descending;
       }
-      const result = await entityService.list(entityType, { limit, params });
-      const items = applyDescendingSort(result.items, descending);
+      const result = await fetchSortedWindow(
+        (o) => entityService.list(entityType, o),
+        { limit, params, field, descending }
+      );
+      const items = result.items;
       return {
         content: [
           {
@@ -26904,8 +27136,8 @@ function nestedObject(value) {
 }
 function collectionValues(value) {
   if (Array.isArray(value)) return value;
-  const obj = nestedObject(value);
-  return Array.isArray(obj?.$values) ? obj.$values : [];
+  const values = nestedObject(value)?.$values;
+  return Array.isArray(values) ? values : [];
 }
 function unwrapValue(value) {
   const obj = nestedObject(value);
@@ -27168,8 +27400,8 @@ function nestedObject2(value) {
 }
 function collectionValues2(value) {
   if (Array.isArray(value)) return value;
-  const obj = nestedObject2(value);
-  return Array.isArray(obj?.$values) ? obj.$values : [];
+  const values = nestedObject2(value)?.$values;
+  return Array.isArray(values) ? values : [];
 }
 function unwrapValue2(value) {
   const obj = nestedObject2(value);
@@ -27435,8 +27667,8 @@ function errorMessage4(error2) {
 }
 function collectionValues3(value) {
   if (Array.isArray(value)) return value;
-  const obj = nestedObject4(value);
-  return Array.isArray(obj?.$values) ? obj.$values : [];
+  const values = nestedObject4(value)?.$values;
+  return Array.isArray(values) ? values : [];
 }
 function uniqueStrings(values) {
   return [...new Set(values.filter((value) => Boolean(value)))];
@@ -27824,3584 +28056,336 @@ async function readEventRegistrations(entityService, partyId, limit, iqaService)
   }
 }
 
-// src/services/party-360-contract.service.ts
-function nestedObject5(value) {
+// src/services/subscription-lifecycle.service.ts
+var SUBSCRIPTION_TYPE = "Asi.Soa.Commerce.DataContracts.SubscriptionData, Asi.Contracts";
+var MONETARY_AMOUNT_TYPE = "Asi.Soa.Core.DataContracts.MonetaryAmountData, Asi.Contracts";
+var SubscriptionLifecycleService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async manage(input) {
+    const compositeId = subscriptionCompositeId(input.partyId, input.itemId);
+    const confirmationText3 = subscriptionConfirmationText(input.operation, input.partyId, input.itemId, input.invoiceId);
+    const beforeSubscription = await this.readSubscription(input.partyId, input.itemId);
+    const beforeInvoices = await this.readInvoices(input.billToPartyId ?? input.partyId);
+    const beforeInvoiceIds = new Set(beforeInvoices.items.map((invoice) => stringValue5(invoice.InvoiceId)).filter(Boolean));
+    const planned = this.buildPlan(input, compositeId, beforeSubscription);
+    const validation = planned.body ? await this.apiClient.post("Subscription/_validate", planned.body) : void 0;
+    const previewResult = {
+      version: "subscription_lifecycle.v1",
+      mode: input.mode,
+      operation: input.operation,
+      status: "preview",
+      partyId: input.partyId,
+      itemId: input.itemId,
+      confirmationText: confirmationText3,
+      before: {
+        subscription: beforeSubscription ? subscriptionSummary(beforeSubscription) : void 0,
+        invoices: beforeInvoices.items.map(invoiceSummary)
+      },
+      planned,
+      validation,
+      proof: {
+        genericMutationExposed: false,
+        readbackVerified: false,
+        invoiceReadbackVerified: false,
+        note: "Subscription lifecycle mutations are owned by this fixed workflow; generic Subscription create/update/delete remains closed."
+      }
+    };
+    if (input.mode === "preview") {
+      return previewResult;
+    }
+    if (input.confirmationText !== confirmationText3) {
+      throw new Error(`Confirmation mismatch. To submit this ${input.operation} operation, pass confirmationText="${confirmationText3}".`);
+    }
+    const result = await this.executePlan(planned);
+    let afterSubscription = await this.readSubscription(input.partyId, input.itemId);
+    let deleted = input.operation === "delete" && !afterSubscription;
+    let readbackVerified = this.readbackMatches(input.operation, afterSubscription, deleted);
+    const computeInvoiceVerified = (invoices) => {
+      const newOnes = invoices.items.filter((invoice) => {
+        const id = stringValue5(invoice.InvoiceId);
+        return id && !beforeInvoiceIds.has(id);
+      });
+      const verified = input.invoiceId ? stringValue5(afterSubscription?.InvoiceId) === input.invoiceId && invoices.items.some((invoice) => stringValue5(invoice.InvoiceId) === input.invoiceId) : input.billSubscription === true ? newOnes.length > 0 || Boolean(stringValue5(recordValue(result)?.InvoiceId)) : true;
+      return { verified, newOnes };
+    };
+    let afterInvoices = await this.readInvoices(input.billToPartyId ?? input.partyId);
+    let { verified: invoiceReadbackVerified, newOnes: newInvoices } = computeInvoiceVerified(afterInvoices);
+    if ((input.billSubscription === true || input.invoiceId) && !invoiceReadbackVerified) {
+      for (let attempt = 0; attempt < 4 && !invoiceReadbackVerified; attempt += 1) {
+        await delay(1500);
+        afterSubscription = await this.readSubscription(input.partyId, input.itemId);
+        deleted = input.operation === "delete" && !afterSubscription;
+        readbackVerified = this.readbackMatches(input.operation, afterSubscription, deleted);
+        afterInvoices = await this.readInvoices(input.billToPartyId ?? input.partyId);
+        ({ verified: invoiceReadbackVerified, newOnes: newInvoices } = computeInvoiceVerified(afterInvoices));
+      }
+    }
+    const readbackUnverified = !readbackVerified || !invoiceReadbackVerified;
+    return {
+      ...previewResult,
+      status: operationStatus(input.operation),
+      result,
+      after: {
+        subscription: afterSubscription ? subscriptionSummary(afterSubscription) : void 0,
+        invoices: afterInvoices.items.map(invoiceSummary),
+        newInvoices: newInvoices.map(invoiceSummary),
+        deleted
+      },
+      proof: {
+        genericMutationExposed: false,
+        readbackVerified,
+        invoiceReadbackVerified,
+        note: readbackUnverified ? `iMIS accepted the ${input.operation} mutation, but post-commit readback could not confirm the expected state for ${compositeId}. The mutation WAS applied \u2014 do not blindly retry; verify in iMIS before re-submitting.` : input.billSubscription === true ? input.invoiceId ? "iMIS attached the subscription to the supplied cash invoice; readback verifies both the subscription InvoiceId and Party invoice state before reporting success." : "iMIS generated the subscription invoice during Subscription POST; readback verifies Party invoice state before the workflow reports success." : "Readback verifies the Subscription composite key state after the workflow mutation."
+      }
+    };
+  }
+  buildPlan(input, compositeId, current) {
+    if (input.invoiceId && input.operation !== "create") {
+      throw new Error("invoiceId is only supported when creating a new billed subscription.");
+    }
+    if (input.invoiceId && input.billSubscription !== true) {
+      throw new Error("invoiceId requires billSubscription=true so iMIS can attach the new subscription to the existing invoice.");
+    }
+    if (input.operation === "create") {
+      if (current) {
+        throw new Error(`Subscription ${compositeId} already exists. Use update, renew, cancel, reinstate, or delete.`);
+      }
+      return {
+        method: "POST",
+        path: "Subscription",
+        compositeId,
+        body: buildCreateSubscription(input)
+      };
+    }
+    if (input.operation === "delete") {
+      if (!current) {
+        throw new Error(`Subscription ${compositeId} does not exist.`);
+      }
+      return {
+        method: "DELETE",
+        path: `Subscription/${encodeURIComponent(compositeId)}`,
+        compositeId
+      };
+    }
+    if (!current) {
+      throw new Error(`Subscription ${compositeId} does not exist.`);
+    }
+    return {
+      method: "PUT",
+      path: `Subscription/${encodeURIComponent(compositeId)}`,
+      compositeId,
+      body: buildUpdatedSubscription(input, current)
+    };
+  }
+  async executePlan(planned) {
+    if (planned.method === "POST") {
+      return this.apiClient.post(planned.path, planned.body);
+    }
+    if (planned.method === "PUT") {
+      return this.apiClient.put(planned.path, planned.body);
+    }
+    await this.apiClient.delete(planned.path);
+    return null;
+  }
+  async readSubscription(partyId, itemId) {
+    try {
+      return await this.entityService.get("Subscription", subscriptionCompositeId(partyId, itemId));
+    } catch (error2) {
+      if (error2 instanceof ImisNotFoundError || /not found|404/i.test(error2 instanceof Error ? error2.message : String(error2))) {
+        return void 0;
+      }
+      throw error2;
+    }
+  }
+  async readInvoices(partyId) {
+    try {
+      return await this.entityService.list("InvoiceSummary", {
+        limit: 50,
+        params: { BillToPartyId: partyId }
+      });
+    } catch {
+      return { items: [], totalCount: 0 };
+    }
+  }
+  readbackMatches(operation, subscription, deleted) {
+    if (operation === "delete") return deleted;
+    if (!subscription) return false;
+    if (operation === "cancel") return numberValue3(subscription.Status) === 1;
+    if (operation === "reinstate") return numberValue3(subscription.Status) !== 1;
+    return true;
+  }
+};
+function buildCreateSubscription(input) {
+  const dates = subscriptionDates(input);
+  const body = {
+    $type: SUBSCRIPTION_TYPE,
+    PartyId: input.partyId,
+    ItemId: input.itemId,
+    IsMemberComponent: input.isMemberComponent ?? false,
+    BillSubscription: input.billSubscription ?? false,
+    BeginDate: dates.beginDate,
+    BillBegin: dates.billBegin,
+    BillThrough: dates.billThrough,
+    PaidThrough: dates.paidThrough,
+    Copies: input.copies ?? 1,
+    BillToPartyId: input.billToPartyId ?? input.partyId
+  };
+  if (input.sourceCode) body.SourceCode = input.sourceCode;
+  if (input.isComplimentary !== void 0) body.IsComplimentary = input.isComplimentary;
+  if (input.billedAmount !== void 0) body.BilledAmount = monetaryAmount(input.billedAmount);
+  if (input.invoiceId) body.InvoiceId = input.invoiceId;
+  if (input.adjustmentReason) body.AdjustmentReason = input.adjustmentReason;
+  return body;
+}
+function buildUpdatedSubscription(input, current) {
+  const body = {
+    ...current,
+    $type: SUBSCRIPTION_TYPE,
+    PartyId: input.partyId,
+    ItemId: input.itemId
+  };
+  if (input.operation === "cancel") {
+    body.Status = 1;
+    body.AdjustmentReason = input.adjustmentReason ?? "Cancelled through iFINITY MCP subscription lifecycle workflow";
+    return body;
+  }
+  if (input.operation === "reinstate") {
+    delete body.Status;
+    body.AdjustmentReason = input.adjustmentReason ?? "Reinstated through iFINITY MCP subscription lifecycle workflow";
+    return body;
+  }
+  const dates = subscriptionDates(input);
+  body.BeginDate = input.beginDate ? dates.beginDate : body.BeginDate;
+  body.BillBegin = input.billBegin || input.operation === "renew" ? dates.billBegin : body.BillBegin;
+  body.BillThrough = input.billThrough || input.operation === "renew" ? dates.billThrough : body.BillThrough;
+  body.PaidThrough = input.paidThrough || input.operation === "renew" ? dates.paidThrough : body.PaidThrough;
+  if (input.billSubscription !== void 0) body.BillSubscription = input.billSubscription;
+  if (input.copies !== void 0) body.Copies = input.copies;
+  if (input.billToPartyId) body.BillToPartyId = input.billToPartyId;
+  if (input.sourceCode !== void 0) body.SourceCode = input.sourceCode;
+  if (input.isMemberComponent !== void 0) body.IsMemberComponent = input.isMemberComponent;
+  if (input.isComplimentary !== void 0) body.IsComplimentary = input.isComplimentary;
+  if (input.billedAmount !== void 0) body.BilledAmount = monetaryAmount(input.billedAmount);
+  if (input.adjustmentReason) body.AdjustmentReason = input.adjustmentReason;
+  return body;
+}
+function subscriptionDates(input) {
+  const beginDate = normalizeDate(input.beginDate ?? input.billBegin ?? todayIsoDate());
+  const billBegin = normalizeDate(input.billBegin ?? beginDate);
+  const billThrough = normalizeDate(input.billThrough ?? input.paidThrough ?? oneYearLessOneDay(billBegin));
+  const paidThrough = normalizeDate(input.paidThrough ?? billThrough);
+  return { beginDate, billBegin, billThrough, paidThrough };
+}
+function subscriptionConfirmationText(operation, partyId, itemId, invoiceId) {
+  const base = `MANAGE SUBSCRIPTION ${operation.toUpperCase()} PARTY ${partyId} ITEM ${itemId}`;
+  return invoiceId ? `${base} INVOICE ${invoiceId}` : base;
+}
+function subscriptionCompositeId(partyId, itemId) {
+  return `~${partyId}|${itemId}`;
+}
+function operationStatus(operation) {
+  switch (operation) {
+    case "create":
+      return "created";
+    case "update":
+      return "updated";
+    case "renew":
+      return "renewed";
+    case "cancel":
+      return "cancelled";
+    case "reinstate":
+      return "reinstated";
+    case "delete":
+      return "deleted";
+  }
+}
+function monetaryAmount(amount) {
+  return {
+    $type: MONETARY_AMOUNT_TYPE,
+    // Round to 2dp so a computed float (e.g. 0.1 + 0.2) is not persisted as BilledAmount
+    // 0.30000000000000004, which breaks downstream invoicing/reconciliation equality checks.
+    Amount: Number(amount.toFixed(2))
+  };
+}
+function normalizeDate(value) {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return `${value}T00:00:00`;
+  return value;
+}
+function todayIsoDate() {
+  return (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+}
+function delay(ms) {
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
+}
+function oneYearLessOneDay(value) {
+  const match = normalizeDate(value).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!match) {
+    throw new Error(`Cannot derive a billing date from "${value}".`);
+  }
+  const [, year, month, day] = match;
+  const date3 = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+  date3.setUTCFullYear(date3.getUTCFullYear() + 1);
+  date3.setUTCDate(date3.getUTCDate() - 1);
+  return `${date3.toISOString().slice(0, 10)}T00:00:00`;
+}
+function recordValue(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
 }
-function collectionValues4(value) {
-  if (Array.isArray(value)) return value;
-  const obj = nestedObject5(value);
-  return Array.isArray(obj?.$values) ? obj.$values : [];
-}
-function unwrapValue5(value) {
-  const obj = nestedObject5(value);
-  return obj && "$value" in obj ? obj.$value : value;
-}
 function stringValue5(value) {
-  const unwrapped = unwrapValue5(value);
+  const unwrapped = recordValue(value)?.$value ?? value;
   if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
   if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
-  return void 0;
-}
-function booleanValue2(value) {
-  const unwrapped = unwrapValue5(value);
-  if (typeof unwrapped === "boolean") return unwrapped;
-  if (typeof unwrapped === "string") {
-    if (unwrapped.toLowerCase() === "true") return true;
-    if (unwrapped.toLowerCase() === "false") return false;
-  }
   return void 0;
 }
 function numberValue3(value) {
-  const unwrapped = unwrapValue5(value);
-  if (typeof unwrapped === "number" && Number.isFinite(unwrapped)) return unwrapped;
-  if (typeof unwrapped === "string" && unwrapped.trim()) {
-    const parsed = Number(unwrapped);
-    return Number.isFinite(parsed) ? parsed : 0;
-  }
-  return 0;
-}
-function itemsFromList(value) {
-  const obj = nestedObject5(value);
-  const items = Array.isArray(obj?.items) ? obj.items : [];
-  return items.filter((item) => !!item && typeof item === "object" && !Array.isArray(item));
-}
-function countFromList(value) {
-  const obj = nestedObject5(value);
-  if (!obj) return 0;
-  const count = numberValue3(obj.count);
-  if (count > 0) return count;
-  return itemsFromList(value).length;
-}
-function totalCountFromList(value) {
-  const obj = nestedObject5(value);
-  if (!obj || obj.totalCount === void 0) return void 0;
-  return numberValue3(obj.totalCount);
-}
-function recordsFromArray(value) {
-  return Array.isArray(value) ? value.filter((item) => !!item && typeof item === "object" && !Array.isArray(item)) : [];
-}
-function additionalAttribute(record2, name) {
-  for (const entry of collectionValues4(record2.AdditionalAttributes)) {
-    const attr = nestedObject5(entry);
-    if (attr && stringValue5(attr.Name) === name) return attr.Value;
-  }
+  const unwrapped = recordValue(value)?.$value ?? value;
+  if (typeof unwrapped === "number") return unwrapped;
+  if (typeof unwrapped === "string" && unwrapped.trim()) return Number(unwrapped);
   return void 0;
 }
-function genericPropertyEntries(record2) {
-  const entries = [];
-  for (const entry of collectionValues4(record2.Properties)) {
-    const property = nestedObject5(entry);
-    const name = property ? stringValue5(property.Name) : void 0;
-    if (property && name) entries.push({ name, value: property.Value });
-  }
-  return entries;
+function moneyValue(value) {
+  const record2 = recordValue(value);
+  const amount = record2?.Amount ?? record2?.$value ?? value;
+  if (typeof amount === "number") return amount;
+  if (typeof amount === "string" && amount.trim()) return Number(amount);
+  return void 0;
 }
-function genericPropertyEntry(record2, name) {
-  const lowerName = name.toLowerCase();
-  return genericPropertyEntries(record2).find((entry) => entry.name.toLowerCase() === lowerName);
-}
-function identityElementValues(record2, field) {
-  const identity = nestedObject5(record2[field]);
-  const values = collectionValues4(identity?.IdentityElements).map((value) => stringValue5(value)).filter((value) => Boolean(value));
-  return [...new Set(values)];
-}
-function partyUniformKey(payload) {
-  const contact = nestedObject5(payload.contact);
-  const relationships = nestedObject5(payload.relationships);
-  const engagement = nestedObject5(payload.engagement);
-  const nativeScoreResults = nestedObject5(engagement?.nativeScoreResults);
-  return stringValue5(contact?.UniformId) ?? stringValue5(contact?.UniformKey) ?? stringValue5(contact?.PartyUniformKey) ?? stringValue5(contact?.ContactKey) ?? stringValue5(relationships?.uniformKey) ?? stringValue5(nativeScoreResults?.contactKey) ?? (contact ? stringValue5(additionalAttribute(contact, "UniformId")) : void 0) ?? (contact ? stringValue5(additionalAttribute(contact, "UniformKey")) : void 0);
-}
-function partyName(record2) {
-  if (!record2) return void 0;
-  const personName = nestedObject5(record2.PersonName);
-  const composed = [stringValue5(personName?.FirstName), stringValue5(personName?.LastName)].filter(Boolean).join(" ");
-  return stringValue5(record2.Name) ?? stringValue5(record2.FullName) ?? stringValue5(personName?.FullName) ?? stringValue5(composed) ?? stringValue5(record2.Sort);
-}
-function firstEmail(record2) {
-  if (!record2) return void 0;
-  const direct = stringValue5(record2.Email);
-  if (direct) return direct;
-  const emails = collectionValues4(record2.Emails).map((entry) => nestedObject5(entry)).filter((entry) => Boolean(entry));
-  const primary = emails.find((entry) => booleanValue2(entry.IsPrimary));
-  return stringValue5(primary?.Address) ?? stringValue5(emails[0]?.Address);
-}
-function firstPhone(record2) {
-  if (!record2) return void 0;
-  const direct = stringValue5(record2.Phone);
-  if (direct) return direct;
-  const phones = collectionValues4(record2.Phones).map((entry) => nestedObject5(entry)).filter((entry) => Boolean(entry));
-  return stringValue5(phones[0]?.Number);
-}
-function isActiveSubscription(record2, now = /* @__PURE__ */ new Date()) {
-  const status = stringValue5(record2.Status)?.toLowerCase();
-  if (status === "a" || status === "active") return true;
-  const paidThrough = stringValue5(record2.PaidThrough) ?? stringValue5(record2.PaidThru) ?? stringValue5(record2.PaidThruDate);
-  if (!paidThrough || paidThrough.startsWith("0001-01-01")) return false;
-  const date3 = new Date(paidThrough);
-  return Number.isFinite(date3.valueOf()) && date3 > now;
-}
-function monetaryAmount(record2, ...fieldNames) {
-  for (const fieldName of fieldNames) {
-    const value = record2[fieldName];
-    const amount = numberValue3(nestedObject5(value)?.Amount ?? value);
-    if (amount !== 0) return amount;
-  }
-  return 0;
-}
-function maxDate(records, ...fieldNames) {
-  const dates = records.flatMap((record2) => fieldNames.map((field) => stringValue5(record2[field]))).filter((value) => Boolean(value) && !value.startsWith("0001-01-01")).sort();
-  return dates.at(-1);
-}
-function statusSummary(evidence) {
-  return evidence.reduce((counts, section) => {
-    counts[section.status] = (counts[section.status] ?? 0) + 1;
-    return counts;
-  }, {});
-}
-function summarizeIdentity(payload) {
-  const contact = nestedObject5(payload.contact);
-  const primaryOrg = nestedObject5(contact?.PrimaryOrganization);
-  const status = nestedObject5(contact?.Status);
+function subscriptionSummary(row) {
   return {
-    partyId: stringValue5(contact?.PartyId) ?? stringValue5(payload.partyId),
-    id: stringValue5(contact?.Id),
-    name: partyName(contact),
-    sortName: stringValue5(contact?.Sort),
-    email: firstEmail(contact),
-    phone: firstPhone(contact),
-    customerTypeCode: stringValue5(contact?.CustomerTypeCode) ?? (contact ? stringValue5(additionalAttribute(contact, "CustomerTypeCode")) : void 0),
-    customerTypeDescription: stringValue5(contact?.CustomerTypeDescription) ?? (contact ? stringValue5(additionalAttribute(contact, "CustomerTypeDescription")) : void 0),
-    isMember: booleanValue2(contact?.IsMember) ?? (contact ? booleanValue2(additionalAttribute(contact, "IsMember")) : void 0),
-    status: stringValue5(status?.Name) ?? stringValue5(status?.PartyStatusId) ?? stringValue5(contact?.Status),
-    primaryOrganizationName: stringValue5(primaryOrg?.Name),
-    primaryOrganizationPartyId: stringValue5(primaryOrg?.OrganizationPartyId)
+    partyId: stringValue5(row.PartyId),
+    itemId: stringValue5(row.ItemId),
+    productType: stringValue5(row.ProductType),
+    status: numberValue3(row.Status),
+    billBegin: stringValue5(row.BillBegin),
+    billThrough: stringValue5(row.BillThrough),
+    paidThrough: stringValue5(row.PaidThrough),
+    invoiceId: stringValue5(row.InvoiceId),
+    billedAmount: moneyValue(row.BilledAmount),
+    balance: moneyValue(row.Balance),
+    billSubscription: row.BillSubscription,
+    sourceCode: stringValue5(row.SourceCode),
+    adjustmentReason: stringValue5(row.AdjustmentReason),
+    updatedBy: stringValue5(row.UpdatedBy),
+    lastUpdated: stringValue5(row.LastUpdated)
   };
 }
-function summarizeMembership(payload) {
-  const subscriptions = itemsFromList(payload.subscriptions);
-  const active = subscriptions.filter((subscription) => isActiveSubscription(subscription));
+function invoiceSummary(row) {
   return {
-    subscriptionCount: subscriptions.length,
-    subscriptionTotalCount: totalCountFromList(payload.subscriptions),
-    activeSubscriptionCount: active.length,
-    paidThroughDate: maxDate(subscriptions, "PaidThrough", "PaidThru", "PaidThruDate")
-  };
-}
-function summarizeFinance(payload) {
-  const invoices = itemsFromList(payload.invoices);
-  const payments = itemsFromList(payload.payments);
-  const orders = itemsFromList(payload.orders);
-  const orderLines = itemsFromList(payload.orderLines);
-  const paymentApplications = itemsFromList(payload.paymentApplications);
-  return {
-    invoiceCount: invoices.length,
-    invoiceTotalCount: totalCountFromList(payload.invoices),
-    paymentCount: payments.length,
-    paymentTotalCount: totalCountFromList(payload.payments),
-    orderCount: orders.length,
-    orderTotalCount: totalCountFromList(payload.orders),
-    orderLineCount: orderLines.length,
-    orderLineTotalCount: totalCountFromList(payload.orderLines),
-    paymentApplicationCount: paymentApplications.length,
-    paymentApplicationTotalCount: totalCountFromList(payload.paymentApplications),
-    outstandingBalance: invoices.reduce((sum, invoice) => sum + monetaryAmount(invoice, "Balance"), 0),
-    totalPaidInWindow: payments.reduce((sum, payment) => sum + monetaryAmount(payment, "Amount", "PaymentAmount"), 0),
-    totalOrderCharges: orders.reduce((sum, order) => sum + monetaryAmount(order, "TotalCharges", "LINE_TOTAL"), 0),
-    totalOrderBalance: orders.reduce((sum, order) => sum + monetaryAmount(order, "Balance"), 0)
-  };
-}
-function summarizeEvents(payload) {
-  const events = nestedObject5(payload.events);
-  const financialSummary = nestedObject5(events?.financialSummary);
-  const attendance = nestedObject5(events?.functionAttendance);
-  const availability = nestedObject5(events?.availability);
-  return {
-    source: stringValue5(events?.source),
-    registrationCount: numberValue3(events?.count),
-    registrationTotalCount: numberValue3(events?.totalCount),
-    eventIds: Array.isArray(events?.eventIds) ? events?.eventIds : [],
-    orderRowCount: countFromList(events?.orderRows),
-    functionAttendanceCount: numberValue3(attendance?.count),
-    availabilityCount: numberValue3(availability?.count),
-    totalCharges: numberValue3(financialSummary?.totalCharges),
-    totalPayments: numberValue3(financialSummary?.totalPayments),
-    balance: numberValue3(financialSummary?.balance),
-    waitlistedCount: numberValue3(financialSummary?.waitlistedCount),
-    registeredCount: numberValue3(financialSummary?.registeredCount)
-  };
-}
-function summarizeSimpleCount(payload, field) {
-  return {
-    count: countFromList(payload[field]),
-    totalCount: totalCountFromList(payload[field])
-  };
-}
-function summarizeAutoPay(payload) {
-  const autoPay = nestedObject5(payload.autoPay);
-  return {
-    accountCount: countFromList(autoPay?.accounts),
-    instructionCount: countFromList(autoPay?.instructions),
-    scheduledPaymentCount: countFromList(autoPay?.scheduledPayments)
-  };
-}
-function summarizeCertification(payload) {
-  const certification = nestedObject5(payload.certification);
-  return {
-    enrollmentCount: numberValue3(certification?.count)
-  };
-}
-function summarizeCommunications(payload) {
-  const communications = nestedObject5(payload.communications);
-  const history = nestedObject5(communications?.history);
-  const preferences = nestedObject5(communications?.preferences);
-  return {
-    historySource: stringValue5(history?.source),
-    historyCount: numberValue3(history?.count),
-    historyTotalCount: numberValue3(history?.totalCount),
-    emailPreferenceCount: numberValue3(nestedObject5(preferences?.emails)?.count),
-    communicationTypePreferenceCount: numberValue3(nestedObject5(preferences?.communicationTypePreferences)?.count)
-  };
-}
-function summarizeForms(payload) {
-  const forms = nestedObject5(payload.forms);
-  return {
-    source: stringValue5(forms?.source),
-    responseCount: numberValue3(forms?.count),
-    responseTotalCount: numberValue3(forms?.totalCount)
-  };
-}
-function summarizeCustomData(payload) {
-  const customPanels = nestedObject5(payload.customPanels);
-  return {
-    panelDefinitionCount: numberValue3(nestedObject5(customPanels?.panelDefinitions)?.count),
-    panelSourceCount: Array.isArray(customPanels?.panelSources) ? customPanels.panelSources.length : 0,
-    recordCount: numberValue3(customPanels?.count)
-  };
-}
-function summarizeDataQuality(payload) {
-  const duplicates = nestedObject5(payload.duplicates);
-  return {
-    flaggedDuplicateCount: numberValue3(duplicates?.flaggedCount),
-    mergeAction: stringValue5(duplicates?.mergeAction)
-  };
-}
-function summarizeEngagement(payload) {
-  const engagement = nestedObject5(payload.engagement);
-  const nativeScoreResults = nestedObject5(engagement?.nativeScoreResults);
-  return {
-    scoreDefinitionCount: numberValue3(nestedObject5(engagement?.scoreDefinitions)?.count),
-    nativeScoreSource: stringValue5(nativeScoreResults?.source),
-    nativeScoreResultCount: numberValue3(nativeScoreResults?.count),
-    activityCount: numberValue3(nestedObject5(engagement?.recentActivity)?.count),
-    groupMembershipCount: numberValue3(nestedObject5(engagement?.groupMemberships)?.count),
-    activeSubscriptionCount: numberValue3(nestedObject5(engagement?.subscriptions)?.activeCount)
-  };
-}
-function summarizeSecurity(payload) {
-  const loginSecurity = nestedObject5(payload.loginSecurity);
-  return {
-    canLogin: booleanValue2(loginSecurity?.canLogin),
-    hasCredentials: booleanValue2(loginSecurity?.hasCredentials),
-    username: stringValue5(loginSecurity?.username)
-  };
-}
-var IDENTIFIER_FIELD_HINTS = [
-  "PartyId",
-  "Id",
-  "ID",
-  "UniformId",
-  "ContactKey",
-  "InvoiceId",
-  "InvoiceNumber",
-  "PaymentId",
-  "PaymentReference",
-  "PaymentApplicationId",
-  "GroupId",
-  "RelationshipKey",
-  "TransactionNumber",
-  "OriginalTransaction",
-  "OrderNumber",
-  "LineNumber",
-  "InvoiceReferenceNumber",
-  "EventId",
-  "EventKey",
-  "RegistrationId",
-  "CommunicationLogRecipientId",
-  "FormResponseId",
-  "ResponseId",
-  "UserId",
-  "Username",
-  "AutoPayAccountId",
-  "AutoPayInstructionId",
-  "ScheduledPaymentId",
-  "CertificationProgramRegistrationId",
-  "EngagementScoreId",
-  "ScoreId"
-];
-function identifierFields(record2) {
-  const identifiers = [];
-  const add = (field, value) => {
-    const stringified = stringValue5(value);
-    if (!stringified || identifiers.some((identifier) => identifier.field.toLowerCase() === field.toLowerCase() && identifier.value === stringified)) return;
-    identifiers.push({ field, value: stringified });
-  };
-  for (const field of IDENTIFIER_FIELD_HINTS) {
-    const property = genericPropertyEntry(record2, field);
-    add(property?.name ?? field, record2[field] ?? property?.value);
-  }
-  for (const value of identityElementValues(record2, "Identity")) add("Identity.IdentityElements", value);
-  for (const [field, value] of Object.entries(record2)) {
-    if (identifiers.length >= 8) break;
-    if (field.endsWith("Id") || field.endsWith("ID") || field.endsWith("Key") || field.endsWith("Number")) {
-      add(field, value);
-    }
-  }
-  for (const { name, value } of genericPropertyEntries(record2)) {
-    if (identifiers.length >= 8) break;
-    if (name.endsWith("Id") || name.endsWith("ID") || name.endsWith("Key") || name.endsWith("Number")) {
-      add(name, value);
-    }
-  }
-  return identifiers.slice(0, 8);
-}
-function partyLinksFromValue(value, path3, partyKeys, links, depth) {
-  const add = (key, expected) => {
-    const actual = stringValue5(value);
-    if (!expected || actual !== expected) return;
-    if (links.some((link) => link.field === path3 && link.key === key && link.value === actual)) return;
-    links.push({ field: path3, key, value: actual });
-  };
-  add("partyId", partyKeys.partyId);
-  add("uniformKey", partyKeys.uniformKey);
-  const obj = nestedObject5(value);
-  if (!obj || depth >= 2) return;
-  for (const [field, nested] of Object.entries(obj)) {
-    partyLinksFromValue(nested, `${path3}.${field}`, partyKeys, links, depth + 1);
-  }
-}
-function partyLinks(record2, partyKeys) {
-  const links = [];
-  for (const [field, value] of Object.entries(record2)) {
-    partyLinksFromValue(value, field, partyKeys, links, 0);
-  }
-  for (const { name, value } of genericPropertyEntries(record2)) {
-    partyLinksFromValue(value, `Properties.${name}`, partyKeys, links, 0);
-  }
-  for (const value of identityElementValues(record2, "PrimaryParentIdentity")) {
-    partyLinksFromValue(value, "PrimaryParentIdentity.IdentityElements", partyKeys, links, 0);
-  }
-  return links.slice(0, 8);
-}
-function recordGroup(source, records) {
-  return records.length > 0 ? [{ source, records }] : [];
-}
-function sectionRecordGroups(key, payload) {
-  const events = nestedObject5(payload.events);
-  const autoPay = nestedObject5(payload.autoPay);
-  const certification = nestedObject5(payload.certification);
-  const communications = nestedObject5(payload.communications);
-  const communicationHistory = nestedObject5(communications?.history);
-  const forms = nestedObject5(payload.forms);
-  const customPanels = nestedObject5(payload.customPanels);
-  const duplicates = nestedObject5(payload.duplicates);
-  const engagement = nestedObject5(payload.engagement);
-  const nativeScoreResults = nestedObject5(engagement?.nativeScoreResults);
-  const loginSecurity = nestedObject5(payload.loginSecurity);
-  const userSecurity = nestedObject5(loginSecurity?.userSecurity);
-  switch (key) {
-    case "identity":
-      return recordGroup("Party", recordsFromArray(nestedObject5(payload.contact) ? [payload.contact] : []));
-    case "membership":
-      return recordGroup("Subscription", itemsFromList(payload.subscriptions));
-    case "finance":
-      return [
-        ...recordGroup("InvoiceSummary", itemsFromList(payload.invoices)),
-        ...recordGroup("PaymentSummary", itemsFromList(payload.payments)),
-        ...recordGroup("CsOrders", itemsFromList(payload.orders)),
-        ...recordGroup("CsOrderLines", itemsFromList(payload.orderLines)),
-        ...recordGroup("PaymentApplication", itemsFromList(payload.paymentApplications))
-      ];
-    case "groups":
-      return recordGroup("GroupMember", itemsFromList(payload.groups));
-    case "activity":
-      return recordGroup("ContactInteraction", itemsFromList(payload.activities));
-    case "relationships":
-      return recordGroup("Relationship", itemsFromList(payload.relationships));
-    case "giving":
-      return recordGroup(stringValue5(nestedObject5(payload.gifts)?.source) ?? "Gift", itemsFromList(payload.gifts));
-    case "events":
-      return [
-        ...recordGroup(stringValue5(events?.source) ?? "EventRegistrantsReport", recordsFromArray(events?.registrations)),
-        ...recordGroup("CsRegistration", itemsFromList(events?.orderRows)),
-        ...recordGroup("LegacyEventFunctionAttendance", itemsFromList(nestedObject5(events?.functionAttendance))),
-        ...recordGroup("PartyEventAvailability", itemsFromList(nestedObject5(events?.availability)))
-      ];
-    case "security":
-      return recordGroup("UserSecurity", userSecurity ? [userSecurity] : []);
-    case "autoPay":
-      return [
-        ...recordGroup("AutoPayAccount", itemsFromList(nestedObject5(autoPay?.accounts))),
-        ...recordGroup("AutoPayInstruction", itemsFromList(nestedObject5(autoPay?.instructions))),
-        ...recordGroup("ScheduledPayment", itemsFromList(nestedObject5(autoPay?.scheduledPayments)))
-      ];
-    case "certification":
-      return recordGroup("CertificationProgramRegistration", recordsFromArray(certification?.enrollments));
-    case "communications":
-      return [
-        ...recordGroup("Party", recordsFromArray(nestedObject5(communications?.preferences) ? [communications?.preferences] : [])),
-        ...recordGroup(stringValue5(communicationHistory?.source) ?? "CommunicationLogRecipient", recordsFromArray(communicationHistory?.communications))
-      ];
-    case "forms":
-      return recordGroup(stringValue5(forms?.source) ?? "FormResponse", recordsFromArray(forms?.responses));
-    case "customData":
-      return recordsFromArray(customPanels?.recordsBySource).flatMap((entry) => {
-        const source = stringValue5(entry.panelSource) ?? "PanelSource";
-        return recordGroup(source, recordsFromArray(entry.records));
-      });
-    case "dataQuality":
-      return recordGroup("PartyDuplicate", recordsFromArray(duplicates?.flaggedDuplicates));
-    case "engagement":
-      return [
-        ...recordGroup("EngagementScore", itemsFromList(nestedObject5(engagement?.scoreDefinitions))),
-        ...recordGroup(stringValue5(nativeScoreResults?.source) ?? "EngagementScoreResult", recordsFromArray(nativeScoreResults?.scoreResults)),
-        ...recordGroup("ContactInteraction", recordsFromArray(nestedObject5(engagement?.recentActivity)?.interactions)),
-        ...recordGroup("GroupMember", recordsFromArray(nestedObject5(engagement?.groupMemberships)?.groups)),
-        ...recordGroup("Subscription", itemsFromList(nestedObject5(engagement?.subscriptions)))
-      ];
-    case "staffProfileParity":
-      return [];
-  }
-}
-function buildRecordMap(key, payload, evidence) {
-  const partyKeys = {
-    partyId: stringValue5(payload.partyId) ?? "",
-    uniformKey: partyUniformKey(payload)
-  };
-  const sourceFilters = (evidence?.sources ?? []).map((source) => ({
-    source: source.source,
-    status: source.status,
-    filters: source.filters,
-    count: source.count,
-    totalCount: source.totalCount
-  }));
-  const groups = sectionRecordGroups(key, payload);
-  const allRecords = groups.flatMap(
-    (group) => group.records.map((record2) => ({
-      source: group.source,
-      identifiers: identifierFields(record2),
-      partyLinks: partyLinks(record2, partyKeys)
-    }))
-  );
-  return {
-    partyKeys,
-    sourceFilters,
-    records: allRecords.slice(0, 25),
-    recordCount: allRecords.length,
-    truncated: allRecords.length > 25
-  };
-}
-function createSection(spec, payload, evidenceBySection) {
-  const evidence = evidenceBySection.get(spec.sourceSection);
-  return {
-    status: evidence?.status ?? "not_implemented",
-    summary: spec.summarize(payload),
-    data: spec.data(payload),
-    sources: evidence?.sources ?? [],
-    recordMap: buildRecordMap(spec.key, payload, evidence),
-    reason: evidence?.reason,
-    nativeHandoff: evidence?.nativeHandoff
-  };
-}
-function buildParty360Contract(input) {
-  const evidenceBySection = new Map(input.evidence.map((section) => [section.section, section]));
-  const specs = [
-    { key: "identity", sourceSection: "contact", data: (payload) => payload.contact, summarize: summarizeIdentity },
-    { key: "membership", sourceSection: "billing", data: (payload) => payload.subscriptions, summarize: summarizeMembership },
-    { key: "finance", sourceSection: "billing", data: (payload) => ({ invoices: payload.invoices, payments: payload.payments, orders: payload.orders, orderLines: payload.orderLines, paymentApplications: payload.paymentApplications }), summarize: summarizeFinance },
-    { key: "groups", sourceSection: "groups", data: (payload) => payload.groups, summarize: (payload) => summarizeSimpleCount(payload, "groups") },
-    { key: "activity", sourceSection: "activity", data: (payload) => payload.activities, summarize: (payload) => summarizeSimpleCount(payload, "activities") },
-    { key: "relationships", sourceSection: "relationships", data: (payload) => payload.relationships, summarize: (payload) => summarizeSimpleCount(payload, "relationships") },
-    { key: "giving", sourceSection: "giving", data: (payload) => payload.gifts, summarize: (payload) => summarizeSimpleCount(payload, "gifts") },
-    { key: "events", sourceSection: "events", data: (payload) => payload.events, summarize: summarizeEvents },
-    { key: "security", sourceSection: "loginSecurity", data: (payload) => payload.loginSecurity, summarize: summarizeSecurity },
-    { key: "autoPay", sourceSection: "autoPay", data: (payload) => payload.autoPay, summarize: summarizeAutoPay },
-    { key: "certification", sourceSection: "certification", data: (payload) => payload.certification, summarize: summarizeCertification },
-    { key: "communications", sourceSection: "communications", data: (payload) => payload.communications, summarize: summarizeCommunications },
-    { key: "forms", sourceSection: "forms", data: (payload) => payload.forms, summarize: summarizeForms },
-    { key: "customData", sourceSection: "customPanels", data: (payload) => payload.customPanels, summarize: summarizeCustomData },
-    { key: "dataQuality", sourceSection: "duplicates", data: (payload) => payload.duplicates, summarize: summarizeDataQuality },
-    { key: "engagement", sourceSection: "engagement", data: (payload) => payload.engagement, summarize: summarizeEngagement },
-    { key: "staffProfileParity", sourceSection: "staffProfileParity", data: () => void 0, summarize: () => ({ nativeProof: "not_proven" }) }
-  ];
-  const sections = Object.fromEntries(
-    specs.map((spec) => [spec.key, createSection(spec, input.payload, evidenceBySection)])
-  );
-  return {
-    version: "party360.v1",
-    partyId: input.partyId,
-    generatedAt: (input.generatedAt ?? /* @__PURE__ */ new Date()).toISOString(),
-    requestedSections: input.requestedSections,
-    defaultSections: input.defaultSections,
-    currentSections: input.currentSections,
-    sections,
-    evidence: {
-      summary: statusSummary(input.evidence)
-    }
+    invoiceId: stringValue5(row.InvoiceId),
+    invoiceNumber: stringValue5(row.InvoiceNumber),
+    billToPartyId: stringValue5(row.BillToPartyId),
+    sourceSystem: stringValue5(row.SourceSystem),
+    invoiceAmount: moneyValue(row.InvoiceAmount ?? row.OriginalInvoiceAmount ?? row.UndiscountedTotal),
+    balance: moneyValue(row.Balance),
+    date: stringValue5(row.InvoiceDate ?? row.Date)
   };
 }
 
-// src/tools/workflow-tools.ts
-var PARTY_360_CURRENT_SECTIONS = [
-  "contact",
-  "billing",
-  "groups",
-  "activity",
-  "relationships",
-  "giving",
-  "events",
-  "loginSecurity",
-  "autoPay",
-  "certification",
-  "duplicates",
-  "engagement"
-];
-var PARTY_360_REQUESTABLE_SECTIONS = [
-  ...PARTY_360_CURRENT_SECTIONS,
-  "communications",
-  "forms",
-  "customPanels"
-];
-var PARTY_360_FRONTIER_SECTIONS = [
-  {
-    section: "staffProfileParity",
-    status: "native_handoff_required",
-    sources: [],
-    nativeHandoff: "Open the native iMIS contact profile and compare visible staff sections against the API-backed 360 response.",
-    reason: "Native staff-view parity requires browser/native observation and cannot be inferred from REST reads alone."
-  }
-];
-var ORGANIZATION_360_CURRENT_SECTIONS = [
-  "profile",
-  "roster",
-  "relationships",
-  "finance",
-  "groups",
-  "dataQuality"
-];
-var DONOR_360_CURRENT_SECTIONS = [
-  "profile",
-  "giving",
-  "pledges",
-  "giftAid",
-  "campaigns",
-  "communications"
-];
-var GIFT_INFORMATION_BATCH_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftInformationBatchData, Asi.Contracts";
-var GIFT_INFORMATION_DATA_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftInformationData, Asi.Contracts";
-var GIFT_INFORMATION_COLLECTION_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftInformationDataCollection, Asi.Contracts";
-var IMPORT_BATCH_POST_REQUEST_TYPE = "Asi.Soa.Core.DataContracts.ImportBatchPostRequest, Asi.Contracts";
-var MONETARY_AMOUNT_TYPE = "Asi.Soa.Core.DataContracts.MonetaryAmountData, Asi.Contracts";
-var REMITTANCE_TYPE = "Asi.Soa.Commerce.DataContracts.RemittanceData, Asi.Contracts";
-var PAYMENT_METHOD_TYPE = "Asi.Soa.Commerce.DataContracts.PaymentMethodData, Asi.Contracts";
-var GIFT_AID_INFORMATION_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftAidInformationData, Asi.Contracts";
-var TRIBUTE_INFORMATION_TYPE = "Asi.Soa.Fundraising.DataContracts.TributeInformationData, Asi.Contracts";
-var TRIBUTE_INFORMATION_COLLECTION_TYPE = "Asi.Soa.Fundraising.DataContracts.TributeInformationDataCollection, Asi.Contracts";
-var SOFT_CREDIT_ALLOCATION_TYPE = "Asi.Soa.Commerce.DataContracts.SoftCreditAllocationData, Asi.Contracts";
-var SOFT_CREDIT_ALLOCATION_COLLECTION_TYPE = "Asi.Soa.Commerce.DataContracts.SoftCreditAllocationDetailsDataCollection, Asi.Contracts";
-var SOFT_CREDIT_ALLOCATION_DETAIL_TYPE = "Asi.Soa.Commerce.DataContracts.SoftCreditAllocationDetailData, Asi.Contracts";
-var SOFT_CREDIT_TYPE = "Asi.Soa.Commerce.DataContracts.SoftCreditTypeData, Asi.Contracts";
-var PARTY_SUMMARY_TYPE = "Asi.Soa.Membership.DataContracts.PartySummaryData, Asi.Contracts";
-var GIFT_AID_PANEL_SOURCES = ["GiftAid", "Gift_Aid", "GIFT_AID"];
-var CONTACTS_BY_COMPANY_QUERY = "$/CampaignManagement/DefaultSystem/Queries/Respondents/Contacts by Company";
-function parseFilters(filters) {
-  const params = {};
-  if (!filters) return params;
-  for (const pair of filters.split(",")) {
-    const [key, ...rest] = pair.trim().split("=");
-    if (key && rest.length > 0) params[key.trim()] = rest.join("=").trim();
-  }
-  return params;
-}
-function nestedObject6(value) {
-  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
-}
-function collectionValues5(value) {
-  if (Array.isArray(value)) return value;
-  const obj = nestedObject6(value);
-  return Array.isArray(obj?.$values) ? obj.$values : [];
-}
-function unwrapValue6(value) {
-  const obj = nestedObject6(value);
-  return obj && "$value" in obj ? obj.$value : value;
-}
-function stringValue6(value) {
-  const unwrapped = unwrapValue6(value);
-  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
-  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
-  return void 0;
-}
-function numberValue4(value) {
-  const unwrapped = unwrapValue6(value);
-  if (typeof unwrapped === "number" && Number.isFinite(unwrapped)) return unwrapped;
-  if (typeof unwrapped === "string" && unwrapped.trim()) {
-    const parsed = Number(unwrapped);
-    return Number.isFinite(parsed) ? parsed : 0;
-  }
-  return 0;
-}
-function requirePositiveAmount(value, fieldName) {
-  if (!Number.isFinite(value) || value <= 0) {
-    throw new Error(`${fieldName} must be a positive number.`);
-  }
-  return value;
-}
-function isoDateTime(value, fieldName) {
-  const date3 = value ? new Date(value) : /* @__PURE__ */ new Date();
-  if (Number.isNaN(date3.getTime())) {
-    throw new Error(`${fieldName} must be a valid ISO date or datetime.`);
-  }
-  return date3.toISOString();
-}
-function giftMonetaryAmount(amount) {
-  return {
-    $type: MONETARY_AMOUNT_TYPE,
-    Amount: amount.toFixed(2)
-  };
-}
-function partySummaryData(party) {
-  const record2 = nestedObject6(party) ?? {};
-  const partyId = stringValue6(record2.PartyId) ?? stringValue6(record2.Id);
-  if (!partyId) {
-    throw new Error("Party record did not include PartyId or Id.");
-  }
-  return {
-    $type: PARTY_SUMMARY_TYPE,
-    PartyId: partyId,
-    Id: stringValue6(record2.Id) ?? partyId,
-    UniformId: stringValue6(record2.UniformId),
-    Name: stringValue6(record2.Name),
-    Sort: stringValue6(record2.Sort),
-    Status: record2.Status
-  };
-}
-function isFundraisingGiftItem(item) {
-  const record2 = nestedObject6(item);
-  const type = stringValue6(record2?.$type);
-  return Boolean(type?.includes("Fundraising.DataContracts.GiftItemData"));
-}
-function giftRecordSummary(gift) {
-  const record2 = nestedObject6(gift) ?? {};
-  const giftItem = nestedObject6(record2.GiftItem);
-  const payment = nestedObject6(record2.PaymentInformation);
-  const paymentMethod = nestedObject6(payment?.PaymentMethod);
-  const installment = nestedObject6(record2.InstallmentInformation);
-  const paymentTerms = nestedObject6(installment?.PaymentTerms);
-  const sourceCode = nestedObject6(record2.SourceCode);
-  const softCreditAllocations = collectionValues5(nestedObject6(record2.SoftCreditInformation)?.Allocations);
-  const tributeRows = collectionValues5(record2.TributeInformation);
-  return {
-    giftId: stringValue6(record2.GiftId),
-    donationType: stringValue6(record2.DonationType),
-    giftDate: stringValue6(record2.GiftDate),
-    amount: numberValue4(nestedObject6(record2.GiftAmount)?.Amount),
-    giftItemId: stringValue6(giftItem?.ItemId) ?? stringValue6(giftItem?.ItemCode),
-    sourceCode: stringValue6(sourceCode?.Code),
-    paymentMethodId: stringValue6(paymentMethod?.PaymentMethodId),
-    paymentTermsId: stringValue6(paymentTerms?.PaymentTermsId),
-    scheduledPaymentCount: collectionValues5(installment?.PaymentSchedule).length,
-    softCreditCount: softCreditAllocations.length,
-    softCreditRecipientIds: softCreditAllocations.map((allocation) => stringValue6(nestedObject6(allocation)?.SoftCreditRecipientId)).filter(Boolean),
-    tributeCount: tributeRows.length,
-    tributeTypes: tributeRows.map((tribute) => {
-      const tributeType = nestedObject6(nestedObject6(tribute)?.TributeType);
-      return stringValue6(tributeType?.TributeTypeId) ?? stringValue6(tributeType?.Name);
-    }).filter(Boolean)
-  };
-}
-function giftBatchSummary(batch) {
-  const record2 = nestedObject6(batch) ?? {};
-  const gifts = collectionValues5(record2.Gifts);
-  return {
-    batchId: stringValue6(record2.BatchId),
-    batchType: stringValue6(record2.BatchType),
-    batchDate: stringValue6(record2.BatchDate),
-    name: stringValue6(record2.Name),
-    status: record2.Status,
-    userId: stringValue6(record2.UserId),
-    giftCount: gifts.length,
-    gifts: gifts.map(giftRecordSummary)
-  };
-}
-function defaultGiftReference() {
-  return `C${Date.now().toString(36).toUpperCase().slice(-8)}`;
-}
-function requireCashReference(value) {
-  const reference = value?.trim() || defaultGiftReference();
-  if (reference.length >= 10) {
-    throw new Error("CASH gift referenceNumber must be fewer than 10 characters because iMIS treats it as the check number during ImportBatch posting.");
-  }
-  return reference;
-}
-function paymentSummaryAmount(payment) {
-  return numberValue4(nestedObject6(payment.Amount)?.Amount ?? payment.Amount);
-}
-function paymentSummarySummary(payment) {
-  const record2 = nestedObject6(payment) ?? {};
-  return {
-    paymentId: stringValue6(record2.PaymentId),
-    paymentDate: stringValue6(record2.PaymentDate),
-    batchId: stringValue6(record2.BatchId),
-    amount: paymentSummaryAmount(record2),
-    status: numberValue4(record2.Status),
-    description: stringValue6(record2.Description),
-    paymentMethodId: stringValue6(record2.PaymentMethodId),
-    financialEntityId: stringValue6(record2.FinancialEntityId),
-    paymentReference: stringValue6(record2.PaymentReference),
-    payorPartyId: stringValue6(nestedObject6(record2.PayorParty)?.PartyId)
-  };
-}
-function matchingPaymentSummary(payments, donorId, referenceNumber, amount) {
-  return payments.find((payment) => {
-    const summary = paymentSummarySummary(payment);
-    return summary.payorPartyId === donorId && summary.paymentReference === referenceNumber && Math.abs(numberValue4(summary.amount) - amount) < 5e-3;
-  });
-}
-function importBatchPostSucceeded(result) {
-  const message = stringValue6(result) ?? JSON.stringify(result);
-  if (!message) return true;
-  return !/^\s*Error:/i.test(message) && !/Business rule violation/i.test(message);
-}
-async function resolveSourceCodeSummary(entityService, sourceCode) {
-  if (!sourceCode) return void 0;
-  const result = await entityService.list("SourceCodeSummary", { limit: 200 });
-  const match = result.items.find((row) => {
-    const code = stringValue6(row.Code);
-    const id = stringValue6(row.SourceCodeId);
-    const name = stringValue6(row.Name);
-    return code === sourceCode || id === sourceCode || name === sourceCode;
-  });
-  if (!match) {
-    throw new Error(`Source code "${sourceCode}" was not found in SourceCodeSummary.`);
-  }
-  return match;
-}
-function booleanValue3(value) {
-  const unwrapped = unwrapValue6(value);
-  if (typeof unwrapped === "boolean") return unwrapped;
-  if (typeof unwrapped === "string") {
-    if (unwrapped.toLowerCase() === "true") return true;
-    if (unwrapped.toLowerCase() === "false") return false;
-  }
-  return void 0;
-}
-function additionalAttribute2(record2, name) {
-  const attributes = collectionValues5(record2.AdditionalAttributes);
-  for (const entry of attributes) {
-    const attr = nestedObject6(entry);
-    if (attr && stringValue6(attr.Name) === name) return attr.Value;
-  }
-  return void 0;
-}
-function firstEmail2(record2) {
-  const direct = stringValue6(record2.Email);
-  if (direct) return direct;
-  const emails = collectionValues5(record2.Emails);
-  const primary = emails.map((entry) => nestedObject6(entry)).find((entry) => entry && booleanValue3(entry.IsPrimary));
-  return stringValue6(primary?.Address) ?? stringValue6(nestedObject6(emails.map((entry) => nestedObject6(entry))[0])?.Address);
-}
-function firstPhone2(record2) {
-  const direct = stringValue6(record2.Phone);
-  if (direct) return direct;
-  const phones = collectionValues5(record2.Phones);
-  return stringValue6(nestedObject6(phones.map((entry) => nestedObject6(entry))[0])?.Number);
-}
-function partyName2(record2) {
-  const personName = nestedObject6(record2.PersonName);
-  const composed = [stringValue6(personName?.FirstName), stringValue6(personName?.LastName)].filter(Boolean).join(" ");
-  return stringValue6(record2.Name) ?? stringValue6(record2.FullName) ?? stringValue6(personName?.FullName) ?? stringValue6(composed) ?? stringValue6(record2.Sort);
-}
-function compactParty(record2) {
-  const primaryOrg = nestedObject6(record2.PrimaryOrganization);
-  const status = nestedObject6(record2.Status);
-  return {
-    partyId: stringValue6(record2.PartyId) ?? stringValue6(record2.Id),
-    id: stringValue6(record2.Id),
-    name: partyName2(record2),
-    sortName: stringValue6(record2.Sort),
-    email: firstEmail2(record2),
-    phone: firstPhone2(record2),
-    customerTypeCode: stringValue6(record2.CustomerTypeCode) ?? stringValue6(additionalAttribute2(record2, "CustomerTypeCode")),
-    customerTypeDescription: stringValue6(record2.CustomerTypeDescription) ?? stringValue6(additionalAttribute2(record2, "CustomerTypeDescription")),
-    isMember: booleanValue3(record2.IsMember) ?? booleanValue3(additionalAttribute2(record2, "IsMember")),
-    status: stringValue6(status?.Name) ?? stringValue6(status?.PartyStatusId) ?? stringValue6(record2.Status),
-    primaryOrganizationName: stringValue6(primaryOrg?.Name),
-    primaryOrganizationPartyId: stringValue6(primaryOrg?.OrganizationPartyId),
-    parentPartyId: stringValue6(record2.ParentPartyId) ?? stringValue6(additionalAttribute2(record2, "ParentPartyId")),
-    joinDate: stringValue6(record2.JoinDate) ?? stringValue6(additionalAttribute2(record2, "JoinDate")),
-    paidThroughDate: stringValue6(record2.PaidThruDate) ?? stringValue6(additionalAttribute2(record2, "PaidThruDate")),
-    renewedThroughDate: stringValue6(record2.RenewedThruDate) ?? stringValue6(additionalAttribute2(record2, "RenewedThruDate"))
-  };
-}
-function monetaryAmount2(record2, ...fieldNames) {
-  for (const fieldName of fieldNames) {
-    const value = record2[fieldName];
-    const amount = numberValue4(nestedObject6(value)?.Amount ?? value);
-    if (amount !== 0) return amount;
-  }
-  return 0;
-}
-function compactFinancialRows(records, amountFields, limit = 3) {
-  return records.slice(0, limit).map((record2) => ({
-    id: stringValue6(record2.InvoiceId) ?? stringValue6(record2.PaymentId) ?? stringValue6(record2.Id),
-    number: stringValue6(record2.InvoiceNumber) ?? stringValue6(record2.PaymentReference),
-    date: stringValue6(record2.InvoiceDate) ?? stringValue6(record2.PaymentDate),
-    description: stringValue6(record2.Description),
-    sourceSystem: stringValue6(additionalAttribute2(record2, "SourceSystem")) ?? stringValue6(record2.SourceSystem),
-    amount: monetaryAmount2(record2, ...amountFields),
-    balance: monetaryAmount2(record2, "Balance")
-  }));
-}
-function countBySource(records) {
-  return records.reduce((counts, record2) => {
-    const source = stringValue6(additionalAttribute2(record2, "SourceSystem")) ?? stringValue6(record2.SourceSystem) ?? "unknown";
-    counts[source] = (counts[source] ?? 0) + 1;
-    return counts;
-  }, {});
-}
-function isActiveSubscription2(record2, now = /* @__PURE__ */ new Date()) {
-  const status = stringValue6(record2.Status)?.toLowerCase();
-  if (status === "a" || status === "active") return true;
-  const paidThrough = stringValue6(record2.PaidThrough) ?? stringValue6(record2.PaidThru) ?? stringValue6(record2.PaidThruDate);
-  if (!paidThrough || paidThrough.startsWith("0001-01-01")) return false;
-  const date3 = new Date(paidThrough);
-  return Number.isFinite(date3.valueOf()) && date3 > now;
-}
-function errorMessage5(error2) {
-  return error2 instanceof Error ? error2.message : String(error2);
-}
-function parseParty360Sections(sections) {
-  if (!sections) return new Set(PARTY_360_CURRENT_SECTIONS);
-  const parsed = sections.split(",").map((section) => section.trim()).filter(Boolean);
-  if (parsed.some((section) => section.toLowerCase() === "all")) {
-    return new Set(PARTY_360_REQUESTABLE_SECTIONS);
-  }
-  return new Set(
-    parsed
-  );
-}
-function normalizeParty360Section(section) {
-  const compact = section.trim().toLowerCase().replace(/[-_\s]/g, "");
-  if (compact === "autopay") return "autoPay";
-  if (compact === "custompanel" || compact === "custompanels" || compact === "custompaneldata") return "customPanels";
-  if (compact === "login" || compact === "security" || compact === "loginsecurity" || compact === "portalaccess") {
-    return "loginSecurity";
-  }
-  if (compact === "staffprofile" || compact === "staffprofileparity" || compact === "staffparity") {
-    return "staffProfileParity";
-  }
-  return compact;
-}
-function parseOrganization360Sections(sections) {
-  if (!sections) return new Set(ORGANIZATION_360_CURRENT_SECTIONS);
-  const parsed = sections.split(",").map((section) => normalizeOrganization360Section(section)).filter(Boolean);
-  if (parsed.some((section) => section.toLowerCase() === "all")) {
-    return new Set(ORGANIZATION_360_CURRENT_SECTIONS);
-  }
-  return new Set(parsed);
-}
-function normalizeOrganization360Section(section) {
-  const compact = section.trim().toLowerCase().replace(/[-_\s]/g, "");
-  if (compact === "org" || compact === "organization" || compact === "organisation") return "profile";
-  if (compact === "staff" || compact === "employees" || compact === "members" || compact === "contacts") return "roster";
-  if (compact === "billing" || compact === "financials") return "finance";
-  if (compact === "duplicates" || compact === "dataquality") return "dataQuality";
-  return compact;
-}
-function parseDonor360Sections(sections) {
-  if (!sections) return new Set(DONOR_360_CURRENT_SECTIONS);
-  const parsed = sections.split(",").map((section) => normalizeDonor360Section(section)).filter(Boolean);
-  if (parsed.some((section) => section.toLowerCase() === "all")) {
-    return new Set(DONOR_360_CURRENT_SECTIONS);
-  }
-  return new Set(parsed);
-}
-function normalizeDonor360Section(section) {
-  const compact = section.trim().toLowerCase().replace(/[-_\s]/g, "");
-  if (compact === "contact" || compact === "identity" || compact === "party") return "profile";
-  if (compact === "gift" || compact === "gifts" || compact === "donations" || compact === "givinghistory") return "giving";
-  if (compact === "pledge" || compact === "scheduledpayments" || compact === "pledgeschedule") return "pledges";
-  if (compact === "giftaid" || compact === "ukgiftaid") return "giftAid";
-  if (compact === "campaign" || compact === "campaigncontext" || compact === "appeals" || compact === "sources" || compact === "solicitations") return "campaigns";
-  if (compact === "communication" || compact === "outreach" || compact === "acknowledgements" || compact === "acknowledgments") return "communications";
-  return compact;
-}
-async function readParty360Record(section, source, read) {
-  try {
-    const value = await read();
-    return {
-      value,
-      evidence: {
-        section,
-        status: "queried",
-        sources: [{ source, status: "queried", count: value ? 1 : 0 }]
-      }
-    };
-  } catch (error2) {
-    return {
-      value: null,
-      evidence: {
-        section,
-        status: "failed",
-        sources: [{ source, status: "failed", error: errorMessage5(error2) }]
-      }
-    };
-  }
-}
-async function readParty360List(source, filters, limit, read) {
-  try {
-    const value = await read();
-    return {
-      value,
-      evidence: {
-        source,
-        status: "queried",
-        filters,
-        limit,
-        count: value.items.length,
-        totalCount: value.totalCount
-      }
-    };
-  } catch (error2) {
-    return {
-      value: { items: [], totalCount: 0 },
-      evidence: {
-        source,
-        status: "failed",
-        filters,
-        limit,
-        count: 0,
-        totalCount: 0,
-        error: errorMessage5(error2)
-      }
-    };
-  }
-}
-async function readParty360PartyReferencedList(source, partyId, refFields, limit, read) {
-  try {
-    const rawValue = await read();
-    const value = filterPartyReferencedRows(rawValue, partyId, refFields);
-    return {
-      value,
-      evidence: {
-        source,
-        status: "queried",
-        filters: { clientPartyReference: partyId },
-        limit,
-        count: value.items.length,
-        totalCount: rawValue.totalCount
-      }
-    };
-  } catch (error2) {
-    return {
-      value: { items: [], totalCount: 0 },
-      evidence: {
-        source,
-        status: "failed",
-        filters: { clientPartyReference: partyId },
-        limit,
-        count: 0,
-        totalCount: 0,
-        error: errorMessage5(error2)
-      }
-    };
-  }
-}
-function contractSectionStatus(section, sources) {
-  const failedCount = sources.filter((source) => source.status === "failed").length;
-  return {
-    section,
-    status: failedCount === 0 ? "queried" : failedCount === sources.length ? "failed" : "partial",
-    sources
-  };
-}
-function notRequestedSection(section) {
-  return {
-    section,
-    status: "not_requested",
-    sources: [],
-    reason: "Section was not requested in the sections parameter."
-  };
-}
-function organizationSectionStatus(sources) {
-  const failedCount = sources.filter((source) => source.status === "failed").length;
-  return failedCount === 0 ? "queried" : failedCount === sources.length ? "failed" : "partial";
-}
-function notRequestedOrganizationSection(organizationKeys2) {
-  return {
-    status: "not_requested",
-    summary: {},
-    sources: [],
-    recordMap: {
-      organizationKeys: organizationKeys2,
-      sourceFilters: [],
-      records: [],
-      recordCount: 0,
-      truncated: false
-    },
-    reason: "Section was not requested in the sections parameter."
-  };
-}
-function recordMatchesPartyReference(record2, partyId, refFields) {
-  return refFields.some((field) => {
-    const value = record2[field];
-    const ref = nestedObject6(value);
-    if (ref) {
-      return stringValue6(ref.Id) === partyId || stringValue6(ref.PartyId) === partyId || stringValue6(ref.CustomerId) === partyId || stringValue6(ref.PayerId) === partyId;
-    }
-    return stringValue6(value) === partyId;
-  });
-}
-function filterPartyReferencedRows(result, partyId, refFields) {
-  return {
-    items: result.items.filter((item) => recordMatchesPartyReference(item, partyId, refFields)),
-    totalCount: result.totalCount
-  };
-}
-function normalizeListResult(result) {
-  return {
-    items: result.items.map(normalizeGenericEntityRecord),
-    totalCount: result.totalCount
-  };
-}
-function organizationName(record2) {
-  if (!record2) return void 0;
-  return stringValue6(record2.OrganizationName) ?? stringValue6(record2.Name) ?? stringValue6(record2.Company) ?? stringValue6(record2["Customer Name"]);
-}
-function organizationKeys(organizationPartyId, profile) {
-  return {
-    organizationPartyId,
-    uniformKey: profile ? partyUniformKey2(profile) : void 0,
-    organizationName: organizationName(profile)
-  };
-}
-function organizationRecordIdentifiers(record2) {
-  const identifiers = [];
-  const fields = [
-    "PartyId",
-    "Id",
-    "ID",
-    "Contact Id",
-    "UniformId",
-    "key_UniformKey",
-    "RelationshipKey",
-    "GroupId",
-    "InvoiceId",
-    "InvoiceNumber",
-    "PaymentId",
-    "PaymentReference",
-    "OrderNumber",
-    "LineNumber"
-  ];
-  const add = (field, value) => {
-    const stringified = stringValue6(value);
-    if (!stringified || identifiers.some((identifier) => identifier.field.toLowerCase() === field.toLowerCase() && identifier.value === stringified)) return;
-    identifiers.push({ field, value: stringified });
-  };
-  for (const field of fields) add(field, record2[field]);
-  for (const [field, value] of Object.entries(record2)) {
-    if (identifiers.length >= 8) break;
-    if (field.endsWith("Id") || field.endsWith("ID") || field.endsWith("Key") || field.endsWith("Number")) {
-      add(field, value);
-    }
-  }
-  return identifiers.slice(0, 8);
-}
-function organizationRecordLinks(record2, keys) {
-  const links = [];
-  for (const [field, value] of Object.entries(record2)) {
-    organizationLinksFromValue(value, field, keys, links, 0);
-  }
-  return links.slice(0, 8);
-}
-function organizationLinksFromValue(value, path3, keys, links, depth) {
-  const add = (key, expected) => {
-    const actual = stringValue6(value);
-    if (!expected || actual !== expected) return;
-    if (links.some((link) => link.field === path3 && link.key === key && link.value === actual)) return;
-    links.push({ field: path3, key, value: actual });
-  };
-  add("organizationPartyId", keys.organizationPartyId);
-  add("uniformKey", keys.uniformKey);
-  add("organizationName", keys.organizationName);
-  const obj = nestedObject6(value);
-  if (!obj || depth >= 2) return;
-  for (const [field, nested] of Object.entries(obj)) {
-    organizationLinksFromValue(nested, `${path3}.${field}`, keys, links, depth + 1);
-  }
-}
-function organizationRecordMap(keys, sources, groups) {
-  const records = groups.flatMap(
-    (group) => group.records.map((record2) => ({
-      source: group.source,
-      identifiers: organizationRecordIdentifiers(record2),
-      organizationLinks: organizationRecordLinks(record2, keys)
-    }))
-  );
-  return {
-    organizationKeys: keys,
-    sourceFilters: sources.map((source) => ({
-      source: source.source,
-      status: source.status,
-      filters: source.filters,
-      count: source.count,
-      totalCount: source.totalCount
-    })),
-    records: records.slice(0, 25),
-    recordCount: records.length,
-    truncated: records.length > 25
-  };
-}
-function organizationSection(keys, data, summary, sources, groups) {
-  return {
-    status: organizationSectionStatus(sources),
-    summary,
-    data,
-    sources,
-    recordMap: organizationRecordMap(keys, sources, groups)
-  };
-}
-function donorSectionStatus(sources) {
-  const failedCount = sources.filter((source) => source.status === "failed").length;
-  return failedCount === 0 ? "queried" : failedCount === sources.length ? "failed" : "partial";
-}
-function donorKeys(donorPartyId, profile) {
-  return {
-    donorPartyId,
-    uniformKey: profile ? partyUniformKey2(profile) : void 0
-  };
-}
-function notRequestedDonorSection(keys) {
-  return {
-    status: "not_requested",
-    summary: {},
-    sources: [],
-    recordMap: {
-      donorKeys: keys,
-      sourceFilters: [],
-      records: [],
-      recordCount: 0,
-      truncated: false
-    },
-    reason: "Section was not requested in the sections parameter."
-  };
-}
-function donorRecordIdentifiers(record2) {
-  const identifiers = [];
-  const fields = [
-    "PartyId",
-    "Id",
-    "ID",
-    "UniformId",
-    "TransactionNumber",
-    "OriginalTransaction",
-    "InvoiceReferenceNumber",
-    "InvoiceId",
-    "InvoiceNumber",
-    "ScheduledPaymentId",
-    "PaymentNumber",
-    "Campaign",
-    "Appeal",
-    "Fund",
-    "SourceCode",
-    "CommunicationLogRecipientId"
-  ];
-  const add = (field, value) => {
-    const stringified = stringValue6(value);
-    if (!stringified || identifiers.some((identifier) => identifier.field.toLowerCase() === field.toLowerCase() && identifier.value === stringified)) return;
-    identifiers.push({ field, value: stringified });
-  };
-  for (const field of fields) add(field, record2[field]);
-  for (const [field, value] of Object.entries(record2)) {
-    if (identifiers.length >= 8) break;
-    if (field.endsWith("Id") || field.endsWith("ID") || field.endsWith("Key") || field.endsWith("Number")) {
-      add(field, value);
-    }
-  }
-  return identifiers.slice(0, 8);
-}
-function donorLinksFromValue(value, path3, keys, links, depth) {
-  const add = (key, expected) => {
-    const actual = stringValue6(value);
-    if (!expected || actual !== expected) return;
-    if (links.some((link) => link.field === path3 && link.key === key && link.value === actual)) return;
-    links.push({ field: path3, key, value: actual });
-  };
-  add("donorPartyId", keys.donorPartyId);
-  add("uniformKey", keys.uniformKey);
-  const obj = nestedObject6(value);
-  if (!obj || depth >= 2) return;
-  for (const [field, nested] of Object.entries(obj)) {
-    donorLinksFromValue(nested, `${path3}.${field}`, keys, links, depth + 1);
-  }
-}
-function donorRecordLinks(record2, keys) {
-  const links = [];
-  for (const [field, value] of Object.entries(record2)) {
-    donorLinksFromValue(value, field, keys, links, 0);
-  }
-  return links.slice(0, 8);
-}
-function donorRecordMap(keys, sources, groups) {
-  const records = groups.flatMap(
-    (group) => group.records.map((record2) => ({
-      source: group.source,
-      identifiers: donorRecordIdentifiers(record2),
-      donorLinks: donorRecordLinks(record2, keys)
-    }))
-  );
-  return {
-    donorKeys: keys,
-    sourceFilters: sources.map((source) => ({
-      source: source.source,
-      status: source.status,
-      filters: source.filters,
-      count: source.count,
-      totalCount: source.totalCount
-    })),
-    records: records.slice(0, 25),
-    recordCount: records.length,
-    truncated: records.length > 25
-  };
-}
-function donorSection(keys, data, summary, sources, groups) {
-  return {
-    status: donorSectionStatus(sources),
-    summary,
-    data,
-    sources,
-    recordMap: donorRecordMap(keys, sources, groups)
-  };
-}
-function orderNumberValue(record2) {
-  return stringValue6(record2.OrderNumber) ?? stringValue6(record2.OrderId) ?? stringValue6(record2.InvoiceReferenceNumber);
-}
-function uniqueStringValues(values) {
-  return [...new Set(values.filter((value) => Boolean(value)))];
-}
-async function readPartyOrderHeaders(entityService, partyId, limit) {
-  return readParty360List(
-    "CsOrders",
-    { BillToId: partyId },
-    limit,
-    async () => normalizeListResult(await entityService.list("CsOrders", { params: { BillToId: partyId }, limit }))
-  );
-}
-async function readPartyPaymentApplications(entityService, partyId, limit) {
-  return readParty360List(
-    "PaymentApplication",
-    { ShipToPartyId: partyId },
-    limit,
-    async () => normalizeListResult(await entityService.list("PaymentApplication", { params: { ShipToPartyId: partyId }, limit }))
-  );
-}
-async function readOrderLinesForOrders(entityService, orders, limit) {
-  const orderNumbers = uniqueStringValues(orders.map(orderNumberValue)).slice(0, Math.max(0, limit));
-  if (orderNumbers.length === 0) {
-    return {
-      value: { items: [], totalCount: 0, orderNumbers },
-      evidence: {
-        source: "CsOrderLines",
-        status: "queried",
-        filters: { OrderNumber: "" },
-        limit,
-        count: 0,
-        totalCount: 0
-      }
-    };
-  }
-  const settled = await Promise.all(orderNumbers.map(async (orderNumber) => {
-    try {
-      const result = normalizeListResult(await entityService.list("CsOrderLines", {
-        params: { OrderNumber: orderNumber },
-        limit
-      }));
-      return { orderNumber, result };
-    } catch (error2) {
-      return { orderNumber, error: errorMessage5(error2) };
-    }
-  }));
-  const failed = settled.filter((item) => "error" in item);
-  const successful = settled.filter((item) => "result" in item);
-  const items = successful.flatMap((item) => item.result.items);
-  const totalCount = successful.reduce((sum, item) => sum + (item.result.totalCount ?? item.result.items.length), 0);
-  return {
-    value: { items, totalCount, orderNumbers },
-    evidence: {
-      source: "CsOrderLines",
-      status: failed.length === 0 ? "queried" : "failed",
-      filters: { OrderNumber: orderNumbers.join(",") },
-      limit,
-      count: items.length,
-      totalCount,
-      error: failed.length ? `Failed order line reads: ${failed.map((item) => `${item.orderNumber}: ${item.error}`).join("; ")}` : void 0
-    }
-  };
-}
-function partyUniformKey2(record2) {
-  const party = nestedObject6(record2);
-  if (!party) return void 0;
-  return stringValue6(party.UniformId) ?? stringValue6(party.UniformKey) ?? stringValue6(party.PartyUniformKey) ?? stringValue6(party.ContactKey) ?? stringValue6(additionalAttribute2(party, "UniformId")) ?? stringValue6(additionalAttribute2(party, "UniformKey"));
-}
-async function resolvePartyUniformKey(entityService, partyId, existingPartyRecord) {
-  const existingUniformKey = partyUniformKey2(existingPartyRecord);
-  if (existingUniformKey) {
-    return {
-      uniformKey: existingUniformKey,
-      evidence: {
-        source: "Party",
-        status: "queried",
-        filters: { id: partyId },
-        count: 1,
-        totalCount: 1
-      }
-    };
-  }
-  try {
-    const party = await entityService.get("Party", partyId);
-    const uniformKey = partyUniformKey2(party);
-    if (!uniformKey) {
-      return {
-        evidence: {
-          source: "Party",
-          status: "failed",
-          filters: { id: partyId },
-          count: 1,
-          totalCount: 1,
-          error: "Party record did not expose UniformId/contact key."
-        }
-      };
-    }
-    return {
-      uniformKey,
-      evidence: {
-        source: "Party",
-        status: "queried",
-        filters: { id: partyId },
-        count: 1,
-        totalCount: 1
-      }
-    };
-  } catch (error2) {
-    return {
-      evidence: {
-        source: "Party",
-        status: "failed",
-        filters: { id: partyId },
-        count: 0,
-        totalCount: 0,
-        error: errorMessage5(error2)
-      }
-    };
-  }
-}
-function dedupeRecords(records, keyFields) {
-  const seen = /* @__PURE__ */ new Set();
-  const deduped = [];
-  for (const record2 of records) {
-    const key = keyFields.map((field) => stringValue6(record2[field])).find(Boolean) ?? JSON.stringify(record2);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    deduped.push(record2);
-  }
-  return deduped;
-}
-function combinedTotalCount(results) {
-  return results.reduce((total, result) => total + (result.totalCount ?? result.items.length), 0);
-}
-async function readParty360Relationships(entityService, partyId, existingPartyRecord, limit = 50) {
-  const partyKey = await resolvePartyUniformKey(entityService, partyId, existingPartyRecord);
-  const evidence = [partyKey.evidence];
-  if (!partyKey.uniformKey) {
-    return {
-      value: { partyId, items: [], totalCount: 0 },
-      evidence
-    };
-  }
-  const [subject, target] = await Promise.all([
-    readParty360List(
-      "Relationship",
-      { SubjectUniformKey: partyKey.uniformKey },
-      limit,
-      () => entityService.list("Relationship", { params: { SubjectUniformKey: partyKey.uniformKey }, limit })
-    ),
-    readParty360List(
-      "Relationship",
-      { TargetUniformKey: partyKey.uniformKey },
-      limit,
-      () => entityService.list("Relationship", { params: { TargetUniformKey: partyKey.uniformKey }, limit })
-    )
-  ]);
-  evidence.push(subject.evidence, target.evidence);
-  const normalizedItems = dedupeRecords(
-    [...normalizeListResult(subject.value).items, ...normalizeListResult(target.value).items],
-    ["RelationshipKey", "RelationshipId"]
-  );
-  return {
-    value: {
-      partyId,
-      uniformKey: partyKey.uniformKey,
-      items: normalizedItems,
-      totalCount: combinedTotalCount([subject.value, target.value])
-    },
-    evidence
-  };
-}
-async function readOrganizationRoster(iqaService, orgName, limit) {
-  if (!orgName) {
-    return {
-      value: { items: [], totalCount: 0, serverFiltered: false, truncated: false },
-      evidence: {
-        source: CONTACTS_BY_COMPANY_QUERY,
-        status: "failed",
-        filters: { Company: "" },
-        limit,
-        count: 0,
-        totalCount: 0,
-        error: "Organization name was not available, so the Contacts by Company runtime parameter could not be sent."
-      }
-    };
-  }
-  try {
-    const result = await iqaService.executeQueryV2(CONTACTS_BY_COMPANY_QUERY, {
-      limit,
-      parameters: { Company: orgName }
-    });
-    const expected = orgName.toLowerCase();
-    const matches = result.items.filter((item) => stringValue6(item.Company)?.toLowerCase() === expected);
-    return {
-      value: {
-        items: matches.slice(0, limit),
-        totalCount: matches.length,
-        sourceTotalCount: result.totalCount,
-        serverFiltered: true,
-        filterMode: "Company runtime parameter",
-        truncated: (result.totalCount ?? result.items.length) > result.items.length
-      },
-      evidence: {
-        source: CONTACTS_BY_COMPANY_QUERY,
-        status: "queried",
-        filters: { Company: orgName },
-        limit,
-        count: Math.min(matches.length, limit),
-        totalCount: result.totalCount,
-        note: "Contacts by Company declares a Company runtime parameter. iMIS applies it as a server-side starts-with company filter; the MCP then exact-matches the returned Company value to the organization name."
-      }
-    };
-  } catch (error2) {
-    return {
-      value: { items: [], totalCount: 0, serverFiltered: false, truncated: false },
-      evidence: {
-        source: CONTACTS_BY_COMPANY_QUERY,
-        status: "failed",
-        filters: { Company: orgName },
-        limit,
-        count: 0,
-        totalCount: 0,
-        error: errorMessage5(error2)
-      }
-    };
-  }
-}
-function buildOrganization360Contract(input) {
-  const profileRecord = nestedObject6(input.profile.value);
-  const keys = organizationKeys(input.organizationPartyId, profileRecord);
-  const sections = {};
-  if (input.requestedSections.includes("profile")) {
-    const sources = input.profile.evidence.sources;
-    sections.profile = organizationSection(
-      keys,
-      input.profile.value,
-      profileRecord ? {
-        organizationPartyId: keys.organizationPartyId,
-        organizationName: keys.organizationName,
-        status: compactParty(profileRecord).status,
-        customerTypeCode: compactParty(profileRecord).customerTypeCode,
-        customerTypeDescription: compactParty(profileRecord).customerTypeDescription,
-        isMember: compactParty(profileRecord).isMember,
-        email: firstEmail2(profileRecord),
-        phone: firstPhone2(profileRecord)
-      } : {},
-      sources,
-      profileRecord ? [{ source: "Organization", records: [profileRecord] }] : []
-    );
-  } else {
-    sections.profile = notRequestedOrganizationSection(keys);
-  }
-  if (input.requestedSections.includes("roster") && input.roster) {
-    sections.roster = organizationSection(
-      keys,
-      {
-        organizationName: keys.organizationName,
-        contacts: input.roster.value.items,
-        count: input.roster.value.items.length,
-        matchedCount: input.roster.value.totalCount,
-        sourceTotalCount: input.roster.value.sourceTotalCount,
-        serverFiltered: input.roster.value.serverFiltered,
-        filterMode: input.roster.value.filterMode,
-        truncated: input.roster.value.truncated
-      },
-      {
-        contactCount: input.roster.value.items.length,
-        matchedCount: input.roster.value.totalCount,
-        sourceTotalCount: input.roster.value.sourceTotalCount,
-        serverFiltered: input.roster.value.serverFiltered,
-        filterMode: input.roster.value.filterMode,
-        truncated: input.roster.value.truncated
-      },
-      [input.roster.evidence],
-      [{ source: CONTACTS_BY_COMPANY_QUERY, records: input.roster.value.items }]
-    );
-  } else {
-    sections.roster = notRequestedOrganizationSection(keys);
-  }
-  if (input.requestedSections.includes("relationships") && input.relationships) {
-    const sources = input.relationships.evidence;
-    sections.relationships = organizationSection(
-      keys,
-      input.relationships.value,
-      {
-        relationshipCount: input.relationships.value.items.length,
-        totalCount: input.relationships.value.totalCount,
-        uniformKey: input.relationships.value.uniformKey
-      },
-      sources,
-      [{ source: "Relationship", records: input.relationships.value.items }]
-    );
-  } else {
-    sections.relationships = notRequestedOrganizationSection(keys);
-  }
-  if (input.requestedSections.includes("finance") && input.finance) {
-    const sources = [
-      input.finance.subscriptions.evidence,
-      input.finance.invoices.evidence,
-      input.finance.payments.evidence,
-      input.finance.orders.evidence,
-      input.finance.orderLines.evidence,
-      input.finance.paymentApplications.evidence
-    ];
-    sections.finance = organizationSection(
-      keys,
-      {
-        subscriptions: input.finance.subscriptions.value,
-        invoices: input.finance.invoices.value,
-        payments: input.finance.payments.value,
-        orders: input.finance.orders.value,
-        orderLines: input.finance.orderLines.value,
-        paymentApplications: input.finance.paymentApplications.value
-      },
-      {
-        subscriptionCount: input.finance.subscriptions.value.items.length,
-        invoiceCount: input.finance.invoices.value.items.length,
-        paymentCount: input.finance.payments.value.items.length,
-        orderCount: input.finance.orders.value.items.length,
-        orderLineCount: input.finance.orderLines.value.items.length,
-        paymentApplicationCount: input.finance.paymentApplications.value.items.length
-      },
-      sources,
-      [
-        { source: "Subscription", records: input.finance.subscriptions.value.items },
-        { source: "InvoiceSummary", records: input.finance.invoices.value.items },
-        { source: "PaymentSummary", records: input.finance.payments.value.items },
-        { source: "CsOrders", records: input.finance.orders.value.items },
-        { source: "CsOrderLines", records: input.finance.orderLines.value.items },
-        { source: "PaymentApplication", records: input.finance.paymentApplications.value.items }
-      ]
-    );
-  } else {
-    sections.finance = notRequestedOrganizationSection(keys);
-  }
-  if (input.requestedSections.includes("groups") && input.groups) {
-    sections.groups = organizationSection(
-      keys,
-      input.groups.value,
-      {
-        groupMembershipCount: input.groups.value.items.length,
-        totalCount: input.groups.value.totalCount
-      },
-      [input.groups.evidence],
-      [{ source: "GroupMember", records: input.groups.value.items }]
-    );
-  } else {
-    sections.groups = notRequestedOrganizationSection(keys);
-  }
-  if (input.requestedSections.includes("dataQuality") && input.duplicates) {
-    sections.dataQuality = organizationSection(
-      keys,
-      input.duplicates.value,
-      {
-        flaggedDuplicateCount: input.duplicates.value.items.length,
-        totalCount: input.duplicates.value.totalCount,
-        mergeAction: "Organization merge review/execution remains a separate guarded workflow."
-      },
-      [input.duplicates.evidence],
-      [{ source: "PartyDuplicate", records: input.duplicates.value.items }]
-    );
-  } else {
-    sections.dataQuality = notRequestedOrganizationSection(keys);
-  }
-  const summary = Object.values(sections).reduce((counts, section) => {
-    counts[section.status] = (counts[section.status] ?? 0) + 1;
-    return counts;
-  }, {});
-  return {
-    version: "organization360.v1",
-    organizationPartyId: input.organizationPartyId,
-    generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-    requestedSections: input.requestedSections,
-    currentSections: [...ORGANIZATION_360_CURRENT_SECTIONS],
-    sections,
-    evidence: { summary }
-  };
-}
-async function readParty360Gifts(entityService, partyId, limit = 50) {
-  const gifts = await readParty360List(
-    "Gift",
-    { ID: partyId },
-    limit,
-    () => entityService.list("Gift", { params: { ID: partyId }, limit })
-  );
-  if (gifts.evidence.status === "queried") {
-    return {
-      value: {
-        partyId,
-        source: "Gift",
-        ...normalizeListResult(gifts.value)
-      },
-      evidence: [gifts.evidence]
-    };
-  }
-  const summaries = await readParty360List(
-    "GiftSummary",
-    { ID: partyId },
-    limit,
-    () => entityService.list("GiftSummary", { params: { ID: partyId }, limit })
-  );
-  return {
-    value: {
-      partyId,
-      source: summaries.evidence.status === "queried" ? "GiftSummary" : "Gift",
-      ...normalizeListResult(summaries.value)
-    },
-    evidence: [gifts.evidence, summaries.evidence]
-  };
-}
-async function readDonorGifts(entityService, donorPartyId, limit = 50) {
-  const gifts = await readParty360List(
-    "Gift",
-    { ID: donorPartyId },
-    limit,
-    async () => normalizeListResult(await entityService.list("Gift", { params: { ID: donorPartyId }, limit }))
-  );
-  return {
-    value: {
-      partyId: donorPartyId,
-      source: "Gift",
-      ...normalizeListResult(gifts.value)
-    },
-    evidence: gifts.evidence
-  };
-}
-async function readDonorPledges(entityService, donorPartyId, limit = 50) {
-  return readParty360List(
-    "PartyPledgeScheduledPayment",
-    { PartyId: donorPartyId },
-    limit,
-    () => entityService.list("PartyPledgeScheduledPayment", { params: { PartyId: donorPartyId }, limit })
-  );
-}
-async function readDonorGiftAid(apiClient, donorPartyId, panelSources = GIFT_AID_PANEL_SOURCES) {
-  const evidence = [];
-  for (const panelSource of panelSources) {
-    try {
-      const declaration = await apiClient.get(`${panelSource}/${encodeURIComponent(donorPartyId)}`);
-      return {
-        value: {
-          hasDeclaration: true,
-          panelSource,
-          declaration,
-          triedPanels: panelSources
-        },
-        evidence: [
-          ...evidence,
-          {
-            source: panelSource,
-            status: "queried",
-            filters: { id: donorPartyId },
-            count: 1,
-            totalCount: 1
-          }
-        ]
-      };
-    } catch (error2) {
-      evidence.push({
-        source: panelSource,
-        status: "failed",
-        filters: { id: donorPartyId },
-        count: 0,
-        totalCount: 0,
-        error: errorMessage5(error2)
-      });
-    }
-  }
-  return {
-    value: {
-      hasDeclaration: false,
-      panelSource: void 0,
-      triedPanels: panelSources,
-      note: "No common Gift Aid panel source responded for this donor. Gift Aid eligibility must not be treated as final without a tenant-specific declaration source."
-    },
-    evidence
-  };
-}
-async function readDonorCommunications(entityService, donorPartyId, limit, iqaService) {
-  const [preferences, history] = await Promise.all([
-    readCommunicationPreferences(entityService, donorPartyId),
-    readCommunicationHistory(entityService, donorPartyId, limit, iqaService)
-  ]);
-  return {
-    value: {
-      donorPartyId,
-      preferences: preferences.value,
-      history: history.value,
-      communications: history.value.communications,
-      count: history.value.count,
-      totalCount: history.value.totalCount,
-      note: "Communication history uses the existing Party communication source contract; source status identifies whether the result came from CommunicationLogRecipient or a lower-priority diagnostic path."
-    },
-    evidence: [preferences.evidence, ...history.evidence]
-  };
-}
-function recordStringValue(record2, ...fieldNames) {
-  for (const fieldName of fieldNames) {
-    const value = stringValue6(record2[fieldName]);
-    if (value) return value;
-  }
-  return void 0;
-}
-function recordsFromUnknown(value) {
-  return Array.isArray(value) ? value.filter((item) => !!item && typeof item === "object" && !Array.isArray(item)) : [];
-}
-function latestDate(records, ...fieldNames) {
-  return records.flatMap((record2) => fieldNames.map((fieldName) => stringValue6(record2[fieldName]))).filter((value) => Boolean(value) && !value.startsWith("0001-01-01")).sort().at(-1);
-}
-function givingCodeSummary(gifts) {
-  return {
-    campaigns: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "Campaign", "CampaignCode"))),
-    appeals: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "Appeal", "AppealCode"))),
-    funds: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "Fund", "FundCode", "ProductCode"))),
-    sourceCodes: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "SourceCode", "Source", "SourceCodeId"))),
-    giftTypes: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "GiftType")))
-  };
-}
-async function readDonorCampaignContext(entityService, gifts, limit) {
-  const [campaigns, appeals, sourceCodes, solicitations] = await Promise.all([
-    readParty360List(
-      "CampaignSummary",
-      {},
-      limit,
-      () => entityService.list("CampaignSummary", { limit })
-    ),
-    readParty360List(
-      "AppealSummary",
-      {},
-      limit,
-      () => entityService.list("AppealSummary", { limit })
-    ),
-    readParty360List(
-      "SourceCodeSummary",
-      {},
-      limit,
-      () => entityService.list("SourceCodeSummary", { limit })
-    ),
-    readParty360List(
-      "SolicitationSummary",
-      {},
-      limit,
-      () => entityService.list("SolicitationSummary", { limit })
-    )
-  ]);
-  return {
-    value: {
-      donorCodes: givingCodeSummary(gifts),
-      catalog: {
-        campaigns: campaigns.value,
-        appeals: appeals.value,
-        sourceCodes: sourceCodes.value,
-        solicitations: solicitations.value
-      },
-      note: "Campaign, appeal, source, solicitation, and fund codes are read from donor gift rows; summary catalog rows are tenant context and are not donor-specific records."
-    },
-    evidence: [campaigns.evidence, appeals.evidence, sourceCodes.evidence, solicitations.evidence]
-  };
-}
-function summarizeDonorGiving(giving) {
-  const gifts = giving.items;
-  return {
-    source: giving.source,
-    giftCount: gifts.length,
-    giftTotalCount: giving.totalCount,
-    totalAmount: gifts.reduce((sum, gift) => sum + monetaryAmount2(gift, "Amount", "AmountAsMoney"), 0),
-    latestGiftDate: latestDate(gifts, "DateReceived", "TransactionDate"),
-    ...givingCodeSummary(gifts)
-  };
-}
-function summarizeDonorPledges(pledges) {
-  const rows = pledges.items;
-  return {
-    pledgeScheduleCount: rows.length,
-    pledgeScheduleTotalCount: pledges.totalCount,
-    totalScheduledAmount: rows.reduce((sum, pledge) => sum + monetaryAmount2(pledge, "Amount"), 0),
-    latestDueDate: latestDate(rows, "DueDate")
-  };
-}
-function summarizeDonorCampaigns(value) {
-  const donorCodes = nestedObject6(value.donorCodes) ?? {};
-  const catalog = nestedObject6(value.catalog) ?? {};
-  return {
-    donorCampaigns: donorCodes.campaigns ?? [],
-    donorAppeals: donorCodes.appeals ?? [],
-    donorFunds: donorCodes.funds ?? [],
-    donorSourceCodes: donorCodes.sourceCodes ?? [],
-    campaignCatalogCount: numberValue4(nestedObject6(catalog.campaigns)?.totalCount),
-    appealCatalogCount: numberValue4(nestedObject6(catalog.appeals)?.totalCount),
-    sourceCodeCatalogCount: numberValue4(nestedObject6(catalog.sourceCodes)?.totalCount),
-    solicitationCatalogCount: numberValue4(nestedObject6(catalog.solicitations)?.totalCount)
-  };
-}
-function buildDonor360Contract(input) {
-  const profileRecord = nestedObject6(input.profile.value);
-  const keys = donorKeys(input.donorPartyId, profileRecord);
-  const sections = {};
-  if (input.requestedSections.includes("profile")) {
-    const sources = input.profile.evidence.sources;
-    sections.profile = donorSection(
-      keys,
-      input.profile.value,
-      profileRecord ? {
-        donorPartyId: keys.donorPartyId,
-        name: compactParty(profileRecord).name,
-        sortName: compactParty(profileRecord).sortName,
-        email: firstEmail2(profileRecord),
-        phone: firstPhone2(profileRecord),
-        customerTypeCode: compactParty(profileRecord).customerTypeCode,
-        customerTypeDescription: compactParty(profileRecord).customerTypeDescription,
-        isMember: compactParty(profileRecord).isMember
-      } : {},
-      sources,
-      profileRecord ? [{ source: "Party", records: [profileRecord] }] : []
-    );
-  } else {
-    sections.profile = notRequestedDonorSection(keys);
-  }
-  if (input.requestedSections.includes("giving") && input.giving) {
-    sections.giving = donorSection(
-      keys,
-      input.giving.value,
-      summarizeDonorGiving(input.giving.value),
-      [input.giving.evidence],
-      [{ source: input.giving.value.source, records: input.giving.value.items }]
-    );
-  } else {
-    sections.giving = notRequestedDonorSection(keys);
-  }
-  if (input.requestedSections.includes("pledges") && input.pledges) {
-    sections.pledges = donorSection(
-      keys,
-      input.pledges.value,
-      summarizeDonorPledges(input.pledges.value),
-      [input.pledges.evidence],
-      [{ source: "PartyPledgeScheduledPayment", records: input.pledges.value.items }]
-    );
-  } else {
-    sections.pledges = notRequestedDonorSection(keys);
-  }
-  if (input.requestedSections.includes("giftAid") && input.giftAid) {
-    sections.giftAid = donorSection(
-      keys,
-      input.giftAid.value,
-      {
-        hasDeclaration: Boolean(input.giftAid.value.hasDeclaration),
-        panelSource: input.giftAid.value.panelSource,
-        triedPanels: input.giftAid.value.triedPanels
-      },
-      input.giftAid.evidence,
-      []
-    );
-  } else {
-    sections.giftAid = notRequestedDonorSection(keys);
-  }
-  if (input.requestedSections.includes("campaigns") && input.campaigns) {
-    const givingRows = input.giving?.value.items ?? [];
-    sections.campaigns = donorSection(
-      keys,
-      input.campaigns.value,
-      summarizeDonorCampaigns(input.campaigns.value),
-      input.campaigns.evidence,
-      [{ source: "Gift campaign/source fields", records: givingRows }]
-    );
-  } else {
-    sections.campaigns = notRequestedDonorSection(keys);
-  }
-  if (input.requestedSections.includes("communications") && input.communications) {
-    const history = nestedObject6(input.communications.value.history);
-    sections.communications = donorSection(
-      keys,
-      input.communications.value,
-      {
-        historySource: stringValue6(history?.source),
-        communicationCount: numberValue4(input.communications.value.count),
-        communicationTotalCount: numberValue4(input.communications.value.totalCount),
-        preferenceSource: "Party"
-      },
-      input.communications.evidence,
-      [{ source: stringValue6(history?.source) ?? "Communication", records: recordsFromUnknown(input.communications.value.communications) }]
-    );
-  } else {
-    sections.communications = notRequestedDonorSection(keys);
-  }
-  const summary = Object.values(sections).reduce((counts, section) => {
-    counts[section.status] = (counts[section.status] ?? 0) + 1;
-    return counts;
-  }, {});
-  return {
-    version: "donor360.v1",
-    donorPartyId: input.donorPartyId,
-    generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-    requestedSections: input.requestedSections,
-    currentSections: [...DONOR_360_CURRENT_SECTIONS],
-    sections,
-    evidence: { summary }
-  };
-}
-async function readParty360Forms(entityService, partyId, limit) {
-  const direct = await readParty360List(
-    "FormResponse",
-    { ParticipantPartyId: partyId },
-    limit,
-    () => entityService.list("FormResponse", { params: { ParticipantPartyId: partyId }, limit })
-  );
-  if (direct.evidence.status === "queried") {
-    return {
-      value: {
-        partyId,
-        source: "FormResponse",
-        responses: direct.value.items,
-        count: direct.value.items.length,
-        totalCount: direct.value.totalCount,
-        sourceStatus: [direct.evidence],
-        note: "Reads FormResponse by ParticipantPartyId. This does not prove form writeback, spam/security settings, or native Form Builder configuration."
-      },
-      evidence: [direct.evidence]
-    };
-  }
-  const fallback = await readParty360PartyReferencedList(
-    "FormResponse bounded fallback",
-    partyId,
-    ["ParticipantPartyId", "Party", "PartyId", "Contact", "ContactId", "SubmittedBy", "SubmittedByParty", "Responder", "ResponderPartyId"],
-    500,
-    () => entityService.list("FormResponse", { limit: 500 })
-  );
-  return {
-    value: {
-      partyId,
-      source: "FormResponse",
-      boundedFallback: fallback.evidence.status === "queried",
-      fallbackReason: direct.evidence.error,
-      responses: fallback.value.items.slice(0, limit),
-      count: fallback.value.items.slice(0, limit).length,
-      totalCount: fallback.value.items.length,
-      sourceTotalCount: fallback.value.totalCount,
-      sourceStatus: [direct.evidence, fallback.evidence],
-      note: "Direct FormResponse PartyId filtering failed, so imis_member_360 read a bounded FormResponse window and client-filtered Party reference fields. This is not complete server-side Party history."
-    },
-    evidence: [direct.evidence, fallback.evidence]
-  };
-}
-var PANEL_SOURCE_FIELDS = [
-  "PanelSourceName",
-  "PanelSource",
-  "PanelSourceId",
-  "SourceName",
-  "Source",
-  "DataSourceName",
-  "DataSource",
-  "BusinessObjectName",
-  "BusinessObject",
-  "EntityTypeName",
-  "EntityType",
-  "Name"
-];
-var PANEL_PARTY_FILTER_FIELDS = [
-  "ID",
-  "PartyId",
-  "ParticipantPartyId",
-  "ContactKey",
-  "ContactId"
-];
-function looksLikePanelSourceName(value) {
-  return /^[A-Za-z][A-Za-z0-9_]*$/.test(value) && value.length <= 80;
-}
-function panelDefinitionId(record2) {
-  return stringValue6(record2.PanelDefinitionId) ?? stringValue6(record2.Id) ?? stringValue6(record2.ID);
-}
-function isPartyPanelDefinition(record2) {
-  const relatedEntityName = stringValue6(record2.RelatedEntityName);
-  if (!relatedEntityName) return true;
-  return ["party", "contact", "person", "organization", "organisation"].includes(relatedEntityName.toLowerCase());
-}
-function extractPanelSourceCandidates(records) {
-  const seen = /* @__PURE__ */ new Set();
-  const candidates = [];
-  for (const record2 of records) {
-    if (!isPartyPanelDefinition(record2)) continue;
-    for (const field of PANEL_SOURCE_FIELDS) {
-      const value = stringValue6(record2[field]);
-      if (!value || !looksLikePanelSourceName(value) || seen.has(value)) continue;
-      seen.add(value);
-      candidates.push({
-        panelSource: value,
-        sourceField: field,
-        panelDefinitionId: panelDefinitionId(record2),
-        relatedEntityName: stringValue6(record2.RelatedEntityName),
-        name: stringValue6(record2.Name) ?? stringValue6(record2.Title) ?? stringValue6(record2.DisplayName)
-      });
-      break;
-    }
-  }
-  return candidates;
-}
-function metadataPropertyNames(metadata) {
-  const obj = nestedObject6(metadata);
-  const properties = collectionValues5(obj?.Properties);
-  return new Set(
-    properties.map((property) => stringValue6(nestedObject6(property)?.Name)).filter((name) => Boolean(name))
-  );
-}
-async function readPanelPartyFilterFields(apiClient, panelSource) {
-  try {
-    const metadata = await apiClient.get(`metadata/${panelSource}`);
-    const propertyNames = metadataPropertyNames(metadata);
-    if (propertyNames.size === 0) return ["ID", "PartyId"];
-    const lowerPropertyNames = new Set([...propertyNames].map((name) => name.toLowerCase()));
-    return PANEL_PARTY_FILTER_FIELDS.filter((field) => lowerPropertyNames.has(field.toLowerCase()));
-  } catch {
-    return ["ID", "PartyId"];
-  }
-}
-async function readParty360PanelSource(apiClient, panelSource, partyId, limit) {
-  const filterFields = await readPanelPartyFilterFields(apiClient, panelSource);
-  if (filterFields.length === 0) {
-    const message = `No known Party filter field found in metadata for ${panelSource}.`;
-    return {
-      value: {
-        panelSource,
-        records: [],
-        count: 0,
-        totalCount: 0,
-        error: message
-      },
-      evidence: [{
-        source: panelSource,
-        status: "failed",
-        limit,
-        count: 0,
-        totalCount: 0,
-        error: message
-      }]
-    };
-  }
-  const failedFilters = {};
-  const evidence = [];
-  for (const field of filterFields) {
-    try {
-      const page = await fetchPage(apiClient, panelSource, 0, limit, { [field]: partyId });
-      return {
-        value: {
-          panelSource,
-          filterUsed: field,
-          records: page.Items,
-          count: page.Items.length,
-          totalCount: page.TotalCount
-        },
-        evidence: [{
-          source: panelSource,
-          status: "queried",
-          filters: { [field]: partyId },
-          limit,
-          count: page.Items.length,
-          totalCount: page.TotalCount
-        }]
-      };
-    } catch (error2) {
-      if (error2 instanceof ImisNotFoundError) {
-        return {
-          value: {
-            panelSource,
-            filterUsed: field,
-            records: [],
-            count: 0,
-            totalCount: 0,
-            emptyReason: errorMessage5(error2)
-          },
-          evidence: [{
-            source: panelSource,
-            status: "queried",
-            filters: { [field]: partyId },
-            limit,
-            count: 0,
-            totalCount: 0
-          }]
-        };
-      }
-      failedFilters[field] = errorMessage5(error2);
-      evidence.push({
-        source: panelSource,
-        status: "failed",
-        filters: { [field]: partyId },
-        limit,
-        count: 0,
-        totalCount: 0,
-        error: errorMessage5(error2)
-      });
-    }
-  }
-  return {
-    value: {
-      panelSource,
-      records: [],
-      count: 0,
-      totalCount: 0,
-      error: Object.values(failedFilters).at(-1) ?? `No Party-scoped read succeeded for ${panelSource}.`,
-      failedFilters
-    },
-    evidence
-  };
-}
-async function readParty360CustomPanels(entityService, apiClient, partyId) {
-  const definitions = await readParty360List(
-    "PanelDefinitionSummary",
-    {},
-    50,
-    () => entityService.list("PanelDefinitionSummary", { limit: 50 })
-  );
-  if (definitions.evidence.status === "failed") {
-    return {
-      value: {
-        partyId,
-        panelDefinitions: { count: 0, totalCount: 0, items: [] },
-        panelSources: [],
-        sourceStatus: [definitions.evidence],
-        error: definitions.evidence.error
-      },
-      evidence: [definitions.evidence]
-    };
-  }
-  const candidates = extractPanelSourceCandidates(definitions.value.items).slice(0, 12);
-  const sourceReads = await mapWithConcurrency(
-    candidates,
-    4,
-    (candidate) => readParty360PanelSource(apiClient, candidate.panelSource, partyId, 20)
-  );
-  const sourceStatus = [
-    definitions.evidence,
-    ...sourceReads.flatMap((read) => read.evidence)
-  ];
-  return {
-    value: {
-      partyId,
-      panelDefinitions: {
-        count: definitions.value.items.length,
-        totalCount: definitions.value.totalCount,
-        items: definitions.value.items.slice(0, 10)
-      },
-      panelSources: candidates,
-      recordsBySource: sourceReads.map((read) => read.value),
-      count: sourceReads.reduce((sum, read) => sum + numberValue4(read.value.count), 0),
-      sourceStatus,
-      note: candidates.length > 0 ? "Panel source probes choose a Party filter from live metadata, preferring ID, PartyId, ParticipantPartyId, ContactKey, then ContactId. This does not prove PanelEditor placement, staff profile rendering, or Form Builder writeback." : "Panel definitions were readable, but no REST panel source name field was discoverable from the summary rows. Use imis_panel_data with a known tenant panel source name for targeted reads."
-    },
-    evidence: sourceStatus
-  };
-}
-async function readParty360Duplicates(entityService, partyId) {
-  const flagged = await readParty360List(
-    "PartyDuplicate",
-    { PartyId: partyId },
-    50,
-    () => entityService.list("PartyDuplicate", { params: { PartyId: partyId }, limit: 50 })
-  );
-  return {
-    value: {
-      partyId,
-      flaggedDuplicates: flagged.value.items,
-      flaggedCount: flagged.value.items.length,
-      totalCount: flagged.value.totalCount,
-      mergeAction: "not_performed",
-      note: "This section only reads system-flagged duplicate candidates. Merge review and execution remain separate explicit workflows.",
-      sourceStatus: [flagged.evidence]
-    },
-    evidence: [flagged.evidence]
-  };
-}
-async function readParty360EngagementScores(entityService) {
-  return readParty360List(
-    "EngagementScore",
-    {},
-    25,
-    () => entityService.list("EngagementScore", { limit: 25 })
-  );
-}
-async function readParty360Engagement(entityService, partyId, iqaService) {
-  const [scores, nativeScoreResults, activities, groups, subscriptions] = await Promise.all([
-    readParty360EngagementScores(entityService),
-    readNativeEngagementScoreResults(entityService, iqaService, partyId, { limit: 25 }),
-    readParty360List(
-      "ContactInteraction",
-      { PartyId: partyId },
-      20,
-      () => entityService.list("ContactInteraction", { params: { PartyId: partyId }, limit: 20 })
-    ),
-    readParty360List(
-      "GroupMember",
-      { PartyId: partyId },
-      50,
-      () => entityService.list("GroupMember", { params: { PartyId: partyId }, limit: 50 })
-    ),
-    readParty360List(
-      "Subscription",
-      { PartyId: partyId },
-      20,
-      () => entityService.list("Subscription", { params: { PartyId: partyId }, limit: 20 })
-    )
-  ]);
-  const subscriptionItems = subscriptions.value.items;
-  return {
-    value: {
-      partyId,
-      scoreDefinitions: {
-        items: scores.value.items,
-        count: scores.value.items.length,
-        totalCount: scores.value.totalCount
-      },
-      nativeScoreResults,
-      recentActivity: {
-        interactions: activities.value.items,
-        count: activities.value.items.length,
-        totalCount: activities.value.totalCount
-      },
-      groupMemberships: {
-        groups: groups.value.items,
-        count: groups.value.items.length,
-        totalCount: groups.value.totalCount
-      },
-      subscriptions: {
-        items: subscriptionItems,
-        count: subscriptionItems.length,
-        totalCount: subscriptions.value.totalCount,
-        activeCount: subscriptionItems.filter((item) => isActiveSubscription2(item)).length
-      },
-      note: "EngagementScore lists score definitions by GUID. Native score result rows come from EngagementScoreResult by Party UniformId/contact key when available, with a bounded ScoresByContact IQA fallback only if needed. Activity, group, and subscription rows are raw signals only; the MCP does not calculate an engagement score.",
-      sourceStatus: [
-        scores.evidence,
-        ...nativeScoreResults.sourceStatus,
-        activities.evidence,
-        groups.evidence,
-        subscriptions.evidence
-      ]
-    },
-    evidence: [
-      scores.evidence,
-      ...nativeScoreResults.sourceStatus,
-      activities.evidence,
-      groups.evidence,
-      subscriptions.evidence
-    ]
-  };
-}
-async function mapWithConcurrency(items, concurrency, mapper) {
-  const results = [];
-  for (let index = 0; index < items.length; index += concurrency) {
-    const chunk = items.slice(index, index + concurrency);
-    results.push(...await Promise.all(chunk.map(mapper)));
-  }
-  return results;
-}
-function registerWorkflowTools(server, entityService, apiClient, iqaService) {
-  server.tool(
-    "imis_find_member",
-    "Find a member/contact in iMIS by name, email, or Party ID. In iMIS, all contacts (members, donors, organizations) are 'Party' records. Membership status is determined by active Subscriptions, not a flag on Party. Use this as the starting point, then follow up with imis_billing_summary for their billing picture.",
-    {
-      query: external_exports.string().describe("Search term: name (e.g., 'Smith' or 'John Smith'), email address, or Party ID"),
-      searchBy: external_exports.enum(["name", "email", "id"]).optional().describe("What field to search by (default: auto-detect)"),
-      firstName: external_exports.string().optional().describe("First name to search for (used with name search for more precise matching)"),
-      limit: external_exports.number().min(1).max(100).optional().describe("Max results (default 25)")
-    },
-    withErrorHandling(async ({ query: query2, searchBy, firstName, limit }) => {
-      const params = {};
-      const field = searchBy ?? (query2.includes("@") ? "email" : /^\d+$/.test(query2) ? "id" : "name");
-      switch (field) {
-        case "email":
-          params.Email = query2;
-          break;
-        case "id":
-          try {
-            const result2 = await entityService.get("Party", query2);
-            return {
-              content: [{ type: "text", text: JSON.stringify(result2, null, 2) }]
-            };
-          } catch {
-            return {
-              content: [{ type: "text", text: JSON.stringify({ error: `No member found with ID "${query2}".` }) }]
-            };
-          }
-        case "name": {
-          if (firstName) {
-            params.FirstName = firstName;
-            params.LastName = query2;
-          } else {
-            const parts = query2.trim().split(/\s+/);
-            if (parts.length >= 2) {
-              params.FirstName = parts.slice(0, -1).join(" ");
-              params.LastName = parts[parts.length - 1];
-            } else {
-              params.LastName = query2;
-            }
-          }
-          break;
-        }
-      }
-      const result = await entityService.list("Party", {
-        limit: limit ?? 25,
-        params
-      });
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(
-              { members: result.items, count: result.items.length, totalCount: result.totalCount },
-              null,
-              2
-            )
-          }
-        ]
-      };
-    })
-  );
-  server.tool(
-    "imis_register_for_event",
-    "Register a contact for an event in iMIS. Events have EventFunctions (sessions/tracks) \u2014 optionally specify which functions to register for. Uses the EventRegistration _execute endpoint. Note: event pricing is determined by member type and registration date. Credit card payments cannot be processed via API.",
-    {
-      partyId: external_exports.string().describe("The Party ID of the registrant"),
-      eventId: external_exports.string().describe("The Event ID to register for"),
-      functionIds: external_exports.string().optional().describe("Comma-separated event function IDs to register for")
-    },
-    withErrorHandling(async ({ partyId, eventId, functionIds }) => {
-      const registrationData = {
-        PartyId: partyId,
-        EventId: eventId
-      };
-      if (functionIds) {
-        registrationData.FunctionIds = functionIds.split(",").map((id) => id.trim());
-      }
-      const result = await entityService.execute(
-        "EventRegistration",
-        registrationData
-      );
-      return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
-      };
-    })
-  );
-  server.tool(
-    "imis_manage_group_member",
-    "Add or remove a member from a group in iMIS. Groups represent committees, chapters, sections, and other organizational structures. Each group has a GroupClass (Committee, Chapter, etc.). Members are assigned a Role (Chair, Member, Secretary) within the group.",
-    {
-      action: external_exports.enum(["add", "remove"]).describe("Whether to add or remove the member"),
-      groupId: external_exports.string().describe("The Group ID"),
-      partyId: external_exports.string().describe("The Party ID of the member"),
-      roleId: external_exports.string().optional().describe("Role ID for the member (required when adding)"),
-      stage: external_exports.string().optional().describe("Stage: 'Committee', 'Applicant', or 'Proposed'")
-    },
-    withErrorHandling(async ({ action, groupId, partyId, roleId, stage }) => {
-      if (action === "add") {
-        const data = {
-          GroupId: groupId,
-          PartyId: partyId
-        };
-        if (roleId) data.RoleId = roleId;
-        if (stage) data.Stage = stage;
-        const result = await entityService.create("GroupMember", data);
-        return {
-          content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
-        };
-      } else {
-        const compositeId = `~${groupId}|${partyId}`;
-        await entityService.delete("GroupMember", compositeId);
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify({ success: true, message: `Removed Party "${partyId}" from Group "${groupId}".` })
-            }
-          ]
-        };
-      }
-    })
-  );
-  server.tool(
-    "imis_create_order",
-    "Reserved ecommerce/order write surface. Finance and commerce reads are available through imis_billing_summary; order creation and cart/checkout payment movement are blocked until a purpose-built ComboOrder/Cart workflow is live-proven with readback and balance checks.",
-    {
-      partyId: external_exports.string().describe("The Party ID placing the order"),
-      data: external_exports.string().describe("JSON string of the ComboOrder data including line items")
-    },
-    withErrorHandling(async () => {
-      throw new Error(
-        "Order creation is not exposed. The shared commerce/payment surface still needs a purpose-built, live-proven ComboOrder or Cart workflow with invoice/payment readback, balance checks, and no raw card handling before agents can create orders or move money."
-      );
-    })
-  );
-  server.tool(
-    "imis_log_activity",
-    "Log an interaction/activity on a contact record in iMIS. Staff use this to track calls, emails, meetings, and notes. Creates a ContactInteraction record visible on the contact's activity history.",
-    {
-      partyId: external_exports.string().describe("The Party ID of the contact"),
-      subject: external_exports.string().describe("Subject/title of the interaction"),
-      notes: external_exports.string().optional().describe("Detailed notes about the interaction"),
-      interactionType: external_exports.enum(["Phone", "Email", "Meeting", "Note", "Other"]).optional().describe("Type of interaction (default: 'Note')")
-    },
-    withErrorHandling(async ({ partyId, subject, notes, interactionType }) => {
-      const data = {
-        PartyId: partyId,
-        Subject: subject,
-        InteractionDate: (/* @__PURE__ */ new Date()).toISOString()
-      };
-      if (notes) data.Notes = notes;
-      if (interactionType) data.InteractionType = interactionType;
-      const result = await entityService.create("ContactInteraction", data);
-      return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
-      };
-    })
-  );
-  server.tool(
-    "imis_billing_summary",
-    "Get a Party/contact's billing picture from iMIS: active subscriptions, outstanding invoices, recent payments, order headers/lines, and payment applications. Use this for members, prospects, donors, customers, and organizations when checking spend, balances, or whether a non-member has paid for events/products/gifts. In iMIS, membership status is determined by Subscriptions \u2014 a member is 'active' if their PaidThrough date is in the future.",
-    {
-      partyId: external_exports.string().describe("The Party ID to get billing summary for")
-    },
-    withErrorHandling(async ({ partyId }) => {
-      const [subscriptions, invoices, payments, orders, paymentApplications] = await Promise.all([
-        entityService.list("Subscription", { params: { PartyId: partyId }, limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
-        entityService.list("InvoiceSummary", { params: { BillToPartyId: partyId }, limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
-        entityService.list("PaymentSummary", { params: { "PayorParty.PartyId": partyId }, limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
-        readPartyOrderHeaders(entityService, partyId, 25),
-        readPartyPaymentApplications(entityService, partyId, 50)
-      ]);
-      const orderLines = await readOrderLinesForOrders(entityService, orders.value.items, 100);
-      const summary = {
-        partyId,
-        subscriptions: {
-          count: subscriptions.items.length,
-          totalCount: subscriptions.totalCount,
-          items: subscriptions.items
-        },
-        invoices: {
-          count: invoices.items.length,
-          totalCount: invoices.totalCount,
-          items: invoices.items
-        },
-        payments: {
-          count: payments.items.length,
-          totalCount: payments.totalCount,
-          items: payments.items
-        },
-        orders: {
-          count: orders.value.items.length,
-          totalCount: orders.value.totalCount,
-          items: orders.value.items
-        },
-        orderLines: {
-          count: orderLines.value.items.length,
-          totalCount: orderLines.value.totalCount,
-          orderNumbers: orderLines.value.orderNumbers,
-          items: orderLines.value.items
-        },
-        paymentApplications: {
-          count: paymentApplications.value.items.length,
-          totalCount: paymentApplications.value.totalCount,
-          items: paymentApplications.value.items
-        },
-        sourceStatus: [
-          orders.evidence,
-          orderLines.evidence,
-          paymentApplications.evidence
-        ]
-      };
-      return {
-        content: [{ type: "text", text: JSON.stringify(summary, null, 2) }]
-      };
-    })
-  );
-  server.tool(
-    "imis_party_search_compact",
-    "Search or list iMIS Party records and return only compact routing fields. Use this before Party-scoped cohort workflows so the agent can get candidate Party IDs without dumping full contact payloads.",
-    {
-      query: external_exports.string().optional().describe("Optional name, email, or Party ID search term."),
-      searchBy: external_exports.enum(["auto", "name", "email", "id"]).optional().describe("How to interpret query. Default auto-detects email and numeric IDs."),
-      customerTypeCode: external_exports.string().optional().describe("Optional iMIS customer/member type filter, e.g. P for prospects."),
-      filters: external_exports.string().optional().describe("Additional comma-separated FieldName=value filters, e.g. Status=A,CityName=London."),
-      limit: external_exports.number().min(1).max(500).optional().describe("Max Party records to scan and compact (default 50, max 500)."),
-      offset: external_exports.number().min(0).optional().describe("Number of records to skip for pagination."),
-      orderBy: external_exports.string().optional().describe("Optional iMIS OrderBy field, e.g. Sort or LastName.")
-    },
-    withErrorHandling(async ({ query: query2, searchBy, customerTypeCode, filters, limit, offset, orderBy }) => {
-      const params = parseFilters(filters);
-      if (customerTypeCode) params.CustomerTypeCode = customerTypeCode;
-      if (orderBy) params.OrderBy = orderBy;
-      const mode = searchBy === "auto" || !searchBy ? query2?.includes("@") ? "email" : query2 && /^\d+$/.test(query2) ? "id" : "name" : searchBy;
-      if (query2 && mode === "id") {
-        const party = await entityService.get("Party", query2);
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify({
-                criteria: { query: query2, searchBy: mode, customerTypeCode, filters },
-                count: 1,
-                totalCount: 1,
-                items: [compactParty(party)]
-              }, null, 2)
-            }
-          ]
-        };
-      }
-      if (query2 && mode === "email") {
-        params.Email = query2;
-      } else if (query2 && mode === "name") {
-        const parts = query2.trim().split(/\s+/);
-        if (parts.length >= 2) {
-          params.FirstName = parts.slice(0, -1).join(" ");
-          params.LastName = parts[parts.length - 1];
-        } else {
-          params.LastName = query2;
-        }
-      }
-      const result = await entityService.list("Party", {
-        limit: limit ?? 50,
-        offset,
-        params
-      });
-      const items = result.items.map(compactParty);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({
-              criteria: { query: query2, searchBy: query2 ? mode : void 0, customerTypeCode, filters, orderBy, limit: limit ?? 50, offset },
-              count: items.length,
-              totalCount: result.totalCount,
-              fields: Object.keys(items[0] ?? {}),
-              items,
-              note: "Compact Party results intentionally omit full addresses, salutations, relationships, and raw AdditionalAttributes. Use imis_member_360 for a selected Party."
-            }, null, 2)
-          }
-        ]
-      };
-    })
-  );
-  server.tool(
-    "imis_prospect_opportunities",
-    "Find non-member/prospect conversion opportunities by compactly scanning Party candidates, then summarising their subscriptions, invoices, and payments. Use this for questions like 'which prospects are already spending money with us but have not joined?'",
-    {
-      customerTypeCode: external_exports.string().optional().describe("Customer/member type code to scan (default P for prospects)."),
-      limit: external_exports.number().min(1).max(500).optional().describe("Max candidate Party records to scan (default 500)."),
-      maxResults: external_exports.number().min(1).max(100).optional().describe("Max opportunities to return after sorting by financial activity (default 15)."),
-      minFinancialActivity: external_exports.number().min(0).optional().describe("Minimum invoice/payment activity to include (default 0)."),
-      includeZeroActivity: external_exports.boolean().optional().describe("Return prospects with no invoice/payment activity as well (default false)."),
-      includeActiveMembers: external_exports.boolean().optional().describe("Include candidates that appear to have active membership subscriptions (default false)."),
-      billingLimit: external_exports.number().min(1).max(100).optional().describe("Max invoices/payments/subscriptions to inspect per Party (default 25)."),
-      evidenceLimit: external_exports.number().min(0).max(10).optional().describe("Max compact invoice/payment evidence rows to return per opportunity (default 3).")
-    },
-    withErrorHandling(async ({
-      customerTypeCode,
-      limit,
-      maxResults,
-      minFinancialActivity,
-      includeZeroActivity,
-      includeActiveMembers,
-      billingLimit,
-      evidenceLimit
-    }) => {
-      const typeCode = customerTypeCode ?? "P";
-      const scanLimit2 = limit ?? 500;
-      const perPartyLimit = billingLimit ?? 25;
-      const resultLimit2 = maxResults ?? 15;
-      const perOpportunityEvidenceLimit = evidenceLimit ?? 3;
-      const candidateResult = await entityService.list("Party", {
-        limit: scanLimit2,
-        params: { CustomerTypeCode: typeCode }
-      });
-      const candidates = candidateResult.items.map(compactParty).filter((party) => party.partyId);
-      const opportunities = await mapWithConcurrency(candidates, 8, async (party) => {
-        const partyId = party.partyId;
-        const [subscriptions, invoices, payments] = await Promise.all([
-          entityService.list("Subscription", { params: { PartyId: partyId }, limit: perPartyLimit }).catch(() => ({ items: [], totalCount: 0 })),
-          entityService.list("InvoiceSummary", { params: { BillToPartyId: partyId }, limit: perPartyLimit }).catch(() => ({ items: [], totalCount: 0 })),
-          entityService.list("PaymentSummary", { params: { "PayorParty.PartyId": partyId }, limit: perPartyLimit }).catch(() => ({ items: [], totalCount: 0 }))
-        ]);
-        const subscriptionRows = subscriptions.items;
-        const invoiceRows = invoices.items;
-        const paymentRows = payments.items;
-        const activeSubscriptions = subscriptionRows.filter((row) => isActiveSubscription2(row));
-        const totalInvoiced = invoiceRows.reduce((sum, row) => sum + monetaryAmount2(row, "InvoiceAmount", "OriginalInvoiceAmount", "UndiscountedTotal"), 0);
-        const totalPaid = paymentRows.reduce((sum, row) => sum + monetaryAmount2(row, "Amount", "PaymentAmount"), 0);
-        const outstandingBalance = invoiceRows.reduce((sum, row) => sum + monetaryAmount2(row, "Balance"), 0);
-        const financialActivity = Math.max(totalInvoiced, totalPaid);
-        return {
-          party,
-          partyId: party.partyId,
-          name: party.name,
-          email: party.email,
-          phone: party.phone,
-          customerTypeCode: party.customerTypeCode,
-          customerTypeDescription: party.customerTypeDescription,
-          isMember: party.isMember ?? false,
-          primaryOrganizationName: party.primaryOrganizationName,
-          primaryOrganizationPartyId: party.primaryOrganizationPartyId,
-          membership: {
-            isMember: party.isMember ?? false,
-            activeSubscriptionCount: activeSubscriptions.length,
-            subscriptionCount: subscriptionRows.length
-          },
-          financialActivity,
-          totalInvoiced,
-          totalPaid,
-          outstandingBalance,
-          invoices: {
-            count: invoiceRows.length,
-            totalCount: invoices.totalCount,
-            sourceSystems: countBySource(invoiceRows),
-            evidence: compactFinancialRows(invoiceRows, ["InvoiceAmount", "OriginalInvoiceAmount", "UndiscountedTotal"], perOpportunityEvidenceLimit)
-          },
-          payments: {
-            count: paymentRows.length,
-            totalCount: payments.totalCount,
-            sourceSystems: countBySource(paymentRows),
-            evidence: compactFinancialRows(paymentRows, ["Amount", "PaymentAmount"], perOpportunityEvidenceLimit)
-          }
-        };
-      });
-      const threshold = minFinancialActivity ?? 0;
-      const filtered = opportunities.filter((row) => includeActiveMembers || row.membership.activeSubscriptionCount === 0).filter((row) => includeZeroActivity ? row.financialActivity >= threshold : row.financialActivity > threshold).sort(
-        (left, right) => right.financialActivity - left.financialActivity || right.totalInvoiced - left.totalInvoiced || (left.party.name ?? "").localeCompare(right.party.name ?? "")
-      ).slice(0, resultLimit2);
-      const matching = opportunities.filter((row) => includeActiveMembers || row.membership.activeSubscriptionCount === 0).filter((row) => includeZeroActivity ? row.financialActivity >= threshold : row.financialActivity > threshold);
-      const sourceSystems = matching.reduce((counts, row) => {
-        for (const [source, count] of Object.entries(row.invoices.sourceSystems)) {
-          counts[source] = (counts[source] ?? 0) + count;
-        }
-        for (const [source, count] of Object.entries(row.payments.sourceSystems)) {
-          counts[source] = (counts[source] ?? 0) + count;
-        }
-        return counts;
-      }, {});
-      const totals = matching.reduce(
-        (sum, row) => ({
-          financialActivity: sum.financialActivity + row.financialActivity,
-          totalInvoiced: sum.totalInvoiced + row.totalInvoiced,
-          totalPaid: sum.totalPaid + row.totalPaid,
-          outstandingBalance: sum.outstandingBalance + row.outstandingBalance
-        }),
-        { financialActivity: 0, totalInvoiced: 0, totalPaid: 0, outstandingBalance: 0 }
-      );
-      const compactResults = filtered.map(({ party, ...row }) => ({
-        ...row,
-        party: {
-          partyId: party.partyId,
-          name: party.name,
-          email: party.email,
-          phone: party.phone,
-          primaryOrganizationName: party.primaryOrganizationName,
-          primaryOrganizationPartyId: party.primaryOrganizationPartyId
-        }
-      }));
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({
-              criteria: {
-                customerTypeCode: typeCode,
-                scannedLimit: scanLimit2,
-                minFinancialActivity: threshold,
-                includeZeroActivity: includeZeroActivity ?? false,
-                includeActiveMembers: includeActiveMembers ?? false,
-                billingLimit: perPartyLimit,
-                maxResults: resultLimit2,
-                evidenceLimit: perOpportunityEvidenceLimit
-              },
-              scanned: candidates.length,
-              candidateTotalCount: candidateResult.totalCount,
-              matched: matching.length,
-              returned: compactResults.length,
-              totals,
-              sourceSystems,
-              opportunities: compactResults,
-              note: "Default output is a compact ranked window for conversation use. financialActivity uses max(totalInvoiced, totalPaid) to avoid double-counting invoice payments. Use imis_member_360 for a selected Party ID when full detail is needed."
-            }, null, 2)
-          }
-        ]
-      };
-    })
-  );
-  server.tool(
-    "imis_process_gift",
-    "Record and post a CASH gift/donation in iMIS through the documented GiftInformationBatch plus ImportBatch posting workflow. Supports fundraising GiftItemData items plus source-code, soft-credit, and tribute subrecords when those live records resolve. Pledge installments, recurring gifts, and non-CASH payment methods are not exposed until separately proven.",
-    {
-      donorId: external_exports.string().describe("The Party ID of the donor"),
-      amount: external_exports.number().describe("The gift amount"),
-      giftItemId: external_exports.string().describe("The fundraising gift item ID/code. Must resolve to Item as GiftItemData, e.g. BLDG, MARSH, or EMERG on the demo tenant; commerce products such as MUG are rejected."),
-      giftDate: external_exports.string().optional().describe("Date the gift was received (ISO format, defaults to today)"),
-      batchUserId: external_exports.string().optional().describe("Party/User ID to own the Gift Entry batch. Defaults to donorId because that path is live-proven on the demo tenant."),
-      paymentMethodId: external_exports.enum(["CASH"]).optional().describe("Payment method. Only CASH is currently live-proven for this tool."),
-      referenceNumber: external_exports.string().optional().describe("Optional CASH check/reference number. Must be fewer than 10 characters for iMIS batch posting. Defaults to a short Codex reference."),
-      sourceCode: external_exports.string().optional().describe("Source code, SourceCodeId, or source name to attach from SourceCodeSummary."),
-      tributeType: external_exports.string().optional().describe("Tribute type ID, e.g. IMO. Requires tributePartyId."),
-      tributePartyId: external_exports.string().optional().describe("Party ID the gift is in tribute of. Required when tributeType is supplied."),
-      tributeMessage: external_exports.string().optional().describe("Optional tribute message."),
-      softCreditId: external_exports.string().optional().describe("Party ID to receive soft credit"),
-      softCreditAmount: external_exports.number().optional().describe("Amount of soft credit (defaults to full gift amount)"),
-      pledgeFrequency: external_exports.enum(["Monthly", "Quarterly", "Annually"]).optional().describe("Not currently supported for creation; supplied values are rejected until scheduled-payment creation is proven."),
-      pledgeInstallments: external_exports.number().optional().describe("Not currently supported for creation; supplied values are rejected until scheduled-payment creation is proven.")
-    },
-    withErrorHandling(async ({
-      donorId,
-      amount,
-      giftItemId,
-      giftDate,
-      batchUserId,
-      paymentMethodId,
-      referenceNumber,
-      sourceCode,
-      tributeType,
-      tributePartyId,
-      tributeMessage,
-      softCreditId,
-      softCreditAmount,
-      pledgeFrequency,
-      pledgeInstallments
-    }) => {
-      if (pledgeFrequency || pledgeInstallments !== void 0) {
-        throw new Error(
-          "Pledge installment creation is not exposed yet. Live probes prove direct gift, source-code, soft-credit, and tribute creation; scheduled pledge rows still need a separate proof loop."
-        );
-      }
-      if (tributeType && !tributePartyId) {
-        throw new Error("tributePartyId is required when tributeType is supplied.");
-      }
-      if (!tributeType && tributePartyId) {
-        throw new Error("tributeType is required when tributePartyId is supplied.");
-      }
-      const giftAmount = requirePositiveAmount(amount, "amount");
-      const effectiveSoftCreditAmount = softCreditAmount === void 0 ? giftAmount : requirePositiveAmount(softCreditAmount, "softCreditAmount");
-      if (effectiveSoftCreditAmount > giftAmount) {
-        throw new Error("softCreditAmount cannot exceed amount.");
-      }
-      const effectiveGiftDate = isoDateTime(giftDate, "giftDate");
-      const effectivePaymentMethodId = paymentMethodId ?? "CASH";
-      const effectiveReferenceNumber = requireCashReference(referenceNumber);
-      const [donor, giftItem, resolvedSourceCode] = await Promise.all([
-        entityService.get("Party", donorId),
-        entityService.get("Item", giftItemId),
-        resolveSourceCodeSummary(entityService, sourceCode)
-      ]);
-      if (!isFundraisingGiftItem(giftItem)) {
-        throw new Error(
-          `Item "${giftItemId}" is not a fundraising GiftItemData record. Use a fundraising gift item such as BLDG, MARSH, or EMERG rather than a commerce product.`
-        );
-      }
-      const softCreditRecipient = softCreditId ? await entityService.get("Party", softCreditId) : void 0;
-      const tributeParty = tributePartyId ? await entityService.get("Party", tributePartyId) : void 0;
-      const resolvedTributeType = tributeType ? await entityService.get("TributeType", tributeType) : void 0;
-      const batch = await entityService.create("GiftInformationBatch", {
-        $type: GIFT_INFORMATION_BATCH_TYPE,
-        BatchDate: effectiveGiftDate,
-        UserId: batchUserId ?? donorId
-      });
-      const batchId = stringValue6(nestedObject6(batch)?.BatchId);
-      if (!batchId) {
-        throw new Error("GiftInformationBatch create did not return a BatchId.");
-      }
-      const gift = {
-        $type: GIFT_INFORMATION_DATA_TYPE,
-        DonationType: "Gift",
-        GiftDate: effectiveGiftDate,
-        GiftAmount: giftMonetaryAmount(giftAmount),
-        GiftItem: giftItem,
-        Donor: donor,
-        PaymentInformation: {
-          $type: REMITTANCE_TYPE,
-          PaymentMethod: {
-            $type: PAYMENT_METHOD_TYPE,
-            PaymentMethodId: effectivePaymentMethodId
-          },
-          ReferenceNumber: effectiveReferenceNumber
-        },
-        GiftAidInformation: {
-          $type: GIFT_AID_INFORMATION_TYPE,
-          IsGiftAidExcluded: true
-        },
-        TributeInformation: {
-          $type: TRIBUTE_INFORMATION_COLLECTION_TYPE,
-          $values: []
-        }
-      };
-      if (resolvedSourceCode) {
-        gift.SourceCode = resolvedSourceCode;
-      }
-      if (softCreditRecipient) {
-        gift.SoftCreditInformation = {
-          $type: SOFT_CREDIT_ALLOCATION_TYPE,
-          Allocations: {
-            $type: SOFT_CREDIT_ALLOCATION_COLLECTION_TYPE,
-            $values: [
-              {
-                $type: SOFT_CREDIT_ALLOCATION_DETAIL_TYPE,
-                SoftCreditRecipientId: softCreditId,
-                SoftCreditRecipient: partySummaryData(softCreditRecipient),
-                SoftCreditType: {
-                  $type: SOFT_CREDIT_TYPE,
-                  Description: ""
-                },
-                AllocationType: 0,
-                Percent: Number((effectiveSoftCreditAmount / giftAmount * 100).toFixed(4)),
-                Amount: giftMonetaryAmount(effectiveSoftCreditAmount)
-              }
-            ]
-          }
-        };
-      }
-      if (resolvedTributeType && tributeParty) {
-        gift.TributeInformation = {
-          $type: TRIBUTE_INFORMATION_COLLECTION_TYPE,
-          $values: [
-            {
-              $type: TRIBUTE_INFORMATION_TYPE,
-              TributeType: resolvedTributeType,
-              TributeParty: tributeParty,
-              NotifyParty: null,
-              Message: tributeMessage ?? null
-            }
-          ]
-        };
-      }
-      let result;
-      try {
-        result = await entityService.create("GiftInformationBatch", {
-          $type: GIFT_INFORMATION_BATCH_TYPE,
-          BatchId: batchId,
-          Gifts: {
-            $type: GIFT_INFORMATION_COLLECTION_TYPE,
-            $values: [gift]
-          }
-        });
-      } catch (error2) {
-        const message = error2 instanceof Error ? error2.message : String(error2);
-        throw new Error(`Gift entry create failed after empty batch "${batchId}" was created: ${message}`);
-      }
-      const readback = await entityService.get("GiftInformationBatch", batchId);
-      const createdGifts = collectionValues5(nestedObject6(result)?.Gifts);
-      const readbackGifts = collectionValues5(nestedObject6(readback)?.Gifts);
-      const createdGiftSummary = giftRecordSummary(createdGifts[0]);
-      const createdGiftId = stringValue6(createdGiftSummary.giftId);
-      const readbackSummaries = readbackGifts.map(giftRecordSummary);
-      const readbackVerified = Boolean(createdGiftId) && readbackSummaries.some((giftSummary) => stringValue6(giftSummary.giftId) === createdGiftId);
-      if (!readbackVerified) {
-        throw new Error(`Gift entry "${createdGiftId ?? "<unknown>"}" was returned by create but not verified by GiftInformationBatch/${batchId} readback.`);
-      }
-      const postResult = await entityService.execute("ImportBatch", {
-        $type: IMPORT_BATCH_POST_REQUEST_TYPE,
-        EntityTypeName: "ImportBatch",
-        OperationName: "Post",
-        BatchId: batchId,
-        RunInBackground: false
-      });
-      if (!importBatchPostSucceeded(postResult)) {
-        const message = stringValue6(postResult) ?? JSON.stringify(postResult);
-        throw new Error(`Gift batch "${batchId}" failed to post through ImportBatch/_execute: ${message}`);
-      }
-      const payments = await entityService.list("PaymentSummary", {
-        limit: 50,
-        params: { "PayorParty.PartyId": donorId }
-      });
-      const paymentReadback = matchingPaymentSummary(
-        payments.items,
-        donorId,
-        effectiveReferenceNumber,
-        giftAmount
-      );
-      if (!paymentReadback) {
-        throw new Error(`Gift batch "${batchId}" posted but PaymentSummary readback did not find reference "${effectiveReferenceNumber}" for donor "${donorId}".`);
-      }
-      const response = {
-        version: "imis_process_gift.v3",
-        status: "posted",
-        giftInformationBatch: {
-          created: giftBatchSummary(result),
-          entryReadback: giftBatchSummary(readback),
-          post: {
-            path: "ImportBatch/_execute",
-            batchId,
-            result: postResult
-          }
-        },
-        gift: createdGiftSummary,
-        payment: paymentSummarySummary(paymentReadback),
-        proof: {
-          writePath: "GiftInformationBatch documented nested POST + ImportBatch/_execute Post",
-          entryReadbackPath: `GiftInformationBatch/${batchId}`,
-          entryReadbackVerified: readbackVerified,
-          postPath: "ImportBatch/_execute",
-          paymentReadbackPath: `PaymentSummary?PayorParty.PartyId=${encodeURIComponent(donorId)}`,
-          paymentReadbackVerified: true,
-          liveProvenOptions: {
-            paymentMethodId: effectivePaymentMethodId,
-            paymentReference: effectiveReferenceNumber,
-            sourceCode: Boolean(resolvedSourceCode),
-            softCredit: Boolean(softCreditRecipient),
-            tribute: Boolean(resolvedTributeType && tributeParty)
-          },
-          notExposed: [
-            "pledge installment schedule creation",
-            "recurring gift mandate/AutoPay creation",
-            "non-CASH payment methods",
-            "HMRC Gift Aid submission"
-          ]
-        }
-      };
-      return {
-        content: [{ type: "text", text: JSON.stringify(response, null, 2) }]
-      };
-    })
-  );
-  server.tool(
-    "imis_manage_subscription",
-    "Reserved subscription mutation surface. Subscription reads are available through imis_billing_summary and member 360; create/update/cancel is blocked until membership billing, proration, invoice, and downstream balance behavior are live-proven.",
-    {
-      partyId: external_exports.string().describe("The Party ID of the member"),
-      productCode: external_exports.string().describe("The billing product code (Item ID). For chapters, use 'CHAPT/{chapterCode}'"),
-      action: external_exports.enum(["create", "update", "cancel"]).describe("Action to perform"),
-      data: external_exports.string().optional().describe("JSON string of additional subscription fields (BeginDate, BillBegin, BillThrough, PaidThrough, BilledAmount, BillToId, Status, etc.)")
-    },
-    withErrorHandling(async () => {
-      throw new Error(
-        "Subscription mutation is not exposed. Use read-only billing/member tools for subscription state until create/update/cancel workflows are live-proven with invoice, proration, membership-status, and balance readback."
-      );
-    })
-  );
-  server.tool(
-    "imis_contact_relationships",
-    "View relationships between contacts in iMIS. Reads Relationship rows by the Party record's UniformId using SubjectUniformKey and TargetUniformKey. Relationship writes are not enabled until the RelationshipKey/type-key write contract is live-proven.",
-    {
-      partyId: external_exports.string().describe("The Party ID of the contact"),
-      action: external_exports.enum(["list", "add", "remove"]).describe("Action to perform. Only list is currently enabled; add/remove return a safety error until write semantics are live-proven."),
-      targetPartyId: external_exports.string().optional().describe("Reserved for future add/remove relationship writes; ignored by list."),
-      relationType: external_exports.string().optional().describe("Reserved for future relationship writes; ignored by list."),
-      reciprocalType: external_exports.string().optional().describe("Reserved for future relationship writes; ignored by list."),
-      beginDate: external_exports.string().optional().describe("Reserved for future relationship writes; ignored by list."),
-      endDate: external_exports.string().optional().describe("Reserved for future relationship writes; ignored by list.")
-    },
-    withErrorHandling(async ({ partyId, action }) => {
-      if (action === "list") {
-        const relationships = await readParty360Relationships(entityService, partyId, void 0, 50);
-        return {
-          content: [{
-            type: "text",
-            text: JSON.stringify({
-              partyId,
-              uniformKey: relationships.value.uniformKey,
-              relationships: relationships.value.items,
-              count: relationships.value.items.length,
-              totalCount: relationships.value.totalCount,
-              sourceStatus: relationships.evidence
-            }, null, 2)
-          }]
-        };
-      }
-      throw new Error(
-        "Relationship write actions are not enabled. The live-proven Relationship read contract uses SubjectUniformKey/TargetUniformKey; create/update/delete semantics must be proven before this tool will mutate relationship rows."
-      );
-    })
-  );
-  server.tool(
-    "imis_organization_360",
-    "Get a normalized Organization360Contract for an iMIS organization Party. Returns one contract with profile, roster, relationships, finance, groups, and data-quality sections; each section owns its data, summary, sources, and record map. The roster section uses the executable Contacts by Company IQA with its live-proven Company runtime parameter.",
-    {
-      organizationPartyId: external_exports.string().describe("The Party ID of the organization"),
-      sections: external_exports.string().optional().describe("Comma-separated sections to include. Defaults to profile, roster, relationships, finance, groups, and dataQuality. Use all for every current section."),
-      rosterLimit: external_exports.number().min(1).max(100).optional().describe("Maximum roster contacts to return from the server-filtered Contacts by Company query (default 25).")
-    },
-    withErrorHandling(async ({ organizationPartyId, sections, rosterLimit }) => {
-      const include = Array.from(parseOrganization360Sections(sections));
-      const profile = await readParty360Record(
-        "profile",
-        "Organization",
-        () => entityService.get("Organization", organizationPartyId)
-      );
-      const profileRecord = nestedObject6(profile.value);
-      const orgName = organizationName(profileRecord);
-      const [roster, relationships, groups, duplicates] = await Promise.all([
-        include.includes("roster") ? iqaService ? readOrganizationRoster(iqaService, orgName, rosterLimit ?? 25) : Promise.resolve({
-          value: { items: [], totalCount: 0, serverFiltered: false, truncated: false },
-          evidence: {
-            source: CONTACTS_BY_COMPANY_QUERY,
-            status: "failed",
-            filters: { Company: orgName ?? "" },
-            limit: rosterLimit ?? 25,
-            count: 0,
-            totalCount: 0,
-            error: "IQA service is not available, so organization roster cannot be read."
-          }
-        }) : Promise.resolve(void 0),
-        include.includes("relationships") ? readParty360Relationships(entityService, organizationPartyId, profile.value, 50) : Promise.resolve(void 0),
-        include.includes("groups") ? readParty360List(
-          "GroupMember",
-          { PartyId: organizationPartyId },
-          50,
-          () => entityService.list("GroupMember", { params: { PartyId: organizationPartyId }, limit: 50 })
-        ) : Promise.resolve(void 0),
-        include.includes("dataQuality") ? readParty360List(
-          "PartyDuplicate",
-          { PartyId: organizationPartyId },
-          50,
-          () => entityService.list("PartyDuplicate", { params: { PartyId: organizationPartyId }, limit: 50 })
-        ) : Promise.resolve(void 0)
-      ]);
-      let finance;
-      if (include.includes("finance")) {
-        const [subscriptions, invoices, payments, orders, paymentApplications] = await Promise.all([
-          readParty360List(
-            "Subscription",
-            { PartyId: organizationPartyId },
-            50,
-            () => entityService.list("Subscription", { params: { PartyId: organizationPartyId }, limit: 50 })
-          ),
-          readParty360List(
-            "InvoiceSummary",
-            { BillToPartyId: organizationPartyId },
-            50,
-            () => entityService.list("InvoiceSummary", { params: { BillToPartyId: organizationPartyId }, limit: 50 })
-          ),
-          readParty360List(
-            "PaymentSummary",
-            { "PayorParty.PartyId": organizationPartyId },
-            50,
-            () => entityService.list("PaymentSummary", { params: { "PayorParty.PartyId": organizationPartyId }, limit: 50 })
-          ),
-          readPartyOrderHeaders(entityService, organizationPartyId, 25),
-          readPartyPaymentApplications(entityService, organizationPartyId, 50)
-        ]);
-        const orderLines = await readOrderLinesForOrders(entityService, orders.value.items, 100);
-        finance = { subscriptions, invoices, payments, orders, orderLines, paymentApplications };
-      }
-      const contract = buildOrganization360Contract({
-        organizationPartyId,
-        requestedSections: include,
-        profile,
-        roster,
-        relationships,
-        finance,
-        groups,
-        duplicates
-      });
-      return {
-        content: [{ type: "text", text: JSON.stringify(contract, null, 2) }]
-      };
-    })
-  );
-  server.tool(
-    "imis_donor_360",
-    "Get a normalized Donor360Contract for an iMIS donor Party. Returns one contract with profile, giving, pledges, Gift Aid, campaign/source context, and communications sections; each section owns its data, summary, sources, and donor record map. Giving uses Gift by donor ID, pledges use PartyPledgeScheduledPayment by PartyId, and communications use the existing Party communication source contract.",
-    {
-      donorPartyId: external_exports.string().describe("The Party ID of the donor/contact"),
-      sections: external_exports.string().optional().describe("Comma-separated sections to include. Defaults to profile, giving, pledges, giftAid, campaigns, and communications. Use all for every current section."),
-      giftLimit: external_exports.number().min(1).max(100).optional().describe("Maximum gifts to return from the donor-scoped Gift read (default 50)."),
-      pledgeLimit: external_exports.number().min(1).max(100).optional().describe("Maximum pledge scheduled payment rows to return from PartyPledgeScheduledPayment by PartyId (default 50)."),
-      communicationLimit: external_exports.number().min(1).max(50).optional().describe("Maximum donor communication history rows to return (default 10).")
-    },
-    withErrorHandling(async ({ donorPartyId, sections, giftLimit, pledgeLimit, communicationLimit }) => {
-      const include = Array.from(parseDonor360Sections(sections));
-      const profile = await readParty360Record(
-        "profile",
-        "Party",
-        () => entityService.get("Party", donorPartyId)
-      );
-      const [giving, pledges, giftAid, communications] = await Promise.all([
-        include.includes("giving") ? readDonorGifts(entityService, donorPartyId, giftLimit ?? 50) : Promise.resolve(void 0),
-        include.includes("pledges") ? readDonorPledges(entityService, donorPartyId, pledgeLimit ?? 50) : Promise.resolve(void 0),
-        include.includes("giftAid") ? readDonorGiftAid(apiClient, donorPartyId) : Promise.resolve(void 0),
-        include.includes("communications") ? readDonorCommunications(entityService, donorPartyId, communicationLimit ?? 10, iqaService) : Promise.resolve(void 0)
-      ]);
-      const campaigns = include.includes("campaigns") ? await readDonorCampaignContext(entityService, giving?.value.items ?? [], 50) : void 0;
-      const contract = buildDonor360Contract({
-        donorPartyId,
-        requestedSections: include,
-        profile,
-        giving,
-        pledges,
-        giftAid,
-        campaigns,
-        communications
-      });
-      return {
-        content: [{ type: "text", text: JSON.stringify(contract, null, 2) }]
-      };
-    })
-  );
-  server.tool(
-    "imis_member_360",
-    "Get a Party/member 360 contract for any iMIS Party/contact \u2014 member, prospect, donor, customer, or organization. Returns a single versioned Party360Contract with normalized sections; each section owns its data, summary, and source evidence. Default sections include contact, billing, groups, activity, relationships, giving, events with event/order/attendance/availability evidence, login/security, auto-pay, certification, duplicate candidates, and engagement signals. Communications, forms, and customPanels can be requested explicitly; tenant-specific endpoint/filter failures are returned as section source status. Use the 'sections' parameter to request only specific areas if needed.",
-    {
-      partyId: external_exports.string().describe("The Party ID of the contact/member/prospect/organization"),
-      sections: external_exports.string().optional().describe("Comma-separated sections to include (default: current API-backed default sections). Default sections: contact, billing, groups, activity, relationships, giving, events, loginSecurity, autoPay, certification, duplicates, engagement. Requestable sections also include communications, forms, and customPanels. Use all to include every wired requestable section. Frontier sections are reported as not_implemented/native_handoff_required when requested or in the source ledger.")
-    },
-    withErrorHandling(async ({ partyId, sections }) => {
-      const include = new Set(
-        Array.from(parseParty360Sections(sections)).map(normalizeParty360Section)
-      );
-      const sectionData = { partyId };
-      const evidence = [];
-      if (include.has("contact")) {
-        const contact = await readParty360Record(
-          "contact",
-          "Party",
-          () => entityService.get("Party", partyId)
-        );
-        sectionData.contact = contact.value;
-        evidence.push(contact.evidence);
-      } else {
-        evidence.push(notRequestedSection("contact"));
-      }
-      if (include.has("billing")) {
-        const [subscriptions, invoices, payments, orders, paymentApplications] = await Promise.all([
-          readParty360List(
-            "Subscription",
-            { PartyId: partyId },
-            50,
-            () => entityService.list("Subscription", { params: { PartyId: partyId }, limit: 50 })
-          ),
-          readParty360List(
-            "InvoiceSummary",
-            { BillToPartyId: partyId },
-            20,
-            () => entityService.list("InvoiceSummary", { params: { BillToPartyId: partyId }, limit: 20 })
-          ),
-          readParty360List(
-            "PaymentSummary",
-            { "PayorParty.PartyId": partyId },
-            20,
-            () => entityService.list("PaymentSummary", { params: { "PayorParty.PartyId": partyId }, limit: 20 })
-          ),
-          readPartyOrderHeaders(entityService, partyId, 20),
-          readPartyPaymentApplications(entityService, partyId, 50)
-        ]);
-        const orderLines = await readOrderLinesForOrders(entityService, orders.value.items, 100);
-        sectionData.subscriptions = subscriptions.value;
-        sectionData.invoices = invoices.value;
-        sectionData.payments = payments.value;
-        sectionData.orders = orders.value;
-        sectionData.orderLines = orderLines.value;
-        sectionData.paymentApplications = paymentApplications.value;
-        evidence.push(contractSectionStatus("billing", [
-          subscriptions.evidence,
-          invoices.evidence,
-          payments.evidence,
-          orders.evidence,
-          orderLines.evidence,
-          paymentApplications.evidence
-        ]));
-      } else {
-        evidence.push(notRequestedSection("billing"));
-      }
-      if (include.has("groups")) {
-        const groups = await readParty360List(
-          "GroupMember",
-          { PartyId: partyId },
-          50,
-          () => entityService.list("GroupMember", { params: { PartyId: partyId }, limit: 50 })
-        );
-        sectionData.groups = groups.value;
-        evidence.push(contractSectionStatus("groups", [groups.evidence]));
-      } else {
-        evidence.push(notRequestedSection("groups"));
-      }
-      if (include.has("activity")) {
-        const activities = await readParty360List(
-          "ContactInteraction",
-          { PartyId: partyId },
-          20,
-          () => entityService.list("ContactInteraction", { params: { PartyId: partyId }, limit: 20 })
-        );
-        sectionData.activities = activities.value;
-        evidence.push(contractSectionStatus("activity", [activities.evidence]));
-      } else {
-        evidence.push(notRequestedSection("activity"));
-      }
-      if (include.has("relationships")) {
-        const relationships = await readParty360Relationships(entityService, partyId, sectionData.contact, 50);
-        sectionData.relationships = relationships.value;
-        evidence.push(contractSectionStatus("relationships", relationships.evidence));
-      } else {
-        evidence.push(notRequestedSection("relationships"));
-      }
-      if (include.has("giving")) {
-        const gifts = await readParty360Gifts(entityService, partyId, 50);
-        sectionData.gifts = gifts.value;
-        evidence.push(contractSectionStatus("giving", gifts.evidence));
-      } else {
-        evidence.push(notRequestedSection("giving"));
-      }
-      if (include.has("events")) {
-        const registrations = await readEventRegistrations(entityService, partyId, 10, iqaService);
-        sectionData.events = registrations.value;
-        evidence.push(contractSectionStatus("events", registrations.evidence));
-      } else {
-        evidence.push(notRequestedSection("events"));
-      }
-      if (include.has("loginSecurity")) {
-        try {
-          const userSecurity = await entityService.get("UserSecurity", partyId);
-          sectionData.loginSecurity = {
-            partyId,
-            canLogin: true,
-            hasCredentials: true,
-            username: userSecurity.Username ?? userSecurity.UserId ?? "unknown",
-            userSecurity
-          };
-          evidence.push(contractSectionStatus("loginSecurity", [{
-            source: "UserSecurity",
-            status: "queried",
-            filters: { id: partyId },
-            count: 1,
-            totalCount: 1
-          }]));
-        } catch (error2) {
-          if (error2 instanceof ImisNotFoundError) {
-            sectionData.loginSecurity = {
-              partyId,
-              canLogin: false,
-              hasCredentials: false,
-              message: "No login credentials found for this party."
-            };
-            evidence.push(contractSectionStatus("loginSecurity", [{
-              source: "UserSecurity",
-              status: "queried",
-              filters: { id: partyId },
-              count: 0,
-              totalCount: 0
-            }]));
-          } else {
-            sectionData.loginSecurity = {
-              partyId,
-              canLogin: false,
-              error: errorMessage5(error2)
-            };
-            evidence.push(contractSectionStatus("loginSecurity", [{
-              source: "UserSecurity",
-              status: "failed",
-              filters: { id: partyId },
-              count: 0,
-              totalCount: 0,
-              error: errorMessage5(error2)
-            }]));
-          }
-        }
-      } else {
-        evidence.push(notRequestedSection("loginSecurity"));
-      }
-      if (include.has("autoPay")) {
-        const [accounts, instructions, scheduledPayments] = await Promise.all([
-          readParty360PartyReferencedList(
-            "AutoPayAccount",
-            partyId,
-            ["Payer", "PayerId", "Customer", "CustomerId", "PartyId"],
-            50,
-            () => entityService.list("AutoPayAccount", { limit: 50 })
-          ),
-          readParty360PartyReferencedList(
-            "AutoPayInstruction",
-            partyId,
-            ["Customer", "CustomerId", "Payer", "PayerId", "PartyId"],
-            50,
-            () => entityService.list("AutoPayInstruction", { limit: 50 })
-          ),
-          readParty360PartyReferencedList(
-            "ScheduledPayment",
-            partyId,
-            ["Payer", "PayerId", "Customer", "CustomerId", "PartyId", "BillToParty", "BillToPartyId"],
-            50,
-            () => entityService.list("ScheduledPayment", { limit: 50 })
-          )
-        ]);
-        sectionData.autoPay = {
-          partyId,
-          accounts: {
-            count: accounts.value.items.length,
-            totalCount: accounts.value.totalCount,
-            items: accounts.value.items
-          },
-          instructions: {
-            count: instructions.value.items.length,
-            totalCount: instructions.value.totalCount,
-            items: instructions.value.items
-          },
-          scheduledPayments: {
-            count: scheduledPayments.value.items.length,
-            totalCount: scheduledPayments.value.totalCount,
-            items: scheduledPayments.value.items
-          },
-          note: "Auto-pay endpoints do not reliably expose flat PartyId filters, so imis_member_360 reads bounded rows and filters by Party references client-side."
-        };
-        evidence.push(contractSectionStatus("autoPay", [accounts.evidence, instructions.evidence, scheduledPayments.evidence]));
-      } else {
-        evidence.push(notRequestedSection("autoPay"));
-      }
-      if (include.has("certification")) {
-        const enrollments = await readParty360PartyReferencedList(
-          "CertificationProgramRegistration",
-          partyId,
-          ["Party", "PartyId"],
-          200,
-          () => entityService.list("CertificationProgramRegistration", { limit: 200 })
-        );
-        sectionData.certification = {
-          partyId,
-          enrollments: enrollments.value.items,
-          count: enrollments.value.items.length,
-          note: "CertificationProgramRegistration uses Party entity references, so imis_member_360 reads bounded rows and filters by Party reference client-side."
-        };
-        evidence.push(contractSectionStatus("certification", [enrollments.evidence]));
-      } else {
-        evidence.push(notRequestedSection("certification"));
-      }
-      if (include.has("communications")) {
-        const [preferences, history] = await Promise.all([
-          readCommunicationPreferences(entityService, partyId),
-          readCommunicationHistory(entityService, partyId, 10, iqaService)
-        ]);
-        sectionData.communications = {
-          partyId,
-          preferences: preferences.value,
-          history: history.value,
-          note: "Communication history first uses the server-filtered CommunicationLogRecipient endpoint by PartyId. If that endpoint is unavailable, imis_member_360 tries the Communication endpoint and then a bounded Communication log IQA fallback. Preference evidence comes from the Party record."
-        };
-        evidence.push(contractSectionStatus("communications", [preferences.evidence, ...history.evidence]));
-      } else {
-        evidence.push(notRequestedSection("communications"));
-      }
-      if (include.has("forms")) {
-        const forms = await readParty360Forms(entityService, partyId, 50);
-        sectionData.forms = forms.value;
-        evidence.push(contractSectionStatus("forms", forms.evidence));
-      } else {
-        evidence.push(notRequestedSection("forms"));
-      }
-      if (include.has("customPanels")) {
-        const customPanels = await readParty360CustomPanels(entityService, apiClient, partyId);
-        sectionData.customPanels = customPanels.value;
-        evidence.push(contractSectionStatus("customPanels", customPanels.evidence));
-      } else {
-        evidence.push(notRequestedSection("customPanels"));
-      }
-      if (include.has("duplicates")) {
-        const duplicates = await readParty360Duplicates(entityService, partyId);
-        sectionData.duplicates = duplicates.value;
-        evidence.push(contractSectionStatus("duplicates", duplicates.evidence));
-      } else {
-        evidence.push(notRequestedSection("duplicates"));
-      }
-      if (include.has("engagement")) {
-        const engagement = await readParty360Engagement(entityService, partyId, iqaService);
-        sectionData.engagement = engagement.value;
-        evidence.push(contractSectionStatus("engagement", engagement.evidence));
-      } else {
-        evidence.push(notRequestedSection("engagement"));
-      }
-      for (const frontier of PARTY_360_FRONTIER_SECTIONS) {
-        evidence.push(
-          include.has(frontier.section) ? frontier : { ...frontier, status: "not_requested", reason: "Section is not yet wired into imis_member_360 and was not requested." }
-        );
-      }
-      const contract = buildParty360Contract({
-        partyId,
-        payload: sectionData,
-        evidence,
-        requestedSections: Array.from(include),
-        defaultSections: [...PARTY_360_CURRENT_SECTIONS],
-        currentSections: [...PARTY_360_REQUESTABLE_SECTIONS]
-      });
-      return {
-        content: [{ type: "text", text: JSON.stringify(contract, null, 2) }]
-      };
-    })
-  );
-}
-
-// src/config/iqa-surface-catalog.ts
-var bo = (category, name, source, keyFields = [], description) => ({
-  category,
-  name,
-  kind: "businessObject",
-  source,
-  keyFields,
-  description
-});
-var query = (category, name, source, description) => ({
-  category,
-  name,
-  kind: "query",
-  source,
-  description
-});
-var IQA_SURFACE_CATALOG = [
-  bo("Common", "Contacts", "NetContactData", ["FullName", "ContactKey", "Email", "MemberType", "Status"], "Central contact demographics for individuals and organizations."),
-  bo("Common", "Donors", "GiftHistorySummaryBasic", ["ID", "FirstGiftDate", "LastGiftDate", "TotalGiving"], "Direct fundraising donor snapshot."),
-  bo("Common", "Event registrations", "CsRegistration", ["EventCode", "OrderNumber", "OrderDate", "Balance", "TotalCharges"], "Event registration transactions and balances."),
-  bo("Common", "Events", "CsEvent", ["EventCode", "Title", "BeginDate", "EndDate", "Registrants"], "Event catalog and high-level attendance data."),
-  bo("Common", "Gifts", "GiftsReceivedSummary", ["Amount", "DateReceived", "GiftType", "Fund", "FiscalYear"], "Donation gift summary for fundraising performance."),
-  bo("Common", "Orders", "CsOrders", ["OrderNumber", "OrderDate", "BillToId", "TotalCharges", "Stage"], "Commerce order header data."),
-  bo("Common", "Products", "CsProduct", ["ProductCode", "Title", "StandardPrice", "Category", "WebOption"], "Core product catalog."),
-  bo("Common", "Products (Commerce)", "CommerceProduct", ["ProductCode", "Title", "StandardPrice", "DiscountPrice", "PublishStartDate"], "Online commerce product catalog."),
-  query("Certification", "Component enrollments", "Component enrollments", "Requirements completed or registered for each program enrollee."),
-  query("Certification", "Components", "Components", "Certification components defined in the system."),
-  query("Certification", "Components in programs", "Components in programs", "Components used in each certification program."),
-  query("Certification", "Offerings", "Offerings", "Ways to complete certification requirements."),
-  query("Certification", "Program enrollments", "Program enrollments"),
-  query("Certification", "Programs", "Programs"),
-  query("Commerce", "Commerce products", "Commerce products"),
-  query("Commerce", "Order data", "Order data"),
-  query("Commerce", "Order lines", "Order lines"),
-  bo("Commerce", "Order lines (Basic)", "CsOrderLines", ["OrderNumber", "ProductCode", "LineNumber", "QuantityOrdered", "UnitPrice"], "Detailed commerce order items."),
-  bo("Commerce", "Order types", "CsOrderType"),
-  query("Commerce", "Promotion usages", "Promotion usages", "Orders which have a promotion applied."),
-  query("Commerce", "Promotion usages by item", "Promotion usages by item"),
-  query("Commerce", "Promotions", "Promotions"),
-  query("Contacts", "Activities", "Activities"),
-  bo("Contacts", "Addresses", "CsAddress", ["ID", "AddressNumber", "Address1", "City", "Email"], "Contact address rows."),
-  query("Contacts", "All contacts", "All contacts"),
-  query("Contacts", "Committee memberships", "Committee memberships"),
-  bo("Contacts", "Committee minutes", "CommitteeMinutes"),
-  bo("Contacts", "Committees", "Committee", ["ProductCode", "Title", "Description"], "Committee profiles and groups."),
-  query("Contacts", "Communication preferences", "Communication preferences", "Contact opt-in state by communication reason."),
-  bo("Contacts", "Contact notes", "CsNameNote"),
-  bo("Contacts", "CsContact", "CsContact", ["FullName", "ID", "Email", "MobilePhone", "MemberType"], "Individual and company contact lookup."),
-  bo("Contacts", "CsContactBasic", "CsContactBasic", ["FullName", "ID", "Email", "FirstName", "MemberType"], "Basic contact demographics."),
-  bo("Contacts", "Customer types", "CsMemberType"),
-  query("Contacts", "Individuals", "Individuals"),
-  query("Contacts", "Organization administrators", "Organization administrators"),
-  query("Contacts", "Organizations", "Organizations"),
-  query("Contacts", "Users", "Users"),
-  query("Events", "All event functions", "All event functions"),
-  query("Events", "Event function registrations", "Event function registrations", "Registrations for registration options and program items."),
-  query("Events", "Event invoice lines", "Event invoice lines"),
-  bo("Events", "Event invoices", "EventInvoice", ["InvoiceNumber", "InvoiceDate", "EventCode", "EventTitle", "TotalCharges"], "Event billing records."),
-  query("Events", "Event registration data", "Event registration data"),
-  query("Events", "Events list", "Events list"),
-  query("Events", "Program item registrations", "Program item registrations"),
-  query("Events", "Program items", "Program items"),
-  bo("Events", "Registrant details", "EventRegistrantsReport", ["FullName", "EventTitle", "Email", "OrderNumber", "RegistrationDate"], "Event registrant detail report."),
-  query("Events", "Registration option registrations", "Registration option registrations"),
-  query("Events", "Registration options", "Registration options"),
-  query("Finance", "Aging settings", "Aging settings"),
-  bo("Finance", "Batches", "BatchSummary"),
-  bo("Finance", "Financial entities", "CsOrg_Control"),
-  bo("Finance", "Invoice lines", "InvoiceLineData", ["InvoiceId", "InvoiceLineId", "ItemId", "Quantity", "UnitPrice"], "Invoice line item details."),
-  bo("Finance", "Invoice types", "InvoicePurpose", ["Code", "Description", "Name"], "Valid invoice purposes."),
-  bo("Finance", "Invoices", "InvoiceSummary", ["InvoiceNumber", "InvoiceDate", "InvoiceAmount", "PaymentAmount", "Description"], "Invoice billing summary."),
-  query("Finance", "Payment adjustments", "Payment adjustments"),
-  bo("Finance", "Payment applications", "PaymentApplication"),
-  bo("Finance", "Payment terms", "CsTerms"),
-  bo("Finance", "Payments", "PaymentSummary", ["PaymentId", "Amount", "PaymentDate", "PaymentStatusCode", "PaymentCategory"], "Payment records."),
-  query("Finance", "Total adjustment amount for payment", "Total adjustment amount for payment", "Sum of adjustments for each payment."),
-  bo("Finance", "Transaction Details", "TransactionDetail", ["EffectiveDate", "Amount", "GLAccount", "ProductCode"], "Transaction line detail."),
-  bo("Finance", "Transaction Summary", "TransactionSummary"),
-  bo("Fundraising", "Donations by fund and source code", "DonationPerformance", ["Fund", "SourceCode", "Amount", "DateReceived"], "Gift and pledge performance by fund/source."),
-  bo("Fundraising", "Donors", "GiftHistorySummaryBasic"),
-  bo("Fundraising", "Gift details", "Gift", ["Amount", "DateReceived", "GiftType", "Fund", "Campaign"], "Gift detail rows."),
-  query("Fundraising", "Gift items", "Gift items"),
-  bo("Fundraising", "Gift receipts", "Receipt", ["ReceiptNumber", "ReceiptKey", "IssuedOn", "IssuedToPartyId"], "Fundraising receipt records."),
-  bo("Fundraising", "Gift transactions", "GiftTransaction"),
-  bo("Fundraising", "Gifts", "GiftsReceivedSummary"),
-  query("Fundraising", "Gifts received for receipting", "Gifts received for receipting"),
-  bo("Fundraising", "Pledge details", "CsPledges", ["PledgeAmount", "NetAmount", "OutstandingBalance", "ReceiptDate"], "Future donation commitments."),
-  query("Fundraising", "Pledge installments", "Pledge installments"),
-  query("Fundraising", "Pledges", "Pledges"),
-  query("Fundraising", "Recurring donation enrollments", "Recurring donation enrollments"),
-  query("Fundraising", "Soft credits", "Soft credits"),
-  query("Fundraising", "Tributes", "Tributes"),
-  bo("Marketing", "Campaigns", "CsCampaign"),
-  query("Marketing", "Communication log", "Communication log", "One row per communication job."),
-  query("Marketing", "Communication log details", "Communication log details", "One row per communication recipient."),
-  query("Marketing", "Communication log events", "Communication log events", "Events associated with sent communications."),
-  bo("Marketing", "Source codes", "CsAppeal"),
-  query("Membership", "All active members", "All active members"),
-  query("Membership", "All non-members", "All non-members"),
-  query("Membership", "Automatic payment membership enrollments", "Automatic payment membership enrollments"),
-  bo("Membership", "Billing cycles", "BillingCycles"),
-  bo("Membership", "Billing fees", "BillingFees", ["BillToName", "Amount", "BillingCycleId", "BillingItemId", "BillingStatus"], "Membership billing fee rows."),
-  bo("Membership", "Billing logs", "BillingLogByParty", ["BillToName", "BillDate", "BillingCycle", "Amount", "Balance"], "Membership billing log rows by party."),
-  query("Membership", "Billing products", "Billing products"),
-  query("Membership", "Chapter memberships", "Chapter memberships"),
-  bo("Membership", "Chapters", "Chapter", ["ChapterName", "ProductCode", "ChapterCode"], "Membership chapter details."),
-  query("Membership", "Inactive members", "Inactive members"),
-  query("Membership", "Renewal invoices", "Renewal invoices"),
-  query("Membership", "Subscriptions", "Subscriptions"),
-  query("Scoring", "Current scores", "Current scores"),
-  bo("Scoring", "Engagement category", "EngagementCategory"),
-  bo("Scoring", "Engagement score formulas", "EngagementScoreFormula"),
-  query("Scoring", "Scores by month", "Scores by month"),
-  query("Scoring", "Scores by year", "Scores by year")
-];
-function searchIqaSurfaceCatalog(opts = {}) {
-  const terms = normalizeSearch(opts.search);
-  const category = opts.category?.toLowerCase();
-  const limit = opts.limit ?? 25;
-  return IQA_SURFACE_CATALOG.filter((entry) => !opts.kind || entry.kind === opts.kind).filter((entry) => !category || entry.category.toLowerCase() === category).map((entry) => ({ entry, score: scoreEntry(entry, terms) })).filter(({ score }) => terms.length === 0 || score > 0).sort(
-    (left, right) => right.score - left.score || left.entry.category.localeCompare(right.entry.category) || left.entry.name.localeCompare(right.entry.name)
-  ).slice(0, limit).map(({ entry }) => entry);
-}
-function iqaSurfaceCategories() {
-  return [...new Set(IQA_SURFACE_CATALOG.map((entry) => entry.category))].sort();
-}
-function normalizeSearch(search) {
-  return (search ?? "").toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
-}
-function scoreEntry(entry, terms) {
-  if (terms.length === 0) return 1;
-  const haystack = [
-    entry.category,
-    entry.name,
-    entry.kind,
-    entry.source,
-    entry.description ?? "",
-    ...entry.keyFields ?? []
-  ].join(" ").toLowerCase();
-  return terms.reduce((score, term) => score + (haystack.includes(term) ? 1 : 0), 0);
-}
+// src/services/fundraising-receipt.service.ts
+import { randomUUID as randomUUID3 } from "crypto";
 
 // src/services/iqd-builder.service.ts
 import fs2 from "fs";
@@ -32297,6 +29281,8 @@ var IqdBuilderService = class {
     return buildIqdQueryData(data.$value, normalized);
   }
   async createQuery(options) {
+    const folderResolution = await this.resolveIqdDefinitionFolderPath(options.folderPath);
+    const folderPath = folderResolution.folderPath;
     const validation = await this.validateQueryDesign(
       options.design,
       options.seedGraphPathOverride
@@ -32310,10 +29296,10 @@ ${validation.errors.join("\n")}`);
       normalized,
       options.seedGraphPathOverride
     );
-    const body = this.buildDocumentBody(normalized, options.folderPath, data);
+    const body = this.buildDocumentBody(normalized, folderPath, data);
     await this.validateDocument(body);
     const created = await this.client.post("Document", body);
-    const path3 = `${options.folderPath.replace(/\/+$/, "")}/${normalized.name}`;
+    const path3 = `${folderPath.replace(/\/+$/, "")}/${normalized.name}`;
     try {
       const queryDefinition = await this.findQueryDefinitionByPath(path3);
       const preview = await this.client.get("Query", {
@@ -32323,6 +29309,7 @@ ${validation.errors.join("\n")}`);
       });
       return {
         path: path3,
+        placement: folderResolution,
         created,
         queryDefinition,
         preview,
@@ -32333,6 +29320,7 @@ ${validation.errors.join("\n")}`);
         created,
         path: path3,
         validation,
+        placement: folderResolution,
         postWriteVerification: {
           ok: false,
           path: path3,
@@ -32340,6 +29328,67 @@ ${validation.errors.join("\n")}`);
         }
       };
     }
+  }
+  async resolveIqdDefinitionFolderPath(folderPath) {
+    const requestedFolderPath = folderPath.trim().replace(/\/+$/, "");
+    const { folderPath: resolvedFolderPath, correction } = normalizeIqdDefinitionFolderPath(requestedFolderPath);
+    const ensuredFolders = await this.ensureIqdDefinitionFolderPath(resolvedFolderPath);
+    return {
+      folderPath: resolvedFolderPath,
+      requestedFolderPath,
+      correction,
+      ensuredFolders
+    };
+  }
+  async ensureIqdDefinitionFolderPath(folderPath) {
+    const ensuredFolders = [];
+    const parts = folderPath.slice(2).split("/").filter(Boolean);
+    let current = "$";
+    for (const part of parts) {
+      const nextPath = `${current}/${part}`;
+      const existing = await this.findDocumentSummaryByPath(nextPath).catch(() => void 0);
+      if (existing) {
+        const documentTypeId = String(existing.DocumentTypeId ?? "");
+        if (documentTypeId !== "FOL") {
+          throw new Error(
+            `Cannot create IQD under '${nextPath}' because that path is '${documentTypeId}', not a definition folder (FOL).`
+          );
+        }
+        current = nextPath;
+        continue;
+      }
+      const body = {
+        $type: DOCUMENT_DATA_TYPE,
+        Name: part,
+        AlternateName: part,
+        DocumentTypeId: "FOL",
+        DocumentCode: "",
+        Path: current,
+        FolderPath: current,
+        IsFolder: true
+      };
+      await this.validateDocument(body);
+      ensuredFolders.push(await this.client.post("Document", body));
+      current = nextPath;
+    }
+    return ensuredFolders;
+  }
+  async findDocumentSummaryByPath(path3) {
+    const summary = await this.client.get("DocumentSummary", { Path: path3 });
+    const direct = this.documentSummaryItems(summary).find(
+      (item) => String(item.Path ?? "") === path3 || String(item.Name ?? "") === path3
+    );
+    if (direct) return direct;
+    const name = path3.slice(path3.lastIndexOf("/") + 1);
+    for (const documentTypeId of ["FOL", "IQD"]) {
+      const typed = await this.client.get("DocumentSummary", { DocumentTypeId: documentTypeId, Name: name });
+      const match = this.documentSummaryItems(typed).find((item) => String(item.Path ?? "") === path3);
+      if (match) return match;
+    }
+    return void 0;
+  }
+  documentSummaryItems(summary) {
+    return extractValues(summary.Items).filter((item) => !!item && typeof item === "object");
   }
   async loadSeedGraphData(seedGraphPath) {
     const seedGraph = await this.findQueryDefinitionByPath(seedGraphPath);
@@ -32365,16 +29414,16 @@ ${validation.errors.join("\n")}`);
     };
   }
   async findQueryDefinitionByPath(path3) {
-    const response = await this.client.post(
+    const response2 = await this.client.post(
       "QueryDefinition/_execute",
       buildExecuteBody("FindByPath", "QueryDefinition", [
         { $type: "System.String", $value: path3 }
       ], ["System.String"])
     );
-    if (!response.Result) {
+    if (!response2.Result) {
       throw new Error(`QueryDefinition '${path3}' was not found.`);
     }
-    return response.Result;
+    return response2.Result;
   }
   async validateDocument(body) {
     const validation = await this.client.post("Document/_validate", body);
@@ -32386,6 +29435,28 @@ ${JSON.stringify(errors, null, 2)}`);
     }
   }
 };
+function normalizeIqdDefinitionFolderPath(folderPath) {
+  const normalized = folderPath.trim().replace(/\/+$/, "");
+  if (normalized === "$" || normalized === "@" || normalized === "") {
+    throw new Error("IQD query definitions must be created in a subfolder under the '$/' definition tree.");
+  }
+  if (normalized.startsWith("$/")) {
+    return { folderPath: normalized };
+  }
+  if (normalized.startsWith("@/")) {
+    const corrected = `$/` + normalized.slice(2);
+    return {
+      folderPath: corrected,
+      correction: `Converted content-tree folder '${normalized}' to IQD definition-tree folder '${corrected}'.`
+    };
+  }
+  if (normalized.startsWith("~/")) {
+    throw new Error(
+      "IQD query definitions must be created under the '$/' definition tree. The '~/...' navigation tree cannot host IQD documents."
+    );
+  }
+  return { folderPath: `$/Common/Queries/${normalized.replace(/^\/+/, "")}` };
+}
 function buildIqdQueryData(seedGraphBase64, design) {
   const normalized = normalizeIqdQueryDesign(design);
   const name = normalized.name;
@@ -32546,7 +29617,7 @@ function normalizeIqdFilterDesign(filter, index) {
   return [
     {
       ...normalized,
-      value: normalizeFilterValueForCompare(filter.value, normalized.compare)
+      value: normalizeFilterValueForCompare(filter.value, normalized.compare ?? "equal")
     }
   ];
 }
@@ -32931,7 +30002,7 @@ function normalizeFilterValue(value) {
 function normalizeFilterValueForCompare(value, compare) {
   const normalizedCompare = normalizeCompareOperator(compare);
   if (Array.isArray(value)) {
-    return value.map((entry) => normalizeSingleFilterValueForCompare(entry, normalizedCompare));
+    return value.map((entry) => normalizeSingleFilterValueForCompare(entry, normalizedCompare)).filter((entry) => entry !== void 0);
   }
   return normalizeSingleFilterValueForCompare(value, normalizedCompare);
 }
@@ -33056,7 +30127,7 @@ function resolveIqdSourceDesign(sources, ref) {
   return source;
 }
 function sortDirectionValue(direction) {
-  const normalized = normalizeSortDirection(direction);
+  const normalized = normalizeSortDirection(direction ?? "ascending");
   if (typeof normalized === "number") return normalized;
   if (normalized === "descending") return 2;
   if (normalized === "random") return 3;
@@ -34864,11 +31935,6552 @@ function encodePrimitive(target, value) {
   }
 }
 
+// src/services/fundraising-receipt.service.ts
+var TASK_ADHOC_REQUEST_TYPE = "Asi.Soa.Communications.DataContracts.TaskAdhocRequest, Asi.Contracts";
+var TASK_DEFINITION_TYPE = "Asi.Soa.Communications.DataContracts.TaskDefinitionData, Asi.Contracts";
+var TASK_TRIGGER_COLLECTION_TYPE = "Asi.Soa.Communications.DataContracts.TaskDefinitionTriggerDataCollection, Asi.Contracts";
+var TASK_EVALUATION_COLLECTION_TYPE = "Asi.Soa.Communications.DataContracts.TaskDefinitionEvaluationDataCollection, Asi.Contracts";
+var TASK_ACTION_COLLECTION_TYPE = "Asi.Soa.Communications.DataContracts.TaskDefinitionActionDataCollection, Asi.Contracts";
+var TASK_NOTIFICATION_COLLECTION_TYPE = "Asi.Soa.Communications.DataContracts.NotificationDefinitionDataCollection, Asi.Contracts";
+var RECEIPT_ACTION_TYPE = "Asi.Soa.Communications.DataContracts.TaskDefinitionActionIssueReceiptsData, Asi.Contracts";
+var GENERIC_PROPERTY_COLLECTION_TYPE = "Asi.Soa.Core.DataContracts.GenericPropertyDataCollection, Asi.Contracts";
+var GENERIC_PROPERTY_TYPE = "Asi.Soa.Core.DataContracts.GenericPropertyData, Asi.Contracts";
+var GIFT_ADJUSTMENT_BATCH_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftAdjustmentBatchData, Asi.Contracts";
+var GIFT_ADJUSTMENT_COLLECTION_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftAdjustmentDataCollection, Asi.Contracts";
+var GIFT_ADJUSTMENT_DATA_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftAdjustmentData, Asi.Contracts";
+var IMPORT_BATCH_POST_REQUEST_TYPE = "Asi.Soa.Core.DataContracts.ImportBatchPostRequest, Asi.Contracts";
+var REMITTANCE_TYPE = "Asi.Soa.Commerce.DataContracts.RemittanceData, Asi.Contracts";
+var DEFAULT_RECEIPT_CANDIDATE_QUERY_FOLDER = "$/Common/Queries/CodexRE";
+var DEFAULT_RECEIPT_CANDIDATE_QUERY_NAME = "iFINITY Receipt Candidate By Payment";
+var DEFAULT_RECEIPT_CANDIDATE_QUERY_PATH = `${DEFAULT_RECEIPT_CANDIDATE_QUERY_FOLDER}/${DEFAULT_RECEIPT_CANDIDATE_QUERY_NAME}`;
+var NATIVE_ISSUE_RECEIPTS_QUERY_PATH = "$/Fundraising/DefaultSystem/Queries/Receipts/Issue receipts/Default";
+var NATIVE_REISSUE_VOID_RECEIPTS_QUERY_PATH = "$/Fundraising/DefaultSystem/Queries/Receipts/Reissue void receipts/Default";
+var DEFAULT_RECEIPT_TEMPLATE_NAME = "Gift Receipt Template";
+var DEFAULT_REPLACEMENT_RECEIPT_TEMPLATE_NAME = "Gift Replacement Receipt Template";
+var FundraisingReceiptService = class {
+  constructor(entityService, apiClient, iqaService, iqdBuilder = new IqdBuilderService(apiClient)) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+    this.iqaService = iqaService;
+    this.iqdBuilder = iqdBuilder;
+  }
+  async issueGiftReceipt(input) {
+    const paymentId = normalizedRequired(input.paymentId, "paymentId");
+    const deliveryMode = input.deliveryMode ?? "issue_only";
+    const queryStatus = await this.ensureReceiptCandidateQuery();
+    const payment = await this.entityService.get("PaymentSummary", paymentId);
+    const payorPartyId = stringValue6(nestedObject5(payment.PayorParty)?.PartyId);
+    if (!payorPartyId) {
+      throw new Error(`PaymentSummary/${paymentId} did not expose PayorParty.PartyId.`);
+    }
+    const candidates = await this.waitForCandidates(paymentId);
+    if (candidates.length !== 1) {
+      const existingReceipts = await this.readMatchingReceipts(payorPartyId, paymentId);
+      throw new Error(
+        `Payment ${paymentId} is not exactly one unreceipted candidate. Candidate count=${candidates.length}; existing matching receipts=${existingReceipts.length}.`
+      );
+    }
+    const candidate = candidates[0];
+    const nativeEmailQuery = deliveryMode === "email" ? await this.resolveNativeEmailQuery(candidate, paymentId) : void 0;
+    const confirmation = confirmationText(paymentId, deliveryMode);
+    const templateId = input.communicationTemplateId?.trim() || await this.resolveReceiptTemplateVersionId();
+    const receiptCulture = input.receiptCulture?.trim() || process.env.FUNDRAISING_RECEIPT_CULTURE?.trim() || "en-GB";
+    const action = buildReceiptActionInput({
+      paymentId,
+      deliveryMode,
+      nativeEmailQuery
+    });
+    const preview = {
+      version: "imis_issue_gift_receipt.v1",
+      mode: input.mode,
+      status: "ready",
+      deliveryMode,
+      payment: paymentSummary(payment),
+      candidate,
+      supportQuery: queryStatus,
+      nativeEmailQuery,
+      receiptAction: {
+        endpoint: "TaskDefinition/_execute",
+        operationName: action.operationName,
+        communicationTemplateId: templateId,
+        receiptCulture,
+        sendCommunication: deliveryMode === "email",
+        queryName: action.queryPath,
+        queryParameters: action.queryParameters
+      },
+      confirmationText: confirmation,
+      boundaries: [
+        deliveryMode === "email" ? "Issues the iMIS receipt and requests native iMIS receipt email communication through the default Issue receipts query. Delivery events may still report SMTP/template failures from iMIS." : "Issues an iMIS receipt only; it does not send email or gateway/card communication.",
+        "Requires the service-owned receipt candidate IQD to return exactly one unreceipted row for the payment. Email mode also requires the native Issue receipts IQA to return exactly one matching payment for the derived donor/date/item scope.",
+        "Receipt reissue, void, resend, replacement receipt, and post-send delivery management are not exposed by this tool."
+      ]
+    };
+    if (input.mode === "preview") {
+      return preview;
+    }
+    if (input.confirmationText !== confirmation) {
+      throw new Error(`confirmationText must exactly match: ${confirmation}`);
+    }
+    const beforeReceipts = await this.readReceipts(payorPartyId);
+    const beforeCommunications = await this.readCommunications(payorPartyId);
+    const beforeTaskLogs = await this.readTaskLogs();
+    const executeResponse = await this.apiClient.post("TaskDefinition/_execute", {
+      $type: TASK_ADHOC_REQUEST_TYPE,
+      EntityTypeName: "TaskDefinition",
+      OperationName: "TaskAdhocRequest",
+      Task: buildReceiptTask({
+        queryPath: DEFAULT_RECEIPT_CANDIDATE_QUERY_PATH,
+        paymentId,
+        communicationTemplateId: templateId,
+        receiptCulture,
+        deliveryMode,
+        nativeEmailQuery
+      })
+    });
+    const after = await this.pollReceiptResult(
+      payorPartyId,
+      paymentId,
+      beforeReceipts,
+      beforeCommunications,
+      beforeTaskLogs,
+      deliveryMode === "email"
+    );
+    if (after.newReceipts.length === 0) {
+      throw new Error(`TaskDefinition/_execute returned ${JSON.stringify(executeResponse)}, but no new receipt was created for payment ${paymentId}.`);
+    }
+    if (deliveryMode === "email" && after.newCommunications.length === 0) {
+      throw new Error(`TaskDefinition/_execute issued receipt for payment ${paymentId}, but iMIS did not create a CommunicationLogRecipient. Do not treat this as sent.`);
+    }
+    return {
+      ...preview,
+      mode: "submit",
+      status: deliveryMode === "email" ? "issued_email_requested" : "issued",
+      executeResponse,
+      proof: {
+        receiptCreated: true,
+        communicationCreated: after.newCommunications.length > 0,
+        candidateScopedToPayment: true,
+        nativeEmailCandidateScopedToPayment: nativeEmailQuery?.candidateCount === 1 && nativeEmailQuery?.matchingPaymentId === paymentId,
+        newReceiptCount: after.newReceipts.length,
+        matchingReceiptCount: after.matchingReceipts.length,
+        newCommunicationCount: after.newCommunications.length,
+        newTaskLogCount: after.newTaskLogs.length
+      },
+      receipts: after.matchingReceipts,
+      newReceipts: after.newReceipts,
+      newCommunications: after.newCommunications.map(communicationSummary),
+      taskLogs: after.newTaskLogs
+    };
+  }
+  async adjustReceiptedGift(input) {
+    const invoiceReferenceNumber = normalizedRequired(input.invoiceReferenceNumber, "invoiceReferenceNumber").replace(/^R/i, "");
+    const adjustedGiftDate = imisDate(input.adjustedGiftDate, "adjustedGiftDate");
+    const adjustmentReason = normalizedRequired(input.adjustmentReason, "adjustmentReason");
+    const replacementReceiptDeliveryMode = input.replacementReceiptDeliveryMode ?? "none";
+    const detail = await this.readGiftDetails(invoiceReferenceNumber);
+    const donor = nestedObject5(detail.Donor);
+    const partyId = stringValue6(donor?.PartyId) ?? stringValue6(donor?.Id);
+    if (!partyId) {
+      throw new Error(`GiftDetails for invoice ${invoiceReferenceNumber} did not expose Donor.PartyId.`);
+    }
+    const receiptNumbers = collectionValues4(detail.ReceiptNumbers).map((value) => stringValue6(value)).filter((value) => Boolean(value));
+    if (receiptNumbers.length === 0) {
+      throw new Error(`Invoice ${invoiceReferenceNumber} is not a receipted gift; no ReceiptNumbers were available.`);
+    }
+    const beforeReceipts = await this.readReceipts(partyId);
+    const originalReceipts = beforeReceipts.filter(
+      (receipt) => receiptNumbers.includes(stringValue6(receipt.ReceiptNumber) ?? "")
+    );
+    if (originalReceipts.length === 0) {
+      throw new Error(`Could not read receipt ${receiptNumbers.join(", ")} for invoice ${invoiceReferenceNumber}.`);
+    }
+    const paymentIds = uniqueStrings2(originalReceipts.flatMap(
+      (receipt) => collectionValues4(nestedObject5(receipt.ReceiptLines)?.$values ?? receipt.ReceiptLines).map((line) => stringValue6(nestedObject5(line)?.PaymentId))
+    ));
+    if (paymentIds.length !== 1) {
+      throw new Error(`Expected exactly one PaymentId across receipt ${receiptNumbers.join(", ")}, found ${paymentIds.length}.`);
+    }
+    const paymentId = paymentIds[0];
+    const confirmation = adjustConfirmationText(invoiceReferenceNumber, adjustedGiftDate, replacementReceiptDeliveryMode);
+    const preview = {
+      version: "imis_adjust_receipted_gift.v1",
+      mode: input.mode,
+      status: "ready",
+      invoiceReferenceNumber,
+      paymentId,
+      originalGift: giftDetailsSummary(detail),
+      originalReceipts: originalReceipts.map(receiptSummary),
+      adjustment: {
+        endpoint: "GiftAdjustmentBatch + ImportBatch/_execute Post",
+        adjustedGiftDate,
+        adjustmentReason
+      },
+      replacementReceiptDeliveryMode,
+      confirmationText: confirmation,
+      boundaries: [
+        "Adjusts the receipted gift through iMIS GiftAdjustmentBatch and ImportBatch posting; this is not raw Receipt mutation.",
+        "Current public adjustment support is limited to changing the gift date on one receipted gift invoice.",
+        replacementReceiptDeliveryMode === "issue_only" ? "After the adjustment creates the replacement gift candidate, the tool issues the replacement receipt without communication through the existing one-payment receipt workflow." : "Replacement receipt issuing is skipped; the adjusted gift can be receipted later with imis_issue_gift_receipt."
+      ]
+    };
+    if (input.mode === "preview") {
+      return preview;
+    }
+    if (input.confirmationText !== confirmation) {
+      throw new Error(`confirmationText must exactly match: ${confirmation}`);
+    }
+    const batchUserId = await this.resolveBatchUserId(input.batchUserId);
+    const beforeLogs = await this.readGiftAdjustmentLogs(invoiceReferenceNumber);
+    const batch = await this.apiClient.post("GiftAdjustmentBatch", {
+      $type: GIFT_ADJUSTMENT_BATCH_TYPE,
+      BatchType: "GiftAdjustment",
+      BatchDate: adjustedGiftDate,
+      UserId: batchUserId
+    });
+    const batchId = normalizedRequired(stringValue6(batch.BatchId), "GiftAdjustmentBatch.BatchId");
+    const adjustmentRow = buildGiftAdjustmentRow({
+      detail,
+      invoiceReferenceNumber,
+      adjustedGiftDate,
+      adjustmentReason
+    });
+    const addResult = await this.apiClient.post("GiftAdjustmentBatch", {
+      $type: GIFT_ADJUSTMENT_BATCH_TYPE,
+      BatchId: batchId,
+      Adjustments: {
+        $type: GIFT_ADJUSTMENT_COLLECTION_TYPE,
+        $values: [adjustmentRow]
+      }
+    });
+    const postResult = await this.apiClient.post("ImportBatch/_execute", {
+      $type: IMPORT_BATCH_POST_REQUEST_TYPE,
+      EntityTypeName: "ImportBatch",
+      OperationName: "Post",
+      BatchId: batchId,
+      RunInBackground: false
+    });
+    if (!importBatchPostSucceeded(postResult)) {
+      throw new Error(`GiftAdjustmentBatch "${batchId}" failed to post through ImportBatch/_execute: ${stringValue6(postResult) ?? JSON.stringify(postResult)}`);
+    }
+    const adjustmentProof = await this.pollGiftAdjustmentResult({
+      invoiceReferenceNumber,
+      partyId,
+      originalReceiptIds: originalReceipts.map((receipt) => stringValue6(receipt.ReceiptId)).filter((value) => Boolean(value)),
+      beforeLogs
+    });
+    let replacementReceipt;
+    if (replacementReceiptDeliveryMode === "issue_only") {
+      const replacementPreview = await this.issueGiftReceipt({
+        mode: "preview",
+        paymentId,
+        deliveryMode: "issue_only"
+      });
+      replacementReceipt = await this.issueGiftReceipt({
+        mode: "submit",
+        paymentId,
+        deliveryMode: "issue_only",
+        confirmationText: stringValue6(replacementPreview.confirmationText)
+      });
+    }
+    const finalReceipts = await this.readReceipts(partyId);
+    const relatedReceipts = relatedReceiptRows(finalReceipts, originalReceipts, paymentId);
+    return {
+      ...preview,
+      mode: "submit",
+      status: replacementReceiptDeliveryMode === "issue_only" ? "adjusted_replacement_issued" : "adjusted",
+      batch: {
+        batchId,
+        batchUserId,
+        createResult: batchSummary(batch),
+        addResult: batchSummary(addResult),
+        postResult
+      },
+      proof: {
+        giftAdjustmentPosted: true,
+        giftAdjustmentLogCreated: adjustmentProof.newLogs.length > 0,
+        originalReceiptVoided: adjustmentProof.originalReceipts.every((receipt) => [2, 4].includes(numberValue4(receipt.ReceiptStatus))),
+        replacementReceiptIssued: replacementReceiptDeliveryMode === "issue_only" ? relatedReceipts.some(
+          (receipt) => originalReceipts.some(
+            (original) => stringValue6(receipt.AssociatedReceiptId) === stringValue6(original.ReceiptId)
+          )
+        ) : false,
+        newInvoiceReferenceNumber: adjustmentProof.newInvoiceReferenceNumber
+      },
+      adjustmentLogs: adjustmentProof.newLogs,
+      receipts: relatedReceipts.map(receiptSummary),
+      replacementReceipt
+    };
+  }
+  async manageGiftReceipt(input) {
+    const operation = input.operation;
+    const receipt = await this.resolveReceipt(input);
+    const receiptId = normalizedRequired(stringValue6(receipt.ReceiptId), "Receipt.ReceiptId");
+    const receiptNumber = normalizedRequired(stringValue6(receipt.ReceiptNumber), "Receipt.ReceiptNumber");
+    const partyId = normalizedRequired(stringValue6(receipt.IssuedToPartyId), "Receipt.IssuedToPartyId");
+    const receiptStatus = numberValue4(receipt.ReceiptStatus);
+    const paymentIds = receiptPaymentIds(receipt);
+    if (paymentIds.length !== 1) {
+      throw new Error(`Expected exactly one PaymentId on receipt ${receiptNumber}, found ${paymentIds.length}.`);
+    }
+    const paymentId = paymentIds[0];
+    if ((operation === "void" || operation === "void_and_reissue") && [2, 4].includes(receiptStatus)) {
+      throw new Error(`Receipt ${receiptNumber} is already ${receiptStatusName(receiptStatus)} and cannot be voided again.`);
+    }
+    if (operation === "reissue_voided" && receiptStatus !== 2) {
+      throw new Error(`Receipt ${receiptNumber} must be Void before reissue; current status is ${receiptStatusName(receiptStatus)}.`);
+    }
+    const receiptCulture = input.receiptCulture?.trim() || process.env.FUNDRAISING_RECEIPT_CULTURE?.trim() || "en-GB";
+    const communicationTemplateId = input.communicationTemplateId?.trim() || (operation === "void" ? void 0 : await this.resolveReceiptTemplateVersionId(DEFAULT_REPLACEMENT_RECEIPT_TEMPLATE_NAME));
+    const reissueQuery = operation === "reissue_voided" ? await this.resolveReissueVoidQuery(receipt, paymentId) : void 0;
+    const confirmation = manageReceiptConfirmationText(operation, receiptNumber, paymentId);
+    const preview = {
+      version: "imis_manage_gift_receipt.v1",
+      mode: input.mode,
+      status: "ready",
+      operation,
+      receipt: receiptSummary(receipt),
+      paymentId,
+      receiptStatus: {
+        code: receiptStatus,
+        name: receiptStatusName(receiptStatus)
+      },
+      receiptAction: operation === "void" ? {
+        endpoint: "Receipt/_execute",
+        operationName: "Receipt",
+        receiptTask: "AssignReceiptStatus",
+        assignedStatus: "Void"
+      } : {
+        endpoint: "TaskDefinition/_execute",
+        operationName: "GenerateDoNotEmail",
+        queryName: NATIVE_REISSUE_VOID_RECEIPTS_QUERY_PATH,
+        communicationTemplateId,
+        receiptCulture,
+        queryParameters: reissueQuery?.queryParameters ?? "resolved after void"
+      },
+      reissueQuery,
+      confirmationText: confirmation,
+      boundaries: [
+        "This is a pure receipt lifecycle workflow. It does not adjust gift, payment, invoice, or GiftAdjustmentBatch financial records.",
+        operation === "void" ? "Voids one existing issued receipt through Receipt/_execute and proves the Receipt status readback." : "Reissues a voided receipt through the native Reissue void receipts IQA plus TaskDefinition/_execute, then proves associated replacement receipt and communication/task readback.",
+        "Direct PaymentSummary/_execute IssueReplacementReceiptRequest remains blocked by iMIS required-permission 403 on the live tenant; this tool does not use it."
+      ]
+    };
+    if (input.mode === "preview") {
+      return preview;
+    }
+    if (input.confirmationText !== confirmation) {
+      throw new Error(`confirmationText must exactly match: ${confirmation}`);
+    }
+    const beforeReceipts = await this.readReceipts(partyId);
+    const beforeCommunications = await this.readCommunications(partyId);
+    const beforeTaskLogs = await this.readTaskLogs();
+    let voidResponse;
+    let voidedReceipt = receipt;
+    if (operation === "void" || operation === "void_and_reissue") {
+      voidResponse = await this.voidReceipt(receiptId);
+      voidedReceipt = await this.pollReceiptStatus(partyId, receiptId, [2]);
+      if (numberValue4(voidedReceipt.ReceiptStatus) !== 2) {
+        throw new Error(`Receipt ${receiptNumber} did not read back as Void after Receipt/_execute.`);
+      }
+    }
+    if (operation === "void") {
+      const afterReceipts = await this.readReceipts(partyId);
+      return {
+        ...preview,
+        mode: "submit",
+        status: "voided",
+        executeResponse: voidResponse,
+        proof: {
+          receiptVoided: numberValue4(voidedReceipt.ReceiptStatus) === 2,
+          originalReceiptStatus: numberValue4(voidedReceipt.ReceiptStatus),
+          newReceiptCount: newRows(beforeReceipts, afterReceipts, "ReceiptId").length
+        },
+        receipts: afterReceipts.filter((row) => stringValue6(row.ReceiptId) === receiptId).map(receiptSummary)
+      };
+    }
+    const resolvedReissueQuery = await this.resolveReissueVoidQuery(voidedReceipt, paymentId);
+    const executeResponse = await this.apiClient.post("TaskDefinition/_execute", {
+      $type: TASK_ADHOC_REQUEST_TYPE,
+      EntityTypeName: "TaskDefinition",
+      OperationName: "TaskAdhocRequest",
+      Task: buildReceiptTaskFromAction({
+        name: `iFINITY reissue gift receipt ${receiptNumber}`,
+        description: "iFINITY one-receipt replacement task",
+        action: {
+          operationName: "GenerateDoNotEmail",
+          queryPath: NATIVE_REISSUE_VOID_RECEIPTS_QUERY_PATH,
+          queryParameters: nestedStringRecord(resolvedReissueQuery.queryParameters)
+        },
+        communicationTemplateId: normalizedRequired(communicationTemplateId, "communicationTemplateId"),
+        receiptCulture
+      })
+    });
+    const replacement = await this.pollReplacementReceiptResult({
+      partyId,
+      paymentId,
+      originalReceiptId: receiptId,
+      beforeReceipts,
+      beforeCommunications,
+      beforeTaskLogs
+    });
+    if (!replacement.replacementReceipt) {
+      throw new Error(`TaskDefinition/_execute returned ${JSON.stringify(executeResponse)}, but no replacement receipt was created for receipt ${receiptNumber}.`);
+    }
+    return {
+      ...preview,
+      mode: "submit",
+      status: operation === "void_and_reissue" ? "voided_reissued" : "reissued",
+      voidExecuteResponse: voidResponse,
+      executeResponse,
+      reissueQuery: resolvedReissueQuery,
+      proof: {
+        receiptVoided: replacement.originalReceipt ? [2, 4].includes(numberValue4(replacement.originalReceipt.ReceiptStatus)) : false,
+        originalReceiptStatus: numberValue4(replacement.originalReceipt?.ReceiptStatus),
+        replacementReceiptCreated: Boolean(replacement.replacementReceipt),
+        replacementAssociatedToOriginal: stringValue6(replacement.replacementReceipt?.AssociatedReceiptId) === receiptId,
+        replacementCommunicationCreated: Boolean(stringValue6(replacement.replacementReceipt?.AttachedToCommunicationLogRecipientId)),
+        newReceiptCount: replacement.newReceipts.length,
+        newCommunicationCount: replacement.newCommunications.length,
+        newTaskLogCount: replacement.newTaskLogs.length
+      },
+      receipts: replacement.relatedReceipts.map(receiptSummary),
+      replacementReceipt: receiptSummary(replacement.replacementReceipt),
+      newCommunications: replacement.newCommunications.map(communicationSummary),
+      taskLogs: replacement.newTaskLogs
+    };
+  }
+  async giftReceiptDeliveryStatus(input) {
+    const receipt = await this.resolveReceipt(input);
+    const partyId = normalizedRequired(stringValue6(receipt.IssuedToPartyId), "Receipt.IssuedToPartyId");
+    const communicationLogRecipientId = stringValue6(receipt.AttachedToCommunicationLogRecipientId);
+    const paymentIds = receiptPaymentIds(receipt);
+    if (!communicationLogRecipientId) {
+      return {
+        version: "imis_gift_receipt_delivery_status.v1",
+        status: "not_requested",
+        receipt: receiptSummary(receipt),
+        paymentIds,
+        delivery: {
+          state: "not_requested",
+          communicationLogRecipientId: null,
+          eventCount: 0,
+          failureReasons: [],
+          latestEvent: null
+        },
+        proof: {
+          receiptRead: true,
+          attachedCommunicationFound: false,
+          eventRowsRead: false
+        },
+        boundaries: [
+          "This is receipt-specific delivery readback only. It does not resend email, mutate receipts, or change communication preferences.",
+          "A receipt without AttachedToCommunicationLogRecipientId was issued without native iMIS communication, or iMIS has not linked a communication to it."
+        ]
+      };
+    }
+    const recipient = await this.readCommunicationRecipientById(communicationLogRecipientId, partyId);
+    const events = await this.readCommunicationEvents(communicationLogRecipientId);
+    const communicationLogId = stringValue6(nestedObject5(recipient.CommunicationLog)?.CommunicationLogId);
+    const taskLog = await this.readReceiptTaskLogForCommunication(communicationLogId);
+    const embeddedEvents = collectionValues4(nestedObject5(recipient.Events)?.$values ?? recipient.Events).map((event) => nestedObject5(event)).filter((event) => Boolean(event));
+    const allEvents = events.length > 0 ? events : embeddedEvents;
+    const failureReasons = uniqueStrings2([
+      stringValue6(recipient.LastStatusReason),
+      ...allEvents.map((event) => stringValue6(event.EventReason)),
+      ...taskLog.failureReasons
+    ].filter((reason) => reason && /fail|error|bounce|drop|reject|not properly generated|void and re-issue/i.test(reason)));
+    const latestEvent = latestEventSummary(allEvents);
+    const state = failureReasons.length > 0 ? "failed" : allEvents.length > 0 ? "logged_no_failure" : "pending_or_unknown";
+    return {
+      version: "imis_gift_receipt_delivery_status.v1",
+      status: state,
+      receipt: receiptSummary(receipt),
+      paymentIds,
+      delivery: {
+        state,
+        communicationLogRecipientId,
+        address: stringValue6(recipient.Address),
+        communication: communicationSummary(recipient),
+        eventCount: allEvents.length,
+        events: allEvents.map(communicationEventSummary),
+        latestEvent,
+        failureReasons,
+        taskLog: taskLog.summary,
+        remediation: taskLog.recommendsVoidReissue && ![2, 4].includes(numberValue4(receipt.ReceiptStatus)) ? {
+          availableTool: "imis_manage_gift_receipt",
+          operation: "void_and_reissue",
+          reason: "The iMIS receipt task log recommends voiding and re-issuing this receipt with a valid communication template."
+        } : void 0
+      },
+      proof: {
+        receiptRead: true,
+        attachedCommunicationFound: true,
+        eventRowsRead: events.length > 0,
+        taskLogRead: Boolean(taskLog.summary?.taskActionLogId),
+        taskLogDetailsRead: Boolean(taskLog.summary?.taskLogDetail) || Boolean(taskLog.summary?.actionDetailsCount),
+        directEventEndpoint: "CommunicationLogEvent?CommunicationLogRecipientId=<id>"
+      },
+      boundaries: [
+        "This is receipt-specific delivery readback only. It does not resend email, mutate receipts, or change communication preferences.",
+        "Delivery state is based on iMIS CommunicationLogRecipient, CommunicationLogEvent, and receipt TaskActionLog readback. SMTP/provider failures remain iMIS-side operational facts."
+      ]
+    };
+  }
+  async ensureReceiptCandidateQuery() {
+    try {
+      await this.iqdBuilder.findQueryDefinitionByPath(DEFAULT_RECEIPT_CANDIDATE_QUERY_PATH);
+      return { path: DEFAULT_RECEIPT_CANDIDATE_QUERY_PATH, created: false };
+    } catch {
+      const result = await this.iqdBuilder.createQuery({
+        design: receiptCandidateQueryDesign(),
+        folderPath: DEFAULT_RECEIPT_CANDIDATE_QUERY_FOLDER,
+        previewParameters: { PaymentId: "0" },
+        limit: 1
+      });
+      return { path: DEFAULT_RECEIPT_CANDIDATE_QUERY_PATH, created: true, result };
+    }
+  }
+  async readCandidates(paymentId) {
+    const result = await this.iqaService.executeQueryV2(DEFAULT_RECEIPT_CANDIDATE_QUERY_PATH, {
+      limit: 2,
+      parameters: { PaymentId: paymentId }
+    });
+    return result.items.map((row) => receiptCandidate(row)).filter((candidate) => candidate.paymentId === paymentId);
+  }
+  async resolveNativeEmailQuery(candidate, paymentId) {
+    const queryParameters = nativeIssueReceiptsQueryParameters(candidate);
+    const result = await this.iqaService.executeQueryV2(NATIVE_ISSUE_RECEIPTS_QUERY_PATH, {
+      limit: 3,
+      parameters: queryParameters
+    });
+    const nativeCandidates = result.items.map((row) => receiptCandidate(row));
+    const matching = nativeCandidates.filter((row) => row.paymentId === paymentId);
+    if (result.items.length !== 1 || matching.length !== 1) {
+      throw new Error(
+        `Email receipt mode could not safely scope the native Issue receipts query to payment ${paymentId}. Native candidate count=${result.items.length}; matching count=${matching.length}. Use issue_only mode or narrow the payment through native Staff receipting.`
+      );
+    }
+    return {
+      queryName: NATIVE_ISSUE_RECEIPTS_QUERY_PATH,
+      queryParameters,
+      candidateCount: result.items.length,
+      matchingPaymentId: matching[0].paymentId,
+      candidate: matching[0]
+    };
+  }
+  async resolveReissueVoidQuery(receipt, paymentId) {
+    const receiptId = normalizedRequired(stringValue6(receipt.ReceiptId), "Receipt.ReceiptId");
+    const candidates = await this.iqaService.executeQueryV2(NATIVE_REISSUE_VOID_RECEIPTS_QUERY_PATH, {
+      limit: 50
+    });
+    const matching = candidates.items.map((row) => reissueVoidCandidate(row)).filter(
+      (candidate) => candidate.paymentId === paymentId && (candidate.receiptKey === receiptId || candidate.associatedReceiptKey === receiptId)
+    );
+    if (matching.length !== 1) {
+      throw new Error(
+        `Native Reissue void receipts query did not return exactly one candidate for receipt ${stringValue6(receipt.ReceiptNumber) ?? receiptId} and payment ${paymentId}. Matching count=${matching.length}; sampled count=${candidates.items.length}.`
+      );
+    }
+    const queryParameters = nativeReissueVoidReceiptsQueryParameters(matching[0]);
+    const scoped = await this.iqaService.executeQueryV2(NATIVE_REISSUE_VOID_RECEIPTS_QUERY_PATH, {
+      limit: 3,
+      parameters: queryParameters
+    });
+    const scopedMatches = scoped.items.map((row) => reissueVoidCandidate(row)).filter(
+      (candidate) => candidate.paymentId === paymentId && (candidate.receiptKey === receiptId || candidate.associatedReceiptKey === receiptId)
+    );
+    if (scoped.items.length !== 1 || scopedMatches.length !== 1) {
+      throw new Error(
+        `Native Reissue void receipts query could not be safely scoped to receipt ${stringValue6(receipt.ReceiptNumber) ?? receiptId}. Scoped count=${scoped.items.length}; matching count=${scopedMatches.length}.`
+      );
+    }
+    return {
+      queryName: NATIVE_REISSUE_VOID_RECEIPTS_QUERY_PATH,
+      queryParameters,
+      candidateCount: scoped.items.length,
+      matchingPaymentId: scopedMatches[0].paymentId,
+      matchingReceiptId: scopedMatches[0].receiptKey,
+      candidate: scopedMatches[0]
+    };
+  }
+  async waitForCandidates(paymentId) {
+    let candidates = await this.readCandidates(paymentId);
+    for (let attempt = 0; attempt < 30 && candidates.length === 0; attempt += 1) {
+      await new Promise((resolve2) => setTimeout(resolve2, 2e3));
+      candidates = await this.readCandidates(paymentId);
+    }
+    return candidates;
+  }
+  async resolveReceiptTemplateVersionId(templateName = DEFAULT_RECEIPT_TEMPLATE_NAME) {
+    const byName = await this.apiClient.get("DocumentSummary", { Name: templateName }).catch(() => void 0);
+    const candidates = collectionValues4(byName?.Items);
+    const match = candidates.map((candidate) => nestedObject5(candidate)).find(
+      (candidate) => stringValue6(candidate?.Name) === templateName && stringValue6(candidate?.DocumentVersionId)
+    );
+    const versionId = stringValue6(match?.DocumentVersionId);
+    if (!versionId) {
+      throw new Error(`Could not resolve ${templateName} DocumentVersionId. Pass communicationTemplateId explicitly.`);
+    }
+    return versionId;
+  }
+  async pollReceiptResult(partyId, paymentId, beforeReceipts, beforeCommunications, beforeTaskLogs, expectCommunication = false) {
+    let receipts = beforeReceipts;
+    let communications = beforeCommunications;
+    let taskLogs = beforeTaskLogs;
+    for (let attempt = 0; attempt < 15; attempt += 1) {
+      await new Promise((resolve2) => setTimeout(resolve2, 2e3));
+      receipts = await this.readReceipts(partyId);
+      communications = await this.readCommunications(partyId);
+      taskLogs = await this.readTaskLogs();
+      const newReceiptRows = newRows(beforeReceipts, receipts, "ReceiptId");
+      const receiptFound = matchingPayment(newReceiptRows, paymentId).length > 0;
+      const communicationFound = newRows(beforeCommunications, communications, "CommunicationLogRecipientId").length > 0;
+      if (receiptFound && (!expectCommunication || communicationFound)) break;
+    }
+    return {
+      newReceipts: newRows(beforeReceipts, receipts, "ReceiptId"),
+      matchingReceipts: matchingPayment(receipts, paymentId),
+      newCommunications: newRows(beforeCommunications, communications, "CommunicationLogRecipientId"),
+      newTaskLogs: newRows(beforeTaskLogs, taskLogs, "TaskActionLogId")
+    };
+  }
+  async readReceipts(partyId) {
+    return (await this.entityService.list("Receipt", {
+      limit: 100,
+      params: { IssuedToPartyId: partyId }
+    })).items;
+  }
+  async readMatchingReceipts(partyId, paymentId) {
+    return matchingPayment(await this.readReceipts(partyId), paymentId);
+  }
+  async resolveReceipt(input) {
+    const receiptId = input.receiptId?.trim();
+    if (receiptId) {
+      return await this.entityService.get("Receipt", receiptId);
+    }
+    const receiptNumber = normalizedRequired(input.receiptNumber, "receiptNumber");
+    const partyId = normalizedRequired(input.partyId, "partyId");
+    const matches = (await this.readReceipts(partyId)).filter((receipt) => stringValue6(receipt.ReceiptNumber) === receiptNumber);
+    if (matches.length !== 1) {
+      throw new Error(`Expected exactly one Receipt ${receiptNumber} for Party ${partyId}, found ${matches.length}.`);
+    }
+    return matches[0];
+  }
+  async voidReceipt(receiptId) {
+    return await this.apiClient.post("Receipt/_execute", {
+      $type: "Asi.Soa.Commerce.DataContracts.ReceiptRequest, Asi.Contracts",
+      EntityTypeName: "Receipt",
+      OperationName: "Receipt",
+      ReceiptId: receiptId,
+      ReceiptIds: [receiptId],
+      AssignedStatus: "Void",
+      ReceiptTask: "AssignReceiptStatus",
+      RequestCulture: process.env.FUNDRAISING_RECEIPT_CULTURE?.trim() || "en-GB"
+    });
+  }
+  async pollReceiptStatus(partyId, receiptId, expectedStatuses) {
+    let receipt;
+    for (let attempt = 0; attempt < 15; attempt += 1) {
+      const receipts = await this.readReceipts(partyId);
+      receipt = receipts.find((row) => stringValue6(row.ReceiptId) === receiptId);
+      if (receipt && expectedStatuses.includes(numberValue4(receipt.ReceiptStatus))) {
+        return receipt;
+      }
+      await new Promise((resolve2) => setTimeout(resolve2, 2e3));
+    }
+    return receipt ?? {};
+  }
+  async pollReplacementReceiptResult({
+    partyId,
+    paymentId,
+    originalReceiptId,
+    beforeReceipts,
+    beforeCommunications,
+    beforeTaskLogs
+  }) {
+    let receipts = beforeReceipts;
+    let communications = beforeCommunications;
+    let taskLogs = beforeTaskLogs;
+    for (let attempt = 0; attempt < 15; attempt += 1) {
+      await new Promise((resolve2) => setTimeout(resolve2, 2e3));
+      receipts = await this.readReceipts(partyId);
+      communications = await this.readCommunications(partyId);
+      taskLogs = await this.readTaskLogs();
+      const replacementReceipt2 = receipts.find(
+        (receipt) => stringValue6(receipt.AssociatedReceiptId) === originalReceiptId && matchingPayment([receipt], paymentId).length > 0
+      );
+      if (replacementReceipt2) break;
+    }
+    const originalReceipt = receipts.find((receipt) => stringValue6(receipt.ReceiptId) === originalReceiptId);
+    const replacementReceipt = receipts.find(
+      (receipt) => stringValue6(receipt.AssociatedReceiptId) === originalReceiptId && matchingPayment([receipt], paymentId).length > 0
+    );
+    const relatedReceipts = receipts.filter(
+      (receipt) => stringValue6(receipt.ReceiptId) === originalReceiptId || stringValue6(receipt.AssociatedReceiptId) === originalReceiptId
+    );
+    return {
+      originalReceipt,
+      replacementReceipt,
+      relatedReceipts,
+      newReceipts: newRows(beforeReceipts, receipts, "ReceiptId"),
+      newCommunications: newRows(beforeCommunications, communications, "CommunicationLogRecipientId"),
+      newTaskLogs: newRows(beforeTaskLogs, taskLogs, "TaskActionLogId")
+    };
+  }
+  async readGiftDetails(invoiceReferenceNumber) {
+    const result = await this.apiClient.get("GiftDetails", {
+      InvoiceReferenceNumber: invoiceReferenceNumber,
+      Offset: 0,
+      Limit: 5
+    });
+    const items = collectionValues4(result.Items).map((item) => nestedObject5(item) ?? {});
+    if (items.length !== 1) {
+      throw new Error(`Expected exactly one GiftDetails row for invoice ${invoiceReferenceNumber}, found ${items.length}.`);
+    }
+    return items[0];
+  }
+  async resolveBatchUserId(inputBatchUserId) {
+    const explicit = inputBatchUserId?.trim() || process.env.FUNDRAISING_GIFT_ADJUSTMENT_USER_ID?.trim() || process.env.IMIS_STAFF_PARTY_ID?.trim();
+    if (explicit) return explicit;
+    const username = this.apiClient.activeInstance.username?.trim();
+    if (!username) {
+      throw new Error("Gift adjustment requires batchUserId, FUNDRAISING_GIFT_ADJUSTMENT_USER_ID, IMIS_STAFF_PARTY_ID, or an iMIS username in the active config.");
+    }
+    const users = await this.entityService.list("User", {
+      limit: 2,
+      params: { UserName: username }
+    });
+    if (users.items.length !== 1) {
+      throw new Error(`Could not resolve configured iMIS username "${username}" to exactly one User row.`);
+    }
+    const user = users.items[0];
+    return normalizedRequired(
+      stringValue6(nestedObject5(user.Party)?.PartyId) ?? stringValue6(user.UserId),
+      `User ${username} PartyId/UserId`
+    );
+  }
+  async readGiftAdjustmentLogs(invoiceReferenceNumber) {
+    return (await this.entityService.list("GiftAdjustmentLog", {
+      limit: 50,
+      params: { InvoiceReferenceNumber: invoiceReferenceNumber }
+    })).items;
+  }
+  async pollGiftAdjustmentResult({
+    invoiceReferenceNumber,
+    partyId,
+    originalReceiptIds,
+    beforeLogs
+  }) {
+    let logs = beforeLogs;
+    let receipts = await this.readReceipts(partyId);
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      logs = await this.readGiftAdjustmentLogs(invoiceReferenceNumber);
+      receipts = await this.readReceipts(partyId);
+      const newLogs2 = newRows(beforeLogs, logs, "GiftAdjustmentLogId");
+      const originalReceipts = receipts.filter((receipt) => originalReceiptIds.includes(stringValue6(receipt.ReceiptId) ?? ""));
+      if (newLogs2.length > 0 && originalReceipts.length === originalReceiptIds.length && originalReceipts.every((receipt) => [2, 4].includes(numberValue4(receipt.ReceiptStatus)))) {
+        return {
+          newLogs: newLogs2,
+          originalReceipts,
+          newInvoiceReferenceNumber: stringValue6(newLogs2[0].NewInvoiceReferenceNumber)
+        };
+      }
+      await new Promise((resolve2) => setTimeout(resolve2, 2e3));
+    }
+    const newLogs = newRows(beforeLogs, logs, "GiftAdjustmentLogId");
+    return {
+      newLogs,
+      originalReceipts: receipts.filter((receipt) => originalReceiptIds.includes(stringValue6(receipt.ReceiptId) ?? "")),
+      newInvoiceReferenceNumber: stringValue6(newLogs[0]?.NewInvoiceReferenceNumber)
+    };
+  }
+  async readCommunications(partyId) {
+    return (await this.entityService.list("CommunicationLogRecipient", {
+      limit: 100,
+      params: { PartyId: partyId }
+    })).items;
+  }
+  async readCommunicationRecipientById(communicationLogRecipientId, partyId) {
+    const direct = await this.apiClient.get("CommunicationLogRecipient", {
+      CommunicationLogRecipientId: communicationLogRecipientId,
+      PartyId: partyId
+    });
+    const directItems = collectionValues4(direct.Items).map((item) => nestedObject5(item) ?? {});
+    const directMatch = directItems.find(
+      (item) => stringValue6(item.CommunicationLogRecipientId) === communicationLogRecipientId
+    );
+    if (directMatch) return directMatch;
+    const partyRows = await this.readCommunications(partyId);
+    const partyMatch = partyRows.find(
+      (item) => stringValue6(item.CommunicationLogRecipientId) === communicationLogRecipientId
+    );
+    if (!partyMatch) {
+      throw new Error(`Receipt communication ${communicationLogRecipientId} was linked from Receipt, but CommunicationLogRecipient readback did not return it for Party ${partyId}.`);
+    }
+    return partyMatch;
+  }
+  async readCommunicationEvents(communicationLogRecipientId) {
+    const result = await this.apiClient.get("CommunicationLogEvent", {
+      CommunicationLogRecipientId: communicationLogRecipientId
+    });
+    return collectionValues4(result.Items).map((item) => nestedObject5(item) ?? {}).filter((item) => stringValue6(item.CommunicationLogRecipientId) === communicationLogRecipientId);
+  }
+  async readReceiptTaskLogForCommunication(communicationLogId) {
+    if (!communicationLogId) return { failureReasons: [], recommendsVoidReissue: false };
+    const logs = await this.entityService.list("TaskActionLog", {
+      limit: 5,
+      params: { Information: communicationLogId }
+    }).catch(() => ({ items: [] }));
+    const taskActionLog = logs.items.map((item) => nestedObject5(item) ?? {}).find(
+      (item) => stringValue6(item.Information) === communicationLogId && stringValue6(nestedObject5(item.TaskAction)?.ActionTypeName) === "IssueAndEmailReceiptsJob"
+    ) ?? logs.items.map((item) => nestedObject5(item) ?? {})[0];
+    if (!taskActionLog) return { failureReasons: [], recommendsVoidReissue: false };
+    const taskActionLogId = stringValue6(taskActionLog.TaskActionLogId);
+    const taskLogDetailId = stringValue6(taskActionLog.TaskLogDetailId);
+    const actionDetails = taskActionLogId ? (await this.entityService.list("TaskActionLogDetail", {
+      limit: 25,
+      params: { TaskActionLogId: taskActionLogId }
+    }).catch(() => ({ items: [] }))).items.map((item) => nestedObject5(item) ?? {}) : [];
+    const taskLogDetail = taskLogDetailId ? (await this.entityService.list("TaskLogDetail", {
+      limit: 2,
+      params: { TaskLogDetailId: taskLogDetailId }
+    }).catch(() => ({ items: [] }))).items.map((item) => nestedObject5(item) ?? {})[0] : void 0;
+    const failureReasons = uniqueStrings2([
+      stringValue6(taskLogDetail?.EventDescription),
+      ...actionDetails.map((detail) => stringValue6(detail.Information))
+    ].filter((value) => value && /fail|error|not properly generated|void and re-issue/i.test(value)));
+    return {
+      summary: receiptTaskLogSummary(taskActionLog, actionDetails, taskLogDetail),
+      failureReasons,
+      recommendsVoidReissue: failureReasons.some((reason) => /void and re-issue/i.test(reason))
+    };
+  }
+  async readTaskLogs() {
+    return (await this.entityService.list("TaskActionLog", { limit: 50 })).items;
+  }
+};
+function receiptCandidateQueryDesign() {
+  return {
+    name: DEFAULT_RECEIPT_CANDIDATE_QUERY_NAME,
+    description: "Service-owned one-payment receipt candidate query for iFINITY receipt issuing.",
+    source: { businessObject: "GiftsReceivedForReceipting", alias: "gifts" },
+    columns: [
+      { name: "GiftDate", alias: "Gift Date" },
+      { name: "Donor", alias: "Donor" },
+      { name: "PartyId", alias: "ID" },
+      { name: "Email", alias: "Email" },
+      { name: "PartyId", alias: "code_PartyId" },
+      { name: "DonationItem", alias: "Gift Item" },
+      { name: "GiftAmount", alias: "Gift Amount" },
+      { name: "FairMarketValue", alias: "Fair Market Value" },
+      { name: "EligibleAmount", alias: "Eligible Amount" },
+      { name: "PaymentMethod", alias: "Payment Method" },
+      { name: "PaymentId", alias: "code_PaymentId" },
+      { name: "ReceiptLineId", alias: "key_ReceiptLineId" },
+      { name: "ReceiptNumber", alias: "code_ReceiptNumber" },
+      { name: "ReceiptKey", alias: "key_ReceiptKey" },
+      { name: "ProductCode", alias: "code_ProductCode" },
+      { name: "TransactionNumber", alias: "code_TransactionNumber" },
+      { name: "InvoiceReferenceNumber", alias: "code_InvoiceReferenceNumber" }
+    ],
+    filters: [
+      {
+        column: "PaymentId",
+        compare: "equal",
+        prompt: "PaymentId",
+        userProvided: true,
+        userRequired: true
+      },
+      { column: "ReceiptKey", compare: "empty" },
+      { column: "IsReceiptable", compare: "equal", value: true }
+    ]
+  };
+}
+function buildReceiptTask({
+  queryPath,
+  paymentId,
+  communicationTemplateId,
+  receiptCulture,
+  deliveryMode,
+  nativeEmailQuery
+}) {
+  const action = buildReceiptActionInput({ paymentId, deliveryMode, nativeEmailQuery });
+  return buildReceiptTaskFromAction({
+    name: `iFINITY issue gift receipt ${paymentId}`,
+    description: "iFINITY one-payment receipt issue task",
+    action: {
+      operationName: action.operationName,
+      queryPath: action.queryPath || queryPath,
+      queryParameters: action.queryParameters
+    },
+    communicationTemplateId,
+    receiptCulture
+  });
+}
+function buildReceiptTaskFromAction({
+  name,
+  description,
+  action,
+  communicationTemplateId,
+  receiptCulture
+}) {
+  return {
+    $type: TASK_DEFINITION_TYPE,
+    Name: name,
+    Description: description,
+    IsActive: true,
+    Priority: 0,
+    TaskType: 1,
+    Triggers: emptyCollection(TASK_TRIGGER_COLLECTION_TYPE),
+    Evaluations: emptyCollection(TASK_EVALUATION_COLLECTION_TYPE),
+    DataSources: null,
+    Actions: {
+      $type: TASK_ACTION_COLLECTION_TYPE,
+      $values: [
+        {
+          $type: RECEIPT_ACTION_TYPE,
+          ActionTypeName: "IssueAndEmailReceiptsJob",
+          AggregateReceipts: false,
+          QueryName: action.queryPath,
+          QueryParameters: genericProperties(action.queryParameters),
+          OperationName: action.operationName,
+          PrintWithAttachmentsAndBody: false,
+          RegenerateDownloadReadyAttachment: false,
+          TaskActionLogId: null,
+          ReceiptCulture: receiptCulture,
+          Description: null,
+          RecipientDatasourceId: "",
+          CommunicationTemplateId: communicationTemplateId,
+          ActionNotification: null
+        }
+      ]
+    },
+    Notifications: emptyCollection(TASK_NOTIFICATION_COLLECTION_TYPE)
+  };
+}
+function buildReceiptActionInput({
+  paymentId,
+  deliveryMode,
+  nativeEmailQuery
+}) {
+  if (deliveryMode === "email") {
+    const queryParameters = nestedStringRecord(nativeEmailQuery?.queryParameters);
+    return {
+      operationName: "Submit",
+      queryPath: NATIVE_ISSUE_RECEIPTS_QUERY_PATH,
+      queryParameters
+    };
+  }
+  return {
+    operationName: "GenerateDoNotEmail",
+    queryPath: DEFAULT_RECEIPT_CANDIDATE_QUERY_PATH,
+    queryParameters: { PaymentId: paymentId }
+  };
+}
+function genericProperties(valuesByName) {
+  return {
+    $type: GENERIC_PROPERTY_COLLECTION_TYPE,
+    $values: Object.entries(valuesByName).map(([Name, Value]) => ({
+      $type: GENERIC_PROPERTY_TYPE,
+      Name,
+      Value
+    }))
+  };
+}
+function emptyCollection($type) {
+  return { $type, $values: [] };
+}
+function confirmationText(paymentId, deliveryMode) {
+  return deliveryMode === "email" ? `EMAIL GIFT RECEIPT PAYMENT ${paymentId}` : `ISSUE GIFT RECEIPT PAYMENT ${paymentId}`;
+}
+function adjustConfirmationText(invoiceReferenceNumber, adjustedGiftDate, replacementReceiptDeliveryMode) {
+  const suffix = replacementReceiptDeliveryMode === "issue_only" ? " AND ISSUE REPLACEMENT" : "";
+  return `ADJUST RECEIPTED GIFT INVOICE R${invoiceReferenceNumber} TO DATE ${dateOnly(adjustedGiftDate)}${suffix}`;
+}
+function paymentSummary(payment) {
+  return {
+    paymentId: stringValue6(payment.PaymentId),
+    paymentReference: stringValue6(payment.PaymentReference),
+    paymentDate: stringValue6(payment.PaymentDate),
+    amount: nestedObject5(payment.Amount)?.Amount ?? payment.Amount,
+    status: payment.Status,
+    paymentMethodId: stringValue6(payment.PaymentMethodId),
+    financialEntityId: stringValue6(payment.FinancialEntityId),
+    payorPartyId: stringValue6(nestedObject5(payment.PayorParty)?.PartyId)
+  };
+}
+function communicationSummary(record2) {
+  const events = collectionValues4(nestedObject5(record2.Events)?.$values ?? record2.Events);
+  const attachments = collectionValues4(nestedObject5(record2.Attachments)?.$values ?? record2.Attachments);
+  const party = nestedObject5(record2.Party);
+  const communicationLog = nestedObject5(record2.CommunicationLog);
+  return {
+    communicationLogRecipientId: stringValue6(record2.CommunicationLogRecipientId),
+    address: stringValue6(record2.Address),
+    lastEventType: record2.LastEventType,
+    lastStatusReason: stringValue6(record2.LastStatusReason),
+    lastEventDateTime: stringValue6(record2.LastEventDateTime),
+    partyId: stringValue6(party?.PartyId),
+    partyName: stringValue6(party?.Name),
+    communicationLogId: stringValue6(communicationLog?.CommunicationLogId),
+    subject: stringValue6(communicationLog?.Subject),
+    eventCount: events.length,
+    events: events.map((event) => {
+      const row = nestedObject5(event) ?? {};
+      return {
+        communicationLogEventId: stringValue6(row.CommunicationLogEventId),
+        eventType: row.EventType,
+        eventReason: stringValue6(row.EventReason),
+        eventDateTime: stringValue6(row.EventDateTime)
+      };
+    }),
+    attachmentCount: attachments.length,
+    attachments: attachments.map((attachment) => {
+      const row = nestedObject5(attachment) ?? {};
+      return {
+        name: stringValue6(row.Name),
+        contentType: stringValue6(row.ContentType)
+      };
+    })
+  };
+}
+function communicationEventSummary(record2) {
+  return {
+    communicationLogEventId: stringValue6(record2.CommunicationLogEventId),
+    communicationLogRecipientId: stringValue6(record2.CommunicationLogRecipientId),
+    eventType: numberValue4(record2.EventType),
+    eventReason: stringValue6(record2.EventReason),
+    eventDateTime: stringValue6(record2.EventDateTime),
+    createdBy: stringValue6(nestedObject5(record2.UpdateInformation)?.CreatedBy),
+    createdOn: stringValue6(nestedObject5(record2.UpdateInformation)?.CreatedOn)
+  };
+}
+function receiptTaskLogSummary(taskActionLog, actionDetails, taskLogDetail) {
+  const action = nestedObject5(taskActionLog.TaskAction);
+  return {
+    taskActionLogId: stringValue6(taskActionLog.TaskActionLogId),
+    taskLogDetailId: stringValue6(taskActionLog.TaskLogDetailId),
+    status: numberValue4(taskActionLog.Status),
+    information: stringValue6(taskActionLog.Information),
+    startTime: stringValue6(taskActionLog.StartTime),
+    endTime: stringValue6(taskActionLog.EndTime),
+    createdBy: stringValue6(nestedObject5(taskActionLog.UpdateInformation)?.CreatedBy),
+    action: {
+      actionTypeName: stringValue6(action?.ActionTypeName),
+      operationName: stringValue6(action?.OperationName),
+      queryName: stringValue6(action?.QueryName),
+      communicationTemplateId: stringValue6(action?.CommunicationTemplateId),
+      regenerateDownloadReadyAttachment: booleanValue2(action?.RegenerateDownloadReadyAttachment),
+      printWithAttachmentsAndBody: booleanValue2(action?.PrintWithAttachmentsAndBody),
+      queryParameters: genericPropertyMap(action?.QueryParameters)
+    },
+    taskLogDetail: taskLogDetail ? {
+      taskLogDetailId: stringValue6(taskLogDetail.TaskLogDetailId),
+      status: numberValue4(taskLogDetail.Status),
+      eventType: stringValue6(taskLogDetail.EventType),
+      eventDescription: stringValue6(taskLogDetail.EventDescription),
+      startTime: stringValue6(taskLogDetail.StartTime),
+      endTime: stringValue6(taskLogDetail.EndTime)
+    } : void 0,
+    actionDetailsCount: actionDetails.length,
+    actionDetails: actionDetails.map((detail) => ({
+      taskActionLogDetailId: stringValue6(detail.TaskActionLogDetailId),
+      status: numberValue4(detail.Status),
+      dataId: stringValue6(detail.DataId),
+      information: stringValue6(detail.Information),
+      createdOn: stringValue6(nestedObject5(detail.UpdateInformation)?.CreatedOn)
+    }))
+  };
+}
+function latestEventSummary(events) {
+  const sorted = [...events].sort(
+    (left, right) => Date.parse(stringValue6(right.EventDateTime) ?? "") - Date.parse(stringValue6(left.EventDateTime) ?? "")
+  );
+  return sorted[0] ? communicationEventSummary(sorted[0]) : null;
+}
+function receiptSummary(record2) {
+  return {
+    receiptId: stringValue6(record2.ReceiptId),
+    receiptNumber: stringValue6(record2.ReceiptNumber),
+    receiptStatus: numberValue4(record2.ReceiptStatus),
+    receiptStatusName: receiptStatusName(numberValue4(record2.ReceiptStatus)),
+    associatedReceiptId: stringValue6(record2.AssociatedReceiptId),
+    issuedToPartyId: stringValue6(record2.IssuedToPartyId),
+    attachedToCommunicationLogRecipientId: stringValue6(record2.AttachedToCommunicationLogRecipientId),
+    lines: collectionValues4(nestedObject5(record2.ReceiptLines)?.$values ?? record2.ReceiptLines).map((line) => {
+      const row = nestedObject5(line) ?? {};
+      return {
+        paymentId: stringValue6(row.PaymentId),
+        itemId: stringValue6(row.ItemId),
+        receiptedAmount: nestedObject5(row.ReceiptedAmount)?.Amount
+      };
+    })
+  };
+}
+function giftDetailsSummary(record2) {
+  const donor = nestedObject5(record2.Donor);
+  const giftItem = nestedObject5(record2.GiftItem);
+  const amount = nestedObject5(record2.GiftAmount);
+  return {
+    transactionNumber: stringValue6(record2.TransactionNumber),
+    invoiceReferenceNumber: stringValue6(record2.InvoiceReferenceNumber),
+    donorPartyId: stringValue6(donor?.PartyId) ?? stringValue6(donor?.Id),
+    donorName: stringValue6(donor?.Name),
+    giftDate: stringValue6(record2.GiftDate),
+    amount: amount?.Amount,
+    giftItemId: stringValue6(giftItem?.ItemCode) ?? stringValue6(giftItem?.ItemId),
+    donationType: stringValue6(record2.DonationType),
+    receiptNumbers: collectionValues4(record2.ReceiptNumbers).map((value) => stringValue6(value)).filter(Boolean)
+  };
+}
+function batchSummary(value) {
+  const record2 = nestedObject5(value) ?? {};
+  return {
+    batchId: stringValue6(record2.BatchId),
+    batchType: stringValue6(record2.BatchType),
+    batchDate: stringValue6(record2.BatchDate),
+    name: stringValue6(record2.Name),
+    status: record2.Status,
+    userId: stringValue6(record2.UserId),
+    adjustmentCount: collectionValues4(nestedObject5(record2.Adjustments)?.$values ?? record2.Adjustments).length
+  };
+}
+function receiptCandidate(row) {
+  return {
+    paymentId: stringValue6(row.code_PaymentId),
+    partyId: stringValue6(row.code_PartyId) ?? stringValue6(row.ID),
+    donor: stringValue6(row.Donor),
+    giftDate: stringValue6(row["Gift Date"]),
+    giftItem: stringValue6(row["Gift Item"]),
+    eligibleAmount: row["Eligible Amount"],
+    receiptNumber: stringValue6(row.code_ReceiptNumber),
+    receiptKey: stringValue6(row.key_ReceiptKey),
+    receiptPreference: stringValue6(row["Receipt Preference"]),
+    raw: row
+  };
+}
+function reissueVoidCandidate(row) {
+  return {
+    ...receiptCandidate(row),
+    associatedReceiptNumber: stringValue6(row.code_AssociatedReceiptNumber),
+    associatedReceiptKey: stringValue6(row.key_AssociatedReceiptKey)
+  };
+}
+function buildGiftAdjustmentRow({
+  detail,
+  invoiceReferenceNumber,
+  adjustedGiftDate,
+  adjustmentReason
+}) {
+  const giftItem = cloneRecord(nestedObject5(detail.GiftItem) ?? {});
+  if (Object.keys(giftItem).length > 0) giftItem.ItemId = "";
+  return withoutUndefined({
+    $type: GIFT_ADJUSTMENT_DATA_TYPE,
+    GiftId: randomUUID3().slice(0, 8),
+    AdjustmentReason: adjustmentReason,
+    GiftAmount: cloneRecord(detail.GiftAmount),
+    PledgeAmountPaid: cloneRecord(detail.PledgeAmountPaid),
+    GiftDate: adjustedGiftDate,
+    ListAsSalutation: cloneRecord(detail.ListAsSalutation),
+    RequestNumber: detail.RequestNumber,
+    SoftCreditInformation: cloneRecord(detail.SoftCreditInformation),
+    GiftItem: Object.keys(giftItem).length > 0 ? giftItem : void 0,
+    PaymentInformation: { $type: REMITTANCE_TYPE },
+    SourceCode: cloneRecord(detail.SourceCode),
+    GiftMessage: detail.GiftMessage,
+    SolicitorPartyId: detail.SolicitorPartyId,
+    TributeInformation: cloneRecord(detail.TributeInformation),
+    DonationType: detail.DonationType,
+    DoNotReceipt: detail.DoNotReceipt,
+    Donor: cloneRecord(detail.Donor),
+    InvoiceReferenceNumber: invoiceReferenceNumber,
+    AdjustedPayments: cloneRecord(detail.AdjustedPayments),
+    TransPostingStatus: detail.TransPostingStatus,
+    ReceiptNumbers: cloneRecord(detail.ReceiptNumbers),
+    GiftItemAllocations: cloneRecord(detail.GiftItemAllocations),
+    IsNotFinancialAdjustmentCapable: detail.IsNotFinancialAdjustmentCapable
+  });
+}
+function nativeIssueReceiptsQueryParameters(candidate) {
+  const giftDate = normalizedRequired(candidate.giftDate, "candidate.giftDate").slice(0, 10);
+  const donor = normalizedRequired(candidate.donor, "candidate.donor");
+  const giftItem = normalizedRequired(candidate.giftItem, "candidate.giftItem");
+  return {
+    GiftDate: `"${giftDate} 00:00:00","${giftDate} 00:00:00"`,
+    Donor: donor,
+    DonationItem: giftItem,
+    ReceiptPreferenceCode: ""
+  };
+}
+function nativeReissueVoidReceiptsQueryParameters(candidate) {
+  return nativeIssueReceiptsQueryParameters(candidate);
+}
+function manageReceiptConfirmationText(operation, receiptNumber, paymentId) {
+  if (operation === "void") return `VOID GIFT RECEIPT ${receiptNumber}`;
+  if (operation === "reissue_voided") return `REISSUE VOIDED GIFT RECEIPT ${receiptNumber} PAYMENT ${paymentId}`;
+  return `VOID AND REISSUE GIFT RECEIPT ${receiptNumber} PAYMENT ${paymentId}`;
+}
+function receiptPaymentIds(receipt) {
+  return uniqueStrings2(
+    collectionValues4(nestedObject5(receipt.ReceiptLines)?.$values ?? receipt.ReceiptLines).map((line) => stringValue6(nestedObject5(line)?.PaymentId))
+  );
+}
+function receiptStatusName(status) {
+  switch (status) {
+    case 1:
+      return "IssuedNotSent";
+    case 2:
+      return "Void";
+    case 3:
+      return "IssuedSent";
+    case 4:
+      return "VoidReplaced";
+    default:
+      return status ? `Unknown(${status})` : "Unknown";
+  }
+}
+function nestedStringRecord(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return Object.fromEntries(
+    Object.entries(value).map(([key, fieldValue]) => [key, stringValue6(fieldValue) ?? ""])
+  );
+}
+function genericPropertyMap(value) {
+  const values = collectionValues4(nestedObject5(value)?.$values ?? value).map((item) => nestedObject5(item) ?? {});
+  return Object.fromEntries(values.map((item) => [stringValue6(item.Name), stringValue6(item.Value)]).filter((entry) => Boolean(entry[0])));
+}
+function normalizedRequired(value, fieldName) {
+  const normalized = value?.trim();
+  if (!normalized) throw new Error(`${fieldName} is required.`);
+  return normalized;
+}
+function nestedObject5(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues4(value) {
+  if (Array.isArray(value)) return value;
+  const values = nestedObject5(value)?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function unwrapValue5(value) {
+  const obj = nestedObject5(value);
+  return obj && "$value" in obj ? obj.$value : value;
+}
+function stringValue6(value) {
+  const unwrapped = unwrapValue5(value);
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function numberValue4(value) {
+  const unwrapped = unwrapValue5(value);
+  if (typeof unwrapped === "number" && Number.isFinite(unwrapped)) return unwrapped;
+  if (typeof unwrapped === "string" && unwrapped.trim()) {
+    const parsed = Number(unwrapped);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+}
+function booleanValue2(value) {
+  const unwrapped = unwrapValue5(value);
+  if (typeof unwrapped === "boolean") return unwrapped;
+  if (typeof unwrapped === "string" && unwrapped.trim()) {
+    if (/^true$/i.test(unwrapped)) return true;
+    if (/^false$/i.test(unwrapped)) return false;
+  }
+  return void 0;
+}
+function imisDate(value, fieldName) {
+  const normalized = value?.trim();
+  if (!normalized) throw new Error(`${fieldName} is required.`);
+  const isoDate = normalized.match(/^(\d{4}-\d{2}-\d{2})/);
+  if (isoDate) return `${isoDate[1]}T00:00:00`;
+  const parsed = new Date(normalized);
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error(`${fieldName} must be a valid ISO date or date string.`);
+  }
+  return `${parsed.toISOString().slice(0, 10)}T00:00:00`;
+}
+function dateOnly(value) {
+  return value.slice(0, 10);
+}
+function importBatchPostSucceeded(result) {
+  const record2 = nestedObject5(result);
+  if (record2?.IsSuccessStatusCode === false) return false;
+  const serialized = stringValue6(result) ?? JSON.stringify(result ?? "");
+  if (!serialized) return true;
+  return !/\bError\s*:/i.test(serialized) && !/Business rule violation/i.test(serialized);
+}
+function uniqueStrings2(values) {
+  return [...new Set(values.filter((value) => Boolean(value)))];
+}
+function relatedReceiptRows(receipts, originalReceipts, paymentId) {
+  const originalIds = new Set(originalReceipts.map((receipt) => stringValue6(receipt.ReceiptId)).filter(Boolean));
+  return receipts.filter(
+    (receipt) => matchingPayment([receipt], paymentId).length > 0 || originalIds.has(stringValue6(receipt.AssociatedReceiptId) ?? "")
+  );
+}
+function cloneRecord(value) {
+  if (value === void 0 || value === null) return value;
+  return JSON.parse(JSON.stringify(value));
+}
+function withoutUndefined(record2) {
+  return Object.fromEntries(Object.entries(record2).filter(([, value]) => value !== void 0));
+}
+function ids(rows, fieldName) {
+  return new Set(rows.map((row) => stringValue6(row[fieldName])).filter((value) => Boolean(value)));
+}
+function newRows(beforeRows, afterRows, idField) {
+  const beforeIds = ids(beforeRows, idField);
+  return afterRows.filter((row) => {
+    const id = stringValue6(row[idField]);
+    return id && !beforeIds.has(id);
+  });
+}
+function matchingPayment(rows, paymentId) {
+  return rows.filter((row) => receiptPaymentIds(row).includes(paymentId));
+}
+
+// src/services/event-registration-lifecycle.service.ts
+var EVENT_REGISTRATION_REQUEST_TYPE = "Asi.Soa.Events.DataContracts.EventRegistrationRequest, Asi.Contracts";
+var GENERIC_EXECUTE_REQUEST_TYPE = "Asi.Soa.Core.DataContracts.GenericExecuteRequest, Asi.Contracts";
+var OBJECT_COLLECTION_TYPE2 = "System.Collections.ObjectModel.Collection`1[[System.Object, mscorlib]], mscorlib";
+var STRING_TYPE = "System.String";
+var ORDER_LINE_TYPE = "Asi.Soa.Commerce.DataContracts.OrderLineData, Asi.Contracts";
+var ORDER_LINE_COLLECTION_TYPE = "Asi.Soa.Commerce.DataContracts.OrderLineDataCollection, Asi.Contracts";
+var ITEM_TYPE = "Asi.Soa.Commerce.DataContracts.ItemData, Asi.Contracts";
+var REGISTER_WITHOUT_PAYMENT = 3;
+var STATUS_NAMES = {
+  "0": "NotRegistered",
+  "1": "Registered",
+  "2": "RegisteredPendingCheckout",
+  "3": "CanceledPendingCheckout",
+  "4": "Canceled",
+  "5": "AdjustedCancellationPendingCheckout",
+  "6": "RegisteredFromWaitlistPendingCheckout",
+  "7": "ChangingRegistration"
+};
+var EventRegistrationLifecycleService = class {
+  constructor(entityService) {
+    this.entityService = entityService;
+  }
+  async status(input) {
+    const lookup = resolveLookup(input);
+    const [registrations, availability, financialRows] = await Promise.all([
+      this.readRegistrations(lookup.eventId, lookup.partyId),
+      this.readAvailability(lookup.eventId, lookup.partyId),
+      this.readFinancialRows(lookup.eventId, lookup.partyId)
+    ]);
+    const summaries = registrations.items.map(registrationSummary);
+    const selected = selectRegistration(summaries, lookup.eventRegistrationId);
+    const eventInvoices = await this.readEventInvoices(lookup, selected, financialRows.items);
+    return {
+      version: "event_registration_lifecycle.v1",
+      action: "status",
+      mode: "read",
+      partyId: lookup.partyId,
+      eventId: lookup.eventId,
+      eventRegistrationId: lookup.eventRegistrationId ?? stringValue7(selected?.eventRegistrationId),
+      registration: selected ?? null,
+      registrations: summaries,
+      availability,
+      financial: {
+        count: financialRows.items.length,
+        rows: financialRows.items.map(financialRowSummary),
+        invoices: eventInvoices.invoices,
+        paymentNextActions: eventInvoices.paymentNextActions,
+        refundNextActions: eventInvoices.refundNextActions
+      },
+      proof: {
+        registrationReadback: summaries.length > 0,
+        availabilityReadback: availability !== null,
+        financialRowsRead: financialRows.items.length > 0,
+        eventInvoiceLinkageReadback: eventInvoices.count > 0,
+        eventInvoiceLookupPath: eventInvoices.lookupPath,
+        eventInvoiceLookupError: eventInvoices.lookupError,
+        paymentSettlementTool: "imis_pay_open_invoice",
+        registrationReadPath: "EventRegistration list with EventId + PartyId filters",
+        compositeGetUsed: false
+      }
+    };
+  }
+  async previewRegister(input) {
+    const resolved = await this.resolveRegisterRequest(input);
+    const [beforeRegistrations, availability, financialRows] = await Promise.all([
+      this.readRegistrations(resolved.eventId, resolved.partyId),
+      this.readAvailability(resolved.eventId, resolved.partyId),
+      this.readFinancialRows(resolved.eventId, resolved.partyId)
+    ]);
+    const beforeSummaries = beforeRegistrations.items.map(registrationSummary);
+    const activeRegistration = activeRegistrationSummary(beforeSummaries);
+    const registrationDecision = registrationDecisionFor(availability, resolved.registrationOptionFunctionId, resolved.waitlist);
+    const canRegister = !activeRegistration && registrationDecision.canSubmit;
+    return {
+      version: "event_registration_lifecycle.v1",
+      action: "register",
+      mode: "preview",
+      partyId: resolved.partyId,
+      eventId: resolved.eventId,
+      registrationOptionFunctionId: resolved.registrationOptionFunctionId,
+      functionId: resolved.functionId,
+      waitlist: resolved.waitlist,
+      canSubmit: canRegister,
+      blockedReason: canRegister ? void 0 : activeRegistration ? alreadyRegisteredBlockedReason(activeRegistration, resolved.registrationOptionFunctionId) : registrationDecision.blockedReason,
+      confirmationText: canRegister ? registerConfirmationText(resolved) : void 0,
+      event: eventSummary(resolved.event),
+      option: eventFunctionSummary(resolved.option),
+      availability,
+      waitlistHandling: waitlistHandlingSummary(resolved.waitlist, availability, resolved.registrationOptionFunctionId),
+      before: {
+        registrations: beforeSummaries,
+        financialRows: financialRows.items.map(financialRowSummary)
+      },
+      planned: {
+        path: "EventRegistration/_execute",
+        operationName: "RegisterEvent",
+        registrationType: REGISTER_WITHOUT_PAYMENT,
+        request: registerRequestSummary(resolved.payload)
+      },
+      proof: {
+        usesDocumentedRegisterEventOperation: true,
+        genericEntityCreateUsed: false,
+        waitlistRequestIsNativeConditional: resolved.waitlist,
+        paymentHandling: "RegisterEvent creates the registration without payment; invoice settlement is handled by the existing invoice/payment tools after readback."
+      }
+    };
+  }
+  async submitRegister(input) {
+    const preview = await this.previewRegister(input);
+    const expected = stringValue7(preview.confirmationText);
+    if (!expected) {
+      throw new Error(stringValue7(preview.blockedReason) ?? "Event registration is not currently available.");
+    }
+    if (input.confirmationText !== expected) {
+      throw new Error(`confirmationText must exactly equal: ${expected}`);
+    }
+    const resolved = await this.resolveRegisterRequest(input);
+    const result = await this.entityService.execute("EventRegistration", resolved.payload);
+    const after = await this.status({ partyId: resolved.partyId, eventId: resolved.eventId });
+    const registrations = arrayValue(after.registrations);
+    const created = registrations.find(
+      (registration) => stringValue7(registration.statusName) === "Registered" || isWaitlistedRegistration(registration) || stringValue7(registration.status) === "1" || stringValue7(registration.eventRegistrationId) === eventRegistrationId(resolved.eventId, resolved.partyId)
+    );
+    const waitlistResult = waitlistSubmitResult(resolved.waitlist, created);
+    return {
+      ...preview,
+      mode: "submitted",
+      result: executeResultSummary(result),
+      after,
+      waitlistResult,
+      proof: {
+        ...nestedObject6(preview.proof) ?? {},
+        operationAccepted: true,
+        registrationReadbackVerified: Boolean(created),
+        waitlistRequested: resolved.waitlist,
+        waitlistReadbackVerified: resolved.waitlist ? isWaitlistedRegistration(created) : void 0
+      }
+    };
+  }
+  async previewWaitlistPromotion(input) {
+    const lookup = resolveLookup(input);
+    const [current, event] = await Promise.all([
+      this.status(lookup),
+      this.entityService.get("Event", lookup.eventId)
+    ]);
+    const registrations = arrayValue(current.registrations);
+    const selected = selectRegistration(registrations, lookup.eventRegistrationId);
+    const waitlisted = isWaitlistedRegistration(selected);
+    const automaticallyReleaseFromWaitlist = booleanValue3(event.AutomaticallyReleaseFromWaitlist);
+    return {
+      version: "event_registration_lifecycle.v1",
+      action: "preview_waitlist_promotion",
+      mode: "preview",
+      partyId: lookup.partyId,
+      eventId: lookup.eventId,
+      eventRegistrationId: stringValue7(selected?.eventRegistrationId) ?? lookup.eventRegistrationId,
+      canSubmit: false,
+      blockedReason: waitlisted ? "No documented REST operation is proven for manually completing a waitlisted event registration. Use the native Complete Registration route or automatic release, then read back status and settle any invoice with the shared payment tools." : "The selected registration is not currently waitlisted by EventRegistration readback, so there is no waitlist promotion to complete.",
+      current,
+      event: eventSummary(event),
+      waitlistReadback: selected ? waitlistRegistrationState(selected) : void 0,
+      productionRoute: {
+        automaticRelease: automaticallyReleaseFromWaitlist ? {
+          enabled: true,
+          route: "Increase capacity or cancel another registration; iMIS can automatically release waitlisted registrants when space becomes available."
+        } : {
+          enabled: false,
+          route: "Open the event on behalf of the waitlisted user, click Complete Registration, then complete native cart checkout."
+        },
+        manualStaffRoute: [
+          "Open the event.",
+          "Go On behalf of the waitlisted user.",
+          "Click Complete Registration.",
+          "Check Out & Confirm Registration.",
+          "Submit payment details, or choose Pay Later and settle the resulting invoice from the public site or with imis_pay_open_invoice after readback."
+        ],
+        source: "iMIS Help: Waitlisting for an event."
+      },
+      mcpOwnedStages: {
+        readWaitlistState: {
+          tool: "imis_manage_event_registration",
+          action: "status",
+          waitlistReadbackVerified: waitlisted
+        },
+        postNativeCompletion: [
+          "Use imis_manage_event_registration action=status to verify the registration is no longer waitlisted.",
+          "Use imis_pay_open_invoice if iMIS created an unpaid event invoice."
+        ]
+      },
+      proof: {
+        waitlistPromotionRestOperationProven: false,
+        nativeCompleteRegistrationHandoffRequired: true,
+        automaticReleaseSettingRead: automaticallyReleaseFromWaitlist !== void 0,
+        automaticallyReleaseFromWaitlist,
+        waitlistReadbackVerified: waitlisted
+      }
+    };
+  }
+  async previewCheckIn(input) {
+    const resolved = await this.resolveCheckInRequest(input);
+    const alreadyAtRequestedUnits = monetaryAmount2(resolved.attendance.creditUnitsEarned) === resolved.targetCreditUnits;
+    const canSubmit = !alreadyAtRequestedUnits;
+    return {
+      version: "event_registration_lifecycle.v1",
+      action: "check_in",
+      mode: "preview",
+      partyId: resolved.lookup.partyId,
+      eventId: resolved.lookup.eventId,
+      eventRegistrationId: stringValue7(resolved.registration.eventRegistrationId),
+      eventFunctionAttendanceId: resolved.attendanceId,
+      functionId: stringValue7(resolved.attendance.functionId),
+      targetCreditUnits: resolved.targetCreditUnits,
+      canSubmit,
+      blockedReason: canSubmit ? void 0 : "The attendance row already has the requested CreditUnitsEarned value.",
+      confirmationText: canSubmit ? checkInConfirmationText(resolved) : void 0,
+      current: resolved.current,
+      attendance: resolved.attendance,
+      planned: {
+        path: `LegacyEventFunctionAttendance/${resolved.attendanceId}`,
+        operationName: "PUT LegacyEventFunctionAttendance",
+        update: {
+          CreditUnitsEarned: resolved.targetCreditUnits
+        }
+      },
+      proof: {
+        usesLegacyEventFunctionAttendanceUpdate: true,
+        registrationReadbackVerified: true,
+        attendanceRowResolved: true,
+        genericEventRegistrationMutationUsed: false
+      }
+    };
+  }
+  async submitCheckIn(input) {
+    const preview = await this.previewCheckIn(input);
+    const expected = stringValue7(preview.confirmationText);
+    if (!expected) {
+      throw new Error(stringValue7(preview.blockedReason) ?? "Event check-in is not currently available.");
+    }
+    if (input.confirmationText !== expected) {
+      throw new Error(`confirmationText must exactly equal: ${expected}`);
+    }
+    const resolved = await this.resolveCheckInRequest(input);
+    const original = await this.entityService.get("LegacyEventFunctionAttendance", resolved.attendanceId);
+    const candidate = {
+      ...original,
+      CreditUnitsEarned: resolved.targetCreditUnits
+    };
+    const result = await this.entityService.update("LegacyEventFunctionAttendance", resolved.attendanceId, candidate);
+    const afterRow = await this.entityService.get("LegacyEventFunctionAttendance", resolved.attendanceId);
+    const afterAttendance = attendanceSummary(afterRow);
+    const creditUnitsEarnedReadback = monetaryAmount2(afterAttendance.creditUnitsEarned) === resolved.targetCreditUnits;
+    return {
+      ...preview,
+      mode: "submitted",
+      result: attendanceSummary(nestedObject6(result) ?? afterRow),
+      after: {
+        attendance: afterAttendance,
+        status: await this.status(resolved.lookup)
+      },
+      proof: {
+        ...nestedObject6(preview.proof) ?? {},
+        updateAccepted: true,
+        attendanceReadbackVerified: Boolean(afterAttendance.eventFunctionAttendanceId),
+        creditUnitsEarnedReadback
+      }
+    };
+  }
+  async previewChangeRegistration(input) {
+    const lookup = resolveLookup(input);
+    const current = await this.status(lookup);
+    const registrations = arrayValue(current.registrations);
+    const selected = selectRegistration(registrations, lookup.eventRegistrationId);
+    if (!selected) {
+      return {
+        version: "event_registration_lifecycle.v1",
+        action: "change_registration",
+        mode: "preview",
+        partyId: lookup.partyId,
+        eventId: lookup.eventId,
+        eventRegistrationId: lookup.eventRegistrationId,
+        canSubmit: false,
+        blockedReason: "No event registration was found for the supplied EventId and PartyId.",
+        current
+      };
+    }
+    const changeRequest = {
+      newRegistrationOptionFunctionId: input.newRegistrationOptionFunctionId?.trim(),
+      addFunctionId: input.addFunctionId?.trim(),
+      removeFunctionId: input.removeFunctionId?.trim()
+    };
+    return {
+      version: "event_registration_lifecycle.v1",
+      action: "change_registration",
+      mode: "preview",
+      partyId: lookup.partyId,
+      eventId: lookup.eventId,
+      eventRegistrationId: stringValue7(selected.eventRegistrationId),
+      canSubmit: false,
+      blockedReason: "Event option/program-item changes are a native iMIS cart workflow, not a proven EventRegistration REST mutation. Live probes showed repeat RegisterEvent and EventRegistration PUT can be accepted without changing the registered option/functions.",
+      current,
+      requestedChange: changeRequest,
+      nativeProductionRoute: {
+        route: "Open the native event showcase while acting on behalf of the registrant, change the registration option or program items, then proceed through Cart checkout.",
+        prerequisites: [
+          "The event must allow itinerary changes after checkout, or the operator must be an authorized Staff user.",
+          "Any resulting charge or credit must be settled by the native cart/payment workflow."
+        ],
+        source: "iMIS Help: Changing registrations after registration is complete."
+      },
+      mcpOwnedAlternatives: [
+        {
+          path: "cancel_and_register",
+          tools: ["imis_manage_event_registration", "imis_pay_open_invoice", "imis_refund_returned_order_payment"],
+          note: "For a practical substitute when the native cart change path is not suitable, cancel the existing registration, register the desired option, then settle the resulting invoice/credit with the shared finance tools. This is not the same as an in-place itinerary change."
+        }
+      ],
+      proof: {
+        repeatRegisterEventChangesRegistration: false,
+        eventRegistrationPutChangesFunctions: false,
+        nativeCartHandoffRequired: true
+      }
+    };
+  }
+  async previewTransfer(input) {
+    const eventId = requireString(input.eventId, "eventId");
+    const sourcePartyId = requireString(input.sourcePartyId, "sourcePartyId");
+    const targetPartyId = requireString(input.targetPartyId, "targetPartyId");
+    if (sourcePartyId === targetPartyId) {
+      throw new Error("sourcePartyId and targetPartyId must be different for event transfer preview.");
+    }
+    const [sourceStatus, targetRegisterPreview] = await Promise.all([
+      this.status({
+        partyId: sourcePartyId,
+        eventId,
+        eventRegistrationId: input.sourceEventRegistrationId
+      }),
+      this.previewRegister({
+        partyId: targetPartyId,
+        eventId,
+        registrationOptionFunctionId: input.targetRegistrationOptionFunctionId,
+        billToPartyId: input.targetBillToPartyId
+      })
+    ]);
+    const sourceRegistration = nestedObject6(sourceStatus.registration);
+    const sourceCanCancel = sourceRegistration ? await this.previewCancel({
+      partyId: sourcePartyId,
+      eventId,
+      eventRegistrationId: stringValue7(sourceRegistration.eventRegistrationId),
+      cancellationFeeItemId: input.cancellationFeeItemId
+    }) : void 0;
+    const sourceInvoices = arrayValue(nestedObject6(sourceStatus.financial)?.invoices);
+    const sourceHasPaidEventInvoice = sourceInvoices.some(
+      (invoice) => numberValue5(invoice.paymentAmount) > 0 || numberValue5(invoice.effectiveBalance) <= 0
+    );
+    return {
+      version: "event_registration_lifecycle.v1",
+      action: "transfer_registration",
+      mode: "preview",
+      eventId,
+      sourcePartyId,
+      targetPartyId,
+      canSubmit: false,
+      blockedReason: "Full registration transfer requires applying the original registrant's open credit to the target registrant's cart. The MCP can preview and perform the cancel/register legs, but source-credit selection/application is not yet REST-proven as an MCP-owned writer.",
+      source: {
+        status: sourceStatus,
+        cancelPreview: sourceCanCancel
+      },
+      target: {
+        registerPreview: targetRegisterPreview
+      },
+      productionRoute: {
+        documentedStaffRoute: [
+          "Cancel the original registration, creating an outstanding credit when the original invoice was paid.",
+          "Register the second registrant.",
+          "In the native cart, use Apply other credit to select the original registrant's credit and apply it to the second registrant's transaction."
+        ],
+        prerequisites: [
+          "Open Credit payment method is configured for the relevant Staff/Public payment method set.",
+          "The staff operator has Orders module authorization level 4 or higher for applying another contact's credit.",
+          "The cart includes the native Open Credit Display iPart when using a custom cart."
+        ],
+        source: "iMIS Help: Applying an open credit; iMIS EMS migrated feature guidance for event attendee transfer."
+      },
+      mcpOwnedStages: {
+        cancelOriginal: sourceCanCancel ? {
+          tool: "imis_manage_event_registration",
+          action: "cancel",
+          canSubmit: booleanValue3(sourceCanCancel.canSubmit),
+          confirmationText: stringValue7(sourceCanCancel.confirmationText)
+        } : void 0,
+        registerTarget: {
+          tool: "imis_manage_event_registration",
+          action: "register",
+          canSubmit: booleanValue3(targetRegisterPreview.canSubmit),
+          confirmationText: stringValue7(targetRegisterPreview.confirmationText)
+        },
+        settleWithoutOpenCreditTransfer: sourceHasPaidEventInvoice ? [
+          "If exact credit transfer is not required, refund the original cancellation credit with imis_refund_returned_order_payment and pay the target invoice with imis_pay_open_invoice.",
+          "This is finance-equivalent cash cleanup/rebill, not the same audit trail as applying the original open credit to the target cart."
+        ] : [
+          "If the original registration was unpaid, cancel/register can stage the attendee substitution without open-credit application."
+        ]
+      },
+      proof: {
+        transferIsSingleRestOperation: false,
+        cancelAndRegisterLegsUseMcpTools: true,
+        openCreditApplicationRestProven: false,
+        nativeCartHandoffRequiredForExactCreditTransfer: true
+      }
+    };
+  }
+  async previewCancel(input) {
+    const lookup = resolveLookup(input);
+    const current = await this.status(lookup);
+    const registrations = arrayValue(current.registrations);
+    const selected = selectRegistration(registrations, lookup.eventRegistrationId);
+    if (!selected) {
+      return {
+        version: "event_registration_lifecycle.v1",
+        action: "cancel",
+        mode: "preview",
+        partyId: lookup.partyId,
+        eventId: lookup.eventId,
+        eventRegistrationId: lookup.eventRegistrationId,
+        canSubmit: false,
+        blockedReason: "No event registration was found for the supplied EventId and PartyId.",
+        current
+      };
+    }
+    const registrationId = requireString(selected.eventRegistrationId, "event registration id");
+    const availability = nestedObject6(current.availability);
+    const alreadyCanceled = stringValue7(selected.statusName) === "Canceled" || stringValue7(selected.status) === "4";
+    const cancellationFeeItemId = input.cancellationFeeItemId?.trim();
+    const cancellationFeeReadiness = cancellationFeeItemId ? await this.readCancellationFeeReadiness(lookup.eventId, lookup.partyId, cancellationFeeItemId) : void 0;
+    const cancellationFeeBlockedReason = stringValue7(cancellationFeeReadiness?.blockedReason);
+    const canCancel = !alreadyCanceled && availability?.isAvailableToCancel !== false && !cancellationFeeBlockedReason;
+    return {
+      version: "event_registration_lifecycle.v1",
+      action: "cancel",
+      mode: "preview",
+      partyId: lookup.partyId,
+      eventId: lookup.eventId,
+      eventRegistrationId: registrationId,
+      canSubmit: canCancel,
+      blockedReason: canCancel ? void 0 : alreadyCanceled ? "The registration is already canceled." : cancellationFeeBlockedReason ?? stringValue7(availability?.cancellationMessage) ?? "iMIS reports this registration is not currently available to cancel.",
+      confirmationText: canCancel ? cancelConfirmationText(lookup.eventId, lookup.partyId, registrationId, cancellationFeeItemId) : void 0,
+      current,
+      planned: {
+        path: "EventRegistration/_execute",
+        operationName: "CancelEventRegistration",
+        cancellationFeeItemId,
+        cancellationFeeMode: cancellationFeeItemId ? "fee_item" : "no_fee",
+        cancellationFeeReadiness
+      },
+      proof: {
+        usesDocumentedCancelEventRegistrationOperation: true,
+        genericEntityDeleteUsed: false,
+        cancellationFeeProviderIncluded: true
+      }
+    };
+  }
+  async submitCancel(input) {
+    const preview = await this.previewCancel(input);
+    const expected = stringValue7(preview.confirmationText);
+    if (!expected) {
+      throw new Error(stringValue7(preview.blockedReason) ?? "Event registration cancellation is not currently available.");
+    }
+    if (input.confirmationText !== expected) {
+      throw new Error(`confirmationText must exactly equal: ${expected}`);
+    }
+    const eventRegistrationId2 = requireString(preview.eventRegistrationId, "event registration id");
+    const payload = cancelRequestPayload(eventRegistrationId2, input.cancellationFeeItemId?.trim());
+    const result = await this.entityService.execute("EventRegistration", payload);
+    const lookup = resolveLookup(input);
+    const after = await this.status(lookup);
+    const registrations = arrayValue(after.registrations);
+    const selected = selectRegistration(registrations, eventRegistrationId2);
+    const canceledReadbackVerified = stringValue7(selected?.statusName) === "Canceled" || stringValue7(selected?.status) === "4" || stringValue7(nestedObject6(executeResultSummary(result).entity)?.statusName) === "Canceled";
+    const cancellationFeeItemId = input.cancellationFeeItemId?.trim();
+    const cancellationFeeResult = cancellationFeeItemId ? cancellationFeeApplicationSummary(cancellationFeeItemId, after) : void 0;
+    return {
+      ...preview,
+      mode: "submitted",
+      result: executeResultSummary(result),
+      after,
+      cancellationFeeResult,
+      proof: {
+        ...nestedObject6(preview.proof) ?? {},
+        operationAccepted: true,
+        canceledReadbackVerified,
+        cancellationFeeFinanciallyApplied: cancellationFeeResult ? booleanValue3(cancellationFeeResult.financiallyApplied) : void 0
+      }
+    };
+  }
+  async registerWithoutExternalConfirmation(input) {
+    const preview = await this.previewRegister(input);
+    const confirmationText3 = requireString(preview.confirmationText, "registration confirmation text");
+    return this.submitRegister({ ...input, confirmationText: confirmationText3 });
+  }
+  async resolveRegisterRequest(input) {
+    const partyId = requireString(input.partyId, "partyId");
+    const eventId = requireString(input.eventId, "eventId");
+    const event = await this.entityService.get("Event", eventId);
+    const option = resolveRegistrationOption(event, input.registrationOptionFunctionId);
+    const registrationOptionFunctionId = requireString(option.EventFunctionId, "registration option function id");
+    const registeredByPartyId = input.registeredByPartyId?.trim() || partyId;
+    const billToPartyId = input.billToPartyId?.trim() || partyId;
+    const waitlist = input.waitlist === true;
+    const functionId = input.functionId?.trim() || void 0;
+    const payload = {
+      "$type": EVENT_REGISTRATION_REQUEST_TYPE,
+      EntityTypeName: "EventRegistration",
+      OperationName: "RegisterEvent",
+      RegistrationType: REGISTER_WITHOUT_PAYMENT,
+      EventId: eventId,
+      RegistrationOptionFunctionId: registrationOptionFunctionId,
+      RegistrantId: partyId,
+      RegisteredBy: registeredByPartyId,
+      BillTo: billToPartyId,
+      Waitlist: waitlist
+    };
+    if (functionId) payload.FunctionId = functionId;
+    return {
+      partyId,
+      eventId,
+      registrationOptionFunctionId,
+      functionId,
+      waitlist,
+      registeredByPartyId,
+      billToPartyId,
+      event,
+      option,
+      payload
+    };
+  }
+  async readRegistrations(eventId, partyId) {
+    return this.entityService.list("EventRegistration", {
+      limit: 25,
+      params: { EventId: eventId, PartyId: partyId }
+    });
+  }
+  async readAvailability(eventId, partyId) {
+    const result = await this.entityService.list("PartyEventAvailability", {
+      limit: 25,
+      params: { PartyId: partyId, EventId: eventId }
+    });
+    const row = result.items.find((item) => stringValue7(item.EventId) === eventId) ?? result.items[0];
+    return row ? availabilitySummary(row) : null;
+  }
+  async readFinancialRows(eventId, partyId) {
+    const result = await this.entityService.list("CsRegistration", {
+      limit: 25,
+      params: { ShipToId: partyId, EventCode: eventId }
+    });
+    return {
+      items: result.items.map((item) => normalizeGenericEntityRecord(item)),
+      totalCount: result.totalCount
+    };
+  }
+  async readEventInvoices(lookup, selectedRegistration, financialRows) {
+    const billToPartyId = stringValue7(selectedRegistration?.billToPartyId) ?? financialRows.map((row) => stringValue7(row.BillToId)).find(Boolean) ?? lookup.partyId;
+    const lookupPath = "Invoice list with BillToPartyId filter, then event line ItemCode/ShipToParty match";
+    const result = {
+      count: 0,
+      billToPartyId,
+      lookupPath,
+      invoices: [],
+      paymentNextActions: [],
+      refundNextActions: []
+    };
+    if (!billToPartyId) return result;
+    try {
+      const invoices = await this.entityService.list("Invoice", {
+        limit: 50,
+        params: { BillToPartyId: billToPartyId }
+      });
+      const matchedInvoices = invoices.items.map((invoice) => eventInvoiceSummary(invoice, lookup, selectedRegistration)).filter((invoice) => numberValue5(invoice.matchedEventLineCount) > 0);
+      result.invoices = await Promise.all(matchedInvoices.map(async (invoice) => {
+        const invoiceId = stringValue7(invoice.invoiceId);
+        if (!invoiceId) return invoice;
+        try {
+          return eventInvoiceSummary(
+            await this.entityService.get("Invoice", invoiceId),
+            lookup,
+            selectedRegistration
+          );
+        } catch (error2) {
+          return {
+            ...invoice,
+            fullInvoiceReadError: error2 instanceof Error ? error2.message : String(error2)
+          };
+        }
+      }));
+      result.count = result.invoices.length;
+      result.paymentNextActions = result.invoices.filter((invoice) => numberValue5(invoice.effectiveBalance) > 0).map((invoice) => ({
+        tool: "imis_pay_open_invoice",
+        action: "preview",
+        invoiceId: stringValue7(invoice.invoiceId),
+        amount: monetaryAmount2(invoice.effectiveBalance),
+        reason: "Open event-registration invoice balance; use the shared guarded invoice-payment workflow."
+      }));
+      result.refundNextActions = result.invoices.filter((invoice) => numberValue5(invoice.effectiveBalance) < 0).map((invoice) => ({
+        tool: "imis_refund_returned_order_payment",
+        action: "preview",
+        invoiceId: stringValue7(invoice.invoiceId),
+        amount: Math.abs(numberValue5(invoice.effectiveBalance)),
+        refundMethod: "cash",
+        reason: "Canceled paid event registration produced an invoice credit; use the shared guarded returned-invoice refund workflow."
+      }));
+    } catch (error2) {
+      result.lookupError = error2 instanceof Error ? error2.message : String(error2);
+    }
+    return result;
+  }
+  async readCancellationFeeReadiness(eventId, partyId, requestedItemId) {
+    const expectedItemId = expectedCancellationFeeItemId(eventId);
+    const supportedItemIdMatched = requestedItemId === expectedItemId;
+    const warnings = [
+      "iMIS applies cancellation fees only when the event's native Pricing > Cancellation fee setup is enabled; submit verifies the resulting invoice line."
+    ];
+    const readiness = {
+      requestedItemId,
+      expectedItemId,
+      supportedItemIdMatched,
+      nativeSetupPath: "Events > Find event > Showcase > Edit > Pricing > Cancellation fee",
+      canAttemptFee: supportedItemIdMatched,
+      warnings
+    };
+    if (!supportedItemIdMatched) {
+      readiness.blockedReason = `Cancellation fee item must be ${expectedItemId}. Arbitrary event item fee ids are not a supported iMIS cancellation-fee surface.`;
+      return readiness;
+    }
+    try {
+      const item2 = await this.entityService.get("Item", expectedItemId);
+      readiness.item = cancellationFeeItemSummary(item2);
+      readiness.itemFound = true;
+    } catch (error2) {
+      readiness.itemFound = false;
+      readiness.itemReadError = error2 instanceof Error ? error2.message : String(error2);
+      readiness.blockedReason = `Cancellation fee item ${expectedItemId} was not readable. Configure the event cancellation fee before requesting fee cancellation.`;
+      readiness.canAttemptFee = false;
+      return readiness;
+    }
+    try {
+      const partyPrices = await this.entityService.list("PartyItemPrice", {
+        limit: 5,
+        params: { PartyId: partyId, ItemId: expectedItemId }
+      });
+      const selectedPrice = partyPrices.items[0];
+      readiness.partyItemPrice = selectedPrice ? partyItemPriceSummary(selectedPrice) : void 0;
+      readiness.partyItemPriceRead = partyPrices.items.length > 0;
+      if (!selectedPrice) {
+        warnings.push(`PartyItemPrice did not return a selected price for ${expectedItemId} and Party ${partyId}.`);
+      }
+    } catch (error2) {
+      readiness.partyItemPriceRead = false;
+      readiness.partyItemPriceReadError = error2 instanceof Error ? error2.message : String(error2);
+      warnings.push(`PartyItemPrice read failed for ${expectedItemId}; iMIS may still cancel, but fee amount cannot be predicted.`);
+    }
+    try {
+      const itemPrices = await this.entityService.list("ItemPrice", {
+        limit: 5,
+        params: { ItemId: expectedItemId }
+      });
+      const defaultPrice = itemPrices.items[0];
+      readiness.itemPrice = defaultPrice ? itemPriceSummary(defaultPrice) : void 0;
+      readiness.itemPriceRead = itemPrices.items.length > 0;
+    } catch (error2) {
+      readiness.itemPriceRead = false;
+      readiness.itemPriceReadError = error2 instanceof Error ? error2.message : String(error2);
+    }
+    const item = nestedObject6(readiness.item);
+    const incomeAccountCode = stringValue7(nestedObject6(item?.incomeAccount)?.glAccountCode);
+    if (!incomeAccountCode) {
+      warnings.push("The cancellation fee item has no income GL account on this tenant; native event setup may still be incomplete.");
+    }
+    return readiness;
+  }
+  async resolveCheckInRequest(input) {
+    const lookup = resolveLookup(input);
+    const current = await this.status(lookup);
+    const registrations = arrayValue(current.registrations);
+    const registration = selectRegistration(registrations, lookup.eventRegistrationId);
+    if (!registration) {
+      throw new Error("No event registration was found for the supplied EventId and PartyId.");
+    }
+    if (stringValue7(registration.statusName) === "Canceled" || stringValue7(registration.status) === "4") {
+      throw new Error("Canceled event registrations cannot be checked in.");
+    }
+    const attendance = await this.resolveAttendanceRow(input, lookup, registration);
+    const attendanceId = requireString(attendance.eventFunctionAttendanceId, "event function attendance id");
+    const targetCreditUnits = input.creditUnitsEarned ?? monetaryAmount2(attendance.functionUnits) ?? 1;
+    if (!Number.isFinite(targetCreditUnits) || targetCreditUnits < 0) {
+      throw new Error("creditUnitsEarned must be a non-negative number.");
+    }
+    return {
+      lookup,
+      current,
+      registration,
+      attendanceId,
+      attendance,
+      targetCreditUnits
+    };
+  }
+  async resolveAttendanceRow(input, lookup, registration) {
+    const requestedAttendanceId = input.eventFunctionAttendanceId?.trim();
+    if (requestedAttendanceId) {
+      const row = attendanceSummary(await this.entityService.get("LegacyEventFunctionAttendance", requestedAttendanceId));
+      if (stringValue7(row.eventId) !== lookup.eventId) {
+        throw new Error(`Attendance row ${requestedAttendanceId} is not for event ${lookup.eventId}.`);
+      }
+      if (input.functionId?.trim() && stringValue7(row.functionId) !== input.functionId.trim()) {
+        throw new Error(`Attendance row ${requestedAttendanceId} is not for function ${input.functionId.trim()}.`);
+      }
+      return row;
+    }
+    const functionIds = arrayValue(registration.functions).map((item) => stringValue7(item.eventFunctionId)).filter((item) => Boolean(item));
+    const requestedFunctionId = input.functionId?.trim();
+    if (!requestedFunctionId && functionIds.length !== 1) {
+      throw new Error(`functionId is required because this registration has ${functionIds.length} function rows.`);
+    }
+    const functionId = requestedFunctionId ?? functionIds[0];
+    const nameParts = await this.registrantNameParts(lookup.partyId, registration);
+    const lastName = requireString(nameParts.lastName, "registrant last name");
+    const rows = await this.entityService.list("LegacyEventFunctionAttendance", {
+      limit: 100,
+      params: { EventId: lookup.eventId, RegistrantLastName: lastName }
+    });
+    const normalizedRows = rows.items.map(attendanceSummary).filter(
+      (row) => stringValue7(row.eventId) === lookup.eventId && stringValue7(row.functionId) === functionId && attendeeMatches(row, nameParts)
+    );
+    if (normalizedRows.length === 0) {
+      throw new Error(`No LegacyEventFunctionAttendance row was found for Event ${lookup.eventId}, Party ${lookup.partyId}, Function ${functionId}.`);
+    }
+    if (normalizedRows.length > 1) {
+      throw new Error(`Multiple attendance rows matched Event ${lookup.eventId}, Party ${lookup.partyId}, Function ${functionId}; pass eventFunctionAttendanceId.`);
+    }
+    return normalizedRows[0];
+  }
+  async registrantNameParts(partyId, registration) {
+    try {
+      const party = await this.entityService.get("Party", partyId);
+      const personName = nestedObject6(party.PersonName);
+      return {
+        firstName: stringValue7(personName?.FirstName) ?? stringValue7(party.FirstName),
+        lastName: stringValue7(personName?.LastName) ?? stringValue7(party.LastName),
+        fullName: stringValue7(personName?.FullName) ?? stringValue7(party.Name) ?? stringValue7(registration.registrantName)
+      };
+    } catch {
+      const fullName = stringValue7(registration.registrantName);
+      const parts = fullName?.split(/\s+/).filter(Boolean) ?? [];
+      return {
+        firstName: parts[0],
+        lastName: parts.length > 1 ? parts[parts.length - 1] : void 0,
+        fullName
+      };
+    }
+  }
+};
+function resolveLookup(input) {
+  const parsed = input.eventRegistrationId ? parseEventRegistrationId(input.eventRegistrationId) : void 0;
+  const eventId = input.eventId?.trim() || parsed?.eventId;
+  const partyId = input.partyId?.trim() || parsed?.partyId;
+  if (!eventId || !partyId) {
+    throw new Error("eventId and partyId are required unless eventRegistrationId is supplied in the native EventId-PartyId format.");
+  }
+  return {
+    eventId,
+    partyId,
+    eventRegistrationId: input.eventRegistrationId?.trim()
+  };
+}
+function parseEventRegistrationId(eventRegistrationId2) {
+  const trimmed = eventRegistrationId2.trim();
+  const match = trimmed.match(/^(.+)-([0-9]+)$/);
+  if (!match) return void 0;
+  return { eventId: match[1], partyId: match[2] };
+}
+function resolveRegistrationOption(event, requestedId) {
+  const options = collectionValues5(event.RegistrationOptions).map((item) => nestedObject6(item)).filter((item) => Boolean(item));
+  if (options.length === 0) {
+    throw new Error(`Event ${stringValue7(event.EventId) ?? "unknown"} does not expose registration options.`);
+  }
+  if (requestedId?.trim()) {
+    const found = options.find((option) => stringValue7(option.EventFunctionId) === requestedId.trim());
+    if (!found) {
+      throw new Error(`Event registration option ${requestedId} was not found. Available options: ${options.map(optionLabel).join(", ")}.`);
+    }
+    return found;
+  }
+  if (options.length === 1) return options[0];
+  const candidate = options.filter((option) => Boolean(option.IsEventRegistrationOption));
+  if (candidate.length === 1) return candidate[0];
+  throw new Error(`Event has multiple registration options; pass registrationOptionFunctionId. Available options: ${options.map(optionLabel).join(", ")}.`);
+}
+function optionLabel(option) {
+  const id = stringValue7(option.EventFunctionId) ?? "unknown";
+  const name = stringValue7(option.Name);
+  return name ? `${id} (${name})` : id;
+}
+function registerConfirmationText(input) {
+  return `REGISTER EVENT ${input.eventId} PARTY ${input.partyId} OPTION ${input.registrationOptionFunctionId}`;
+}
+function cancelConfirmationText(eventId, partyId, eventRegistrationId2, cancellationFeeItemId) {
+  const base = `CANCEL EVENT ${eventId} PARTY ${partyId} REGISTRATION ${eventRegistrationId2}`;
+  return cancellationFeeItemId ? `${base} FEE ${cancellationFeeItemId}` : base;
+}
+function checkInConfirmationText(input) {
+  return `CHECK IN EVENT ${input.lookup.eventId} PARTY ${input.lookup.partyId} ATTENDANCE ${input.attendanceId} CREDITS ${input.targetCreditUnits}`;
+}
+function expectedCancellationFeeItemId(eventId) {
+  return `${eventId}/_CANCEL`;
+}
+function cancelRequestPayload(eventRegistrationId2, cancellationFeeItemId) {
+  const childLine = { "$type": ORDER_LINE_TYPE };
+  if (cancellationFeeItemId) {
+    childLine.QuantityOrdered = 1;
+    childLine.Item = {
+      "$type": ITEM_TYPE,
+      ItemCode: cancellationFeeItemId,
+      ItemId: cancellationFeeItemId
+    };
+  }
+  return {
+    "$type": GENERIC_EXECUTE_REQUEST_TYPE,
+    OperationName: "CancelEventRegistration",
+    EntityTypeName: "EventRegistration",
+    Parameters: {
+      "$type": OBJECT_COLLECTION_TYPE2,
+      "$values": [
+        { "$type": STRING_TYPE, "$value": eventRegistrationId2 },
+        {
+          "$type": ORDER_LINE_TYPE,
+          ChildOrderLines: {
+            "$type": ORDER_LINE_COLLECTION_TYPE,
+            "$values": [childLine]
+          }
+        }
+      ]
+    }
+  };
+}
+function eventSummary(event) {
+  return {
+    eventId: stringValue7(event.EventId),
+    name: stringValue7(event.Name),
+    status: stringValue7(event.Status),
+    startDateTime: stringValue7(event.StartDateTime),
+    endDateTime: stringValue7(event.EndDateTime),
+    registrationOptions: collectionValues5(event.RegistrationOptions).map((item) => nestedObject6(item)).filter((item) => Boolean(item)).map(eventFunctionSummary)
+  };
+}
+function cancellationFeeItemSummary(item) {
+  return {
+    itemId: stringValue7(item.ItemId),
+    itemCode: stringValue7(item.ItemCode),
+    name: stringValue7(item.Name),
+    itemClassId: stringValue7(nestedObject6(item.ItemClass)?.ItemClassId),
+    incomeAccount: financialAccountSummary(
+      nestedObject6(nestedObject6(nestedObject6(nestedObject6(item.ItemFinancialInformation)?.ItemFinancialAccounts)?.Income)?.GLAccount)
+    )
+  };
+}
+function partyItemPriceSummary(row) {
+  return {
+    partyId: stringValue7(row.PartyId),
+    selectedPrice: monetaryAmount2(row.SelectedPrice),
+    standardPrice: monetaryAmount2(row.StandardPrice),
+    discountPrice: monetaryAmount2(row.DiscountPrice),
+    selectedPriceSheetId: stringValue7(nestedObject6(row.SelectedPriceSheet)?.PriceSheetId),
+    itemId: stringValue7(nestedObject6(row.Item)?.ItemId),
+    itemCode: stringValue7(nestedObject6(row.Item)?.ItemCode)
+  };
+}
+function itemPriceSummary(row) {
+  return {
+    itemPriceId: stringValue7(row.ItemPriceId),
+    itemId: stringValue7(nestedObject6(row.Item)?.ItemId),
+    priceSheetId: stringValue7(nestedObject6(row.PriceSheet)?.PriceSheetId),
+    defaultPrice: monetaryAmount2(row.DefaultPrice),
+    currencyCode: stringValue7(nestedObject6(row.Currency)?.CurrencyCode)
+  };
+}
+function financialAccountSummary(account) {
+  if (!account) return void 0;
+  return {
+    glAccountId: stringValue7(account.GLAccountId),
+    glAccountCode: stringValue7(account.GLAccountCode),
+    name: stringValue7(account.Name),
+    financialEntityId: stringValue7(nestedObject6(account.FinancialEntity)?.FinancialEntityId)
+  };
+}
+function cancellationFeeApplicationSummary(cancellationFeeItemId, afterStatus) {
+  const invoices = arrayValue(nestedObject6(afterStatus.financial)?.invoices);
+  const feeLines = invoices.flatMap(
+    (invoice) => arrayValue(invoice.eventLines).filter((line) => stringValue7(line.itemCode) === cancellationFeeItemId).map((line) => ({
+      invoiceId: stringValue7(invoice.invoiceId),
+      invoiceLineId: stringValue7(line.invoiceLineId),
+      itemCode: stringValue7(line.itemCode),
+      name: stringValue7(line.name),
+      amount: monetaryAmount2(line.amount),
+      balance: monetaryAmount2(line.balance)
+    }))
+  );
+  const feeAmountApplied = sumDefined(feeLines.map((line) => monetaryAmount2(line.amount))) ?? 0;
+  const financiallyApplied = feeLines.length > 0 && feeAmountApplied > 0;
+  return {
+    requestedItemId: cancellationFeeItemId,
+    matchingFeeLineCount: feeLines.length,
+    feeAmountApplied,
+    financiallyApplied,
+    feeLines,
+    warning: financiallyApplied ? void 0 : "iMIS accepted the cancellation but did not produce a cancellation-fee invoice line. Verify the event's native Pricing > Cancellation fee setup before relying on a fee."
+  };
+}
+function eventFunctionSummary(option) {
+  return {
+    eventFunctionId: stringValue7(option.EventFunctionId),
+    name: stringValue7(option.Name),
+    registrationType: numberValue5(option.RegistrationType),
+    availableTo: numberValue5(option.AvailableTo),
+    startDateTime: stringValue7(option.StartDateTime),
+    endDateTime: stringValue7(option.EndDateTime),
+    itemId: stringValue7(nestedObject6(option.Item)?.ItemId) ?? stringValue7(nestedObject6(option.Item)?.ItemCode)
+  };
+}
+function registrationSummary(registration) {
+  const event = nestedObject6(registration.Event);
+  const registrant = nestedObject6(registration.Registrant);
+  const status = stringValue7(registration.Status);
+  const statusName = status ? STATUS_NAMES[status] ?? status : void 0;
+  const functions = collectionValues5(registration.Functions).map((item) => nestedObject6(item)).filter((item) => Boolean(item)).map((item) => {
+    const eventFunction = nestedObject6(item.EventFunction);
+    return {
+      eventFunctionRegistrationId: stringValue7(item.EventFunctionRegistrationId),
+      eventFunctionId: stringValue7(eventFunction?.EventFunctionId),
+      name: stringValue7(eventFunction?.Name),
+      status: stringValue7(item.Status) ?? item.Status,
+      quantity: quantityAmount(item.Quantity),
+      quantityWaitlisted: quantityAmount(item.QuantityWaitlisted)
+    };
+  });
+  const waitlistedFunctionIds = functions.filter((item) => numberValue5(item.quantityWaitlisted) > 0).map((item) => stringValue7(item.eventFunctionId)).filter((item) => Boolean(item));
+  const waitlistedByStatus = statusName ? /waitlist/i.test(statusName) : false;
+  return {
+    eventRegistrationId: stringValue7(registration.EventRegistrationId),
+    eventId: stringValue7(event?.EventId),
+    eventName: stringValue7(event?.Name),
+    partyId: stringValue7(registrant?.PartyId) ?? stringValue7(registrant?.Id),
+    registrantName: stringValue7(registrant?.Name) ?? stringValue7(registrant?.FullName),
+    status: status ?? registration.Status,
+    statusName,
+    isWaitlisted: waitlistedByStatus || waitlistedFunctionIds.length > 0,
+    waitlistedFunctionIds,
+    totalQuantityWaitlisted: sumDefined(functions.map((item) => quantityAmount(item.quantityWaitlisted))) ?? 0,
+    registrationDate: stringValue7(registration.RegistrationDate),
+    billToPartyId: stringValue7(registration.BillToPartyId),
+    associatedInvoiceId: stringValue7(additionalAttribute(registration, "AssociatedInvoiceId")),
+    functions
+  };
+}
+function availabilitySummary(row) {
+  return {
+    partyId: stringValue7(row.PartyId),
+    eventId: stringValue7(row.EventId),
+    isAvailableToRegister: booleanValue3(row.IsAvailableToRegister),
+    isAvailableToWaitList: booleanValue3(row.IsAvailableToWaitList),
+    registrationMessage: stringValue7(row.RegistrationMessage),
+    isAvailableToCancel: booleanValue3(row.IsAvailableToCancel),
+    cancellationMessage: stringValue7(row.CancellationMessage),
+    waitListMessage: stringValue7(row.WaitListMessage),
+    registrationOptions: collectionValues5(row.RegistrationOptionsAvailability).map((item) => nestedObject6(item)).filter((item) => Boolean(item)).map(availabilityFunctionSummary),
+    functions: collectionValues5(row.FunctionsAvailability).map((item) => nestedObject6(item)).filter((item) => Boolean(item)).map(availabilityFunctionSummary)
+  };
+}
+function availabilityFunctionSummary(row) {
+  return {
+    eventFunctionId: stringValue7(row.EventFunctionId),
+    isAvailableToRegister: booleanValue3(row.IsAvailableToRegister),
+    isAvailableToWaitList: booleanValue3(row.IsAvailableToWaitList),
+    registrationMessage: stringValue7(row.RegistrationMessage),
+    waitListMessage: stringValue7(row.WaitListMessage),
+    quantityAvailable: numberValue5(row.QuantityAvailable)
+  };
+}
+function optionAvailability(availability, optionId) {
+  if (!availability) return void 0;
+  const options = arrayValue(availability.registrationOptions);
+  return options.find((item) => stringValue7(item.eventFunctionId) === optionId);
+}
+function registrationDecisionFor(availability, optionId, waitlist) {
+  if (!availability) {
+    return {
+      canSubmit: false,
+      blockedReason: "PartyEventAvailability did not return an availability row for this Party/Event."
+    };
+  }
+  const option = optionAvailability(availability, optionId);
+  const availableToRegister = availability.isAvailableToRegister !== false && option?.isAvailableToRegister !== false;
+  if (!waitlist) {
+    return {
+      canSubmit: availableToRegister,
+      blockedReason: availableToRegister ? void 0 : stringValue7(availability.registrationMessage) ?? stringValue7(option?.registrationMessage) ?? `iMIS reports option ${optionId} is not currently available to register.`
+    };
+  }
+  const availableToWaitList = availability.isAvailableToWaitList === true || option?.isAvailableToWaitList === true;
+  const canSubmit = availableToWaitList || availableToRegister;
+  return {
+    canSubmit,
+    blockedReason: canSubmit ? void 0 : stringValue7(availability.waitListMessage) ?? stringValue7(option?.waitListMessage) ?? stringValue7(availability.registrationMessage) ?? stringValue7(option?.registrationMessage) ?? `iMIS reports option ${optionId} is not currently available to waitlist or register.`
+  };
+}
+function waitlistHandlingSummary(requested, availability, optionId) {
+  const option = optionAvailability(availability, optionId);
+  const explicitWaitlistAvailable = availability?.isAvailableToWaitList === true || option?.isAvailableToWaitList === true;
+  return {
+    requested,
+    option: option ? {
+      eventFunctionId: stringValue7(option.eventFunctionId),
+      isAvailableToRegister: booleanValue3(option.isAvailableToRegister),
+      isAvailableToWaitList: booleanValue3(option.isAvailableToWaitList),
+      quantityAvailable: numberValue5(option.quantityAvailable),
+      waitListMessage: stringValue7(option.waitListMessage)
+    } : void 0,
+    requestSemantics: requested ? "The RegisterEvent Waitlist flag is a native iMIS request. Staff/API registration can still register or overbook depending on event capacity/settings, so submit verifies waitlist state by readback." : "Direct registration request.",
+    expectedReadback: requested ? "Waitlist is considered proven only when EventRegistration readback shows waitlisted quantity/status." : void 0,
+    explicitWaitlistAvailable
+  };
+}
+function waitlistSubmitResult(requested, registration) {
+  if (!requested) return void 0;
+  const waitlisted = isWaitlistedRegistration(registration);
+  return {
+    requested: true,
+    readbackVerified: waitlisted,
+    registration: waitlistRegistrationState(registration),
+    warning: waitlisted ? void 0 : "iMIS accepted the RegisterEvent waitlist request but readback does not show a waitlisted registration; treat the result as a normal registration/overbook unless PartyEventAvailability or EventRegistration later reports waitlist state."
+  };
+}
+function waitlistRegistrationState(registration) {
+  if (!registration) return void 0;
+  return {
+    eventRegistrationId: stringValue7(registration.eventRegistrationId),
+    status: stringValue7(registration.status),
+    statusName: stringValue7(registration.statusName),
+    isWaitlisted: booleanValue3(registration.isWaitlisted) === true,
+    waitlistedFunctionIds: arrayValue(registration.waitlistedFunctionIds),
+    totalQuantityWaitlisted: numberValue5(registration.totalQuantityWaitlisted)
+  };
+}
+function isWaitlistedRegistration(registration) {
+  if (!registration) return false;
+  if (booleanValue3(registration.isWaitlisted) === true) return true;
+  if (/waitlist/i.test(stringValue7(registration.statusName) ?? "")) return true;
+  if (numberValue5(registration.totalQuantityWaitlisted) > 0) return true;
+  return arrayValue(registration.functions).some((item) => numberValue5(item.quantityWaitlisted) > 0 || /waitlist/i.test(stringValue7(item.status) ?? ""));
+}
+function quantityAmount(value) {
+  const amount = monetaryAmount2(value);
+  if (amount !== void 0) return amount;
+  const unwrapped = unwrapValue6(value);
+  if (typeof unwrapped === "number" && Number.isFinite(unwrapped)) return unwrapped;
+  if (typeof unwrapped === "string" && unwrapped.trim()) {
+    const parsed = Number(unwrapped);
+    return Number.isFinite(parsed) ? parsed : void 0;
+  }
+  return void 0;
+}
+function activeRegistrationSummary(registrations) {
+  return registrations.find((registration) => {
+    const statusName = stringValue7(registration.statusName);
+    const status = stringValue7(registration.status);
+    if (!statusName && !status) return false;
+    return statusName !== "Canceled" && status !== "4";
+  });
+}
+function alreadyRegisteredBlockedReason(registration, requestedOptionId) {
+  const activeOptionIds = arrayValue(registration.functions).map((item) => stringValue7(item.eventFunctionId)).filter((item) => Boolean(item));
+  const active = activeOptionIds.length ? activeOptionIds.join(", ") : "an existing registration option";
+  return `Party already has an active registration for this event (${active}). Repeat RegisterEvent does not change the registration to ${requestedOptionId}; use preview_change_registration for the native change route or cancel first.`;
+}
+function financialRowSummary(row) {
+  return {
+    eventCode: stringValue7(row.EventCode),
+    partyId: stringValue7(row.ShipToId),
+    billToId: stringValue7(row.BillToId),
+    orderNumber: stringValue7(row.OrderNumber),
+    status: stringValue7(row.Status),
+    balance: numberValue5(row.Balance),
+    totalCharges: numberValue5(row.TotalCharges),
+    totalPayments: numberValue5(row.TotalPayments),
+    totalRegistered: numberValue5(row.TotalRegistered),
+    totalWaitlisted: numberValue5(row.TotalWaitlisted),
+    lineTotal: numberValue5(row.LineTotal),
+    orderDate: stringValue7(row.OrderDate)
+  };
+}
+function attendanceSummary(row) {
+  return {
+    eventFunctionAttendanceId: stringValue7(row.EventFunctionAttendanceId),
+    eventId: stringValue7(row.EventId),
+    functionId: stringValue7(row.FunctionId),
+    functionName: stringValue7(row.FunctionName),
+    functionUnits: monetaryAmount2(row.FunctionUnits),
+    creditUnitsEarned: monetaryAmount2(row.CreditUnitsEarned),
+    checkedIn: numberValue5(row.CreditUnitsEarned) > 0,
+    registrantFullName: stringValue7(row.RegistrantFullName),
+    registrantFirstName: stringValue7(row.RegistrantFirstName),
+    registrantLastName: stringValue7(row.RegistrantLastName),
+    registrantOrganization: stringValue7(row.RegistrantOrganization)
+  };
+}
+function attendeeMatches(row, nameParts) {
+  const rowLastName = normalizeName(stringValue7(row.registrantLastName));
+  const rowFirstName = normalizeName(stringValue7(row.registrantFirstName));
+  const rowFullName = normalizeName(stringValue7(row.registrantFullName));
+  const expectedLastName = normalizeName(nameParts.lastName);
+  const expectedFirstName = normalizeName(nameParts.firstName);
+  const expectedFullName = normalizeName(nameParts.fullName);
+  if (expectedLastName && rowLastName !== expectedLastName) return false;
+  if (expectedFirstName && rowFirstName && rowFirstName !== expectedFirstName) return false;
+  if (expectedFullName && rowFullName && rowFirstName && rowLastName) return true;
+  return Boolean(expectedLastName || expectedFullName);
+}
+function normalizeName(value) {
+  return value?.replace(/\s+/g, " ").trim().toLowerCase() || void 0;
+}
+function eventInvoiceSummary(invoice, lookup, selectedRegistration) {
+  const eventFunctionIds = new Set(
+    arrayValue(selectedRegistration?.functions).map((item) => stringValue7(item.eventFunctionId)).filter((item) => Boolean(item))
+  );
+  const lines = collectionValues5(invoice.Lines).map((line) => invoiceLineSummary(line, lookup, eventFunctionIds)).filter((line) => Boolean(line));
+  const eventLines = lines.filter((line) => line.eventLine === true);
+  return {
+    invoiceId: stringValue7(invoice.InvoiceId),
+    invoiceNumber: stringValue7(invoice.InvoiceNumber),
+    invoiceDate: stringValue7(invoice.InvoiceDate),
+    billToPartyId: stringValue7(nestedObject6(invoice.BillToParty)?.PartyId) ?? stringValue7(invoice.BillToPartyId),
+    invoiceAmount: monetaryAmount2(invoice.InvoiceAmount),
+    paymentAmount: monetaryAmount2(invoice.PaymentAmount),
+    balance: monetaryAmount2(invoice.Balance),
+    effectiveBalance: monetaryAmount2(invoice.Balance) ?? 0,
+    adjustmentAmount: monetaryAmount2(invoice.AdjustmentAmount),
+    matchedEventLineCount: eventLines.length,
+    matchedItemCodes: eventLines.map((line) => stringValue7(line.itemCode)).filter(Boolean),
+    eventLineBalance: sumDefined(eventLines.map((line) => monetaryAmount2(line.balance))),
+    eventLineAmount: sumDefined(eventLines.map((line) => monetaryAmount2(line.amount))),
+    eventLines
+  };
+}
+function invoiceLineSummary(lineValue, lookup, eventFunctionIds) {
+  const line = nestedObject6(lineValue);
+  if (!line) return void 0;
+  const item = nestedObject6(line.Item);
+  const itemCode = stringValue7(item?.ItemCode) ?? stringValue7(item?.ItemId);
+  const shipToPartyId = stringValue7(nestedObject6(line.ShipToParty)?.PartyId);
+  const eventLine = Boolean(itemCode && (itemCode === lookup.eventId || itemCode.startsWith(`${lookup.eventId}/`) || eventFunctionIds.has(itemCode))) && (!shipToPartyId || shipToPartyId === lookup.partyId);
+  return {
+    invoiceLineId: stringValue7(line.InvoiceLineId),
+    lineNumber: numberValue5(line.LineNumber),
+    itemCode,
+    name: stringValue7(item?.Name) ?? stringValue7(item?.Description),
+    shipToPartyId,
+    amount: monetaryAmount2(line.ExtendedAmount) ?? monetaryAmount2(line.LineTotal) ?? monetaryAmount2(line.Price),
+    balance: monetaryAmount2(line.Balance),
+    eventLine
+  };
+}
+function sumDefined(values) {
+  const defined = values.filter((value) => typeof value === "number" && Number.isFinite(value));
+  if (defined.length === 0) return void 0;
+  return Number(defined.reduce((sum, value) => sum + value, 0).toFixed(2));
+}
+function registerRequestSummary(payload) {
+  return {
+    entityTypeName: stringValue7(payload.EntityTypeName),
+    operationName: stringValue7(payload.OperationName),
+    registrationType: payload.RegistrationType,
+    eventId: stringValue7(payload.EventId),
+    registrationOptionFunctionId: stringValue7(payload.RegistrationOptionFunctionId),
+    functionId: stringValue7(payload.FunctionId),
+    registrantId: stringValue7(payload.RegistrantId),
+    registeredBy: stringValue7(payload.RegisteredBy),
+    billTo: stringValue7(payload.BillTo),
+    waitlist: booleanValue3(payload.Waitlist)
+  };
+}
+function executeResultSummary(result) {
+  const record2 = nestedObject6(result) ?? {};
+  const entity = nestedObject6(record2.Entity);
+  return {
+    type: stringValue7(record2.$type),
+    isValid: booleanValue3(record2.IsValid),
+    hasEntity: Boolean(entity),
+    entity: entity ? registrationSummary(entity) : void 0
+  };
+}
+function selectRegistration(registrations, eventRegistrationId2) {
+  if (eventRegistrationId2) {
+    return registrations.find((registration) => stringValue7(registration.eventRegistrationId) === eventRegistrationId2);
+  }
+  return registrations.find((registration) => stringValue7(registration.statusName) !== "Canceled") ?? registrations[0];
+}
+function eventRegistrationId(eventId, partyId) {
+  return `${eventId}-${partyId}`;
+}
+function additionalAttribute(record2, name) {
+  for (const item of collectionValues5(record2.AdditionalAttributes)) {
+    const attr = nestedObject6(item);
+    if (stringValue7(attr?.Name) === name) return attr?.Value;
+  }
+  return void 0;
+}
+function nestedObject6(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues5(value) {
+  if (Array.isArray(value)) return value;
+  const values = nestedObject6(value)?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function arrayValue(value) {
+  return Array.isArray(value) ? value : [];
+}
+function unwrapValue6(value) {
+  const obj = nestedObject6(value);
+  return obj && "$value" in obj ? obj.$value : value;
+}
+function stringValue7(value) {
+  const unwrapped = unwrapValue6(value);
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function requireString(value, fieldName) {
+  const normalized = stringValue7(value);
+  if (!normalized) throw new Error(`${fieldName} is required.`);
+  return normalized;
+}
+function numberValue5(value) {
+  const unwrapped = unwrapValue6(value);
+  if (typeof unwrapped === "number" && Number.isFinite(unwrapped)) return unwrapped;
+  if (typeof unwrapped === "string" && unwrapped.trim()) {
+    const parsed = Number(unwrapped);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+}
+function monetaryAmount2(value) {
+  const record2 = nestedObject6(value);
+  const amount = record2?.Amount ?? record2?.$value ?? value;
+  if (typeof amount === "number" && Number.isFinite(amount)) return Number(amount.toFixed(2));
+  if (typeof amount === "string" && amount.trim()) {
+    const parsed = Number(amount);
+    return Number.isFinite(parsed) ? Number(parsed.toFixed(2)) : void 0;
+  }
+  return void 0;
+}
+function booleanValue3(value) {
+  const unwrapped = unwrapValue6(value);
+  if (typeof unwrapped === "boolean") return unwrapped;
+  if (typeof unwrapped === "string") {
+    if (unwrapped.toLowerCase() === "true") return true;
+    if (unwrapped.toLowerCase() === "false") return false;
+  }
+  return void 0;
+}
+
+// src/services/party-360-contract.service.ts
+function nestedObject7(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues6(value) {
+  if (Array.isArray(value)) return value;
+  const values = nestedObject7(value)?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function unwrapValue7(value) {
+  const obj = nestedObject7(value);
+  return obj && "$value" in obj ? obj.$value : value;
+}
+function stringValue8(value) {
+  const unwrapped = unwrapValue7(value);
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function booleanValue4(value) {
+  const unwrapped = unwrapValue7(value);
+  if (typeof unwrapped === "boolean") return unwrapped;
+  if (typeof unwrapped === "string") {
+    if (unwrapped.toLowerCase() === "true") return true;
+    if (unwrapped.toLowerCase() === "false") return false;
+  }
+  return void 0;
+}
+function numberValue6(value) {
+  const unwrapped = unwrapValue7(value);
+  if (typeof unwrapped === "number" && Number.isFinite(unwrapped)) return unwrapped;
+  if (typeof unwrapped === "string" && unwrapped.trim()) {
+    const parsed = Number(unwrapped);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+}
+function itemsFromList(value) {
+  const obj = nestedObject7(value);
+  const items = Array.isArray(obj?.items) ? obj.items : [];
+  return items.filter((item) => !!item && typeof item === "object" && !Array.isArray(item));
+}
+function countFromList(value) {
+  const obj = nestedObject7(value);
+  if (!obj) return 0;
+  const count = numberValue6(obj.count);
+  if (count > 0) return count;
+  return itemsFromList(value).length;
+}
+function totalCountFromList(value) {
+  const obj = nestedObject7(value);
+  if (!obj || obj.totalCount === void 0) return void 0;
+  return numberValue6(obj.totalCount);
+}
+function recordsFromArray(value) {
+  return Array.isArray(value) ? value.filter((item) => !!item && typeof item === "object" && !Array.isArray(item)) : [];
+}
+function additionalAttribute2(record2, name) {
+  for (const entry of collectionValues6(record2.AdditionalAttributes)) {
+    const attr = nestedObject7(entry);
+    if (attr && stringValue8(attr.Name) === name) return attr.Value;
+  }
+  return void 0;
+}
+function genericPropertyEntries(record2) {
+  const entries = [];
+  for (const entry of collectionValues6(record2.Properties)) {
+    const property = nestedObject7(entry);
+    const name = property ? stringValue8(property.Name) : void 0;
+    if (property && name) entries.push({ name, value: property.Value });
+  }
+  return entries;
+}
+function genericPropertyEntry(record2, name) {
+  const lowerName = name.toLowerCase();
+  return genericPropertyEntries(record2).find((entry) => entry.name.toLowerCase() === lowerName);
+}
+function identityElementValues(record2, field) {
+  const identity = nestedObject7(record2[field]);
+  const values = collectionValues6(identity?.IdentityElements).map((value) => stringValue8(value)).filter((value) => Boolean(value));
+  return [...new Set(values)];
+}
+function partyUniformKey(payload) {
+  const contact = nestedObject7(payload.contact);
+  const relationships = nestedObject7(payload.relationships);
+  const engagement = nestedObject7(payload.engagement);
+  const nativeScoreResults = nestedObject7(engagement?.nativeScoreResults);
+  return stringValue8(contact?.UniformId) ?? stringValue8(contact?.UniformKey) ?? stringValue8(contact?.PartyUniformKey) ?? stringValue8(contact?.ContactKey) ?? stringValue8(relationships?.uniformKey) ?? stringValue8(nativeScoreResults?.contactKey) ?? (contact ? stringValue8(additionalAttribute2(contact, "UniformId")) : void 0) ?? (contact ? stringValue8(additionalAttribute2(contact, "UniformKey")) : void 0);
+}
+function partyName(record2) {
+  if (!record2) return void 0;
+  const personName = nestedObject7(record2.PersonName);
+  const composed = [stringValue8(personName?.FirstName), stringValue8(personName?.LastName)].filter(Boolean).join(" ");
+  return stringValue8(record2.Name) ?? stringValue8(record2.FullName) ?? stringValue8(personName?.FullName) ?? stringValue8(composed) ?? stringValue8(record2.Sort);
+}
+function firstEmail(record2) {
+  if (!record2) return void 0;
+  const direct = stringValue8(record2.Email);
+  if (direct) return direct;
+  const emails = collectionValues6(record2.Emails).map((entry) => nestedObject7(entry)).filter((entry) => Boolean(entry));
+  const primary = emails.find((entry) => booleanValue4(entry.IsPrimary));
+  return stringValue8(primary?.Address) ?? stringValue8(emails[0]?.Address);
+}
+function firstPhone(record2) {
+  if (!record2) return void 0;
+  const direct = stringValue8(record2.Phone);
+  if (direct) return direct;
+  const phones = collectionValues6(record2.Phones).map((entry) => nestedObject7(entry)).filter((entry) => Boolean(entry));
+  return stringValue8(phones[0]?.Number);
+}
+function isActiveSubscription(record2, now = /* @__PURE__ */ new Date()) {
+  const status = stringValue8(record2.Status)?.toLowerCase();
+  if (status === "a" || status === "active") return true;
+  const paidThrough = stringValue8(record2.PaidThrough) ?? stringValue8(record2.PaidThru) ?? stringValue8(record2.PaidThruDate);
+  if (!paidThrough || paidThrough.startsWith("0001-01-01")) return false;
+  const date3 = new Date(paidThrough);
+  return Number.isFinite(date3.valueOf()) && date3 > now;
+}
+function monetaryAmount3(record2, ...fieldNames) {
+  for (const fieldName of fieldNames) {
+    const value = record2[fieldName];
+    const amount = numberValue6(nestedObject7(value)?.Amount ?? value);
+    if (amount !== 0) return amount;
+  }
+  return 0;
+}
+function maxDate(records, ...fieldNames) {
+  const dates = records.flatMap((record2) => fieldNames.map((field) => stringValue8(record2[field]))).filter((value) => typeof value === "string" && !value.startsWith("0001-01-01")).sort();
+  return dates.at(-1);
+}
+function statusSummary(evidence) {
+  return evidence.reduce((counts, section) => {
+    counts[section.status] = (counts[section.status] ?? 0) + 1;
+    return counts;
+  }, {});
+}
+function summarizeIdentity(payload) {
+  const contact = nestedObject7(payload.contact);
+  const primaryOrg = nestedObject7(contact?.PrimaryOrganization);
+  const status = nestedObject7(contact?.Status);
+  return {
+    partyId: stringValue8(contact?.PartyId) ?? stringValue8(payload.partyId),
+    id: stringValue8(contact?.Id),
+    name: partyName(contact),
+    sortName: stringValue8(contact?.Sort),
+    email: firstEmail(contact),
+    phone: firstPhone(contact),
+    customerTypeCode: stringValue8(contact?.CustomerTypeCode) ?? (contact ? stringValue8(additionalAttribute2(contact, "CustomerTypeCode")) : void 0),
+    customerTypeDescription: stringValue8(contact?.CustomerTypeDescription) ?? (contact ? stringValue8(additionalAttribute2(contact, "CustomerTypeDescription")) : void 0),
+    isMember: booleanValue4(contact?.IsMember) ?? (contact ? booleanValue4(additionalAttribute2(contact, "IsMember")) : void 0),
+    status: stringValue8(status?.Name) ?? stringValue8(status?.PartyStatusId) ?? stringValue8(contact?.Status),
+    primaryOrganizationName: stringValue8(primaryOrg?.Name),
+    primaryOrganizationPartyId: stringValue8(primaryOrg?.OrganizationPartyId)
+  };
+}
+function summarizeMembership(payload) {
+  const subscriptions = itemsFromList(payload.subscriptions);
+  const active = subscriptions.filter((subscription) => isActiveSubscription(subscription));
+  return {
+    subscriptionCount: subscriptions.length,
+    subscriptionTotalCount: totalCountFromList(payload.subscriptions),
+    activeSubscriptionCount: active.length,
+    paidThroughDate: maxDate(subscriptions, "PaidThrough", "PaidThru", "PaidThruDate")
+  };
+}
+function summarizeFinance(payload) {
+  const invoices = itemsFromList(payload.invoices);
+  const payments = itemsFromList(payload.payments);
+  const orders = itemsFromList(payload.orders);
+  const orderLines = itemsFromList(payload.orderLines);
+  const paymentApplications = itemsFromList(payload.paymentApplications);
+  return {
+    invoiceCount: invoices.length,
+    invoiceTotalCount: totalCountFromList(payload.invoices),
+    paymentCount: payments.length,
+    paymentTotalCount: totalCountFromList(payload.payments),
+    orderCount: orders.length,
+    orderTotalCount: totalCountFromList(payload.orders),
+    orderLineCount: orderLines.length,
+    orderLineTotalCount: totalCountFromList(payload.orderLines),
+    paymentApplicationCount: paymentApplications.length,
+    paymentApplicationTotalCount: totalCountFromList(payload.paymentApplications),
+    outstandingBalance: invoices.reduce((sum, invoice) => sum + monetaryAmount3(invoice, "Balance"), 0),
+    totalPaidInWindow: payments.reduce((sum, payment) => sum + monetaryAmount3(payment, "Amount", "PaymentAmount"), 0),
+    totalOrderCharges: orders.reduce((sum, order) => sum + monetaryAmount3(order, "TotalCharges", "LINE_TOTAL"), 0),
+    totalOrderBalance: orders.reduce((sum, order) => sum + monetaryAmount3(order, "Balance"), 0)
+  };
+}
+function summarizeEvents(payload) {
+  const events = nestedObject7(payload.events);
+  const financialSummary = nestedObject7(events?.financialSummary);
+  const attendance = nestedObject7(events?.functionAttendance);
+  const availability = nestedObject7(events?.availability);
+  return {
+    source: stringValue8(events?.source),
+    registrationCount: numberValue6(events?.count),
+    registrationTotalCount: numberValue6(events?.totalCount),
+    eventIds: Array.isArray(events?.eventIds) ? events?.eventIds : [],
+    orderRowCount: countFromList(events?.orderRows),
+    functionAttendanceCount: numberValue6(attendance?.count),
+    availabilityCount: numberValue6(availability?.count),
+    totalCharges: numberValue6(financialSummary?.totalCharges),
+    totalPayments: numberValue6(financialSummary?.totalPayments),
+    balance: numberValue6(financialSummary?.balance),
+    waitlistedCount: numberValue6(financialSummary?.waitlistedCount),
+    registeredCount: numberValue6(financialSummary?.registeredCount)
+  };
+}
+function summarizeSimpleCount(payload, field) {
+  return {
+    count: countFromList(payload[field]),
+    totalCount: totalCountFromList(payload[field])
+  };
+}
+function summarizeAutoPay(payload) {
+  const autoPay = nestedObject7(payload.autoPay);
+  return {
+    accountCount: countFromList(autoPay?.accounts),
+    instructionCount: countFromList(autoPay?.instructions),
+    scheduledPaymentCount: countFromList(autoPay?.scheduledPayments)
+  };
+}
+function summarizeCertification(payload) {
+  const certification = nestedObject7(payload.certification);
+  return {
+    enrollmentCount: numberValue6(certification?.count)
+  };
+}
+function summarizeCommunications(payload) {
+  const communications = nestedObject7(payload.communications);
+  const history = nestedObject7(communications?.history);
+  const preferences = nestedObject7(communications?.preferences);
+  return {
+    historySource: stringValue8(history?.source),
+    historyCount: numberValue6(history?.count),
+    historyTotalCount: numberValue6(history?.totalCount),
+    emailPreferenceCount: numberValue6(nestedObject7(preferences?.emails)?.count),
+    communicationTypePreferenceCount: numberValue6(nestedObject7(preferences?.communicationTypePreferences)?.count)
+  };
+}
+function summarizeForms(payload) {
+  const forms = nestedObject7(payload.forms);
+  return {
+    source: stringValue8(forms?.source),
+    responseCount: numberValue6(forms?.count),
+    responseTotalCount: numberValue6(forms?.totalCount)
+  };
+}
+function summarizeCustomData(payload) {
+  const customPanels = nestedObject7(payload.customPanels);
+  return {
+    panelDefinitionCount: numberValue6(nestedObject7(customPanels?.panelDefinitions)?.count),
+    panelSourceCount: Array.isArray(customPanels?.panelSources) ? customPanels.panelSources.length : 0,
+    recordCount: numberValue6(customPanels?.count)
+  };
+}
+function summarizeDataQuality(payload) {
+  const duplicates = nestedObject7(payload.duplicates);
+  return {
+    flaggedDuplicateCount: numberValue6(duplicates?.flaggedCount),
+    mergeAction: stringValue8(duplicates?.mergeAction)
+  };
+}
+function summarizeEngagement(payload) {
+  const engagement = nestedObject7(payload.engagement);
+  const nativeScoreResults = nestedObject7(engagement?.nativeScoreResults);
+  return {
+    scoreDefinitionCount: numberValue6(nestedObject7(engagement?.scoreDefinitions)?.count),
+    nativeScoreSource: stringValue8(nativeScoreResults?.source),
+    nativeScoreResultCount: numberValue6(nativeScoreResults?.count),
+    activityCount: numberValue6(nestedObject7(engagement?.recentActivity)?.count),
+    groupMembershipCount: numberValue6(nestedObject7(engagement?.groupMemberships)?.count),
+    activeSubscriptionCount: numberValue6(nestedObject7(engagement?.subscriptions)?.activeCount)
+  };
+}
+function summarizeSecurity(payload) {
+  const loginSecurity = nestedObject7(payload.loginSecurity);
+  return {
+    canLogin: booleanValue4(loginSecurity?.canLogin),
+    hasCredentials: booleanValue4(loginSecurity?.hasCredentials),
+    username: stringValue8(loginSecurity?.username)
+  };
+}
+var IDENTIFIER_FIELD_HINTS = [
+  "PartyId",
+  "Id",
+  "ID",
+  "UniformId",
+  "ContactKey",
+  "InvoiceId",
+  "InvoiceNumber",
+  "PaymentId",
+  "PaymentReference",
+  "PaymentApplicationId",
+  "GroupId",
+  "RelationshipKey",
+  "TransactionNumber",
+  "OriginalTransaction",
+  "OrderNumber",
+  "LineNumber",
+  "InvoiceReferenceNumber",
+  "EventId",
+  "EventKey",
+  "RegistrationId",
+  "CommunicationLogRecipientId",
+  "FormResponseId",
+  "ResponseId",
+  "UserId",
+  "Username",
+  "AutoPayAccountId",
+  "AutoPayInstructionId",
+  "ScheduledPaymentId",
+  "CertificationProgramRegistrationId",
+  "EngagementScoreId",
+  "ScoreId"
+];
+function identifierFields(record2) {
+  const identifiers = [];
+  const add = (field, value) => {
+    const stringified = stringValue8(value);
+    if (!stringified || identifiers.some((identifier) => identifier.field.toLowerCase() === field.toLowerCase() && identifier.value === stringified)) return;
+    identifiers.push({ field, value: stringified });
+  };
+  for (const field of IDENTIFIER_FIELD_HINTS) {
+    const property = genericPropertyEntry(record2, field);
+    add(property?.name ?? field, record2[field] ?? property?.value);
+  }
+  for (const value of identityElementValues(record2, "Identity")) add("Identity.IdentityElements", value);
+  for (const [field, value] of Object.entries(record2)) {
+    if (identifiers.length >= 8) break;
+    if (field.endsWith("Id") || field.endsWith("ID") || field.endsWith("Key") || field.endsWith("Number")) {
+      add(field, value);
+    }
+  }
+  for (const { name, value } of genericPropertyEntries(record2)) {
+    if (identifiers.length >= 8) break;
+    if (name.endsWith("Id") || name.endsWith("ID") || name.endsWith("Key") || name.endsWith("Number")) {
+      add(name, value);
+    }
+  }
+  return identifiers.slice(0, 8);
+}
+function partyLinksFromValue(value, path3, partyKeys, links, depth) {
+  const add = (key, expected) => {
+    const actual = stringValue8(value);
+    if (!expected || actual !== expected) return;
+    if (links.some((link) => link.field === path3 && link.key === key && link.value === actual)) return;
+    links.push({ field: path3, key, value: actual });
+  };
+  add("partyId", partyKeys.partyId);
+  add("uniformKey", partyKeys.uniformKey);
+  const obj = nestedObject7(value);
+  if (!obj || depth >= 2) return;
+  for (const [field, nested] of Object.entries(obj)) {
+    partyLinksFromValue(nested, `${path3}.${field}`, partyKeys, links, depth + 1);
+  }
+}
+function partyLinks(record2, partyKeys) {
+  const links = [];
+  for (const [field, value] of Object.entries(record2)) {
+    partyLinksFromValue(value, field, partyKeys, links, 0);
+  }
+  for (const { name, value } of genericPropertyEntries(record2)) {
+    partyLinksFromValue(value, `Properties.${name}`, partyKeys, links, 0);
+  }
+  for (const value of identityElementValues(record2, "PrimaryParentIdentity")) {
+    partyLinksFromValue(value, "PrimaryParentIdentity.IdentityElements", partyKeys, links, 0);
+  }
+  return links.slice(0, 8);
+}
+function recordGroup(source, records) {
+  return records.length > 0 ? [{ source, records }] : [];
+}
+function sectionRecordGroups(key, payload) {
+  const events = nestedObject7(payload.events);
+  const autoPay = nestedObject7(payload.autoPay);
+  const certification = nestedObject7(payload.certification);
+  const communications = nestedObject7(payload.communications);
+  const communicationHistory = nestedObject7(communications?.history);
+  const forms = nestedObject7(payload.forms);
+  const customPanels = nestedObject7(payload.customPanels);
+  const duplicates = nestedObject7(payload.duplicates);
+  const engagement = nestedObject7(payload.engagement);
+  const nativeScoreResults = nestedObject7(engagement?.nativeScoreResults);
+  const loginSecurity = nestedObject7(payload.loginSecurity);
+  const userSecurity = nestedObject7(loginSecurity?.userSecurity);
+  switch (key) {
+    case "identity":
+      return recordGroup("Party", recordsFromArray(nestedObject7(payload.contact) ? [payload.contact] : []));
+    case "membership":
+      return recordGroup("Subscription", itemsFromList(payload.subscriptions));
+    case "finance":
+      return [
+        ...recordGroup("InvoiceSummary", itemsFromList(payload.invoices)),
+        ...recordGroup("PaymentSummary", itemsFromList(payload.payments)),
+        ...recordGroup("CsOrders", itemsFromList(payload.orders)),
+        ...recordGroup("CsOrderLines", itemsFromList(payload.orderLines)),
+        ...recordGroup("PaymentApplication", itemsFromList(payload.paymentApplications))
+      ];
+    case "groups":
+      return recordGroup("GroupMember", itemsFromList(payload.groups));
+    case "activity":
+      return recordGroup("ContactInteraction", itemsFromList(payload.activities));
+    case "relationships":
+      return recordGroup("Relationship", itemsFromList(payload.relationships));
+    case "giving":
+      return recordGroup(stringValue8(nestedObject7(payload.gifts)?.source) ?? "Gift", itemsFromList(payload.gifts));
+    case "events":
+      return [
+        ...recordGroup(stringValue8(events?.source) ?? "EventRegistrantsReport", recordsFromArray(events?.registrations)),
+        ...recordGroup("CsRegistration", itemsFromList(events?.orderRows)),
+        ...recordGroup("LegacyEventFunctionAttendance", itemsFromList(nestedObject7(events?.functionAttendance))),
+        ...recordGroup("PartyEventAvailability", itemsFromList(nestedObject7(events?.availability)))
+      ];
+    case "security":
+      return recordGroup("UserSecurity", userSecurity ? [userSecurity] : []);
+    case "autoPay":
+      return [
+        ...recordGroup("AutoPayAccount", itemsFromList(nestedObject7(autoPay?.accounts))),
+        ...recordGroup("AutoPayInstruction", itemsFromList(nestedObject7(autoPay?.instructions))),
+        ...recordGroup("ScheduledPayment", itemsFromList(nestedObject7(autoPay?.scheduledPayments)))
+      ];
+    case "certification":
+      return recordGroup("CertificationProgramRegistration", recordsFromArray(certification?.enrollments));
+    case "communications":
+      return [
+        ...recordGroup("Party", recordsFromArray(nestedObject7(communications?.preferences) ? [communications?.preferences] : [])),
+        ...recordGroup(stringValue8(communicationHistory?.source) ?? "CommunicationLogRecipient", recordsFromArray(communicationHistory?.communications))
+      ];
+    case "forms":
+      return recordGroup(stringValue8(forms?.source) ?? "FormResponse", recordsFromArray(forms?.responses));
+    case "customData":
+      return recordsFromArray(customPanels?.recordsBySource).flatMap((entry) => {
+        const source = stringValue8(entry.panelSource) ?? "PanelSource";
+        return recordGroup(source, recordsFromArray(entry.records));
+      });
+    case "dataQuality":
+      return recordGroup("PartyDuplicate", recordsFromArray(duplicates?.flaggedDuplicates));
+    case "engagement":
+      return [
+        ...recordGroup("EngagementScore", itemsFromList(nestedObject7(engagement?.scoreDefinitions))),
+        ...recordGroup(stringValue8(nativeScoreResults?.source) ?? "EngagementScoreResult", recordsFromArray(nativeScoreResults?.scoreResults)),
+        ...recordGroup("ContactInteraction", recordsFromArray(nestedObject7(engagement?.recentActivity)?.interactions)),
+        ...recordGroup("GroupMember", recordsFromArray(nestedObject7(engagement?.groupMemberships)?.groups)),
+        ...recordGroup("Subscription", itemsFromList(nestedObject7(engagement?.subscriptions)))
+      ];
+    case "staffProfileParity":
+      return [];
+  }
+}
+function buildRecordMap(key, payload, evidence) {
+  const partyKeys = {
+    partyId: stringValue8(payload.partyId) ?? "",
+    uniformKey: partyUniformKey(payload)
+  };
+  const sourceFilters = (evidence?.sources ?? []).map((source) => ({
+    source: source.source,
+    status: source.status,
+    filters: source.filters,
+    count: source.count,
+    totalCount: source.totalCount
+  }));
+  const groups = sectionRecordGroups(key, payload);
+  const allRecords = groups.flatMap(
+    (group) => group.records.map((record2) => ({
+      source: group.source,
+      identifiers: identifierFields(record2),
+      partyLinks: partyLinks(record2, partyKeys)
+    }))
+  );
+  return {
+    partyKeys,
+    sourceFilters,
+    records: allRecords.slice(0, 25),
+    recordCount: allRecords.length,
+    truncated: allRecords.length > 25
+  };
+}
+function createSection(spec, payload, evidenceBySection) {
+  const evidence = evidenceBySection.get(spec.sourceSection);
+  return {
+    status: evidence?.status ?? "not_implemented",
+    summary: spec.summarize(payload),
+    data: spec.data(payload),
+    sources: evidence?.sources ?? [],
+    recordMap: buildRecordMap(spec.key, payload, evidence),
+    reason: evidence?.reason,
+    nativeHandoff: evidence?.nativeHandoff
+  };
+}
+function buildParty360Contract(input) {
+  const evidenceBySection = new Map(input.evidence.map((section) => [section.section, section]));
+  const specs = [
+    { key: "identity", sourceSection: "contact", data: (payload) => payload.contact, summarize: summarizeIdentity },
+    { key: "membership", sourceSection: "billing", data: (payload) => payload.subscriptions, summarize: summarizeMembership },
+    { key: "finance", sourceSection: "billing", data: (payload) => ({ invoices: payload.invoices, payments: payload.payments, orders: payload.orders, orderLines: payload.orderLines, paymentApplications: payload.paymentApplications }), summarize: summarizeFinance },
+    { key: "groups", sourceSection: "groups", data: (payload) => payload.groups, summarize: (payload) => summarizeSimpleCount(payload, "groups") },
+    { key: "activity", sourceSection: "activity", data: (payload) => payload.activities, summarize: (payload) => summarizeSimpleCount(payload, "activities") },
+    { key: "relationships", sourceSection: "relationships", data: (payload) => payload.relationships, summarize: (payload) => summarizeSimpleCount(payload, "relationships") },
+    { key: "giving", sourceSection: "giving", data: (payload) => payload.gifts, summarize: (payload) => summarizeSimpleCount(payload, "gifts") },
+    { key: "events", sourceSection: "events", data: (payload) => payload.events, summarize: summarizeEvents },
+    { key: "security", sourceSection: "loginSecurity", data: (payload) => payload.loginSecurity, summarize: summarizeSecurity },
+    { key: "autoPay", sourceSection: "autoPay", data: (payload) => payload.autoPay, summarize: summarizeAutoPay },
+    { key: "certification", sourceSection: "certification", data: (payload) => payload.certification, summarize: summarizeCertification },
+    { key: "communications", sourceSection: "communications", data: (payload) => payload.communications, summarize: summarizeCommunications },
+    { key: "forms", sourceSection: "forms", data: (payload) => payload.forms, summarize: summarizeForms },
+    { key: "customData", sourceSection: "customPanels", data: (payload) => payload.customPanels, summarize: summarizeCustomData },
+    { key: "dataQuality", sourceSection: "duplicates", data: (payload) => payload.duplicates, summarize: summarizeDataQuality },
+    { key: "engagement", sourceSection: "engagement", data: (payload) => payload.engagement, summarize: summarizeEngagement },
+    { key: "staffProfileParity", sourceSection: "staffProfileParity", data: () => void 0, summarize: () => ({ nativeProof: "not_proven" }) }
+  ];
+  const sections = Object.fromEntries(
+    specs.map((spec) => [spec.key, createSection(spec, input.payload, evidenceBySection)])
+  );
+  return {
+    version: "party360.v1",
+    partyId: input.partyId,
+    generatedAt: (input.generatedAt ?? /* @__PURE__ */ new Date()).toISOString(),
+    requestedSections: input.requestedSections,
+    defaultSections: input.defaultSections,
+    currentSections: input.currentSections,
+    sections,
+    evidence: {
+      summary: statusSummary(input.evidence)
+    }
+  };
+}
+
+// src/tools/workflow-tools.ts
+var PARTY_360_CURRENT_SECTIONS = [
+  "contact",
+  "billing",
+  "groups",
+  "activity",
+  "relationships",
+  "giving",
+  "events",
+  "loginSecurity",
+  "autoPay",
+  "certification",
+  "duplicates",
+  "engagement"
+];
+var PARTY_360_REQUESTABLE_SECTIONS = [
+  ...PARTY_360_CURRENT_SECTIONS,
+  "communications",
+  "forms",
+  "customPanels"
+];
+var PARTY_360_FRONTIER_SECTIONS = [
+  {
+    section: "staffProfileParity",
+    status: "native_handoff_required",
+    sources: [],
+    nativeHandoff: "Open the native iMIS contact profile and compare visible staff sections against the API-backed 360 response.",
+    reason: "Native staff-view parity requires browser/native observation and cannot be inferred from REST reads alone."
+  }
+];
+var ORGANIZATION_360_CURRENT_SECTIONS = [
+  "profile",
+  "roster",
+  "relationships",
+  "finance",
+  "groups",
+  "dataQuality"
+];
+var DONOR_360_CURRENT_SECTIONS = [
+  "profile",
+  "giving",
+  "pledges",
+  "giftAid",
+  "campaigns",
+  "communications"
+];
+var GIFT_INFORMATION_BATCH_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftInformationBatchData, Asi.Contracts";
+var GIFT_INFORMATION_DATA_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftInformationData, Asi.Contracts";
+var GIFT_INFORMATION_COLLECTION_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftInformationDataCollection, Asi.Contracts";
+var IMPORT_BATCH_POST_REQUEST_TYPE2 = "Asi.Soa.Core.DataContracts.ImportBatchPostRequest, Asi.Contracts";
+var MONETARY_AMOUNT_TYPE2 = "Asi.Soa.Core.DataContracts.MonetaryAmountData, Asi.Contracts";
+var REMITTANCE_TYPE2 = "Asi.Soa.Commerce.DataContracts.RemittanceData, Asi.Contracts";
+var PAYMENT_METHOD_TYPE = "Asi.Soa.Commerce.DataContracts.PaymentMethodData, Asi.Contracts";
+var GIFT_AID_INFORMATION_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftAidInformationData, Asi.Contracts";
+var TRIBUTE_INFORMATION_TYPE = "Asi.Soa.Fundraising.DataContracts.TributeInformationData, Asi.Contracts";
+var TRIBUTE_INFORMATION_COLLECTION_TYPE = "Asi.Soa.Fundraising.DataContracts.TributeInformationDataCollection, Asi.Contracts";
+var SOFT_CREDIT_ALLOCATION_TYPE = "Asi.Soa.Commerce.DataContracts.SoftCreditAllocationData, Asi.Contracts";
+var SOFT_CREDIT_ALLOCATION_COLLECTION_TYPE = "Asi.Soa.Commerce.DataContracts.SoftCreditAllocationDetailsDataCollection, Asi.Contracts";
+var SOFT_CREDIT_ALLOCATION_DETAIL_TYPE = "Asi.Soa.Commerce.DataContracts.SoftCreditAllocationDetailData, Asi.Contracts";
+var SOFT_CREDIT_TYPE = "Asi.Soa.Commerce.DataContracts.SoftCreditTypeData, Asi.Contracts";
+var PARTY_SUMMARY_TYPE = "Asi.Soa.Membership.DataContracts.PartySummaryData, Asi.Contracts";
+var GIFT_AID_PANEL_SOURCES = ["GiftAid", "Gift_Aid", "GIFT_AID"];
+var CONTACTS_BY_COMPANY_QUERY = "$/CampaignManagement/DefaultSystem/Queries/Respondents/Contacts by Company";
+function parseFilters(filters) {
+  const params = {};
+  if (!filters) return params;
+  for (const pair of filters.split(",")) {
+    const [key, ...rest] = pair.trim().split("=");
+    if (key && rest.length > 0) params[key.trim()] = rest.join("=").trim();
+  }
+  return params;
+}
+function nestedObject8(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues7(value) {
+  if (Array.isArray(value)) return value;
+  const values = nestedObject8(value)?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function unwrapValue8(value) {
+  const obj = nestedObject8(value);
+  return obj && "$value" in obj ? obj.$value : value;
+}
+function stringValue9(value) {
+  const unwrapped = unwrapValue8(value);
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function requireToolString(value, fieldName) {
+  const normalized = stringValue9(value);
+  if (!normalized) throw new Error(`${fieldName} is required.`);
+  return normalized;
+}
+function numberValue7(value) {
+  const unwrapped = unwrapValue8(value);
+  if (typeof unwrapped === "number" && Number.isFinite(unwrapped)) return unwrapped;
+  if (typeof unwrapped === "string" && unwrapped.trim()) {
+    const parsed = Number(unwrapped);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+}
+function requirePositiveAmount(value, fieldName) {
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new Error(`${fieldName} must be a positive number.`);
+  }
+  return value;
+}
+function isoDateTime(value, fieldName) {
+  const date3 = value ? new Date(value) : /* @__PURE__ */ new Date();
+  if (Number.isNaN(date3.getTime())) {
+    throw new Error(`${fieldName} must be a valid ISO date or datetime.`);
+  }
+  return date3.toISOString();
+}
+function giftMonetaryAmount(amount) {
+  return {
+    $type: MONETARY_AMOUNT_TYPE2,
+    Amount: amount.toFixed(2)
+  };
+}
+function partySummaryData(party) {
+  const record2 = nestedObject8(party) ?? {};
+  const partyId = stringValue9(record2.PartyId) ?? stringValue9(record2.Id);
+  if (!partyId) {
+    throw new Error("Party record did not include PartyId or Id.");
+  }
+  return {
+    $type: PARTY_SUMMARY_TYPE,
+    PartyId: partyId,
+    Id: stringValue9(record2.Id) ?? partyId,
+    UniformId: stringValue9(record2.UniformId),
+    Name: stringValue9(record2.Name),
+    Sort: stringValue9(record2.Sort),
+    Status: record2.Status
+  };
+}
+function isFundraisingGiftItem(item) {
+  const record2 = nestedObject8(item);
+  const type = stringValue9(record2?.$type);
+  return Boolean(type?.includes("Fundraising.DataContracts.GiftItemData"));
+}
+function giftRecordSummary(gift) {
+  const record2 = nestedObject8(gift) ?? {};
+  const giftItem = nestedObject8(record2.GiftItem);
+  const payment = nestedObject8(record2.PaymentInformation);
+  const paymentMethod = nestedObject8(payment?.PaymentMethod);
+  const installment = nestedObject8(record2.InstallmentInformation);
+  const paymentTerms = nestedObject8(installment?.PaymentTerms);
+  const sourceCode = nestedObject8(record2.SourceCode);
+  const softCreditAllocations = collectionValues7(nestedObject8(record2.SoftCreditInformation)?.Allocations);
+  const tributeRows = collectionValues7(record2.TributeInformation);
+  return {
+    giftId: stringValue9(record2.GiftId),
+    donationType: stringValue9(record2.DonationType),
+    giftDate: stringValue9(record2.GiftDate),
+    amount: numberValue7(nestedObject8(record2.GiftAmount)?.Amount),
+    giftItemId: stringValue9(giftItem?.ItemId) ?? stringValue9(giftItem?.ItemCode),
+    sourceCode: stringValue9(sourceCode?.Code),
+    paymentMethodId: stringValue9(paymentMethod?.PaymentMethodId),
+    paymentTermsId: stringValue9(paymentTerms?.PaymentTermsId),
+    scheduledPaymentCount: collectionValues7(installment?.PaymentSchedule).length,
+    softCreditCount: softCreditAllocations.length,
+    softCreditRecipientIds: softCreditAllocations.map((allocation) => stringValue9(nestedObject8(allocation)?.SoftCreditRecipientId)).filter(Boolean),
+    tributeCount: tributeRows.length,
+    tributeTypes: tributeRows.map((tribute) => {
+      const tributeType = nestedObject8(nestedObject8(tribute)?.TributeType);
+      return stringValue9(tributeType?.TributeTypeId) ?? stringValue9(tributeType?.Name);
+    }).filter(Boolean)
+  };
+}
+function giftBatchSummary(batch) {
+  const record2 = nestedObject8(batch) ?? {};
+  const gifts = collectionValues7(record2.Gifts);
+  return {
+    batchId: stringValue9(record2.BatchId),
+    batchType: stringValue9(record2.BatchType),
+    batchDate: stringValue9(record2.BatchDate),
+    name: stringValue9(record2.Name),
+    status: record2.Status,
+    userId: stringValue9(record2.UserId),
+    giftCount: gifts.length,
+    gifts: gifts.map(giftRecordSummary)
+  };
+}
+function defaultGiftReference() {
+  return `C${Date.now().toString(36).toUpperCase().slice(-8)}`;
+}
+function requireCashReference(value) {
+  const reference = value?.trim() || defaultGiftReference();
+  if (reference.length >= 10) {
+    throw new Error("CASH gift referenceNumber must be fewer than 10 characters because iMIS treats it as the check number during ImportBatch posting.");
+  }
+  return reference;
+}
+function paymentSummaryAmount(payment) {
+  return numberValue7(nestedObject8(payment.Amount)?.Amount ?? payment.Amount);
+}
+function paymentSummarySummary(payment) {
+  const record2 = nestedObject8(payment) ?? {};
+  return {
+    paymentId: stringValue9(record2.PaymentId),
+    paymentDate: stringValue9(record2.PaymentDate),
+    batchId: stringValue9(record2.BatchId),
+    amount: paymentSummaryAmount(record2),
+    status: numberValue7(record2.Status),
+    description: stringValue9(record2.Description),
+    paymentMethodId: stringValue9(record2.PaymentMethodId),
+    financialEntityId: stringValue9(record2.FinancialEntityId),
+    paymentReference: stringValue9(record2.PaymentReference),
+    payorPartyId: stringValue9(nestedObject8(record2.PayorParty)?.PartyId)
+  };
+}
+function matchingPaymentSummary(payments, donorId, referenceNumber, amount) {
+  return payments.find((payment) => {
+    const summary = paymentSummarySummary(payment);
+    return summary.payorPartyId === donorId && summary.paymentReference === referenceNumber && Math.abs(numberValue7(summary.amount) - amount) < 5e-3;
+  });
+}
+async function waitForMatchingPaymentSummary(entityService, donorId, referenceNumber, amount) {
+  for (let attempt = 0; attempt < 12; attempt += 1) {
+    const payments = await entityService.list("PaymentSummary", {
+      limit: 10,
+      params: {
+        "PayorParty.PartyId": donorId,
+        PaymentReference: referenceNumber
+      }
+    });
+    const match = matchingPaymentSummary(
+      payments.items,
+      donorId,
+      referenceNumber,
+      amount
+    );
+    if (match) return match;
+    await new Promise((resolve2) => setTimeout(resolve2, 1e3));
+  }
+  return void 0;
+}
+function importBatchPostSucceeded2(result) {
+  const record2 = nestedObject8(result);
+  if (record2?.IsSuccessStatusCode === false) return false;
+  const serialized = stringValue9(result) ?? JSON.stringify(result ?? "");
+  if (!serialized) return true;
+  return !/\bError\s*:/i.test(serialized) && !/Business rule violation/i.test(serialized);
+}
+async function resolveSourceCodeSummary(entityService, sourceCode) {
+  if (!sourceCode) return void 0;
+  const result = await entityService.list("SourceCodeSummary", { limit: 200 });
+  const match = result.items.find((row) => {
+    const code = stringValue9(row.Code);
+    const id = stringValue9(row.SourceCodeId);
+    const name = stringValue9(row.Name);
+    return code === sourceCode || id === sourceCode || name === sourceCode;
+  });
+  if (!match) {
+    throw new Error(`Source code "${sourceCode}" was not found in SourceCodeSummary.`);
+  }
+  return match;
+}
+function booleanValue5(value) {
+  const unwrapped = unwrapValue8(value);
+  if (typeof unwrapped === "boolean") return unwrapped;
+  if (typeof unwrapped === "string") {
+    if (unwrapped.toLowerCase() === "true") return true;
+    if (unwrapped.toLowerCase() === "false") return false;
+  }
+  return void 0;
+}
+function additionalAttribute3(record2, name) {
+  const attributes = collectionValues7(record2.AdditionalAttributes);
+  for (const entry of attributes) {
+    const attr = nestedObject8(entry);
+    if (attr && stringValue9(attr.Name) === name) return attr.Value;
+  }
+  return void 0;
+}
+function firstEmail2(record2) {
+  const direct = stringValue9(record2.Email);
+  if (direct) return direct;
+  const emails = collectionValues7(record2.Emails);
+  const primary = emails.map((entry) => nestedObject8(entry)).find((entry) => entry && booleanValue5(entry.IsPrimary));
+  return stringValue9(primary?.Address) ?? stringValue9(nestedObject8(emails.map((entry) => nestedObject8(entry))[0])?.Address);
+}
+function firstPhone2(record2) {
+  const direct = stringValue9(record2.Phone);
+  if (direct) return direct;
+  const phones = collectionValues7(record2.Phones);
+  return stringValue9(nestedObject8(phones.map((entry) => nestedObject8(entry))[0])?.Number);
+}
+function partyName2(record2) {
+  const personName = nestedObject8(record2.PersonName);
+  const composed = [stringValue9(personName?.FirstName), stringValue9(personName?.LastName)].filter(Boolean).join(" ");
+  return stringValue9(record2.Name) ?? stringValue9(record2.FullName) ?? stringValue9(personName?.FullName) ?? stringValue9(composed) ?? stringValue9(record2.Sort);
+}
+function compactParty(record2) {
+  const primaryOrg = nestedObject8(record2.PrimaryOrganization);
+  const status = nestedObject8(record2.Status);
+  return {
+    partyId: stringValue9(record2.PartyId) ?? stringValue9(record2.Id),
+    id: stringValue9(record2.Id),
+    name: partyName2(record2),
+    sortName: stringValue9(record2.Sort),
+    email: firstEmail2(record2),
+    phone: firstPhone2(record2),
+    customerTypeCode: stringValue9(record2.CustomerTypeCode) ?? stringValue9(additionalAttribute3(record2, "CustomerTypeCode")),
+    customerTypeDescription: stringValue9(record2.CustomerTypeDescription) ?? stringValue9(additionalAttribute3(record2, "CustomerTypeDescription")),
+    isMember: booleanValue5(record2.IsMember) ?? booleanValue5(additionalAttribute3(record2, "IsMember")),
+    status: stringValue9(status?.Name) ?? stringValue9(status?.PartyStatusId) ?? stringValue9(record2.Status),
+    primaryOrganizationName: stringValue9(primaryOrg?.Name),
+    primaryOrganizationPartyId: stringValue9(primaryOrg?.OrganizationPartyId),
+    parentPartyId: stringValue9(record2.ParentPartyId) ?? stringValue9(additionalAttribute3(record2, "ParentPartyId")),
+    joinDate: stringValue9(record2.JoinDate) ?? stringValue9(additionalAttribute3(record2, "JoinDate")),
+    paidThroughDate: stringValue9(record2.PaidThruDate) ?? stringValue9(additionalAttribute3(record2, "PaidThruDate")),
+    renewedThroughDate: stringValue9(record2.RenewedThruDate) ?? stringValue9(additionalAttribute3(record2, "RenewedThruDate"))
+  };
+}
+function monetaryAmount4(record2, ...fieldNames) {
+  for (const fieldName of fieldNames) {
+    const value = record2[fieldName];
+    const amount = numberValue7(nestedObject8(value)?.Amount ?? value);
+    if (amount !== 0) return amount;
+  }
+  return 0;
+}
+function compactFinancialRows(records, amountFields, limit = 3) {
+  return records.slice(0, limit).map((record2) => ({
+    id: stringValue9(record2.InvoiceId) ?? stringValue9(record2.PaymentId) ?? stringValue9(record2.Id),
+    number: stringValue9(record2.InvoiceNumber) ?? stringValue9(record2.PaymentReference),
+    date: stringValue9(record2.InvoiceDate) ?? stringValue9(record2.PaymentDate),
+    description: stringValue9(record2.Description),
+    sourceSystem: stringValue9(additionalAttribute3(record2, "SourceSystem")) ?? stringValue9(record2.SourceSystem),
+    amount: monetaryAmount4(record2, ...amountFields),
+    balance: monetaryAmount4(record2, "Balance")
+  }));
+}
+function countBySource(records) {
+  return records.reduce((counts, record2) => {
+    const source = stringValue9(additionalAttribute3(record2, "SourceSystem")) ?? stringValue9(record2.SourceSystem) ?? "unknown";
+    counts[source] = (counts[source] ?? 0) + 1;
+    return counts;
+  }, {});
+}
+function isActiveSubscription2(record2, now = /* @__PURE__ */ new Date()) {
+  const status = stringValue9(record2.Status)?.toLowerCase();
+  if (status === "a" || status === "active") return true;
+  const paidThrough = stringValue9(record2.PaidThrough) ?? stringValue9(record2.PaidThru) ?? stringValue9(record2.PaidThruDate);
+  if (!paidThrough || paidThrough.startsWith("0001-01-01")) return false;
+  const date3 = new Date(paidThrough);
+  return Number.isFinite(date3.valueOf()) && date3 > now;
+}
+function errorMessage5(error2) {
+  return error2 instanceof Error ? error2.message : String(error2);
+}
+function parseParty360Sections(sections) {
+  if (!sections) return new Set(PARTY_360_CURRENT_SECTIONS);
+  const parsed = sections.split(",").map((section) => section.trim()).filter(Boolean);
+  if (parsed.some((section) => section.toLowerCase() === "all")) {
+    return new Set(PARTY_360_REQUESTABLE_SECTIONS);
+  }
+  return new Set(
+    parsed
+  );
+}
+function normalizeParty360Section(section) {
+  const compact = section.trim().toLowerCase().replace(/[-_\s]/g, "");
+  if (compact === "autopay") return "autoPay";
+  if (compact === "custompanel" || compact === "custompanels" || compact === "custompaneldata") return "customPanels";
+  if (compact === "login" || compact === "security" || compact === "loginsecurity" || compact === "portalaccess") {
+    return "loginSecurity";
+  }
+  if (compact === "staffprofile" || compact === "staffprofileparity" || compact === "staffparity") {
+    return "staffProfileParity";
+  }
+  return compact;
+}
+function parseOrganization360Sections(sections) {
+  if (!sections) return new Set(ORGANIZATION_360_CURRENT_SECTIONS);
+  const parsed = sections.split(",").map((section) => normalizeOrganization360Section(section)).filter(Boolean);
+  if (parsed.some((section) => section.toLowerCase() === "all")) {
+    return new Set(ORGANIZATION_360_CURRENT_SECTIONS);
+  }
+  return new Set(parsed);
+}
+function normalizeOrganization360Section(section) {
+  const compact = section.trim().toLowerCase().replace(/[-_\s]/g, "");
+  if (compact === "org" || compact === "organization" || compact === "organisation") return "profile";
+  if (compact === "staff" || compact === "employees" || compact === "members" || compact === "contacts") return "roster";
+  if (compact === "billing" || compact === "financials") return "finance";
+  if (compact === "duplicates" || compact === "dataquality") return "dataQuality";
+  return compact;
+}
+function parseDonor360Sections(sections) {
+  if (!sections) return new Set(DONOR_360_CURRENT_SECTIONS);
+  const parsed = sections.split(",").map((section) => normalizeDonor360Section(section)).filter(Boolean);
+  if (parsed.some((section) => section.toLowerCase() === "all")) {
+    return new Set(DONOR_360_CURRENT_SECTIONS);
+  }
+  return new Set(parsed);
+}
+function normalizeDonor360Section(section) {
+  const compact = section.trim().toLowerCase().replace(/[-_\s]/g, "");
+  if (compact === "contact" || compact === "identity" || compact === "party") return "profile";
+  if (compact === "gift" || compact === "gifts" || compact === "donations" || compact === "givinghistory") return "giving";
+  if (compact === "pledge" || compact === "scheduledpayments" || compact === "pledgeschedule") return "pledges";
+  if (compact === "giftaid" || compact === "ukgiftaid") return "giftAid";
+  if (compact === "campaign" || compact === "campaigncontext" || compact === "appeals" || compact === "sources" || compact === "solicitations") return "campaigns";
+  if (compact === "communication" || compact === "outreach" || compact === "acknowledgements" || compact === "acknowledgments") return "communications";
+  return compact;
+}
+async function readParty360Record(section, source, read) {
+  try {
+    const value = await read();
+    return {
+      value,
+      evidence: {
+        section,
+        status: "queried",
+        sources: [{ source, status: "queried", count: value ? 1 : 0 }]
+      }
+    };
+  } catch (error2) {
+    return {
+      value: null,
+      evidence: {
+        section,
+        status: "failed",
+        sources: [{ source, status: "failed", error: errorMessage5(error2) }]
+      }
+    };
+  }
+}
+async function readParty360List(source, filters, limit, read) {
+  try {
+    const value = await read();
+    return {
+      value,
+      evidence: {
+        source,
+        status: "queried",
+        filters,
+        limit,
+        count: value.items.length,
+        totalCount: value.totalCount
+      }
+    };
+  } catch (error2) {
+    return {
+      value: { items: [], totalCount: 0 },
+      evidence: {
+        source,
+        status: "failed",
+        filters,
+        limit,
+        count: 0,
+        totalCount: 0,
+        error: errorMessage5(error2)
+      }
+    };
+  }
+}
+async function readParty360PartyReferencedList(source, partyId, refFields, limit, read) {
+  try {
+    const rawValue = await read();
+    const value = filterPartyReferencedRows(rawValue, partyId, refFields);
+    return {
+      value,
+      evidence: {
+        source,
+        status: "queried",
+        filters: { clientPartyReference: partyId },
+        limit,
+        count: value.items.length,
+        totalCount: rawValue.totalCount
+      }
+    };
+  } catch (error2) {
+    return {
+      value: { items: [], totalCount: 0 },
+      evidence: {
+        source,
+        status: "failed",
+        filters: { clientPartyReference: partyId },
+        limit,
+        count: 0,
+        totalCount: 0,
+        error: errorMessage5(error2)
+      }
+    };
+  }
+}
+function contractSectionStatus(section, sources) {
+  const failedCount = sources.filter((source) => source.status === "failed").length;
+  return {
+    section,
+    status: failedCount === 0 ? "queried" : failedCount === sources.length ? "failed" : "partial",
+    sources
+  };
+}
+function notRequestedSection(section) {
+  return {
+    section,
+    status: "not_requested",
+    sources: [],
+    reason: "Section was not requested in the sections parameter."
+  };
+}
+function organizationSectionStatus(sources) {
+  const failedCount = sources.filter((source) => source.status === "failed").length;
+  return failedCount === 0 ? "queried" : failedCount === sources.length ? "failed" : "partial";
+}
+function notRequestedOrganizationSection(organizationKeys2) {
+  return {
+    status: "not_requested",
+    summary: {},
+    sources: [],
+    recordMap: {
+      organizationKeys: organizationKeys2,
+      sourceFilters: [],
+      records: [],
+      recordCount: 0,
+      truncated: false
+    },
+    reason: "Section was not requested in the sections parameter."
+  };
+}
+function recordMatchesPartyReference(record2, partyId, refFields) {
+  return refFields.some((field) => {
+    const value = record2[field];
+    const ref = nestedObject8(value);
+    if (ref) {
+      return stringValue9(ref.Id) === partyId || stringValue9(ref.PartyId) === partyId || stringValue9(ref.CustomerId) === partyId || stringValue9(ref.PayerId) === partyId;
+    }
+    return stringValue9(value) === partyId;
+  });
+}
+function filterPartyReferencedRows(result, partyId, refFields) {
+  return {
+    items: result.items.filter((item) => recordMatchesPartyReference(item, partyId, refFields)),
+    totalCount: result.totalCount
+  };
+}
+function normalizeListResult(result) {
+  return {
+    items: result.items.map(normalizeGenericEntityRecord),
+    totalCount: result.totalCount
+  };
+}
+function organizationName(record2) {
+  if (!record2) return void 0;
+  return stringValue9(record2.OrganizationName) ?? stringValue9(record2.Name) ?? stringValue9(record2.Company) ?? stringValue9(record2["Customer Name"]);
+}
+function organizationKeys(organizationPartyId, profile) {
+  return {
+    organizationPartyId,
+    uniformKey: profile ? partyUniformKey2(profile) : void 0,
+    organizationName: organizationName(profile)
+  };
+}
+function organizationRecordIdentifiers(record2) {
+  const identifiers = [];
+  const fields = [
+    "PartyId",
+    "Id",
+    "ID",
+    "Contact Id",
+    "UniformId",
+    "key_UniformKey",
+    "RelationshipKey",
+    "GroupId",
+    "InvoiceId",
+    "InvoiceNumber",
+    "PaymentId",
+    "PaymentReference",
+    "OrderNumber",
+    "LineNumber"
+  ];
+  const add = (field, value) => {
+    const stringified = stringValue9(value);
+    if (!stringified || identifiers.some((identifier) => identifier.field.toLowerCase() === field.toLowerCase() && identifier.value === stringified)) return;
+    identifiers.push({ field, value: stringified });
+  };
+  for (const field of fields) add(field, record2[field]);
+  for (const [field, value] of Object.entries(record2)) {
+    if (identifiers.length >= 8) break;
+    if (field.endsWith("Id") || field.endsWith("ID") || field.endsWith("Key") || field.endsWith("Number")) {
+      add(field, value);
+    }
+  }
+  return identifiers.slice(0, 8);
+}
+function organizationRecordLinks(record2, keys) {
+  const links = [];
+  for (const [field, value] of Object.entries(record2)) {
+    organizationLinksFromValue(value, field, keys, links, 0);
+  }
+  return links.slice(0, 8);
+}
+function organizationLinksFromValue(value, path3, keys, links, depth) {
+  const add = (key, expected) => {
+    const actual = stringValue9(value);
+    if (!expected || actual !== expected) return;
+    if (links.some((link) => link.field === path3 && link.key === key && link.value === actual)) return;
+    links.push({ field: path3, key, value: actual });
+  };
+  add("organizationPartyId", keys.organizationPartyId);
+  add("uniformKey", keys.uniformKey);
+  add("organizationName", keys.organizationName);
+  const obj = nestedObject8(value);
+  if (!obj || depth >= 2) return;
+  for (const [field, nested] of Object.entries(obj)) {
+    organizationLinksFromValue(nested, `${path3}.${field}`, keys, links, depth + 1);
+  }
+}
+function organizationRecordMap(keys, sources, groups) {
+  const records = groups.flatMap(
+    (group) => group.records.map((record2) => ({
+      source: group.source,
+      identifiers: organizationRecordIdentifiers(record2),
+      organizationLinks: organizationRecordLinks(record2, keys)
+    }))
+  );
+  return {
+    organizationKeys: keys,
+    sourceFilters: sources.map((source) => ({
+      source: source.source,
+      status: source.status,
+      filters: source.filters,
+      count: source.count,
+      totalCount: source.totalCount
+    })),
+    records: records.slice(0, 25),
+    recordCount: records.length,
+    truncated: records.length > 25
+  };
+}
+function organizationSection(keys, data, summary, sources, groups) {
+  return {
+    status: organizationSectionStatus(sources),
+    summary,
+    data,
+    sources,
+    recordMap: organizationRecordMap(keys, sources, groups)
+  };
+}
+function donorSectionStatus(sources) {
+  const failedCount = sources.filter((source) => source.status === "failed").length;
+  return failedCount === 0 ? "queried" : failedCount === sources.length ? "failed" : "partial";
+}
+function donorKeys(donorPartyId, profile) {
+  return {
+    donorPartyId,
+    uniformKey: profile ? partyUniformKey2(profile) : void 0
+  };
+}
+function notRequestedDonorSection(keys) {
+  return {
+    status: "not_requested",
+    summary: {},
+    sources: [],
+    recordMap: {
+      donorKeys: keys,
+      sourceFilters: [],
+      records: [],
+      recordCount: 0,
+      truncated: false
+    },
+    reason: "Section was not requested in the sections parameter."
+  };
+}
+function donorRecordIdentifiers(record2) {
+  const identifiers = [];
+  const fields = [
+    "PartyId",
+    "Id",
+    "ID",
+    "UniformId",
+    "TransactionNumber",
+    "OriginalTransaction",
+    "InvoiceReferenceNumber",
+    "InvoiceId",
+    "InvoiceNumber",
+    "ScheduledPaymentId",
+    "PaymentNumber",
+    "Campaign",
+    "Appeal",
+    "Fund",
+    "SourceCode",
+    "CommunicationLogRecipientId"
+  ];
+  const add = (field, value) => {
+    const stringified = stringValue9(value);
+    if (!stringified || identifiers.some((identifier) => identifier.field.toLowerCase() === field.toLowerCase() && identifier.value === stringified)) return;
+    identifiers.push({ field, value: stringified });
+  };
+  for (const field of fields) add(field, record2[field]);
+  for (const [field, value] of Object.entries(record2)) {
+    if (identifiers.length >= 8) break;
+    if (field.endsWith("Id") || field.endsWith("ID") || field.endsWith("Key") || field.endsWith("Number")) {
+      add(field, value);
+    }
+  }
+  return identifiers.slice(0, 8);
+}
+function donorLinksFromValue(value, path3, keys, links, depth) {
+  const add = (key, expected) => {
+    const actual = stringValue9(value);
+    if (!expected || actual !== expected) return;
+    if (links.some((link) => link.field === path3 && link.key === key && link.value === actual)) return;
+    links.push({ field: path3, key, value: actual });
+  };
+  add("donorPartyId", keys.donorPartyId);
+  add("uniformKey", keys.uniformKey);
+  const obj = nestedObject8(value);
+  if (!obj || depth >= 2) return;
+  for (const [field, nested] of Object.entries(obj)) {
+    donorLinksFromValue(nested, `${path3}.${field}`, keys, links, depth + 1);
+  }
+}
+function donorRecordLinks(record2, keys) {
+  const links = [];
+  for (const [field, value] of Object.entries(record2)) {
+    donorLinksFromValue(value, field, keys, links, 0);
+  }
+  return links.slice(0, 8);
+}
+function donorRecordMap(keys, sources, groups) {
+  const records = groups.flatMap(
+    (group) => group.records.map((record2) => ({
+      source: group.source,
+      identifiers: donorRecordIdentifiers(record2),
+      donorLinks: donorRecordLinks(record2, keys)
+    }))
+  );
+  return {
+    donorKeys: keys,
+    sourceFilters: sources.map((source) => ({
+      source: source.source,
+      status: source.status,
+      filters: source.filters,
+      count: source.count,
+      totalCount: source.totalCount
+    })),
+    records: records.slice(0, 25),
+    recordCount: records.length,
+    truncated: records.length > 25
+  };
+}
+function donorSection(keys, data, summary, sources, groups) {
+  return {
+    status: donorSectionStatus(sources),
+    summary,
+    data,
+    sources,
+    recordMap: donorRecordMap(keys, sources, groups)
+  };
+}
+function orderNumberValue(record2) {
+  return stringValue9(record2.OrderNumber) ?? stringValue9(record2.OrderId) ?? stringValue9(record2.InvoiceReferenceNumber);
+}
+function uniqueStringValues(values) {
+  return [...new Set(values.filter((value) => Boolean(value)))];
+}
+async function readPartyOrderHeaders(entityService, partyId, limit) {
+  return readParty360List(
+    "CsOrders",
+    { BillToId: partyId },
+    limit,
+    async () => normalizeListResult(await entityService.list("CsOrders", { params: { BillToId: partyId }, limit }))
+  );
+}
+async function readPartyPaymentApplications(entityService, partyId, limit) {
+  return readParty360List(
+    "PaymentApplication",
+    { ShipToPartyId: partyId },
+    limit,
+    async () => normalizeListResult(await entityService.list("PaymentApplication", { params: { ShipToPartyId: partyId }, limit }))
+  );
+}
+async function readOrderLinesForOrders(entityService, orders, limit) {
+  const orderNumbers = uniqueStringValues(orders.map(orderNumberValue)).slice(0, Math.max(0, limit));
+  if (orderNumbers.length === 0) {
+    return {
+      value: { items: [], totalCount: 0, orderNumbers },
+      evidence: {
+        source: "CsOrderLines",
+        status: "queried",
+        filters: { OrderNumber: "" },
+        limit,
+        count: 0,
+        totalCount: 0
+      }
+    };
+  }
+  const settled = await Promise.all(orderNumbers.map(async (orderNumber) => {
+    try {
+      const result = normalizeListResult(await entityService.list("CsOrderLines", {
+        params: { OrderNumber: orderNumber },
+        limit
+      }));
+      return { orderNumber, result };
+    } catch (error2) {
+      return { orderNumber, error: errorMessage5(error2) };
+    }
+  }));
+  const failed = settled.filter((item) => "error" in item);
+  const successful = settled.filter((item) => "result" in item);
+  const items = successful.flatMap((item) => item.result.items);
+  const totalCount = successful.reduce((sum, item) => sum + (item.result.totalCount ?? item.result.items.length), 0);
+  return {
+    value: { items, totalCount, orderNumbers },
+    evidence: {
+      source: "CsOrderLines",
+      status: failed.length === 0 ? "queried" : "failed",
+      filters: { OrderNumber: orderNumbers.join(",") },
+      limit,
+      count: items.length,
+      totalCount,
+      error: failed.length ? `Failed order line reads: ${failed.map((item) => `${item.orderNumber}: ${item.error}`).join("; ")}` : void 0
+    }
+  };
+}
+function partyUniformKey2(record2) {
+  const party = nestedObject8(record2);
+  if (!party) return void 0;
+  return stringValue9(party.UniformId) ?? stringValue9(party.UniformKey) ?? stringValue9(party.PartyUniformKey) ?? stringValue9(party.ContactKey) ?? stringValue9(additionalAttribute3(party, "UniformId")) ?? stringValue9(additionalAttribute3(party, "UniformKey"));
+}
+async function resolvePartyUniformKey(entityService, partyId, existingPartyRecord) {
+  const existingUniformKey = partyUniformKey2(existingPartyRecord);
+  if (existingUniformKey) {
+    return {
+      uniformKey: existingUniformKey,
+      evidence: {
+        source: "Party",
+        status: "queried",
+        filters: { id: partyId },
+        count: 1,
+        totalCount: 1
+      }
+    };
+  }
+  try {
+    const party = await entityService.get("Party", partyId);
+    const uniformKey = partyUniformKey2(party);
+    if (!uniformKey) {
+      return {
+        evidence: {
+          source: "Party",
+          status: "failed",
+          filters: { id: partyId },
+          count: 1,
+          totalCount: 1,
+          error: "Party record did not expose UniformId/contact key."
+        }
+      };
+    }
+    return {
+      uniformKey,
+      evidence: {
+        source: "Party",
+        status: "queried",
+        filters: { id: partyId },
+        count: 1,
+        totalCount: 1
+      }
+    };
+  } catch (error2) {
+    return {
+      evidence: {
+        source: "Party",
+        status: "failed",
+        filters: { id: partyId },
+        count: 0,
+        totalCount: 0,
+        error: errorMessage5(error2)
+      }
+    };
+  }
+}
+function dedupeRecords(records, keyFields) {
+  const seen = /* @__PURE__ */ new Set();
+  const deduped = [];
+  for (const record2 of records) {
+    const key = keyFields.map((field) => stringValue9(record2[field])).find(Boolean) ?? JSON.stringify(record2);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    deduped.push(record2);
+  }
+  return deduped;
+}
+function combinedTotalCount(results) {
+  return results.reduce((total, result) => total + (result.totalCount ?? result.items.length), 0);
+}
+async function readParty360Relationships(entityService, partyId, existingPartyRecord, limit = 50) {
+  const partyKey = await resolvePartyUniformKey(entityService, partyId, existingPartyRecord);
+  const evidence = [partyKey.evidence];
+  if (!partyKey.uniformKey) {
+    return {
+      value: { partyId, items: [], totalCount: 0 },
+      evidence
+    };
+  }
+  const [subject, target] = await Promise.all([
+    readParty360List(
+      "Relationship",
+      { SubjectUniformKey: partyKey.uniformKey },
+      limit,
+      () => entityService.list("Relationship", { params: { SubjectUniformKey: partyKey.uniformKey }, limit })
+    ),
+    readParty360List(
+      "Relationship",
+      { TargetUniformKey: partyKey.uniformKey },
+      limit,
+      () => entityService.list("Relationship", { params: { TargetUniformKey: partyKey.uniformKey }, limit })
+    )
+  ]);
+  evidence.push(subject.evidence, target.evidence);
+  const normalizedItems = dedupeRecords(
+    [...normalizeListResult(subject.value).items, ...normalizeListResult(target.value).items],
+    ["RelationshipKey", "RelationshipId"]
+  );
+  return {
+    value: {
+      partyId,
+      uniformKey: partyKey.uniformKey,
+      items: normalizedItems,
+      totalCount: combinedTotalCount([subject.value, target.value])
+    },
+    evidence
+  };
+}
+async function readOrganizationRoster(iqaService, orgName, limit) {
+  if (!orgName) {
+    return {
+      value: { items: [], totalCount: 0, serverFiltered: false, truncated: false },
+      evidence: {
+        source: CONTACTS_BY_COMPANY_QUERY,
+        status: "failed",
+        filters: { Company: "" },
+        limit,
+        count: 0,
+        totalCount: 0,
+        error: "Organization name was not available, so the Contacts by Company runtime parameter could not be sent."
+      }
+    };
+  }
+  try {
+    const result = await iqaService.executeQueryV2(CONTACTS_BY_COMPANY_QUERY, {
+      limit,
+      parameters: { Company: orgName }
+    });
+    const expected = orgName.toLowerCase();
+    const matches = result.items.filter((item) => stringValue9(item.Company)?.toLowerCase() === expected);
+    return {
+      value: {
+        items: matches.slice(0, limit),
+        totalCount: matches.length,
+        sourceTotalCount: result.totalCount,
+        serverFiltered: true,
+        filterMode: "Company runtime parameter",
+        truncated: (result.totalCount ?? result.items.length) > result.items.length
+      },
+      evidence: {
+        source: CONTACTS_BY_COMPANY_QUERY,
+        status: "queried",
+        filters: { Company: orgName },
+        limit,
+        count: Math.min(matches.length, limit),
+        totalCount: result.totalCount,
+        note: "Contacts by Company declares a Company runtime parameter. iMIS applies it as a server-side starts-with company filter; the MCP then exact-matches the returned Company value to the organization name."
+      }
+    };
+  } catch (error2) {
+    return {
+      value: { items: [], totalCount: 0, serverFiltered: false, truncated: false },
+      evidence: {
+        source: CONTACTS_BY_COMPANY_QUERY,
+        status: "failed",
+        filters: { Company: orgName },
+        limit,
+        count: 0,
+        totalCount: 0,
+        error: errorMessage5(error2)
+      }
+    };
+  }
+}
+function buildOrganization360Contract(input) {
+  const profileRecord = nestedObject8(input.profile.value);
+  const keys = organizationKeys(input.organizationPartyId, profileRecord);
+  const sections = {};
+  if (input.requestedSections.includes("profile")) {
+    const sources = input.profile.evidence.sources;
+    sections.profile = organizationSection(
+      keys,
+      input.profile.value,
+      profileRecord ? {
+        organizationPartyId: keys.organizationPartyId,
+        organizationName: keys.organizationName,
+        status: compactParty(profileRecord).status,
+        customerTypeCode: compactParty(profileRecord).customerTypeCode,
+        customerTypeDescription: compactParty(profileRecord).customerTypeDescription,
+        isMember: compactParty(profileRecord).isMember,
+        email: firstEmail2(profileRecord),
+        phone: firstPhone2(profileRecord)
+      } : {},
+      sources,
+      profileRecord ? [{ source: "Organization", records: [profileRecord] }] : []
+    );
+  } else {
+    sections.profile = notRequestedOrganizationSection(keys);
+  }
+  if (input.requestedSections.includes("roster") && input.roster) {
+    sections.roster = organizationSection(
+      keys,
+      {
+        organizationName: keys.organizationName,
+        contacts: input.roster.value.items,
+        count: input.roster.value.items.length,
+        matchedCount: input.roster.value.totalCount,
+        sourceTotalCount: input.roster.value.sourceTotalCount,
+        serverFiltered: input.roster.value.serverFiltered,
+        filterMode: input.roster.value.filterMode,
+        truncated: input.roster.value.truncated
+      },
+      {
+        contactCount: input.roster.value.items.length,
+        matchedCount: input.roster.value.totalCount,
+        sourceTotalCount: input.roster.value.sourceTotalCount,
+        serverFiltered: input.roster.value.serverFiltered,
+        filterMode: input.roster.value.filterMode,
+        truncated: input.roster.value.truncated
+      },
+      [input.roster.evidence],
+      [{ source: CONTACTS_BY_COMPANY_QUERY, records: input.roster.value.items }]
+    );
+  } else {
+    sections.roster = notRequestedOrganizationSection(keys);
+  }
+  if (input.requestedSections.includes("relationships") && input.relationships) {
+    const sources = input.relationships.evidence;
+    sections.relationships = organizationSection(
+      keys,
+      input.relationships.value,
+      {
+        relationshipCount: input.relationships.value.items.length,
+        totalCount: input.relationships.value.totalCount,
+        uniformKey: input.relationships.value.uniformKey
+      },
+      sources,
+      [{ source: "Relationship", records: input.relationships.value.items }]
+    );
+  } else {
+    sections.relationships = notRequestedOrganizationSection(keys);
+  }
+  if (input.requestedSections.includes("finance") && input.finance) {
+    const sources = [
+      input.finance.subscriptions.evidence,
+      input.finance.invoices.evidence,
+      input.finance.payments.evidence,
+      input.finance.orders.evidence,
+      input.finance.orderLines.evidence,
+      input.finance.paymentApplications.evidence
+    ];
+    sections.finance = organizationSection(
+      keys,
+      {
+        subscriptions: input.finance.subscriptions.value,
+        invoices: input.finance.invoices.value,
+        payments: input.finance.payments.value,
+        orders: input.finance.orders.value,
+        orderLines: input.finance.orderLines.value,
+        paymentApplications: input.finance.paymentApplications.value
+      },
+      {
+        subscriptionCount: input.finance.subscriptions.value.items.length,
+        invoiceCount: input.finance.invoices.value.items.length,
+        paymentCount: input.finance.payments.value.items.length,
+        orderCount: input.finance.orders.value.items.length,
+        orderLineCount: input.finance.orderLines.value.items.length,
+        paymentApplicationCount: input.finance.paymentApplications.value.items.length
+      },
+      sources,
+      [
+        { source: "Subscription", records: input.finance.subscriptions.value.items },
+        { source: "InvoiceSummary", records: input.finance.invoices.value.items },
+        { source: "PaymentSummary", records: input.finance.payments.value.items },
+        { source: "CsOrders", records: input.finance.orders.value.items },
+        { source: "CsOrderLines", records: input.finance.orderLines.value.items },
+        { source: "PaymentApplication", records: input.finance.paymentApplications.value.items }
+      ]
+    );
+  } else {
+    sections.finance = notRequestedOrganizationSection(keys);
+  }
+  if (input.requestedSections.includes("groups") && input.groups) {
+    sections.groups = organizationSection(
+      keys,
+      input.groups.value,
+      {
+        groupMembershipCount: input.groups.value.items.length,
+        totalCount: input.groups.value.totalCount
+      },
+      [input.groups.evidence],
+      [{ source: "GroupMember", records: input.groups.value.items }]
+    );
+  } else {
+    sections.groups = notRequestedOrganizationSection(keys);
+  }
+  if (input.requestedSections.includes("dataQuality") && input.duplicates) {
+    sections.dataQuality = organizationSection(
+      keys,
+      input.duplicates.value,
+      {
+        flaggedDuplicateCount: input.duplicates.value.items.length,
+        totalCount: input.duplicates.value.totalCount,
+        mergeAction: "Organization merge review/execution remains a separate guarded workflow."
+      },
+      [input.duplicates.evidence],
+      [{ source: "PartyDuplicate", records: input.duplicates.value.items }]
+    );
+  } else {
+    sections.dataQuality = notRequestedOrganizationSection(keys);
+  }
+  const summary = Object.values(sections).reduce((counts, section) => {
+    counts[section.status] = (counts[section.status] ?? 0) + 1;
+    return counts;
+  }, {});
+  return {
+    version: "organization360.v1",
+    organizationPartyId: input.organizationPartyId,
+    generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
+    requestedSections: input.requestedSections,
+    currentSections: [...ORGANIZATION_360_CURRENT_SECTIONS],
+    sections,
+    evidence: { summary }
+  };
+}
+async function readParty360Gifts(entityService, partyId, limit = 50) {
+  const gifts = await readParty360List(
+    "Gift",
+    { ID: partyId },
+    limit,
+    () => entityService.list("Gift", { params: { ID: partyId }, limit })
+  );
+  if (gifts.evidence.status === "queried") {
+    return {
+      value: {
+        partyId,
+        source: "Gift",
+        ...normalizeListResult(gifts.value)
+      },
+      evidence: [gifts.evidence]
+    };
+  }
+  const summaries = await readParty360List(
+    "GiftSummary",
+    { ID: partyId },
+    limit,
+    () => entityService.list("GiftSummary", { params: { ID: partyId }, limit })
+  );
+  return {
+    value: {
+      partyId,
+      source: summaries.evidence.status === "queried" ? "GiftSummary" : "Gift",
+      ...normalizeListResult(summaries.value)
+    },
+    evidence: [gifts.evidence, summaries.evidence]
+  };
+}
+async function readDonorGifts(entityService, donorPartyId, limit = 50) {
+  const gifts = await readParty360List(
+    "Gift",
+    { ID: donorPartyId },
+    limit,
+    async () => normalizeListResult(await entityService.list("Gift", { params: { ID: donorPartyId }, limit }))
+  );
+  return {
+    value: {
+      partyId: donorPartyId,
+      source: "Gift",
+      ...normalizeListResult(gifts.value)
+    },
+    evidence: gifts.evidence
+  };
+}
+async function readDonorPledges(entityService, donorPartyId, limit = 50) {
+  return readParty360List(
+    "PartyPledgeScheduledPayment",
+    { PartyId: donorPartyId },
+    limit,
+    () => entityService.list("PartyPledgeScheduledPayment", { params: { PartyId: donorPartyId }, limit })
+  );
+}
+async function readDonorGiftAid(apiClient, donorPartyId, panelSources = GIFT_AID_PANEL_SOURCES) {
+  const evidence = [];
+  for (const panelSource of panelSources) {
+    try {
+      const declaration = await apiClient.get(`${panelSource}/${encodeURIComponent(donorPartyId)}`);
+      return {
+        value: {
+          hasDeclaration: true,
+          panelSource,
+          declaration,
+          triedPanels: panelSources
+        },
+        evidence: [
+          ...evidence,
+          {
+            source: panelSource,
+            status: "queried",
+            filters: { id: donorPartyId },
+            count: 1,
+            totalCount: 1
+          }
+        ]
+      };
+    } catch (error2) {
+      evidence.push({
+        source: panelSource,
+        status: "failed",
+        filters: { id: donorPartyId },
+        count: 0,
+        totalCount: 0,
+        error: errorMessage5(error2)
+      });
+    }
+  }
+  return {
+    value: {
+      hasDeclaration: false,
+      panelSource: void 0,
+      triedPanels: panelSources,
+      note: "No common Gift Aid panel source responded for this donor. Gift Aid eligibility must not be treated as final without a tenant-specific declaration source."
+    },
+    evidence
+  };
+}
+async function readDonorCommunications(entityService, donorPartyId, limit, iqaService) {
+  const [preferences, history] = await Promise.all([
+    readCommunicationPreferences(entityService, donorPartyId),
+    readCommunicationHistory(entityService, donorPartyId, limit, iqaService)
+  ]);
+  return {
+    value: {
+      donorPartyId,
+      preferences: preferences.value,
+      history: history.value,
+      communications: history.value.communications,
+      count: history.value.count,
+      totalCount: history.value.totalCount,
+      note: "Communication history uses the existing Party communication source contract; source status identifies whether the result came from CommunicationLogRecipient or a lower-priority diagnostic path."
+    },
+    evidence: [preferences.evidence, ...history.evidence]
+  };
+}
+function recordStringValue(record2, ...fieldNames) {
+  for (const fieldName of fieldNames) {
+    const value = stringValue9(record2[fieldName]);
+    if (value) return value;
+  }
+  return void 0;
+}
+function recordsFromUnknown(value) {
+  return Array.isArray(value) ? value.filter((item) => !!item && typeof item === "object" && !Array.isArray(item)) : [];
+}
+function latestDate(records, ...fieldNames) {
+  return records.flatMap((record2) => fieldNames.map((fieldName) => stringValue9(record2[fieldName]))).filter((value) => typeof value === "string" && !value.startsWith("0001-01-01")).sort().at(-1);
+}
+function givingCodeSummary(gifts) {
+  return {
+    campaigns: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "Campaign", "CampaignCode"))),
+    appeals: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "Appeal", "AppealCode"))),
+    funds: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "Fund", "FundCode", "ProductCode"))),
+    sourceCodes: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "SourceCode", "Source", "SourceCodeId"))),
+    giftTypes: uniqueStringValues(gifts.map((gift) => recordStringValue(gift, "GiftType")))
+  };
+}
+async function readDonorCampaignContext(entityService, gifts, limit) {
+  const [campaigns, appeals, sourceCodes, solicitations] = await Promise.all([
+    readParty360List(
+      "CampaignSummary",
+      {},
+      limit,
+      () => entityService.list("CampaignSummary", { limit })
+    ),
+    readParty360List(
+      "AppealSummary",
+      {},
+      limit,
+      () => entityService.list("AppealSummary", { limit })
+    ),
+    readParty360List(
+      "SourceCodeSummary",
+      {},
+      limit,
+      () => entityService.list("SourceCodeSummary", { limit })
+    ),
+    readParty360List(
+      "SolicitationSummary",
+      {},
+      limit,
+      () => entityService.list("SolicitationSummary", { limit })
+    )
+  ]);
+  return {
+    value: {
+      donorCodes: givingCodeSummary(gifts),
+      catalog: {
+        campaigns: campaigns.value,
+        appeals: appeals.value,
+        sourceCodes: sourceCodes.value,
+        solicitations: solicitations.value
+      },
+      note: "Campaign, appeal, source, solicitation, and fund codes are read from donor gift rows; summary catalog rows are tenant context and are not donor-specific records."
+    },
+    evidence: [campaigns.evidence, appeals.evidence, sourceCodes.evidence, solicitations.evidence]
+  };
+}
+function summarizeDonorGiving(giving) {
+  const gifts = giving.items;
+  return {
+    source: giving.source,
+    giftCount: gifts.length,
+    giftTotalCount: giving.totalCount,
+    totalAmount: gifts.reduce((sum, gift) => sum + monetaryAmount4(gift, "Amount", "AmountAsMoney"), 0),
+    latestGiftDate: latestDate(gifts, "DateReceived", "TransactionDate"),
+    ...givingCodeSummary(gifts)
+  };
+}
+function summarizeDonorPledges(pledges) {
+  const rows = pledges.items;
+  return {
+    pledgeScheduleCount: rows.length,
+    pledgeScheduleTotalCount: pledges.totalCount,
+    totalScheduledAmount: rows.reduce((sum, pledge) => sum + monetaryAmount4(pledge, "Amount"), 0),
+    latestDueDate: latestDate(rows, "DueDate")
+  };
+}
+function summarizeDonorCampaigns(value) {
+  const donorCodes = nestedObject8(value.donorCodes) ?? {};
+  const catalog = nestedObject8(value.catalog) ?? {};
+  return {
+    donorCampaigns: donorCodes.campaigns ?? [],
+    donorAppeals: donorCodes.appeals ?? [],
+    donorFunds: donorCodes.funds ?? [],
+    donorSourceCodes: donorCodes.sourceCodes ?? [],
+    campaignCatalogCount: numberValue7(nestedObject8(catalog.campaigns)?.totalCount),
+    appealCatalogCount: numberValue7(nestedObject8(catalog.appeals)?.totalCount),
+    sourceCodeCatalogCount: numberValue7(nestedObject8(catalog.sourceCodes)?.totalCount),
+    solicitationCatalogCount: numberValue7(nestedObject8(catalog.solicitations)?.totalCount)
+  };
+}
+function buildDonor360Contract(input) {
+  const profileRecord = nestedObject8(input.profile.value);
+  const keys = donorKeys(input.donorPartyId, profileRecord);
+  const sections = {};
+  if (input.requestedSections.includes("profile")) {
+    const sources = input.profile.evidence.sources;
+    sections.profile = donorSection(
+      keys,
+      input.profile.value,
+      profileRecord ? {
+        donorPartyId: keys.donorPartyId,
+        name: compactParty(profileRecord).name,
+        sortName: compactParty(profileRecord).sortName,
+        email: firstEmail2(profileRecord),
+        phone: firstPhone2(profileRecord),
+        customerTypeCode: compactParty(profileRecord).customerTypeCode,
+        customerTypeDescription: compactParty(profileRecord).customerTypeDescription,
+        isMember: compactParty(profileRecord).isMember
+      } : {},
+      sources,
+      profileRecord ? [{ source: "Party", records: [profileRecord] }] : []
+    );
+  } else {
+    sections.profile = notRequestedDonorSection(keys);
+  }
+  if (input.requestedSections.includes("giving") && input.giving) {
+    sections.giving = donorSection(
+      keys,
+      input.giving.value,
+      summarizeDonorGiving(input.giving.value),
+      [input.giving.evidence],
+      [{ source: input.giving.value.source, records: input.giving.value.items }]
+    );
+  } else {
+    sections.giving = notRequestedDonorSection(keys);
+  }
+  if (input.requestedSections.includes("pledges") && input.pledges) {
+    sections.pledges = donorSection(
+      keys,
+      input.pledges.value,
+      summarizeDonorPledges(input.pledges.value),
+      [input.pledges.evidence],
+      [{ source: "PartyPledgeScheduledPayment", records: input.pledges.value.items }]
+    );
+  } else {
+    sections.pledges = notRequestedDonorSection(keys);
+  }
+  if (input.requestedSections.includes("giftAid") && input.giftAid) {
+    sections.giftAid = donorSection(
+      keys,
+      input.giftAid.value,
+      {
+        hasDeclaration: Boolean(input.giftAid.value.hasDeclaration),
+        panelSource: input.giftAid.value.panelSource,
+        triedPanels: input.giftAid.value.triedPanels
+      },
+      input.giftAid.evidence,
+      []
+    );
+  } else {
+    sections.giftAid = notRequestedDonorSection(keys);
+  }
+  if (input.requestedSections.includes("campaigns") && input.campaigns) {
+    const givingRows = input.giving?.value.items ?? [];
+    sections.campaigns = donorSection(
+      keys,
+      input.campaigns.value,
+      summarizeDonorCampaigns(input.campaigns.value),
+      input.campaigns.evidence,
+      [{ source: "Gift campaign/source fields", records: givingRows }]
+    );
+  } else {
+    sections.campaigns = notRequestedDonorSection(keys);
+  }
+  if (input.requestedSections.includes("communications") && input.communications) {
+    const history = nestedObject8(input.communications.value.history);
+    sections.communications = donorSection(
+      keys,
+      input.communications.value,
+      {
+        historySource: stringValue9(history?.source),
+        communicationCount: numberValue7(input.communications.value.count),
+        communicationTotalCount: numberValue7(input.communications.value.totalCount),
+        preferenceSource: "Party"
+      },
+      input.communications.evidence,
+      [{ source: stringValue9(history?.source) ?? "Communication", records: recordsFromUnknown(input.communications.value.communications) }]
+    );
+  } else {
+    sections.communications = notRequestedDonorSection(keys);
+  }
+  const summary = Object.values(sections).reduce((counts, section) => {
+    counts[section.status] = (counts[section.status] ?? 0) + 1;
+    return counts;
+  }, {});
+  return {
+    version: "donor360.v1",
+    donorPartyId: input.donorPartyId,
+    generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
+    requestedSections: input.requestedSections,
+    currentSections: [...DONOR_360_CURRENT_SECTIONS],
+    sections,
+    evidence: { summary }
+  };
+}
+async function readParty360Forms(entityService, partyId, limit) {
+  const direct = await readParty360List(
+    "FormResponse",
+    { ParticipantPartyId: partyId },
+    limit,
+    () => entityService.list("FormResponse", { params: { ParticipantPartyId: partyId }, limit })
+  );
+  if (direct.evidence.status === "queried") {
+    return {
+      value: {
+        partyId,
+        source: "FormResponse",
+        responses: direct.value.items,
+        count: direct.value.items.length,
+        totalCount: direct.value.totalCount,
+        sourceStatus: [direct.evidence],
+        note: "Reads FormResponse by ParticipantPartyId. This does not prove form writeback, spam/security settings, or native Form Builder configuration."
+      },
+      evidence: [direct.evidence]
+    };
+  }
+  const fallback = await readParty360PartyReferencedList(
+    "FormResponse bounded fallback",
+    partyId,
+    ["ParticipantPartyId", "Party", "PartyId", "Contact", "ContactId", "SubmittedBy", "SubmittedByParty", "Responder", "ResponderPartyId"],
+    500,
+    () => entityService.list("FormResponse", { limit: 500 })
+  );
+  return {
+    value: {
+      partyId,
+      source: "FormResponse",
+      boundedFallback: fallback.evidence.status === "queried",
+      fallbackReason: direct.evidence.error,
+      responses: fallback.value.items.slice(0, limit),
+      count: fallback.value.items.slice(0, limit).length,
+      totalCount: fallback.value.items.length,
+      sourceTotalCount: fallback.value.totalCount,
+      sourceStatus: [direct.evidence, fallback.evidence],
+      note: "Direct FormResponse PartyId filtering failed, so imis_member_360 read a bounded FormResponse window and client-filtered Party reference fields. This is not complete server-side Party history."
+    },
+    evidence: [direct.evidence, fallback.evidence]
+  };
+}
+var PANEL_SOURCE_FIELDS = [
+  "PanelSourceName",
+  "PanelSource",
+  "PanelSourceId",
+  "SourceName",
+  "Source",
+  "DataSourceName",
+  "DataSource",
+  "BusinessObjectName",
+  "BusinessObject",
+  "EntityTypeName",
+  "EntityType",
+  "Name"
+];
+var PANEL_PARTY_FILTER_FIELDS = [
+  "ID",
+  "PartyId",
+  "ParticipantPartyId",
+  "ContactKey",
+  "ContactId"
+];
+function looksLikePanelSourceName(value) {
+  return /^[A-Za-z][A-Za-z0-9_]*$/.test(value) && value.length <= 80;
+}
+function panelDefinitionId(record2) {
+  return stringValue9(record2.PanelDefinitionId) ?? stringValue9(record2.Id) ?? stringValue9(record2.ID);
+}
+function isPartyPanelDefinition(record2) {
+  const relatedEntityName = stringValue9(record2.RelatedEntityName);
+  if (!relatedEntityName) return true;
+  return ["party", "contact", "person", "organization", "organisation"].includes(relatedEntityName.toLowerCase());
+}
+function extractPanelSourceCandidates(records) {
+  const seen = /* @__PURE__ */ new Set();
+  const candidates = [];
+  for (const record2 of records) {
+    if (!isPartyPanelDefinition(record2)) continue;
+    for (const field of PANEL_SOURCE_FIELDS) {
+      const value = stringValue9(record2[field]);
+      if (!value || !looksLikePanelSourceName(value) || seen.has(value)) continue;
+      seen.add(value);
+      candidates.push({
+        panelSource: value,
+        sourceField: field,
+        panelDefinitionId: panelDefinitionId(record2),
+        relatedEntityName: stringValue9(record2.RelatedEntityName),
+        name: stringValue9(record2.Name) ?? stringValue9(record2.Title) ?? stringValue9(record2.DisplayName)
+      });
+      break;
+    }
+  }
+  return candidates;
+}
+function metadataPropertyNames(metadata) {
+  const obj = nestedObject8(metadata);
+  const properties = collectionValues7(obj?.Properties);
+  return new Set(
+    properties.map((property) => stringValue9(nestedObject8(property)?.Name)).filter((name) => Boolean(name))
+  );
+}
+async function readPanelPartyFilterFields(apiClient, panelSource) {
+  try {
+    const metadata = await apiClient.get(`metadata/${panelSource}`);
+    const propertyNames = metadataPropertyNames(metadata);
+    if (propertyNames.size === 0) return ["ID", "PartyId"];
+    const lowerPropertyNames = new Set([...propertyNames].map((name) => name.toLowerCase()));
+    return PANEL_PARTY_FILTER_FIELDS.filter((field) => lowerPropertyNames.has(field.toLowerCase()));
+  } catch {
+    return ["ID", "PartyId"];
+  }
+}
+async function readParty360PanelSource(apiClient, panelSource, partyId, limit) {
+  const filterFields = await readPanelPartyFilterFields(apiClient, panelSource);
+  if (filterFields.length === 0) {
+    const message = `No known Party filter field found in metadata for ${panelSource}.`;
+    return {
+      value: {
+        panelSource,
+        records: [],
+        count: 0,
+        totalCount: 0,
+        error: message
+      },
+      evidence: [{
+        source: panelSource,
+        status: "failed",
+        limit,
+        count: 0,
+        totalCount: 0,
+        error: message
+      }]
+    };
+  }
+  const failedFilters = {};
+  const evidence = [];
+  for (const field of filterFields) {
+    try {
+      const page = await fetchPage(apiClient, panelSource, 0, limit, { [field]: partyId });
+      return {
+        value: {
+          panelSource,
+          filterUsed: field,
+          records: page.Items,
+          count: page.Items.length,
+          totalCount: page.TotalCount
+        },
+        evidence: [{
+          source: panelSource,
+          status: "queried",
+          filters: { [field]: partyId },
+          limit,
+          count: page.Items.length,
+          totalCount: page.TotalCount
+        }]
+      };
+    } catch (error2) {
+      if (error2 instanceof ImisNotFoundError) {
+        return {
+          value: {
+            panelSource,
+            filterUsed: field,
+            records: [],
+            count: 0,
+            totalCount: 0,
+            emptyReason: errorMessage5(error2)
+          },
+          evidence: [{
+            source: panelSource,
+            status: "queried",
+            filters: { [field]: partyId },
+            limit,
+            count: 0,
+            totalCount: 0
+          }]
+        };
+      }
+      failedFilters[field] = errorMessage5(error2);
+      evidence.push({
+        source: panelSource,
+        status: "failed",
+        filters: { [field]: partyId },
+        limit,
+        count: 0,
+        totalCount: 0,
+        error: errorMessage5(error2)
+      });
+    }
+  }
+  return {
+    value: {
+      panelSource,
+      records: [],
+      count: 0,
+      totalCount: 0,
+      error: Object.values(failedFilters).at(-1) ?? `No Party-scoped read succeeded for ${panelSource}.`,
+      failedFilters
+    },
+    evidence
+  };
+}
+async function readParty360CustomPanels(entityService, apiClient, partyId) {
+  const definitions = await readParty360List(
+    "PanelDefinitionSummary",
+    {},
+    50,
+    () => entityService.list("PanelDefinitionSummary", { limit: 50 })
+  );
+  if (definitions.evidence.status === "failed") {
+    return {
+      value: {
+        partyId,
+        panelDefinitions: { count: 0, totalCount: 0, items: [] },
+        panelSources: [],
+        sourceStatus: [definitions.evidence],
+        error: definitions.evidence.error
+      },
+      evidence: [definitions.evidence]
+    };
+  }
+  const candidates = extractPanelSourceCandidates(definitions.value.items).slice(0, 12);
+  const sourceReads = await mapWithConcurrency(
+    candidates,
+    4,
+    (candidate) => readParty360PanelSource(apiClient, candidate.panelSource, partyId, 20)
+  );
+  const sourceStatus = [
+    definitions.evidence,
+    ...sourceReads.flatMap((read) => read.evidence)
+  ];
+  return {
+    value: {
+      partyId,
+      panelDefinitions: {
+        count: definitions.value.items.length,
+        totalCount: definitions.value.totalCount,
+        items: definitions.value.items.slice(0, 10)
+      },
+      panelSources: candidates,
+      recordsBySource: sourceReads.map((read) => read.value),
+      count: sourceReads.reduce((sum, read) => sum + numberValue7(read.value.count), 0),
+      sourceStatus,
+      note: candidates.length > 0 ? "Panel source probes choose a Party filter from live metadata, preferring ID, PartyId, ParticipantPartyId, ContactKey, then ContactId. This does not prove PanelEditor placement, staff profile rendering, or Form Builder writeback." : "Panel definitions were readable, but no REST panel source name field was discoverable from the summary rows. Use imis_panel_data with a known tenant panel source name for targeted reads."
+    },
+    evidence: sourceStatus
+  };
+}
+async function readParty360Duplicates(entityService, partyId) {
+  const flagged = await readParty360List(
+    "PartyDuplicate",
+    { PartyId: partyId },
+    50,
+    () => entityService.list("PartyDuplicate", { params: { PartyId: partyId }, limit: 50 })
+  );
+  return {
+    value: {
+      partyId,
+      flaggedDuplicates: flagged.value.items,
+      flaggedCount: flagged.value.items.length,
+      totalCount: flagged.value.totalCount,
+      mergeAction: "not_performed",
+      note: "This section only reads system-flagged duplicate candidates. Merge review and execution remain separate explicit workflows.",
+      sourceStatus: [flagged.evidence]
+    },
+    evidence: [flagged.evidence]
+  };
+}
+async function readParty360EngagementScores(entityService) {
+  return readParty360List(
+    "EngagementScore",
+    {},
+    25,
+    () => entityService.list("EngagementScore", { limit: 25 })
+  );
+}
+async function readParty360Engagement(entityService, partyId, iqaService) {
+  const [scores, nativeScoreResults, activities, groups, subscriptions] = await Promise.all([
+    readParty360EngagementScores(entityService),
+    readNativeEngagementScoreResults(entityService, iqaService, partyId, { limit: 25 }),
+    readParty360List(
+      "ContactInteraction",
+      { PartyId: partyId },
+      20,
+      () => entityService.list("ContactInteraction", { params: { PartyId: partyId }, limit: 20 })
+    ),
+    readParty360List(
+      "GroupMember",
+      { PartyId: partyId },
+      50,
+      () => entityService.list("GroupMember", { params: { PartyId: partyId }, limit: 50 })
+    ),
+    readParty360List(
+      "Subscription",
+      { PartyId: partyId },
+      20,
+      () => entityService.list("Subscription", { params: { PartyId: partyId }, limit: 20 })
+    )
+  ]);
+  const subscriptionItems = subscriptions.value.items;
+  return {
+    value: {
+      partyId,
+      scoreDefinitions: {
+        items: scores.value.items,
+        count: scores.value.items.length,
+        totalCount: scores.value.totalCount
+      },
+      nativeScoreResults,
+      recentActivity: {
+        interactions: activities.value.items,
+        count: activities.value.items.length,
+        totalCount: activities.value.totalCount
+      },
+      groupMemberships: {
+        groups: groups.value.items,
+        count: groups.value.items.length,
+        totalCount: groups.value.totalCount
+      },
+      subscriptions: {
+        items: subscriptionItems,
+        count: subscriptionItems.length,
+        totalCount: subscriptions.value.totalCount,
+        activeCount: subscriptionItems.filter((item) => isActiveSubscription2(item)).length
+      },
+      note: "EngagementScore lists score definitions by GUID. Native score result rows come from EngagementScoreResult by Party UniformId/contact key when available, with a bounded ScoresByContact IQA fallback only if needed. Activity, group, and subscription rows are raw signals only; the MCP does not calculate an engagement score.",
+      sourceStatus: [
+        scores.evidence,
+        ...nativeScoreResults.sourceStatus,
+        activities.evidence,
+        groups.evidence,
+        subscriptions.evidence
+      ]
+    },
+    evidence: [
+      scores.evidence,
+      ...nativeScoreResults.sourceStatus,
+      activities.evidence,
+      groups.evidence,
+      subscriptions.evidence
+    ]
+  };
+}
+async function mapWithConcurrency(items, concurrency, mapper) {
+  const results = [];
+  for (let index = 0; index < items.length; index += concurrency) {
+    const chunk = items.slice(index, index + concurrency);
+    results.push(...await Promise.all(chunk.map(mapper)));
+  }
+  return results;
+}
+function registerWorkflowTools(server, entityService, apiClient, iqaService) {
+  server.tool(
+    "imis_find_member",
+    "Find a member/contact in iMIS by name, email, or Party ID. In iMIS, all contacts (members, donors, organizations) are 'Party' records. Membership status is determined by active Subscriptions, not a flag on Party. Use this as the starting point, then follow up with imis_billing_summary for their billing picture.",
+    {
+      query: external_exports.string().describe("Search term: name (e.g., 'Smith' or 'John Smith'), email address, or Party ID"),
+      searchBy: external_exports.enum(["name", "email", "id"]).optional().describe("What field to search by (default: auto-detect)"),
+      firstName: external_exports.string().optional().describe("First name to search for (used with name search for more precise matching)"),
+      limit: external_exports.number().min(1).max(100).optional().describe("Max results (default 25)")
+    },
+    withErrorHandling(async ({ query: query2, searchBy, firstName, limit }) => {
+      const params = {};
+      const field = searchBy ?? (query2.includes("@") ? "email" : /^\d+$/.test(query2) ? "id" : "name");
+      switch (field) {
+        case "email":
+          params.Email = query2;
+          break;
+        case "id":
+          try {
+            const result2 = await entityService.get("Party", query2);
+            return {
+              content: [{ type: "text", text: JSON.stringify(result2, null, 2) }]
+            };
+          } catch {
+            return {
+              content: [{ type: "text", text: JSON.stringify({ error: `No member found with ID "${query2}".` }) }]
+            };
+          }
+        case "name": {
+          if (firstName) {
+            params.FirstName = firstName;
+            params.LastName = query2;
+          } else {
+            const parts = query2.trim().split(/\s+/);
+            if (parts.length >= 2) {
+              params.FirstName = parts.slice(0, -1).join(" ");
+              params.LastName = parts[parts.length - 1];
+            } else {
+              params.LastName = query2;
+            }
+          }
+          break;
+        }
+      }
+      const result = await entityService.list("Party", {
+        limit: limit ?? 25,
+        params
+      });
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              { members: result.items, count: result.items.length, totalCount: result.totalCount },
+              null,
+              2
+            )
+          }
+        ]
+      };
+    })
+  );
+  server.tool(
+    "imis_register_for_event",
+    "Register a contact for an event in iMIS using the documented EventRegistration RegisterEvent operation. This creates the registration without payment; use invoice/payment tools after readback for balances. For guarded preview/cancel/status use imis_manage_event_registration.",
+    {
+      partyId: external_exports.string().describe("The Party ID of the registrant"),
+      eventId: external_exports.string().describe("The Event ID to register for"),
+      registrationOptionFunctionId: external_exports.string().optional().describe("Registration option EventFunctionId, for example ANNCONF/ANNGONFREG. Required when the event has multiple registration options."),
+      functionId: external_exports.string().optional().describe("Optional single additional EventFunctionId supported by the native RegisterEvent request."),
+      functionIds: external_exports.string().optional().describe("Deprecated compatibility field. Must contain at most one EventFunctionId; use functionId for new calls."),
+      waitlist: external_exports.boolean().optional().describe("Whether to register to the waitlist. Defaults false."),
+      registeredByPartyId: external_exports.string().optional().describe("Party ID performing registration. Defaults to partyId."),
+      billToPartyId: external_exports.string().optional().describe("Bill-to Party ID. Defaults to partyId.")
+    },
+    withErrorHandling(async ({
+      partyId,
+      eventId,
+      registrationOptionFunctionId,
+      functionId,
+      functionIds,
+      waitlist,
+      registeredByPartyId,
+      billToPartyId
+    }) => {
+      const deprecatedFunctionIds = functionIds?.split(",").map((id) => id.trim()).filter(Boolean) ?? [];
+      if (deprecatedFunctionIds.length > 1) {
+        throw new Error("The documented RegisterEvent request accepts one FunctionId. Use imis_manage_event_registration plus follow-up event adjustment once that surface is proven for multi-function changes.");
+      }
+      const lifecycle = new EventRegistrationLifecycleService(entityService);
+      const result = await lifecycle.registerWithoutExternalConfirmation({
+        partyId,
+        eventId,
+        registrationOptionFunctionId,
+        functionId: functionId ?? deprecatedFunctionIds[0],
+        waitlist,
+        registeredByPartyId,
+        billToPartyId
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_manage_event_registration",
+    "Preview, submit, cancel, inspect, check in, or plan transfer/change/waitlist handling for an iMIS event registration through the supported EventRegistration lifecycle operations. Status reports linked event invoices, points open balances to imis_pay_open_invoice, and points cancellation credits to imis_refund_returned_order_payment. Registration uses RegisterEvent without payment and is blocked when an active registration already exists; repeat RegisterEvent is not treated as a change. The waitlist flag is a native iMIS request and submit verifies whether readback is actually waitlisted. Check-in updates LegacyEventFunctionAttendance CreditUnitsEarned and verifies readback. Cancellation uses CancelEventRegistration with the required cancellation-fee provider. Cancellation fees only use the native EventId/_CANCEL item and are verified by invoice-line readback; arbitrary fee items are blocked. Change-registration, waitlist promotion, and exact attendee transfer are exposed as guarded preview/planning surfaces when native cart/open-credit/Complete Registration legs are not REST-proven.",
+    {
+      action: external_exports.enum(["status", "preview_register", "register", "preview_cancel", "cancel", "preview_check_in", "check_in", "preview_change_registration", "preview_waitlist_promotion", "preview_transfer"]).describe("Lifecycle action. Submit actions require the exact confirmationText from the matching preview. Change/waitlist-promotion/transfer actions are preview/planning only until the native cart/open-credit/Complete Registration legs are REST-proven."),
+      partyId: external_exports.string().optional().describe("Registrant Party ID. Required unless eventRegistrationId is supplied in native EventId-PartyId format."),
+      eventId: external_exports.string().optional().describe("Event ID. Required unless eventRegistrationId is supplied in native EventId-PartyId format."),
+      eventRegistrationId: external_exports.string().optional().describe("Native EventRegistrationId, usually EventId-PartyId, used for status/cancel."),
+      registrationOptionFunctionId: external_exports.string().optional().describe("Registration option EventFunctionId for register actions, for example ANNCONF/ANNGONFREG."),
+      newRegistrationOptionFunctionId: external_exports.string().optional().describe("Desired replacement registration option for preview_change_registration. This is native-cart handoff only, not a direct REST mutation."),
+      functionId: external_exports.string().optional().describe("Optional single additional EventFunctionId for register actions."),
+      eventFunctionAttendanceId: external_exports.string().optional().describe("LegacyEventFunctionAttendance row id for preview_check_in/check_in. Optional when one row can be resolved from party/event/function."),
+      creditUnitsEarned: external_exports.number().min(0).optional().describe("Attendance/CEU units to set for preview_check_in/check_in. Defaults to the function's units."),
+      addFunctionId: external_exports.string().optional().describe("Desired program item/session to add for preview_change_registration. Native-cart handoff only."),
+      removeFunctionId: external_exports.string().optional().describe("Desired program item/session to remove for preview_change_registration. Native-cart handoff only."),
+      waitlist: external_exports.boolean().optional().describe("Request iMIS waitlist registration. Submit readback reports whether iMIS actually created a waitlisted registration; staff/API registration can otherwise register or overbook."),
+      registeredByPartyId: external_exports.string().optional().describe("Party ID performing registration. Defaults to partyId."),
+      billToPartyId: external_exports.string().optional().describe("Bill-to Party ID. Defaults to partyId."),
+      sourcePartyId: external_exports.string().optional().describe("Original registrant Party ID for preview_transfer."),
+      targetPartyId: external_exports.string().optional().describe("Replacement registrant Party ID for preview_transfer."),
+      targetRegistrationOptionFunctionId: external_exports.string().optional().describe("Target registration option EventFunctionId for preview_transfer. Defaults using normal registration option resolution."),
+      targetBillToPartyId: external_exports.string().optional().describe("Bill-to Party ID for the replacement registration in preview_transfer. Defaults to targetPartyId."),
+      cancellationFeeItemId: external_exports.string().optional().describe("Optional native cancellation fee item. The only supported value is EventId/_CANCEL; omit for no-fee cancellation. iMIS applies a fee only when the event's native cancellation-fee setup is enabled."),
+      confirmationText: external_exports.string().optional().describe("Exact confirmation text returned by preview_register or preview_cancel.")
+    },
+    withErrorHandling(async ({
+      action,
+      partyId,
+      eventId,
+      eventRegistrationId: eventRegistrationId2,
+      registrationOptionFunctionId,
+      newRegistrationOptionFunctionId,
+      functionId,
+      eventFunctionAttendanceId,
+      creditUnitsEarned,
+      addFunctionId,
+      removeFunctionId,
+      waitlist,
+      registeredByPartyId,
+      billToPartyId,
+      sourcePartyId,
+      targetPartyId,
+      targetRegistrationOptionFunctionId,
+      targetBillToPartyId,
+      cancellationFeeItemId,
+      confirmationText: confirmationText3
+    }) => {
+      const lifecycle = new EventRegistrationLifecycleService(entityService);
+      let result;
+      switch (action) {
+        case "status":
+          result = await lifecycle.status({ partyId, eventId, eventRegistrationId: eventRegistrationId2 });
+          break;
+        case "preview_register":
+          result = await lifecycle.previewRegister({
+            partyId: requireToolString(partyId, "partyId"),
+            eventId: requireToolString(eventId, "eventId"),
+            registrationOptionFunctionId,
+            functionId,
+            waitlist,
+            registeredByPartyId,
+            billToPartyId
+          });
+          break;
+        case "register":
+          result = await lifecycle.submitRegister({
+            partyId: requireToolString(partyId, "partyId"),
+            eventId: requireToolString(eventId, "eventId"),
+            registrationOptionFunctionId,
+            functionId,
+            waitlist,
+            registeredByPartyId,
+            billToPartyId,
+            confirmationText: requireToolString(confirmationText3, "confirmationText")
+          });
+          break;
+        case "preview_cancel":
+          result = await lifecycle.previewCancel({
+            partyId,
+            eventId,
+            eventRegistrationId: eventRegistrationId2,
+            cancellationFeeItemId
+          });
+          break;
+        case "cancel":
+          result = await lifecycle.submitCancel({
+            partyId,
+            eventId,
+            eventRegistrationId: eventRegistrationId2,
+            cancellationFeeItemId,
+            confirmationText: requireToolString(confirmationText3, "confirmationText")
+          });
+          break;
+        case "preview_check_in":
+          result = await lifecycle.previewCheckIn({
+            partyId,
+            eventId,
+            eventRegistrationId: eventRegistrationId2,
+            eventFunctionAttendanceId,
+            functionId,
+            creditUnitsEarned
+          });
+          break;
+        case "check_in":
+          result = await lifecycle.submitCheckIn({
+            partyId,
+            eventId,
+            eventRegistrationId: eventRegistrationId2,
+            eventFunctionAttendanceId,
+            functionId,
+            creditUnitsEarned,
+            confirmationText: requireToolString(confirmationText3, "confirmationText")
+          });
+          break;
+        case "preview_change_registration":
+          result = await lifecycle.previewChangeRegistration({
+            partyId,
+            eventId,
+            eventRegistrationId: eventRegistrationId2,
+            newRegistrationOptionFunctionId,
+            addFunctionId,
+            removeFunctionId
+          });
+          break;
+        case "preview_waitlist_promotion":
+          result = await lifecycle.previewWaitlistPromotion({
+            partyId,
+            eventId,
+            eventRegistrationId: eventRegistrationId2
+          });
+          break;
+        case "preview_transfer":
+          result = await lifecycle.previewTransfer({
+            sourcePartyId: requireToolString(sourcePartyId, "sourcePartyId"),
+            targetPartyId: requireToolString(targetPartyId, "targetPartyId"),
+            eventId: requireToolString(eventId, "eventId"),
+            sourceEventRegistrationId: eventRegistrationId2,
+            targetRegistrationOptionFunctionId,
+            targetBillToPartyId,
+            cancellationFeeItemId
+          });
+          break;
+      }
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_manage_group_member",
+    "Add or remove a member from a group in iMIS. Groups represent committees, chapters, sections, and other organizational structures. Each group has a GroupClass (Committee, Chapter, etc.). Members are assigned a Role (Chair, Member, Secretary) within the group.",
+    {
+      action: external_exports.enum(["add", "remove"]).describe("Whether to add or remove the member"),
+      groupId: external_exports.string().describe("The Group ID"),
+      partyId: external_exports.string().describe("The Party ID of the member"),
+      roleId: external_exports.string().optional().describe("Role ID for the member (required when adding)"),
+      stage: external_exports.string().optional().describe("Stage: 'Committee', 'Applicant', or 'Proposed'")
+    },
+    withErrorHandling(async ({ action, groupId, partyId, roleId, stage }) => {
+      if (action === "add") {
+        const data = {
+          GroupId: groupId,
+          PartyId: partyId
+        };
+        if (roleId) data.RoleId = roleId;
+        if (stage) data.Stage = stage;
+        const result = await entityService.create("GroupMember", data);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+        };
+      } else {
+        const compositeId = `~${groupId}|${partyId}`;
+        await entityService.delete("GroupMember", compositeId);
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({ success: true, message: `Removed Party "${partyId}" from Group "${groupId}".` })
+            }
+          ]
+        };
+      }
+    })
+  );
+  server.tool(
+    "imis_create_order",
+    "Reserved generic ecommerce/order write surface. Use imis_create_billme_order for the live-proven BillMe product-order workflow; raw ComboOrder/Cart JSON remains blocked.",
+    {
+      partyId: external_exports.string().describe("The Party ID placing the order"),
+      data: external_exports.string().describe("JSON string of the ComboOrder data including line items")
+    },
+    withErrorHandling(async () => {
+      throw new Error(
+        "Generic order creation is not exposed. Use imis_create_billme_order for the live-proven BillMe product-order workflow; raw ComboOrder/Cart JSON, card/gateway checkout, subscriptions, refunds, credits, and returns remain blocked until separately proven."
+      );
+    })
+  );
+  server.tool(
+    "imis_log_activity",
+    "Log an interaction/activity on a contact record in iMIS. Staff use this to track calls, emails, meetings, and notes. Creates a ContactInteraction record visible on the contact's activity history.",
+    {
+      partyId: external_exports.string().describe("The Party ID of the contact"),
+      subject: external_exports.string().describe("Subject/title of the interaction"),
+      notes: external_exports.string().optional().describe("Detailed notes about the interaction"),
+      interactionType: external_exports.enum(["Phone", "Email", "Meeting", "Note", "Other"]).optional().describe("Type of interaction (default: 'Note')")
+    },
+    withErrorHandling(async ({ partyId, subject, notes, interactionType }) => {
+      const data = {
+        PartyId: partyId,
+        Subject: subject,
+        InteractionDate: (/* @__PURE__ */ new Date()).toISOString()
+      };
+      if (notes) data.Notes = notes;
+      if (interactionType) data.InteractionType = interactionType;
+      const result = await entityService.create("ContactInteraction", data);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_billing_summary",
+    "Get a Party/contact's billing picture from iMIS: active subscriptions, outstanding invoices, recent payments, order headers/lines, and payment applications. Use this for members, prospects, donors, customers, and organizations when checking spend, balances, or whether a non-member has paid for events/products/gifts. In iMIS, membership status is determined by Subscriptions \u2014 a member is 'active' if their PaidThrough date is in the future.",
+    {
+      partyId: external_exports.string().describe("The Party ID to get billing summary for")
+    },
+    withErrorHandling(async ({ partyId }) => {
+      const [subscriptions, invoices, payments, orders, paymentApplications] = await Promise.all([
+        entityService.list("Subscription", { params: { PartyId: partyId }, limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
+        entityService.list("InvoiceSummary", { params: { BillToPartyId: partyId }, limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
+        entityService.list("PaymentSummary", { params: { "PayorParty.PartyId": partyId }, limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
+        readPartyOrderHeaders(entityService, partyId, 25),
+        readPartyPaymentApplications(entityService, partyId, 50)
+      ]);
+      const orderLines = await readOrderLinesForOrders(entityService, orders.value.items, 100);
+      const summary = {
+        partyId,
+        subscriptions: {
+          count: subscriptions.items.length,
+          totalCount: subscriptions.totalCount,
+          items: subscriptions.items
+        },
+        invoices: {
+          count: invoices.items.length,
+          totalCount: invoices.totalCount,
+          items: invoices.items
+        },
+        payments: {
+          count: payments.items.length,
+          totalCount: payments.totalCount,
+          items: payments.items
+        },
+        orders: {
+          count: orders.value.items.length,
+          totalCount: orders.value.totalCount,
+          items: orders.value.items
+        },
+        orderLines: {
+          count: orderLines.value.items.length,
+          totalCount: orderLines.value.totalCount,
+          orderNumbers: orderLines.value.orderNumbers,
+          items: orderLines.value.items
+        },
+        paymentApplications: {
+          count: paymentApplications.value.items.length,
+          totalCount: paymentApplications.value.totalCount,
+          items: paymentApplications.value.items
+        },
+        sourceStatus: [
+          orders.evidence,
+          orderLines.evidence,
+          paymentApplications.evidence
+        ]
+      };
+      return {
+        content: [{ type: "text", text: JSON.stringify(summary, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_party_search_compact",
+    "Search or list iMIS Party records and return only compact routing fields. Use this before Party-scoped cohort workflows so the agent can get candidate Party IDs without dumping full contact payloads.",
+    {
+      query: external_exports.string().optional().describe("Optional name, email, or Party ID search term."),
+      searchBy: external_exports.enum(["auto", "name", "email", "id"]).optional().describe("How to interpret query. Default auto-detects email and numeric IDs."),
+      customerTypeCode: external_exports.string().optional().describe("Optional iMIS customer/member type filter, e.g. P for prospects."),
+      filters: external_exports.string().optional().describe("Additional comma-separated FieldName=value filters, e.g. Status=A,CityName=London."),
+      limit: external_exports.number().min(1).max(500).optional().describe("Max Party records to scan and compact (default 50, max 500)."),
+      offset: external_exports.number().min(0).optional().describe("Number of records to skip for pagination."),
+      orderBy: external_exports.string().optional().describe("Optional iMIS OrderBy field, e.g. Sort or LastName.")
+    },
+    withErrorHandling(async ({ query: query2, searchBy, customerTypeCode, filters, limit, offset, orderBy }) => {
+      const params = parseFilters(filters);
+      if (customerTypeCode) params.CustomerTypeCode = customerTypeCode;
+      if (orderBy) params.OrderBy = orderBy;
+      const mode = searchBy === "auto" || !searchBy ? query2?.includes("@") ? "email" : query2 && /^\d+$/.test(query2) ? "id" : "name" : searchBy;
+      if (query2 && mode === "id") {
+        const party = await entityService.get("Party", query2);
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                criteria: { query: query2, searchBy: mode, customerTypeCode, filters },
+                count: 1,
+                totalCount: 1,
+                items: [compactParty(party)]
+              }, null, 2)
+            }
+          ]
+        };
+      }
+      if (query2 && mode === "email") {
+        params.Email = query2;
+      } else if (query2 && mode === "name") {
+        const parts = query2.trim().split(/\s+/);
+        if (parts.length >= 2) {
+          params.FirstName = parts.slice(0, -1).join(" ");
+          params.LastName = parts[parts.length - 1];
+        } else {
+          params.LastName = query2;
+        }
+      }
+      const result = await entityService.list("Party", {
+        limit: limit ?? 50,
+        offset,
+        params
+      });
+      const items = result.items.map(compactParty);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              criteria: { query: query2, searchBy: query2 ? mode : void 0, customerTypeCode, filters, orderBy, limit: limit ?? 50, offset },
+              count: items.length,
+              totalCount: result.totalCount,
+              fields: Object.keys(items[0] ?? {}),
+              items,
+              note: "Compact Party results intentionally omit full addresses, salutations, relationships, and raw AdditionalAttributes. Use imis_member_360 for a selected Party."
+            }, null, 2)
+          }
+        ]
+      };
+    })
+  );
+  server.tool(
+    "imis_prospect_opportunities",
+    "Find non-member/prospect conversion opportunities by compactly scanning Party candidates, then summarising their subscriptions, invoices, and payments. Use this for questions like 'which prospects are already spending money with us but have not joined?'",
+    {
+      customerTypeCode: external_exports.string().optional().describe("Customer/member type code to scan (default P for prospects)."),
+      limit: external_exports.number().min(1).max(500).optional().describe("Max candidate Party records to scan (default 500)."),
+      maxResults: external_exports.number().min(1).max(100).optional().describe("Max opportunities to return after sorting by financial activity (default 15)."),
+      minFinancialActivity: external_exports.number().min(0).optional().describe("Minimum invoice/payment activity to include (default 0)."),
+      includeZeroActivity: external_exports.boolean().optional().describe("Return prospects with no invoice/payment activity as well (default false)."),
+      includeActiveMembers: external_exports.boolean().optional().describe("Include candidates that appear to have active membership subscriptions (default false)."),
+      billingLimit: external_exports.number().min(1).max(100).optional().describe("Max invoices/payments/subscriptions to inspect per Party (default 25)."),
+      evidenceLimit: external_exports.number().min(0).max(10).optional().describe("Max compact invoice/payment evidence rows to return per opportunity (default 3).")
+    },
+    withErrorHandling(async ({
+      customerTypeCode,
+      limit,
+      maxResults,
+      minFinancialActivity,
+      includeZeroActivity,
+      includeActiveMembers,
+      billingLimit,
+      evidenceLimit
+    }) => {
+      const typeCode = customerTypeCode ?? "P";
+      const scanLimit2 = limit ?? 500;
+      const perPartyLimit = billingLimit ?? 25;
+      const resultLimit2 = maxResults ?? 15;
+      const perOpportunityEvidenceLimit = evidenceLimit ?? 3;
+      const candidateResult = await entityService.list("Party", {
+        limit: scanLimit2,
+        params: { CustomerTypeCode: typeCode }
+      });
+      const candidates = candidateResult.items.map(compactParty).filter((party) => party.partyId);
+      const opportunities = await mapWithConcurrency(candidates, 8, async (party) => {
+        const partyId = party.partyId;
+        const [subscriptions, invoices, payments] = await Promise.all([
+          entityService.list("Subscription", { params: { PartyId: partyId }, limit: perPartyLimit }).catch(() => ({ items: [], totalCount: 0 })),
+          entityService.list("InvoiceSummary", { params: { BillToPartyId: partyId }, limit: perPartyLimit }).catch(() => ({ items: [], totalCount: 0 })),
+          entityService.list("PaymentSummary", { params: { "PayorParty.PartyId": partyId }, limit: perPartyLimit }).catch(() => ({ items: [], totalCount: 0 }))
+        ]);
+        const subscriptionRows = subscriptions.items;
+        const invoiceRows = invoices.items;
+        const paymentRows = payments.items;
+        const activeSubscriptions = subscriptionRows.filter((row) => isActiveSubscription2(row));
+        const totalInvoiced = invoiceRows.reduce((sum, row) => sum + monetaryAmount4(row, "InvoiceAmount", "OriginalInvoiceAmount", "UndiscountedTotal"), 0);
+        const totalPaid = paymentRows.reduce((sum, row) => sum + monetaryAmount4(row, "Amount", "PaymentAmount"), 0);
+        const outstandingBalance = invoiceRows.reduce((sum, row) => sum + monetaryAmount4(row, "Balance"), 0);
+        const financialActivity = Math.max(totalInvoiced, totalPaid);
+        return {
+          party,
+          partyId: party.partyId,
+          name: party.name,
+          email: party.email,
+          phone: party.phone,
+          customerTypeCode: party.customerTypeCode,
+          customerTypeDescription: party.customerTypeDescription,
+          isMember: party.isMember ?? false,
+          primaryOrganizationName: party.primaryOrganizationName,
+          primaryOrganizationPartyId: party.primaryOrganizationPartyId,
+          membership: {
+            isMember: party.isMember ?? false,
+            activeSubscriptionCount: activeSubscriptions.length,
+            subscriptionCount: subscriptionRows.length
+          },
+          financialActivity,
+          totalInvoiced,
+          totalPaid,
+          outstandingBalance,
+          invoices: {
+            count: invoiceRows.length,
+            totalCount: invoices.totalCount,
+            sourceSystems: countBySource(invoiceRows),
+            evidence: compactFinancialRows(invoiceRows, ["InvoiceAmount", "OriginalInvoiceAmount", "UndiscountedTotal"], perOpportunityEvidenceLimit)
+          },
+          payments: {
+            count: paymentRows.length,
+            totalCount: payments.totalCount,
+            sourceSystems: countBySource(paymentRows),
+            evidence: compactFinancialRows(paymentRows, ["Amount", "PaymentAmount"], perOpportunityEvidenceLimit)
+          }
+        };
+      });
+      const threshold = minFinancialActivity ?? 0;
+      const filtered = opportunities.filter((row) => includeActiveMembers || row.membership.activeSubscriptionCount === 0).filter((row) => includeZeroActivity ? row.financialActivity >= threshold : row.financialActivity > threshold).sort(
+        (left, right) => right.financialActivity - left.financialActivity || right.totalInvoiced - left.totalInvoiced || (left.party.name ?? "").localeCompare(right.party.name ?? "")
+      ).slice(0, resultLimit2);
+      const matching = opportunities.filter((row) => includeActiveMembers || row.membership.activeSubscriptionCount === 0).filter((row) => includeZeroActivity ? row.financialActivity >= threshold : row.financialActivity > threshold);
+      const sourceSystems = matching.reduce((counts, row) => {
+        for (const [source, count] of Object.entries(row.invoices.sourceSystems)) {
+          counts[source] = (counts[source] ?? 0) + count;
+        }
+        for (const [source, count] of Object.entries(row.payments.sourceSystems)) {
+          counts[source] = (counts[source] ?? 0) + count;
+        }
+        return counts;
+      }, {});
+      const totals = matching.reduce(
+        (sum, row) => ({
+          financialActivity: sum.financialActivity + row.financialActivity,
+          totalInvoiced: sum.totalInvoiced + row.totalInvoiced,
+          totalPaid: sum.totalPaid + row.totalPaid,
+          outstandingBalance: sum.outstandingBalance + row.outstandingBalance
+        }),
+        { financialActivity: 0, totalInvoiced: 0, totalPaid: 0, outstandingBalance: 0 }
+      );
+      const compactResults = filtered.map(({ party, ...row }) => ({
+        ...row,
+        party: {
+          partyId: party.partyId,
+          name: party.name,
+          email: party.email,
+          phone: party.phone,
+          primaryOrganizationName: party.primaryOrganizationName,
+          primaryOrganizationPartyId: party.primaryOrganizationPartyId
+        }
+      }));
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              criteria: {
+                customerTypeCode: typeCode,
+                scannedLimit: scanLimit2,
+                minFinancialActivity: threshold,
+                includeZeroActivity: includeZeroActivity ?? false,
+                includeActiveMembers: includeActiveMembers ?? false,
+                billingLimit: perPartyLimit,
+                maxResults: resultLimit2,
+                evidenceLimit: perOpportunityEvidenceLimit
+              },
+              scanned: candidates.length,
+              candidateTotalCount: candidateResult.totalCount,
+              matched: matching.length,
+              returned: compactResults.length,
+              totals,
+              sourceSystems,
+              opportunities: compactResults,
+              note: "Default output is a compact ranked window for conversation use. financialActivity uses max(totalInvoiced, totalPaid) to avoid double-counting invoice payments. Use imis_member_360 for a selected Party ID when full detail is needed."
+            }, null, 2)
+          }
+        ]
+      };
+    })
+  );
+  server.tool(
+    "imis_process_gift",
+    "Record and post a CASH gift/donation in iMIS through the documented GiftInformationBatch plus ImportBatch posting workflow. Supports fundraising GiftItemData items plus source-code, soft-credit, and tribute subrecords when those live records resolve. Use imis_create_pledge_installment_schedule for posted pledge schedules and imis_pay_pledge_installment for installment settlement. Recurring gifts and non-CASH payment methods are not exposed here.",
+    {
+      donorId: external_exports.string().describe("The Party ID of the donor"),
+      amount: external_exports.number().describe("The gift amount"),
+      giftItemId: external_exports.string().describe("Tenant-specific fundraising gift item ID/code. Must resolve to Item as GiftItemData; commerce product items are rejected."),
+      giftDate: external_exports.string().optional().describe("Date the gift was received (ISO format, defaults to today)"),
+      batchUserId: external_exports.string().optional().describe("Party/User ID to own the Gift Entry batch. Defaults to donorId because that ownership path is live-proven."),
+      paymentMethodId: external_exports.enum(["CASH"]).optional().describe("Payment method. Only CASH is currently live-proven for this tool."),
+      referenceNumber: external_exports.string().optional().describe("Optional CASH check/reference number. Must be fewer than 10 characters for iMIS batch posting. Defaults to a short Codex reference."),
+      sourceCode: external_exports.string().optional().describe("Source code, SourceCodeId, or source name to attach from SourceCodeSummary."),
+      tributeType: external_exports.string().optional().describe("Tribute type ID, e.g. IMO. Requires tributePartyId."),
+      tributePartyId: external_exports.string().optional().describe("Party ID the gift is in tribute of. Required when tributeType is supplied."),
+      tributeMessage: external_exports.string().optional().describe("Optional tribute message."),
+      softCreditId: external_exports.string().optional().describe("Party ID to receive soft credit"),
+      softCreditAmount: external_exports.number().optional().describe("Amount of soft credit (defaults to full gift amount)"),
+      pledgeFrequency: external_exports.enum(["Monthly", "Quarterly", "Annually"]).optional().describe("Use imis_create_pledge_installment_schedule instead; supplied values are rejected by this gift tool."),
+      pledgeInstallments: external_exports.number().optional().describe("Use imis_create_pledge_installment_schedule instead; supplied values are rejected by this gift tool.")
+    },
+    withErrorHandling(async ({
+      donorId,
+      amount,
+      giftItemId,
+      giftDate,
+      batchUserId,
+      paymentMethodId,
+      referenceNumber,
+      sourceCode,
+      tributeType,
+      tributePartyId,
+      tributeMessage,
+      softCreditId,
+      softCreditAmount,
+      pledgeFrequency,
+      pledgeInstallments
+    }) => {
+      if (pledgeFrequency || pledgeInstallments !== void 0) {
+        throw new Error(
+          "Pledge installment creation uses imis_create_pledge_installment_schedule. imis_process_gift remains the single-purpose CASH gift posting workflow."
+        );
+      }
+      if (tributeType && !tributePartyId) {
+        throw new Error("tributePartyId is required when tributeType is supplied.");
+      }
+      if (!tributeType && tributePartyId) {
+        throw new Error("tributeType is required when tributePartyId is supplied.");
+      }
+      const giftAmount = requirePositiveAmount(amount, "amount");
+      const effectiveSoftCreditAmount = softCreditAmount === void 0 ? giftAmount : requirePositiveAmount(softCreditAmount, "softCreditAmount");
+      if (effectiveSoftCreditAmount > giftAmount) {
+        throw new Error("softCreditAmount cannot exceed amount.");
+      }
+      const effectiveGiftDate = isoDateTime(giftDate, "giftDate");
+      const effectivePaymentMethodId = paymentMethodId ?? "CASH";
+      const effectiveReferenceNumber = requireCashReference(referenceNumber);
+      const [donor, giftItem, resolvedSourceCode] = await Promise.all([
+        entityService.get("Party", donorId),
+        entityService.get("Item", giftItemId),
+        resolveSourceCodeSummary(entityService, sourceCode)
+      ]);
+      if (!isFundraisingGiftItem(giftItem)) {
+        throw new Error(
+          `Item "${giftItemId}" is not a fundraising GiftItemData record. Use a tenant fundraising gift item rather than a commerce product.`
+        );
+      }
+      const softCreditRecipient = softCreditId ? await entityService.get("Party", softCreditId) : void 0;
+      const tributeParty = tributePartyId ? await entityService.get("Party", tributePartyId) : void 0;
+      const resolvedTributeType = tributeType ? await entityService.get("TributeType", tributeType) : void 0;
+      const batch = await entityService.create("GiftInformationBatch", {
+        $type: GIFT_INFORMATION_BATCH_TYPE,
+        BatchDate: effectiveGiftDate,
+        UserId: batchUserId ?? donorId
+      });
+      const batchId = stringValue9(nestedObject8(batch)?.BatchId);
+      if (!batchId) {
+        throw new Error("GiftInformationBatch create did not return a BatchId.");
+      }
+      const gift = {
+        $type: GIFT_INFORMATION_DATA_TYPE,
+        DonationType: "Gift",
+        GiftDate: effectiveGiftDate,
+        GiftAmount: giftMonetaryAmount(giftAmount),
+        GiftItem: giftItem,
+        Donor: donor,
+        PaymentInformation: {
+          $type: REMITTANCE_TYPE2,
+          PaymentMethod: {
+            $type: PAYMENT_METHOD_TYPE,
+            PaymentMethodId: effectivePaymentMethodId
+          },
+          ReferenceNumber: effectiveReferenceNumber
+        },
+        GiftAidInformation: {
+          $type: GIFT_AID_INFORMATION_TYPE,
+          IsGiftAidExcluded: true
+        },
+        TributeInformation: {
+          $type: TRIBUTE_INFORMATION_COLLECTION_TYPE,
+          $values: []
+        }
+      };
+      if (resolvedSourceCode) {
+        gift.SourceCode = resolvedSourceCode;
+      }
+      if (softCreditRecipient) {
+        gift.SoftCreditInformation = {
+          $type: SOFT_CREDIT_ALLOCATION_TYPE,
+          Allocations: {
+            $type: SOFT_CREDIT_ALLOCATION_COLLECTION_TYPE,
+            $values: [
+              {
+                $type: SOFT_CREDIT_ALLOCATION_DETAIL_TYPE,
+                SoftCreditRecipientId: softCreditId,
+                SoftCreditRecipient: partySummaryData(softCreditRecipient),
+                SoftCreditType: {
+                  $type: SOFT_CREDIT_TYPE,
+                  Description: ""
+                },
+                AllocationType: 0,
+                Percent: Number((effectiveSoftCreditAmount / giftAmount * 100).toFixed(4)),
+                Amount: giftMonetaryAmount(effectiveSoftCreditAmount)
+              }
+            ]
+          }
+        };
+      }
+      if (resolvedTributeType && tributeParty) {
+        gift.TributeInformation = {
+          $type: TRIBUTE_INFORMATION_COLLECTION_TYPE,
+          $values: [
+            {
+              $type: TRIBUTE_INFORMATION_TYPE,
+              TributeType: resolvedTributeType,
+              TributeParty: tributeParty,
+              NotifyParty: null,
+              Message: tributeMessage ?? null
+            }
+          ]
+        };
+      }
+      let result;
+      try {
+        result = await entityService.create("GiftInformationBatch", {
+          $type: GIFT_INFORMATION_BATCH_TYPE,
+          BatchId: batchId,
+          Gifts: {
+            $type: GIFT_INFORMATION_COLLECTION_TYPE,
+            $values: [gift]
+          }
+        });
+      } catch (error2) {
+        const message = error2 instanceof Error ? error2.message : String(error2);
+        throw new Error(`Gift entry create failed after empty batch "${batchId}" was created: ${message}`);
+      }
+      const readback = await entityService.get("GiftInformationBatch", batchId);
+      const createdGifts = collectionValues7(nestedObject8(result)?.Gifts);
+      const readbackGifts = collectionValues7(nestedObject8(readback)?.Gifts);
+      const createdGiftSummary = giftRecordSummary(createdGifts[0]);
+      const createdGiftId = stringValue9(createdGiftSummary.giftId);
+      const readbackSummaries = readbackGifts.map(giftRecordSummary);
+      const readbackVerified = Boolean(createdGiftId) && readbackSummaries.some((giftSummary2) => stringValue9(giftSummary2.giftId) === createdGiftId);
+      if (!readbackVerified) {
+        throw new Error(`Gift entry "${createdGiftId ?? "<unknown>"}" was returned by create but not verified by GiftInformationBatch/${batchId} readback.`);
+      }
+      const postResult = await entityService.execute("ImportBatch", {
+        $type: IMPORT_BATCH_POST_REQUEST_TYPE2,
+        EntityTypeName: "ImportBatch",
+        OperationName: "Post",
+        BatchId: batchId,
+        RunInBackground: false
+      });
+      if (!importBatchPostSucceeded2(postResult)) {
+        const message = stringValue9(postResult) ?? JSON.stringify(postResult);
+        throw new Error(`Gift batch "${batchId}" failed to post through ImportBatch/_execute: ${message}`);
+      }
+      const paymentReadback = await waitForMatchingPaymentSummary(
+        entityService,
+        donorId,
+        effectiveReferenceNumber,
+        giftAmount
+      );
+      if (!paymentReadback) {
+        throw new Error(`Gift batch "${batchId}" posted but PaymentSummary readback did not find reference "${effectiveReferenceNumber}" for donor "${donorId}".`);
+      }
+      const response2 = {
+        version: "imis_process_gift.v3",
+        status: "posted",
+        giftInformationBatch: {
+          created: giftBatchSummary(result),
+          entryReadback: giftBatchSummary(readback),
+          post: {
+            path: "ImportBatch/_execute",
+            batchId,
+            result: postResult
+          }
+        },
+        gift: createdGiftSummary,
+        payment: paymentSummarySummary(paymentReadback),
+        proof: {
+          writePath: "GiftInformationBatch documented nested POST + ImportBatch/_execute Post",
+          entryReadbackPath: `GiftInformationBatch/${batchId}`,
+          entryReadbackVerified: readbackVerified,
+          postPath: "ImportBatch/_execute",
+          paymentReadbackPath: `PaymentSummary?PayorParty.PartyId=${encodeURIComponent(donorId)}&PaymentReference=${encodeURIComponent(effectiveReferenceNumber)}`,
+          paymentReadbackVerified: true,
+          liveProvenOptions: {
+            paymentMethodId: effectivePaymentMethodId,
+            paymentReference: effectiveReferenceNumber,
+            sourceCode: Boolean(resolvedSourceCode),
+            softCredit: Boolean(softCreditRecipient),
+            tribute: Boolean(resolvedTributeType && tributeParty)
+          },
+          notExposed: [
+            "pledge installment schedule creation",
+            "recurring gift mandate/AutoPay creation",
+            "non-CASH payment methods",
+            "HMRC Gift Aid submission"
+          ]
+        }
+      };
+      return {
+        content: [{ type: "text", text: JSON.stringify(response2, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_issue_gift_receipt",
+    "Preview or submit a one-payment iMIS fundraising receipt workflow. issue_only uses the service-owned receipt candidate IQD plus TaskDefinition/_execute GenerateDoNotEmail. email uses the native Issue receipts IQA plus TaskDefinition/_execute Submit and requires exact native scoping before it creates the receipt communication. Use imis_gift_receipt_delivery_status to read post-send communication status, and imis_adjust_receipted_gift for the proven gift-date adjustment plus replacement receipt path. Pure receipt-only void/reissue belongs in imis_manage_gift_receipt; resend is not exposed.",
+    {
+      mode: external_exports.enum(["preview", "submit"]).optional().describe("Preview validates that the payment is exactly one unreceipted receipt candidate. Submit issues the receipt only when confirmationText matches exactly. Defaults to preview."),
+      paymentId: external_exports.string().describe("PaymentSummary.PaymentId for the posted fundraising gift payment to receipt."),
+      deliveryMode: external_exports.enum(["issue_only", "email"]).optional().describe("issue_only creates the receipt without communication. email uses iMIS native Issue receipts Submit to create the receipt communication after native query scoping proves exactly one matching payment. Defaults to issue_only."),
+      confirmationText: external_exports.string().optional().describe("Exact confirmation text returned by preview. Required for submit."),
+      receiptCulture: external_exports.string().optional().describe("Optional iMIS receipt culture, e.g. en-GB or en-US. Defaults to FUNDRAISING_RECEIPT_CULTURE or en-GB."),
+      communicationTemplateId: external_exports.string().optional().describe("Optional receipt template DocumentVersionId. Defaults to the live Gift Receipt Template version when resolvable.")
+    },
+    withErrorHandling(async ({
+      mode,
+      paymentId,
+      deliveryMode,
+      confirmationText: confirmationText3,
+      receiptCulture,
+      communicationTemplateId
+    }) => {
+      if (!iqaService) {
+        throw new Error("imis_issue_gift_receipt requires an IQA service so it can verify the one-payment receipt candidate query before issuing.");
+      }
+      const receipts = new FundraisingReceiptService(entityService, apiClient, iqaService);
+      const result = await receipts.issueGiftReceipt({
+        mode: mode ?? "preview",
+        paymentId,
+        deliveryMode,
+        confirmationText: confirmationText3,
+        receiptCulture,
+        communicationTemplateId
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_adjust_receipted_gift",
+    "Preview or submit a receipted fundraising gift date adjustment through the native iMIS GiftAdjustmentBatch + ImportBatch workflow. The adjustment voids the original receipt; optionally issue the replacement receipt without communication through the existing one-payment receipt workflow. This is for gift-date correction, not raw receipt mutation, pure receipt-only void, resend, or arbitrary gift editing.",
+    {
+      mode: external_exports.enum(["preview", "submit"]).optional().describe("Preview validates the receipted invoice and returns exact confirmation text. Submit performs the adjustment only when confirmationText matches exactly. Defaults to preview."),
+      invoiceReferenceNumber: external_exports.string().describe("The receipted gift invoice reference number, with or without leading R, e.g. 8271 or R8271."),
+      adjustedGiftDate: external_exports.string().describe("Corrected gift date as ISO date or datetime. The current public adjustment surface supports gift-date correction only."),
+      adjustmentReason: external_exports.string().describe("Reason to store on the iMIS GiftAdjustmentLog."),
+      replacementReceiptDeliveryMode: external_exports.enum(["none", "issue_only"]).optional().describe("none leaves the adjusted gift ready to receipt later. issue_only issues the replacement receipt without communication. Defaults to none."),
+      batchUserId: external_exports.string().optional().describe("Optional staff Party/User ID for GiftAdjustmentBatch.UserId. Defaults to the configured iMIS username's User.Party.PartyId when resolvable."),
+      confirmationText: external_exports.string().optional().describe("Exact confirmation text returned by preview. Required for submit.")
+    },
+    withErrorHandling(async ({
+      mode,
+      invoiceReferenceNumber,
+      adjustedGiftDate,
+      adjustmentReason,
+      replacementReceiptDeliveryMode,
+      batchUserId,
+      confirmationText: confirmationText3
+    }) => {
+      if (!iqaService) {
+        throw new Error("imis_adjust_receipted_gift requires an IQA service so it can verify and issue the replacement receipt candidate when requested.");
+      }
+      const receipts = new FundraisingReceiptService(entityService, apiClient, iqaService);
+      const result = await receipts.adjustReceiptedGift({
+        mode: mode ?? "preview",
+        invoiceReferenceNumber,
+        adjustedGiftDate,
+        adjustmentReason,
+        replacementReceiptDeliveryMode,
+        batchUserId,
+        confirmationText: confirmationText3
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_manage_gift_receipt",
+    "Preview or submit a pure receipt lifecycle operation for one fundraising gift receipt. Supports void, reissue_voided, and void_and_reissue through Receipt/_execute plus the native Reissue void receipts IQA/TaskDefinition route with exact confirmation and readback. Use imis_adjust_receipted_gift when the gift itself needs a date correction; use imis_gift_receipt_delivery_status to read post-send communication status. This tool does not change gift/payment/invoice records or resend receipt emails.",
+    {
+      mode: external_exports.enum(["preview", "submit"]).optional().describe("Preview validates the receipt and returns exact confirmation text. Submit performs the operation only when confirmationText matches exactly. Defaults to preview."),
+      operation: external_exports.enum(["void", "reissue_voided", "void_and_reissue"]).describe("void assigns the receipt to Void. reissue_voided creates a replacement for an already-voided receipt. void_and_reissue does both in one approved workflow."),
+      receiptId: external_exports.string().optional().describe("Receipt.ReceiptId. Preferred when available."),
+      receiptNumber: external_exports.string().optional().describe("Receipt number to resolve with partyId when receiptId is not supplied."),
+      partyId: external_exports.string().optional().describe("Issued-to Party ID required when resolving by receiptNumber."),
+      receiptCulture: external_exports.string().optional().describe("Optional iMIS receipt culture, e.g. en-GB or en-US. Defaults to FUNDRAISING_RECEIPT_CULTURE or en-GB."),
+      communicationTemplateId: external_exports.string().optional().describe("Optional replacement receipt template DocumentVersionId. Defaults to the live Gift Replacement Receipt Template for reissue operations."),
+      confirmationText: external_exports.string().optional().describe("Exact confirmation text returned by preview. Required for submit.")
+    },
+    withErrorHandling(async ({
+      mode,
+      operation,
+      receiptId,
+      receiptNumber,
+      partyId,
+      receiptCulture,
+      communicationTemplateId,
+      confirmationText: confirmationText3
+    }) => {
+      if (!iqaService) {
+        throw new Error("imis_manage_gift_receipt requires an IQA service so it can safely scope the native Reissue void receipts query.");
+      }
+      const receipts = new FundraisingReceiptService(entityService, apiClient, iqaService);
+      const result = await receipts.manageGiftReceipt({
+        mode: mode ?? "preview",
+        operation,
+        receiptId,
+        receiptNumber,
+        partyId,
+        receiptCulture,
+        communicationTemplateId,
+        confirmationText: confirmationText3
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_gift_receipt_delivery_status",
+    "Read the delivery status for one iMIS fundraising receipt by following Receipt.AttachedToCommunicationLogRecipientId into CommunicationLogRecipient, CommunicationLogEvent, and the linked receipt TaskActionLog/TaskLogDetail readback. When iMIS recommends void/reissue remediation, the response points to imis_manage_gift_receipt. This tool does not resend email, mutate receipts, or change communication preferences.",
+    {
+      receiptId: external_exports.string().optional().describe("Receipt.ReceiptId. Preferred when available."),
+      receiptNumber: external_exports.string().optional().describe("Receipt number to resolve with partyId when receiptId is not supplied."),
+      partyId: external_exports.string().optional().describe("Issued-to Party ID required when resolving by receiptNumber.")
+    },
+    withErrorHandling(async ({ receiptId, receiptNumber, partyId }) => {
+      if (!iqaService) {
+        throw new Error("imis_gift_receipt_delivery_status requires an IQA service because it shares the guarded fundraising receipt service contract.");
+      }
+      const receipts = new FundraisingReceiptService(entityService, apiClient, iqaService);
+      const result = await receipts.giftReceiptDeliveryStatus({
+        receiptId,
+        receiptNumber,
+        partyId
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_manage_subscription",
+    "Preview or submit a purpose-built iMIS Subscription lifecycle operation. Supports create, update, renew, cancel, reinstate, and delete through the fixed Subscription workflow with validation, exact confirmation text, readback, and invoice evidence. For multi-item subscription invoicing, create the first billed subscription, then create additional billed subscriptions with invoiceId set to the first subscription invoice. Generic raw Subscription/Cart JSON remains closed; upgrade/downgrade should be represented as explicit create/renew plus cancel operations so source and target subscriptions stay visible.",
+    {
+      mode: external_exports.enum(["preview", "submit"]).optional().describe("Preview validates and returns confirmation text. Submit performs the operation only when confirmationText matches exactly. Defaults to preview."),
+      operation: external_exports.enum(["create", "update", "renew", "cancel", "reinstate", "delete"]).describe("Subscription lifecycle operation to perform."),
+      partyId: external_exports.string().describe("The Party ID that owns the subscription."),
+      itemId: external_exports.string().describe("The subscription/dues/chapter item ID, e.g. INSIDMAG, REG, or CHAPT/EAST."),
+      confirmationText: external_exports.string().optional().describe("Exact confirmation text returned by preview. Required for submit."),
+      beginDate: external_exports.string().optional().describe("Subscription begin date, ISO date or date-time. Defaults to billBegin or today for create/renew."),
+      billBegin: external_exports.string().optional().describe("Billing period start date, ISO date or date-time."),
+      billThrough: external_exports.string().optional().describe("Billing period end date, ISO date or date-time."),
+      paidThrough: external_exports.string().optional().describe("Paid-through date, ISO date or date-time."),
+      billToPartyId: external_exports.string().optional().describe("Bill-to Party ID. Defaults to partyId."),
+      sourceCode: external_exports.string().optional().describe("Optional source code to store on the subscription."),
+      copies: external_exports.number().int().min(1).max(999).optional().describe("Number of subscription copies. Defaults to 1."),
+      isMemberComponent: external_exports.boolean().optional().describe("Whether this subscription is a member component. Defaults false on create."),
+      billSubscription: external_exports.boolean().optional().describe("Whether iMIS should generate subscription billing/invoice state during the mutation. Defaults false."),
+      isComplimentary: external_exports.boolean().optional().describe("Whether the subscription is complimentary."),
+      billedAmount: external_exports.number().optional().describe("Optional explicit billed amount. Prefer leaving unset so iMIS pricing/proration rules calculate it."),
+      invoiceId: external_exports.string().optional().describe("For create with billSubscription=true only: attach this new subscription to an existing cash invoice created by a prior billed Subscription create."),
+      adjustmentReason: external_exports.string().optional().describe("Optional adjustment/cancel/reinstate reason.")
+    },
+    withErrorHandling(async ({
+      mode,
+      operation,
+      partyId,
+      itemId,
+      confirmationText: confirmationText3,
+      beginDate,
+      billBegin,
+      billThrough,
+      paidThrough,
+      billToPartyId,
+      sourceCode,
+      copies,
+      isMemberComponent,
+      billSubscription,
+      isComplimentary,
+      billedAmount,
+      invoiceId,
+      adjustmentReason
+    }) => {
+      const lifecycle = new SubscriptionLifecycleService(entityService, apiClient);
+      const result = await lifecycle.manage({
+        mode: mode ?? "preview",
+        operation,
+        partyId,
+        itemId,
+        confirmationText: confirmationText3,
+        beginDate,
+        billBegin,
+        billThrough,
+        paidThrough,
+        billToPartyId,
+        sourceCode,
+        copies,
+        isMemberComponent,
+        billSubscription,
+        isComplimentary,
+        billedAmount,
+        invoiceId,
+        adjustmentReason
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_contact_relationships",
+    "View relationships between contacts in iMIS. Reads Relationship rows by the Party record's UniformId using SubjectUniformKey and TargetUniformKey. Relationship writes are not enabled until the RelationshipKey/type-key write contract is live-proven.",
+    {
+      partyId: external_exports.string().describe("The Party ID of the contact"),
+      action: external_exports.enum(["list", "add", "remove"]).describe("Action to perform. Only list is currently enabled; add/remove return a safety error until write semantics are live-proven."),
+      targetPartyId: external_exports.string().optional().describe("Reserved for future add/remove relationship writes; ignored by list."),
+      relationType: external_exports.string().optional().describe("Reserved for future relationship writes; ignored by list."),
+      reciprocalType: external_exports.string().optional().describe("Reserved for future relationship writes; ignored by list."),
+      beginDate: external_exports.string().optional().describe("Reserved for future relationship writes; ignored by list."),
+      endDate: external_exports.string().optional().describe("Reserved for future relationship writes; ignored by list.")
+    },
+    withErrorHandling(async ({ partyId, action }) => {
+      if (action === "list") {
+        const relationships = await readParty360Relationships(entityService, partyId, void 0, 50);
+        return {
+          content: [{
+            type: "text",
+            text: JSON.stringify({
+              partyId,
+              uniformKey: relationships.value.uniformKey,
+              relationships: relationships.value.items,
+              count: relationships.value.items.length,
+              totalCount: relationships.value.totalCount,
+              sourceStatus: relationships.evidence
+            }, null, 2)
+          }]
+        };
+      }
+      throw new Error(
+        "Relationship write actions are not enabled. The live-proven Relationship read contract uses SubjectUniformKey/TargetUniformKey; create/update/delete semantics must be proven before this tool will mutate relationship rows."
+      );
+    })
+  );
+  server.tool(
+    "imis_organization_360",
+    "Get a normalized Organization360Contract for an iMIS organization Party. Returns one contract with profile, roster, relationships, finance, groups, and data-quality sections; each section owns its data, summary, sources, and record map. The roster section uses the executable Contacts by Company IQA with its live-proven Company runtime parameter.",
+    {
+      organizationPartyId: external_exports.string().describe("The Party ID of the organization"),
+      sections: external_exports.string().optional().describe("Comma-separated sections to include. Defaults to profile, roster, relationships, finance, groups, and dataQuality. Use all for every current section."),
+      rosterLimit: external_exports.number().min(1).max(100).optional().describe("Maximum roster contacts to return from the server-filtered Contacts by Company query (default 25).")
+    },
+    withErrorHandling(async ({ organizationPartyId, sections, rosterLimit }) => {
+      const include = Array.from(parseOrganization360Sections(sections));
+      const profile = await readParty360Record(
+        "profile",
+        "Organization",
+        () => entityService.get("Organization", organizationPartyId)
+      );
+      const profileRecord = nestedObject8(profile.value);
+      const orgName = organizationName(profileRecord);
+      const [roster, relationships, groups, duplicates] = await Promise.all([
+        include.includes("roster") ? iqaService ? readOrganizationRoster(iqaService, orgName, rosterLimit ?? 25) : Promise.resolve({
+          value: { items: [], totalCount: 0, serverFiltered: false, truncated: false },
+          evidence: {
+            source: CONTACTS_BY_COMPANY_QUERY,
+            status: "failed",
+            filters: { Company: orgName ?? "" },
+            limit: rosterLimit ?? 25,
+            count: 0,
+            totalCount: 0,
+            error: "IQA service is not available, so organization roster cannot be read."
+          }
+        }) : Promise.resolve(void 0),
+        include.includes("relationships") ? readParty360Relationships(entityService, organizationPartyId, profile.value, 50) : Promise.resolve(void 0),
+        include.includes("groups") ? readParty360List(
+          "GroupMember",
+          { PartyId: organizationPartyId },
+          50,
+          () => entityService.list("GroupMember", { params: { PartyId: organizationPartyId }, limit: 50 })
+        ) : Promise.resolve(void 0),
+        include.includes("dataQuality") ? readParty360List(
+          "PartyDuplicate",
+          { PartyId: organizationPartyId },
+          50,
+          () => entityService.list("PartyDuplicate", { params: { PartyId: organizationPartyId }, limit: 50 })
+        ) : Promise.resolve(void 0)
+      ]);
+      let finance;
+      if (include.includes("finance")) {
+        const [subscriptions, invoices, payments, orders, paymentApplications] = await Promise.all([
+          readParty360List(
+            "Subscription",
+            { PartyId: organizationPartyId },
+            50,
+            () => entityService.list("Subscription", { params: { PartyId: organizationPartyId }, limit: 50 })
+          ),
+          readParty360List(
+            "InvoiceSummary",
+            { BillToPartyId: organizationPartyId },
+            50,
+            () => entityService.list("InvoiceSummary", { params: { BillToPartyId: organizationPartyId }, limit: 50 })
+          ),
+          readParty360List(
+            "PaymentSummary",
+            { "PayorParty.PartyId": organizationPartyId },
+            50,
+            () => entityService.list("PaymentSummary", { params: { "PayorParty.PartyId": organizationPartyId }, limit: 50 })
+          ),
+          readPartyOrderHeaders(entityService, organizationPartyId, 25),
+          readPartyPaymentApplications(entityService, organizationPartyId, 50)
+        ]);
+        const orderLines = await readOrderLinesForOrders(entityService, orders.value.items, 100);
+        finance = { subscriptions, invoices, payments, orders, orderLines, paymentApplications };
+      }
+      const contract = buildOrganization360Contract({
+        organizationPartyId,
+        requestedSections: include,
+        profile,
+        roster,
+        relationships,
+        finance,
+        groups,
+        duplicates
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(contract, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_donor_360",
+    "Get a normalized Donor360Contract for an iMIS donor Party. Returns one contract with profile, giving, pledges, Gift Aid, campaign/source context, and communications sections; each section owns its data, summary, sources, and donor record map. Giving uses Gift by donor ID, pledges use PartyPledgeScheduledPayment by PartyId, and communications use the existing Party communication source contract.",
+    {
+      donorPartyId: external_exports.string().describe("The Party ID of the donor/contact"),
+      sections: external_exports.string().optional().describe("Comma-separated sections to include. Defaults to profile, giving, pledges, giftAid, campaigns, and communications. Use all for every current section."),
+      giftLimit: external_exports.number().min(1).max(100).optional().describe("Maximum gifts to return from the donor-scoped Gift read (default 50)."),
+      pledgeLimit: external_exports.number().min(1).max(100).optional().describe("Maximum pledge scheduled payment rows to return from PartyPledgeScheduledPayment by PartyId (default 50)."),
+      communicationLimit: external_exports.number().min(1).max(50).optional().describe("Maximum donor communication history rows to return (default 10).")
+    },
+    withErrorHandling(async ({ donorPartyId, sections, giftLimit, pledgeLimit, communicationLimit }) => {
+      const include = Array.from(parseDonor360Sections(sections));
+      const profile = await readParty360Record(
+        "profile",
+        "Party",
+        () => entityService.get("Party", donorPartyId)
+      );
+      const [giving, pledges, giftAid, communications] = await Promise.all([
+        include.includes("giving") ? readDonorGifts(entityService, donorPartyId, giftLimit ?? 50) : Promise.resolve(void 0),
+        include.includes("pledges") ? readDonorPledges(entityService, donorPartyId, pledgeLimit ?? 50) : Promise.resolve(void 0),
+        include.includes("giftAid") ? readDonorGiftAid(apiClient, donorPartyId) : Promise.resolve(void 0),
+        include.includes("communications") ? readDonorCommunications(entityService, donorPartyId, communicationLimit ?? 10, iqaService) : Promise.resolve(void 0)
+      ]);
+      const campaigns = include.includes("campaigns") ? await readDonorCampaignContext(entityService, giving?.value.items ?? [], 50) : void 0;
+      const contract = buildDonor360Contract({
+        donorPartyId,
+        requestedSections: include,
+        profile,
+        giving,
+        pledges,
+        giftAid,
+        campaigns,
+        communications
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(contract, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_member_360",
+    "Get a Party/member 360 contract for any iMIS Party/contact \u2014 member, prospect, donor, customer, or organization. Returns a single versioned Party360Contract with normalized sections; each section owns its data, summary, and source evidence. Default sections include contact, billing, groups, activity, relationships, giving, events with event/order/attendance/availability evidence, login/security, auto-pay, certification, duplicate candidates, and engagement signals. Communications, forms, and customPanels can be requested explicitly; tenant-specific endpoint/filter failures are returned as section source status. Use the 'sections' parameter to request only specific areas if needed.",
+    {
+      partyId: external_exports.string().describe("The Party ID of the contact/member/prospect/organization"),
+      sections: external_exports.string().optional().describe("Comma-separated sections to include (default: current API-backed default sections). Default sections: contact, billing, groups, activity, relationships, giving, events, loginSecurity, autoPay, certification, duplicates, engagement. Requestable sections also include communications, forms, and customPanels. Use all to include every wired requestable section. Frontier sections are reported as not_implemented/native_handoff_required when requested or in the source ledger.")
+    },
+    withErrorHandling(async ({ partyId, sections }) => {
+      const include = new Set(
+        Array.from(parseParty360Sections(sections)).map(normalizeParty360Section)
+      );
+      const sectionData = { partyId };
+      const evidence = [];
+      if (include.has("contact")) {
+        const contact = await readParty360Record(
+          "contact",
+          "Party",
+          () => entityService.get("Party", partyId)
+        );
+        sectionData.contact = contact.value;
+        evidence.push(contact.evidence);
+      } else {
+        evidence.push(notRequestedSection("contact"));
+      }
+      if (include.has("billing")) {
+        const [subscriptions, invoices, payments, orders, paymentApplications] = await Promise.all([
+          readParty360List(
+            "Subscription",
+            { PartyId: partyId },
+            50,
+            () => entityService.list("Subscription", { params: { PartyId: partyId }, limit: 50 })
+          ),
+          readParty360List(
+            "InvoiceSummary",
+            { BillToPartyId: partyId },
+            20,
+            () => entityService.list("InvoiceSummary", { params: { BillToPartyId: partyId }, limit: 20 })
+          ),
+          readParty360List(
+            "PaymentSummary",
+            { "PayorParty.PartyId": partyId },
+            20,
+            () => entityService.list("PaymentSummary", { params: { "PayorParty.PartyId": partyId }, limit: 20 })
+          ),
+          readPartyOrderHeaders(entityService, partyId, 20),
+          readPartyPaymentApplications(entityService, partyId, 50)
+        ]);
+        const orderLines = await readOrderLinesForOrders(entityService, orders.value.items, 100);
+        sectionData.subscriptions = subscriptions.value;
+        sectionData.invoices = invoices.value;
+        sectionData.payments = payments.value;
+        sectionData.orders = orders.value;
+        sectionData.orderLines = orderLines.value;
+        sectionData.paymentApplications = paymentApplications.value;
+        evidence.push(contractSectionStatus("billing", [
+          subscriptions.evidence,
+          invoices.evidence,
+          payments.evidence,
+          orders.evidence,
+          orderLines.evidence,
+          paymentApplications.evidence
+        ]));
+      } else {
+        evidence.push(notRequestedSection("billing"));
+      }
+      if (include.has("groups")) {
+        const groups = await readParty360List(
+          "GroupMember",
+          { PartyId: partyId },
+          50,
+          () => entityService.list("GroupMember", { params: { PartyId: partyId }, limit: 50 })
+        );
+        sectionData.groups = groups.value;
+        evidence.push(contractSectionStatus("groups", [groups.evidence]));
+      } else {
+        evidence.push(notRequestedSection("groups"));
+      }
+      if (include.has("activity")) {
+        const activities = await readParty360List(
+          "ContactInteraction",
+          { PartyId: partyId },
+          20,
+          () => entityService.list("ContactInteraction", { params: { PartyId: partyId }, limit: 20 })
+        );
+        sectionData.activities = activities.value;
+        evidence.push(contractSectionStatus("activity", [activities.evidence]));
+      } else {
+        evidence.push(notRequestedSection("activity"));
+      }
+      if (include.has("relationships")) {
+        const relationships = await readParty360Relationships(entityService, partyId, sectionData.contact, 50);
+        sectionData.relationships = relationships.value;
+        evidence.push(contractSectionStatus("relationships", relationships.evidence));
+      } else {
+        evidence.push(notRequestedSection("relationships"));
+      }
+      if (include.has("giving")) {
+        const gifts = await readParty360Gifts(entityService, partyId, 50);
+        sectionData.gifts = gifts.value;
+        evidence.push(contractSectionStatus("giving", gifts.evidence));
+      } else {
+        evidence.push(notRequestedSection("giving"));
+      }
+      if (include.has("events")) {
+        const registrations = await readEventRegistrations(entityService, partyId, 10, iqaService);
+        sectionData.events = registrations.value;
+        evidence.push(contractSectionStatus("events", registrations.evidence));
+      } else {
+        evidence.push(notRequestedSection("events"));
+      }
+      if (include.has("loginSecurity")) {
+        try {
+          const userSecurity = await entityService.get("UserSecurity", partyId);
+          sectionData.loginSecurity = {
+            partyId,
+            canLogin: true,
+            hasCredentials: true,
+            username: userSecurity.Username ?? userSecurity.UserId ?? "unknown",
+            userSecurity
+          };
+          evidence.push(contractSectionStatus("loginSecurity", [{
+            source: "UserSecurity",
+            status: "queried",
+            filters: { id: partyId },
+            count: 1,
+            totalCount: 1
+          }]));
+        } catch (error2) {
+          if (error2 instanceof ImisNotFoundError) {
+            sectionData.loginSecurity = {
+              partyId,
+              canLogin: false,
+              hasCredentials: false,
+              message: "No login credentials found for this party."
+            };
+            evidence.push(contractSectionStatus("loginSecurity", [{
+              source: "UserSecurity",
+              status: "queried",
+              filters: { id: partyId },
+              count: 0,
+              totalCount: 0
+            }]));
+          } else {
+            sectionData.loginSecurity = {
+              partyId,
+              canLogin: false,
+              error: errorMessage5(error2)
+            };
+            evidence.push(contractSectionStatus("loginSecurity", [{
+              source: "UserSecurity",
+              status: "failed",
+              filters: { id: partyId },
+              count: 0,
+              totalCount: 0,
+              error: errorMessage5(error2)
+            }]));
+          }
+        }
+      } else {
+        evidence.push(notRequestedSection("loginSecurity"));
+      }
+      if (include.has("autoPay")) {
+        const [accounts, instructions, scheduledPayments] = await Promise.all([
+          readParty360PartyReferencedList(
+            "AutoPayAccount",
+            partyId,
+            ["Payer", "PayerId", "Customer", "CustomerId", "PartyId"],
+            50,
+            () => entityService.list("AutoPayAccount", { limit: 50 })
+          ),
+          readParty360PartyReferencedList(
+            "AutoPayInstruction",
+            partyId,
+            ["Customer", "CustomerId", "Payer", "PayerId", "PartyId"],
+            50,
+            () => entityService.list("AutoPayInstruction", { limit: 50 })
+          ),
+          readParty360PartyReferencedList(
+            "ScheduledPayment",
+            partyId,
+            ["Payer", "PayerId", "Customer", "CustomerId", "PartyId", "BillToParty", "BillToPartyId"],
+            50,
+            () => entityService.list("ScheduledPayment", { limit: 50 })
+          )
+        ]);
+        sectionData.autoPay = {
+          partyId,
+          accounts: {
+            count: accounts.value.items.length,
+            totalCount: accounts.value.totalCount,
+            items: accounts.value.items
+          },
+          instructions: {
+            count: instructions.value.items.length,
+            totalCount: instructions.value.totalCount,
+            items: instructions.value.items
+          },
+          scheduledPayments: {
+            count: scheduledPayments.value.items.length,
+            totalCount: scheduledPayments.value.totalCount,
+            items: scheduledPayments.value.items
+          },
+          note: "Auto-pay endpoints do not reliably expose flat PartyId filters, so imis_member_360 reads bounded rows and filters by Party references client-side."
+        };
+        evidence.push(contractSectionStatus("autoPay", [accounts.evidence, instructions.evidence, scheduledPayments.evidence]));
+      } else {
+        evidence.push(notRequestedSection("autoPay"));
+      }
+      if (include.has("certification")) {
+        const enrollments = await readParty360PartyReferencedList(
+          "CertificationProgramRegistration",
+          partyId,
+          ["Party", "PartyId"],
+          200,
+          () => entityService.list("CertificationProgramRegistration", { limit: 200 })
+        );
+        sectionData.certification = {
+          partyId,
+          enrollments: enrollments.value.items,
+          count: enrollments.value.items.length,
+          note: "CertificationProgramRegistration uses Party entity references, so imis_member_360 reads bounded rows and filters by Party reference client-side."
+        };
+        evidence.push(contractSectionStatus("certification", [enrollments.evidence]));
+      } else {
+        evidence.push(notRequestedSection("certification"));
+      }
+      if (include.has("communications")) {
+        const [preferences, history] = await Promise.all([
+          readCommunicationPreferences(entityService, partyId),
+          readCommunicationHistory(entityService, partyId, 10, iqaService)
+        ]);
+        sectionData.communications = {
+          partyId,
+          preferences: preferences.value,
+          history: history.value,
+          note: "Communication history first uses the server-filtered CommunicationLogRecipient endpoint by PartyId. If that endpoint is unavailable, imis_member_360 tries the Communication endpoint and then a bounded Communication log IQA fallback. Preference evidence comes from the Party record."
+        };
+        evidence.push(contractSectionStatus("communications", [preferences.evidence, ...history.evidence]));
+      } else {
+        evidence.push(notRequestedSection("communications"));
+      }
+      if (include.has("forms")) {
+        const forms = await readParty360Forms(entityService, partyId, 50);
+        sectionData.forms = forms.value;
+        evidence.push(contractSectionStatus("forms", forms.evidence));
+      } else {
+        evidence.push(notRequestedSection("forms"));
+      }
+      if (include.has("customPanels")) {
+        const customPanels = await readParty360CustomPanels(entityService, apiClient, partyId);
+        sectionData.customPanels = customPanels.value;
+        evidence.push(contractSectionStatus("customPanels", customPanels.evidence));
+      } else {
+        evidence.push(notRequestedSection("customPanels"));
+      }
+      if (include.has("duplicates")) {
+        const duplicates = await readParty360Duplicates(entityService, partyId);
+        sectionData.duplicates = duplicates.value;
+        evidence.push(contractSectionStatus("duplicates", duplicates.evidence));
+      } else {
+        evidence.push(notRequestedSection("duplicates"));
+      }
+      if (include.has("engagement")) {
+        const engagement = await readParty360Engagement(entityService, partyId, iqaService);
+        sectionData.engagement = engagement.value;
+        evidence.push(contractSectionStatus("engagement", engagement.evidence));
+      } else {
+        evidence.push(notRequestedSection("engagement"));
+      }
+      for (const frontier of PARTY_360_FRONTIER_SECTIONS) {
+        evidence.push(
+          include.has(frontier.section) ? frontier : { ...frontier, status: "not_requested", reason: "Section is not yet wired into imis_member_360 and was not requested." }
+        );
+      }
+      const contract = buildParty360Contract({
+        partyId,
+        payload: sectionData,
+        evidence,
+        requestedSections: Array.from(include),
+        defaultSections: [...PARTY_360_CURRENT_SECTIONS],
+        currentSections: [...PARTY_360_REQUESTABLE_SECTIONS]
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(contract, null, 2) }]
+      };
+    })
+  );
+}
+
+// src/config/iqa-surface-catalog.ts
+var bo = (category, name, source, keyFields = [], description) => ({
+  category,
+  name,
+  kind: "businessObject",
+  source,
+  keyFields,
+  description
+});
+var query = (category, name, source, description) => ({
+  category,
+  name,
+  kind: "query",
+  source,
+  description
+});
+var IQA_SURFACE_CATALOG = [
+  bo("Common", "Contacts", "NetContactData", ["FullName", "ContactKey", "Email", "MemberType", "Status"], "Central contact demographics for individuals and organizations."),
+  bo("Common", "Donors", "GiftHistorySummaryBasic", ["ID", "FirstGiftDate", "LastGiftDate", "TotalGiving"], "Direct fundraising donor snapshot."),
+  bo("Common", "Event registrations", "CsRegistration", ["EventCode", "OrderNumber", "OrderDate", "Balance", "TotalCharges"], "Event registration transactions and balances."),
+  bo("Common", "Events", "CsEvent", ["EventCode", "Title", "BeginDate", "EndDate", "Registrants"], "Event catalog and high-level attendance data."),
+  bo("Common", "Gifts", "GiftsReceivedSummary", ["Amount", "DateReceived", "GiftType", "Fund", "FiscalYear"], "Donation gift summary for fundraising performance."),
+  bo("Common", "Orders", "CsOrders", ["OrderNumber", "OrderDate", "BillToId", "TotalCharges", "Stage"], "Commerce order header data."),
+  bo("Common", "Products", "CsProduct", ["ProductCode", "Title", "StandardPrice", "Category", "WebOption"], "Core product catalog."),
+  bo("Common", "Products (Commerce)", "CommerceProduct", ["ProductCode", "Title", "StandardPrice", "DiscountPrice", "PublishStartDate"], "Online commerce product catalog."),
+  query("Certification", "Component enrollments", "Component enrollments", "Requirements completed or registered for each program enrollee."),
+  query("Certification", "Components", "Components", "Certification components defined in the system."),
+  query("Certification", "Components in programs", "Components in programs", "Components used in each certification program."),
+  query("Certification", "Offerings", "Offerings", "Ways to complete certification requirements."),
+  query("Certification", "Program enrollments", "Program enrollments"),
+  query("Certification", "Programs", "Programs"),
+  query("Commerce", "Commerce products", "Commerce products"),
+  query("Commerce", "Order data", "Order data"),
+  query("Commerce", "Order lines", "Order lines"),
+  bo("Commerce", "Order lines (Basic)", "CsOrderLines", ["OrderNumber", "ProductCode", "LineNumber", "QuantityOrdered", "UnitPrice"], "Detailed commerce order items."),
+  bo("Commerce", "Order types", "CsOrderType"),
+  query("Commerce", "Promotion usages", "Promotion usages", "Orders which have a promotion applied."),
+  query("Commerce", "Promotion usages by item", "Promotion usages by item"),
+  query("Commerce", "Promotions", "Promotions"),
+  query("Contacts", "Activities", "Activities"),
+  bo("Contacts", "Addresses", "CsAddress", ["ID", "AddressNumber", "Address1", "City", "Email"], "Contact address rows."),
+  query("Contacts", "All contacts", "All contacts"),
+  query("Contacts", "Committee memberships", "Committee memberships"),
+  bo("Contacts", "Committee minutes", "CommitteeMinutes"),
+  bo("Contacts", "Committees", "Committee", ["ProductCode", "Title", "Description"], "Committee profiles and groups."),
+  query("Contacts", "Communication preferences", "Communication preferences", "Contact opt-in state by communication reason."),
+  bo("Contacts", "Contact notes", "CsNameNote"),
+  bo("Contacts", "CsContact", "CsContact", ["FullName", "ID", "Email", "MobilePhone", "MemberType"], "Individual and company contact lookup."),
+  bo("Contacts", "CsContactBasic", "CsContactBasic", ["FullName", "ID", "Email", "FirstName", "MemberType"], "Basic contact demographics."),
+  bo("Contacts", "Customer types", "CsMemberType"),
+  query("Contacts", "Individuals", "Individuals"),
+  query("Contacts", "Organization administrators", "Organization administrators"),
+  query("Contacts", "Organizations", "Organizations"),
+  query("Contacts", "Users", "Users"),
+  query("Events", "All event functions", "All event functions"),
+  query("Events", "Event function registrations", "Event function registrations", "Registrations for registration options and program items."),
+  query("Events", "Event invoice lines", "Event invoice lines"),
+  bo("Events", "Event invoices", "EventInvoice", ["InvoiceNumber", "InvoiceDate", "EventCode", "EventTitle", "TotalCharges"], "Event billing records."),
+  query("Events", "Event registration data", "Event registration data"),
+  query("Events", "Events list", "Events list"),
+  query("Events", "Program item registrations", "Program item registrations"),
+  query("Events", "Program items", "Program items"),
+  bo("Events", "Registrant details", "EventRegistrantsReport", ["FullName", "EventTitle", "Email", "OrderNumber", "RegistrationDate"], "Event registrant detail report."),
+  query("Events", "Registration option registrations", "Registration option registrations"),
+  query("Events", "Registration options", "Registration options"),
+  query("Finance", "Aging settings", "Aging settings"),
+  bo("Finance", "Batches", "BatchSummary"),
+  bo("Finance", "Financial entities", "CsOrg_Control"),
+  bo("Finance", "Invoice lines", "InvoiceLineData", ["InvoiceId", "InvoiceLineId", "ItemId", "Quantity", "UnitPrice"], "Invoice line item details."),
+  bo("Finance", "Invoice types", "InvoicePurpose", ["Code", "Description", "Name"], "Valid invoice purposes."),
+  bo("Finance", "Invoices", "InvoiceSummary", ["InvoiceNumber", "InvoiceDate", "InvoiceAmount", "PaymentAmount", "Description"], "Invoice billing summary."),
+  query("Finance", "Payment adjustments", "Payment adjustments"),
+  bo("Finance", "Payment applications", "PaymentApplication"),
+  bo("Finance", "Payment terms", "CsTerms"),
+  bo("Finance", "Payments", "PaymentSummary", ["PaymentId", "Amount", "PaymentDate", "PaymentStatusCode", "PaymentCategory"], "Payment records."),
+  query("Finance", "Total adjustment amount for payment", "Total adjustment amount for payment", "Sum of adjustments for each payment."),
+  bo("Finance", "Transaction Details", "TransactionDetail", ["EffectiveDate", "Amount", "GLAccount", "ProductCode"], "Transaction line detail."),
+  bo("Finance", "Transaction Summary", "TransactionSummary"),
+  bo("Fundraising", "Donations by fund and source code", "DonationPerformance", ["Fund", "SourceCode", "Amount", "DateReceived"], "Gift and pledge performance by fund/source."),
+  bo("Fundraising", "Donors", "GiftHistorySummaryBasic"),
+  bo("Fundraising", "Gift details", "Gift", ["Amount", "DateReceived", "GiftType", "Fund", "Campaign"], "Gift detail rows."),
+  query("Fundraising", "Gift items", "Gift items"),
+  bo("Fundraising", "Gift receipts", "Receipt", ["ReceiptNumber", "ReceiptKey", "IssuedOn", "IssuedToPartyId"], "Fundraising receipt records."),
+  bo("Fundraising", "Gift transactions", "GiftTransaction"),
+  bo("Fundraising", "Gifts", "GiftsReceivedSummary"),
+  query("Fundraising", "Gifts received for receipting", "Gifts received for receipting"),
+  bo("Fundraising", "Pledge details", "CsPledges", ["PledgeAmount", "NetAmount", "OutstandingBalance", "ReceiptDate"], "Future donation commitments."),
+  query("Fundraising", "Pledge installments", "Pledge installments"),
+  query("Fundraising", "Pledges", "Pledges"),
+  query("Fundraising", "Recurring donation enrollments", "Recurring donation enrollments"),
+  query("Fundraising", "Soft credits", "Soft credits"),
+  query("Fundraising", "Tributes", "Tributes"),
+  bo("Marketing", "Campaigns", "CsCampaign"),
+  query("Marketing", "Communication log", "Communication log", "One row per communication job."),
+  query("Marketing", "Communication log details", "Communication log details", "One row per communication recipient."),
+  query("Marketing", "Communication log events", "Communication log events", "Events associated with sent communications."),
+  bo("Marketing", "Source codes", "CsAppeal"),
+  query("Membership", "All active members", "All active members"),
+  query("Membership", "All non-members", "All non-members"),
+  query("Membership", "Automatic payment membership enrollments", "Automatic payment membership enrollments"),
+  bo("Membership", "Billing cycles", "BillingCycles"),
+  bo("Membership", "Billing fees", "BillingFees", ["BillToName", "Amount", "BillingCycleId", "BillingItemId", "BillingStatus"], "Membership billing fee rows."),
+  bo("Membership", "Billing logs", "BillingLogByParty", ["BillToName", "BillDate", "BillingCycle", "Amount", "Balance"], "Membership billing log rows by party."),
+  query("Membership", "Billing products", "Billing products"),
+  query("Membership", "Chapter memberships", "Chapter memberships"),
+  bo("Membership", "Chapters", "Chapter", ["ChapterName", "ProductCode", "ChapterCode"], "Membership chapter details."),
+  query("Membership", "Inactive members", "Inactive members"),
+  query("Membership", "Renewal invoices", "Renewal invoices"),
+  query("Membership", "Subscriptions", "Subscriptions"),
+  query("Scoring", "Current scores", "Current scores"),
+  bo("Scoring", "Engagement category", "EngagementCategory"),
+  bo("Scoring", "Engagement score formulas", "EngagementScoreFormula"),
+  query("Scoring", "Scores by month", "Scores by month"),
+  query("Scoring", "Scores by year", "Scores by year")
+];
+function searchIqaSurfaceCatalog(opts = {}) {
+  const terms = normalizeSearch(opts.search);
+  const category = opts.category?.toLowerCase();
+  const limit = opts.limit ?? 25;
+  return IQA_SURFACE_CATALOG.filter((entry) => !opts.kind || entry.kind === opts.kind).filter((entry) => !category || entry.category.toLowerCase() === category).map((entry) => ({ entry, score: scoreEntry(entry, terms) })).filter(({ score }) => terms.length === 0 || score > 0).sort(
+    (left, right) => right.score - left.score || left.entry.category.localeCompare(right.entry.category) || left.entry.name.localeCompare(right.entry.name)
+  ).slice(0, limit).map(({ entry }) => entry);
+}
+function iqaSurfaceCategories() {
+  return [...new Set(IQA_SURFACE_CATALOG.map((entry) => entry.category))].sort();
+}
+function normalizeSearch(search) {
+  return (search ?? "").toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+}
+function scoreEntry(entry, terms) {
+  if (terms.length === 0) return 1;
+  const haystack = [
+    entry.category,
+    entry.name,
+    entry.kind,
+    entry.source,
+    entry.description ?? "",
+    ...entry.keyFields ?? []
+  ].join(" ").toLowerCase();
+  return terms.reduce((score, term) => score + (haystack.includes(term) ? 1 : 0), 0);
+}
+
 // src/utils/logger.ts
 function createLogger(server) {
   const send = (level, message) => {
     const maybeServer = server;
-    maybeServer?.server?.sendLoggingMessage?.({ level, data: message });
+    try {
+      const result = maybeServer?.server?.sendLoggingMessage?.({ level, data: message });
+      void Promise.resolve(result).catch(() => {
+      });
+    } catch {
+    }
   };
   return {
     info(message, data) {
@@ -34974,13 +38586,13 @@ async function liveCheckIqaSurface(apiClient, entry) {
     }
   }
   try {
-    const response = await apiClient.get("DocumentSummary", {
+    const response2 = await apiClient.get("DocumentSummary", {
       Name: entry.source
     });
-    const candidates = extractValues2(response.Items).filter(
+    const candidates = extractValues2(response2.Items).filter(
       (candidate) => !!candidate && typeof candidate === "object"
     ).filter((candidate) => !candidate.DocumentTypeId || candidate.DocumentTypeId === "IQD").map((candidate) => {
-      const path3 = stringValue7(candidate.Path);
+      const path3 = stringValue10(candidate.Path);
       const isQuerySource = path3?.includes("/Query Sources/") ?? false;
       return {
         name: candidate.Name,
@@ -35026,30 +38638,30 @@ function extractValues2(value) {
   return [];
 }
 async function resolveIqaQueryCandidates(apiClient, name) {
-  const response = await apiClient.get("DocumentSummary", { Name: name });
-  return extractValues2(response.Items).filter(
+  const response2 = await apiClient.get("DocumentSummary", { Name: name });
+  return extractValues2(response2.Items).filter(
     (candidate) => !!candidate && typeof candidate === "object"
   ).filter((candidate) => !candidate.DocumentTypeId || candidate.DocumentTypeId === "IQD").map((candidate) => ({
-    name: stringValue7(candidate.Name),
-    path: stringValue7(candidate.Path),
-    documentId: stringValue7(candidate.DocumentId),
-    documentVersionId: stringValue7(candidate.DocumentVersionId),
-    documentTypeId: stringValue7(candidate.DocumentTypeId)
+    name: stringValue10(candidate.Name),
+    path: stringValue10(candidate.Path),
+    documentId: stringValue10(candidate.DocumentId),
+    documentVersionId: stringValue10(candidate.DocumentVersionId),
+    documentTypeId: stringValue10(candidate.DocumentTypeId)
   })).sort((left, right) => scoreIqaCandidate(right, name) - scoreIqaCandidate(left, name));
 }
 async function resolveIqaQueryByVersion(apiClient, documentVersionId) {
   try {
-    const response = await apiClient.get("DocumentSummary", {
+    const response2 = await apiClient.get("DocumentSummary", {
       DocumentVersionId: documentVersionId
     });
-    const candidate = extractValues2(response.Items).filter((item) => !!item && typeof item === "object").find((item) => !item.DocumentTypeId || item.DocumentTypeId === "IQD");
+    const candidate = extractValues2(response2.Items).filter((item) => !!item && typeof item === "object").find((item) => !item.DocumentTypeId || item.DocumentTypeId === "IQD");
     if (!candidate) return null;
     return {
-      name: stringValue7(candidate.Name),
-      path: stringValue7(candidate.Path),
-      documentId: stringValue7(candidate.DocumentId),
-      documentVersionId: stringValue7(candidate.DocumentVersionId) ?? documentVersionId,
-      documentTypeId: stringValue7(candidate.DocumentTypeId)
+      name: stringValue10(candidate.Name),
+      path: stringValue10(candidate.Path),
+      documentId: stringValue10(candidate.DocumentId),
+      documentVersionId: stringValue10(candidate.DocumentVersionId) ?? documentVersionId,
+      documentTypeId: stringValue10(candidate.DocumentTypeId)
     };
   } catch {
     return null;
@@ -35156,7 +38768,7 @@ function scoreIqaCandidate(candidate, requestedName) {
   if (candidate.path?.includes("/Query Sources/")) score += 2;
   return score;
 }
-function stringValue7(value) {
+function stringValue10(value) {
   return typeof value === "string" && value.trim() ? value.trim() : void 0;
 }
 function errorSummary(error2) {
@@ -35778,11 +39390,11 @@ function registerIqaTools(server, iqaService, apiClient) {
   );
   server.tool(
     "imis_iqd_query",
-    `Validate, assemble, or create iMIS IQD query definitions from a generic JSON query form. This is the guarded IQA write surface: callers provide source/column/filter/sort/display intent, while the MCP chooses the internal writer strategy, writes the IQD payload, validates the Document payload, resolves the created QueryDefinition, and previews created queries through /api/Query. Agents should fill in the query form; they should not choose internal writer strategies or reason about BinaryFormatter internals.`,
+    `Validate, assemble, or create iMIS IQD query definitions from a generic JSON query form. This is the guarded IQA write surface: callers provide source/column/filter/sort/display intent, while the MCP chooses the internal writer strategy, writes the IQD payload, validates the Document payload, resolves the created QueryDefinition, and previews created queries through /api/Query. IQD documents always live under the '$/' definition tree; '@/...' content folder inputs are canonicalized to the matching '$/...' IQD folder and missing definition folders are created before writing. Agents should fill in the query form; they should not choose internal writer strategies or reason about BinaryFormatter internals.`,
     {
       action: external_exports.enum(["capabilities", "validate", "assemble", "create"]).describe("capabilities lists the public query-form features currently supported; validate checks a design; assemble returns Document.Data without writing; create validates, posts, resolves, and previews."),
       design: external_exports.string().optional().describe(`JSON IQD query form. Required except for action=capabilities. Single-source shape: {"name":"QueryName","source":{"businessObject":"Contact"},"columns":[{"name":"ID","alias":"ID"}],"filters":[{"column":"FullName","compare":"contains","value":"Aad"}],"sorts":[{"column":"FullName","direction":"ascending"}],"templateHtml":"<strong>{#query.ID}</strong>"}. Columns may use physical fields or calculated expressions: {"expression":"CASE WHEN vBoCsContact.IsCompany = 1 THEN vBoCsContact.Company ELSE vBoCsContact.FullName END","alias":"DisplayName"}. Grouping uses column.subtotal=true; aggregates use aggregate='average'|'count'|'max'|'min'|'sum' or proven native numeric codes 0-5 only. Filter value accepts string/number/boolean literals; compare='in' and compare='between' accept value arrays. Supported compares include equal/equals, notEqual/notEquals, contains, notContain, startsWith, endsWith, empty, notEmpty, greaterThan, greaterThanOrEqual/greaterThanOrEquals, lessThan, lessThanOrEqual/lessThanOrEquals, in, between, withinDaysOfToday, withinMonthsOfToday, and withinYearsOfToday. The within*OfToday operators are native relative windows around @date; use 0 for the current day/month/year or a positive number to widen the relative window, and combine with >= @date or <= @date when a future-only or past-only bound is required. Prefer full ISO DateTime literals such as 2026-07-18T00:00:00; date-only range bounds are normalized internally to start/end-of-day. SQL expressions such as GETDATE()/DATEADD() are rejected in filters because the IQD graph stores filter values as literal/runtime values, not SQL; use column.expression for calculated display columns. Same-column range filters are represented as IQA filter sets internally by the MCP; explicit boolean sets can use filters with filterSet keys plus filterSets entries such as {"key":"either","isOr":true} or {"key":"notActive","isNot":true}. Multi-source shape uses sources with keys plus source references on columns/filters/sorts/relations. relationType supports equal/inner, exists, notExists, leftOuter, and crossJoin. templateHtml writes the IQA Template tab for Query Template Display iParts.`),
-      folderPath: external_exports.string().optional().describe("Target iMIS document folder for action=create, e.g. '$/Common/Queries/CodexRE'."),
+      folderPath: external_exports.string().optional().describe("Target iMIS definition-tree folder for action=create, e.g. '$/Common/Queries/CodexRE'. '@/...' content folder inputs are converted to matching '$/...' IQD definition folders."),
       previewParameters: external_exports.string().optional().describe(`JSON object of runtime prompt values to use for create preview, e.g. '{"EventCode":"ANNCONF"}'. For IQD allowMultiple prompts, pass a quoted CSV string such as '{"Status":"\\"I\\",\\"D\\""}' rather than repeated array values.`),
       limit: external_exports.number().min(1).max(25).optional().describe("Preview row limit for action=create.")
     },
@@ -35908,7 +39520,7 @@ function registerPanelTools(server, apiClient) {
 }
 
 // src/tools/content-tools.ts
-import { randomUUID as randomUUID3 } from "crypto";
+import { randomUUID as randomUUID4 } from "crypto";
 
 // src/services/content-backup.service.ts
 import { createHash as createHash3 } from "crypto";
@@ -35954,12 +39566,12 @@ async function createContentBackupFromDocuments(apiClient, documentsToCapture, o
     seen.add(documentId);
     documents.push({
       documentId,
-      path: stringValue8(doc.Path),
-      name: stringValue8(doc.Name),
-      title: stringValue8(doc.AlternateName),
-      documentTypeId: stringValue8(doc.DocumentTypeId),
-      documentVersionId: stringValue8(doc.DocumentVersionId) ?? stringValue8(doc.DocumentVersionKey),
-      status: stringValue8(doc.Status),
+      path: stringValue11(doc.Path),
+      name: stringValue11(doc.Name),
+      title: stringValue11(doc.AlternateName),
+      documentTypeId: stringValue11(doc.DocumentTypeId),
+      documentVersionId: stringValue11(doc.DocumentVersionId) ?? stringValue11(doc.DocumentVersionKey),
+      status: stringValue11(doc.Status),
       dataHash: doc.Data ? shortHash(doc.Data) : void 0,
       capturedAt,
       document: doc
@@ -36121,7 +39733,7 @@ function stableHash(value) {
 function shortHash(value) {
   return stableHash(value).slice(0, 12);
 }
-function stringValue8(value) {
+function stringValue11(value) {
   if (value === void 0 || value === null || value === "") return void 0;
   return String(value);
 }
@@ -36317,7 +39929,7 @@ async function readContentFolderAssignments(apiClient, contentFolders, concurren
         const xml = decodeDocumentDataBlob(doc.Data);
         const defaultWebsiteKey = normalizeWebsiteKey(extractXmlText(xml, "DefaultWebsiteKey"));
         const additionalWebsiteKeys = extractWebsiteKeyList(xml);
-        const websiteKeys = uniqueStrings2([defaultWebsiteKey, ...additionalWebsiteKeys], 20);
+        const websiteKeys = uniqueStrings3([defaultWebsiteKey, ...additionalWebsiteKeys], 20);
         if (websiteKeys.length === 0) return void 0;
         return {
           path: path3,
@@ -36364,10 +39976,10 @@ async function readNavigationRecords(opts) {
         const xml = decodeDocumentDataBlob(navDoc.Data);
         const navigation = extractNavigationXmlSummary(xml);
         const target = navigation.targetUrl || navigation.postPublishUrl || "";
-        const targetSummary = target.startsWith("@/") ? opts.contentSummariesByPath.get(target) : void 0;
+        const targetSummary2 = target.startsWith("@/") ? opts.contentSummariesByPath.get(target) : void 0;
         const assignment = target.startsWith("@/") ? findNearestContentFolderAssignment(
           target,
-          recordString(targetSummary, "FolderPath"),
+          recordString(targetSummary2, "FolderPath"),
           opts.contentFolderAssignments
         ) : void 0;
         const websiteKeys = assignment?.websiteKeys ?? [];
@@ -36381,10 +39993,10 @@ async function readNavigationRecords(opts) {
           isUnauthenticatedOnly: xmlBoolean(navigation.isUnauthenticatedOnly, false),
           target,
           targetPublicUrl: targetToPublicUrl(target, opts.publicBaseUrl),
-          targetDocumentId: recordString(targetSummary, "DocumentId"),
-          targetDocumentVersionId: recordString(targetSummary, "DocumentVersionId") ?? recordString(targetSummary, "DocumentVersionKey"),
-          targetStatus: recordString(targetSummary, "Status"),
-          targetFolderPath: recordString(targetSummary, "FolderPath"),
+          targetDocumentId: recordString(targetSummary2, "DocumentId"),
+          targetDocumentVersionId: recordString(targetSummary2, "DocumentVersionId") ?? recordString(targetSummary2, "DocumentVersionKey"),
+          targetStatus: recordString(targetSummary2, "Status"),
+          targetFolderPath: recordString(targetSummary2, "FolderPath"),
           assignedContentFolder: assignment?.path,
           websiteKeys,
           perspectiveNames: perspectiveNamesForKeys(opts.perspectives, websiteKeys),
@@ -36500,8 +40112,8 @@ function toSitemapScope(group, opts) {
       untargeted: group.records.filter((record2) => !record2.target).length,
       contentRoots: contentRoots.length
     },
-    sampleNavigationPaths: uniqueStrings2(group.records.map((record2) => record2.navigationPath), 10),
-    sampleUrls: uniqueStrings2(
+    sampleNavigationPaths: uniqueStrings3(group.records.map((record2) => record2.navigationPath), 10),
+    sampleUrls: uniqueStrings3(
       group.records.map((record2) => record2.targetPublicUrl ?? navigationPathToPublicUrl(record2.navigationPath, opts.publicBaseUrl)),
       10
     ),
@@ -36536,7 +40148,7 @@ function resolveSiteFilter(perspectives, options) {
 }
 function contentRootsForScope(group, assignments) {
   const roots = group.websiteKey ? assignments.filter((assignment) => assignment.websiteKeys.includes(group.websiteKey ?? "")).map((assignment) => assignment.path) : group.records.map((record2) => record2.assignedContentFolder);
-  return reduceToRootPaths(uniqueStrings2(roots, 500));
+  return reduceToRootPaths(uniqueStrings3(roots, 500));
 }
 function findNearestContentFolderAssignment(contentPath, contentFolderPath, assignments) {
   const candidates = /* @__PURE__ */ new Set();
@@ -36636,7 +40248,7 @@ function countBy(values) {
   }
   return [...counts.entries()].sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0])).map(([value, count]) => ({ value, count }));
 }
-function uniqueStrings2(values, limit) {
+function uniqueStrings3(values, limit) {
   const seen = /* @__PURE__ */ new Set();
   const result = [];
   for (const value of values) {
@@ -37025,6 +40637,462 @@ function buildRenderedPageAuditScript(waitMs) {
 `;
 }
 
+// src/services/native-staff-save.service.ts
+var DEFAULT_NAVIGATION_WAIT_MS = 1500;
+var DEFAULT_STEP_WAIT_MS = 500;
+var NativeStaffSaveService = class {
+  constructor(companion) {
+    this.companion = companion;
+  }
+  async run(url, steps) {
+    await this.companion.navigate(url);
+    await delay2(DEFAULT_NAVIGATION_WAIT_MS);
+    const stepResults = [];
+    for (const step of steps) {
+      const result = await this.companion.executeJs(step.script);
+      if (isFailedStepResult(result)) {
+        throw new Error(`Native Staff Save step "${step.label}" failed: ${JSON.stringify(result)}`);
+      }
+      stepResults.push({ label: step.label, result });
+      await delay2(step.waitAfterMs ?? DEFAULT_STEP_WAIT_MS);
+    }
+    return {
+      method: "companion_native_staff_form",
+      url,
+      stepResults
+    };
+  }
+};
+function delay2(ms) {
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
+}
+function isFailedStepResult(value) {
+  return Boolean(
+    value && typeof value === "object" && "ok" in value && value.ok === false
+  );
+}
+
+// src/services/automatic-payment-settings.service.ts
+var COMMERCE_SETTINGS_ID = "0";
+var PAY_CENTRAL_SETTINGS_PATH = "/iCore/System_Settings/Finance/Pay-Central-settings.aspx";
+var AutomaticPaymentSettingsService = class {
+  constructor(apiClient, companion) {
+    this.apiClient = apiClient;
+    this.companion = companion;
+  }
+  async read() {
+    const current = await this.readSettings();
+    return {
+      version: "automatic-payment-settings.v2",
+      mode: "read",
+      commerceSettingsId: COMMERCE_SETTINGS_ID,
+      current: automaticPaymentSettingsSummary(current),
+      nativeStaffSave: this.nativeStaffSaveInfo(),
+      boundary: "This reads iMIS CommerceSettings automatic-payment switches only; it does not create mandates, capture cards, submit donations, or collect AutoPay invoices."
+    };
+  }
+  async preview(input) {
+    const current = await this.readSettings();
+    const target = buildTargetSettings(input);
+    const body = applyTargetSettings(current, target);
+    const hasChanges = Object.keys(target).length > 0;
+    let validation;
+    if (hasChanges) {
+      const result = await this.apiClient.post("CommerceSettings/_validate", body);
+      validation = {
+        status: "accepted",
+        responseType: recordValue2(result)?.$type
+      };
+    }
+    return {
+      version: "automatic-payment-settings.v2",
+      mode: "preview",
+      commerceSettingsId: COMMERCE_SETTINGS_ID,
+      current: automaticPaymentSettingsSummary(current),
+      requestedTarget: targetSummary(target),
+      confirmationText: hasChanges ? automaticPaymentSettingsConfirmation(target) : void 0,
+      validation,
+      validationBodyShape: hasChanges ? {
+        endpoint: "POST CommerceSettings/_validate",
+        usesExistingSettingsAsBase: true,
+        values: targetSummary(target)
+      } : void 0,
+      nativeStaffSave: this.nativeStaffSaveInfo(input.staffSettingsUrl),
+      verificationRequired: [
+        "Validate the CommerceSettings shape before submit.",
+        "Submit must use the native Staff Pay Central settings Save path when a companion browser is connected.",
+        "Read CommerceSettings/0 after native Save; enabled recurring donations must read back AllowAutomaticFundraisingPayments=1 or 2, with 2 meaning recurring by default.",
+        "Do not use REST PUT CommerceSettings as persistence proof; live evidence showed it can echo automatic-payment values without durable readback."
+      ],
+      boundary: "This configures the tenant switch that allows native iMIS/Pay Central recurring flows. It does not enroll a donor/member, create AutoPay accounts or instructions, capture cards, or move money."
+    };
+  }
+  async submit(input) {
+    const preview = await this.preview(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${String(preview.confirmationText ?? "")}`);
+    }
+    const target = buildTargetSettings(input);
+    if (Object.keys(target).length === 0) {
+      throw new Error("At least one automatic-payment setting must be requested for submit.");
+    }
+    const current = await this.readSettings();
+    const body = applyTargetSettings(current, target);
+    await this.apiClient.post("CommerceSettings/_validate", body);
+    if (!this.companion?.isConnected()) {
+      return this.nativeSaveRequiredResult(input, target, current);
+    }
+    const staffSettingsUrl = await this.resolveNativeStaffSettingsUrl(input.staffSettingsUrl);
+    const nativeSave = await new NativeStaffSaveService(this.companion).run(
+      staffSettingsUrl,
+      buildNativeSaveSteps(target)
+    );
+    const after = await this.readSettings();
+    const readback = automaticPaymentSettingsSummary(after);
+    const readbackMatchedTarget = targetMatchesSummary(target, readback);
+    if (!readbackMatchedTarget) {
+      throw new Error(
+        `Native Staff Save completed, but CommerceSettings/0 did not read back the requested target: ${JSON.stringify({ requestedTarget: targetSummary(target), readback })}`
+      );
+    }
+    return {
+      version: "automatic-payment-settings.v2",
+      mode: "submitted",
+      commerceSettingsId: COMMERCE_SETTINGS_ID,
+      confirmationText: input.confirmationText,
+      requestedTarget: targetSummary(target),
+      previous: automaticPaymentSettingsSummary(current),
+      nativeSave,
+      readback,
+      proof: {
+        validateAccepted: true,
+        nativeStaffSaveCompleted: true,
+        readbackMatchedTarget,
+        restPutUsed: false,
+        durableWriteSource: "native_staff_pay_central_settings_save"
+      },
+      boundary: "Automatic-payment settings were saved through the native Staff Pay Central settings form and verified through CommerceSettings/0 readback. This still does not create a donor/member enrollment, AutoPay mandate, invoice, payment, or collection."
+    };
+  }
+  async readSettings() {
+    return recordValue2(await this.apiClient.get(`CommerceSettings/${COMMERCE_SETTINGS_ID}`)) ?? {};
+  }
+  async resolveNativeStaffSettingsUrl(explicitUrl) {
+    if (explicitUrl?.trim()) return explicitUrl.trim();
+    const currentUrl = await this.companion?.executeJs("(() => window.location.href)()").catch(() => void 0);
+    if (typeof currentUrl === "string" && isPayCentralSettingsUrl(currentUrl)) {
+      return currentUrl;
+    }
+    return defaultPayCentralSettingsUrl(this.apiClient);
+  }
+  nativeStaffSaveInfo(explicitUrl) {
+    const fallbackUrl = explicitUrl?.trim() || defaultPayCentralSettingsUrl(this.apiClient);
+    return {
+      requiredForSubmit: true,
+      companionConnected: this.companion?.isConnected() === true,
+      route: fallbackUrl,
+      routeNote: "If iMIS requires WebsiteKey/hkey parameters, open Staff > Finance > Pay Central settings > Automatic payments and pass that current URL as staffSettingsUrl, or run from a connected companion browser already on that page.",
+      restPutBoundary: "REST PUT CommerceSettings is intentionally not used for submit because live proof showed it can echo automatic-payment values without persisting them."
+    };
+  }
+  nativeSaveRequiredResult(input, target, current) {
+    return {
+      version: "automatic-payment-settings.v2",
+      mode: "native_save_required",
+      canProceed: false,
+      commerceSettingsId: COMMERCE_SETTINGS_ID,
+      requestedTarget: targetSummary(target),
+      current: automaticPaymentSettingsSummary(current),
+      nativeStaffSave: this.nativeStaffSaveInfo(input.staffSettingsUrl),
+      operatorSteps: describeNativeSaveSteps(target),
+      proof: {
+        validateAccepted: true,
+        nativeStaffSaveCompleted: false,
+        restPutUsed: false,
+        readbackMatchedTarget: false
+      },
+      reason: "The requested setting shape validates, but durable persistence for these Pay Central automatic-payment switches is the native Staff Save path. Connect the AgentZ companion browser on the Pay Central settings page or provide staffSettingsUrl, then retry submit.",
+      boundary: "No configuration write was claimed. The tool did not use the false-positive REST PUT fallback."
+    };
+  }
+};
+function buildTargetSettings(input) {
+  const target = {};
+  if (input.recurringDonations) {
+    const mode = normalizeRecurringMode(input.recurringDonations);
+    target.AllowAutomaticFundraisingPayments = recurringDonationModeValue(mode);
+    if (mode !== "disabled") {
+      target.AllowDonorChangeDonationAmount = input.allowDonorChangeDonationAmount ?? true;
+    } else if (input.allowDonorChangeDonationAmount !== void 0) {
+      target.AllowDonorChangeDonationAmount = input.allowDonorChangeDonationAmount;
+    }
+  } else if (input.allowDonorChangeDonationAmount !== void 0) {
+    target.AllowDonorChangeDonationAmount = input.allowDonorChangeDonationAmount;
+  }
+  if (input.autoRenewingMemberships) {
+    target.AllowAutomaticSubscriptionPayments = autoRenewingMembershipModeValue(
+      normalizeAutoRenewingMembershipMode(input.autoRenewingMemberships)
+    );
+  }
+  return target;
+}
+function applyTargetSettings(current, target) {
+  return {
+    ...current,
+    ...target
+  };
+}
+function normalizeRecurringMode(mode) {
+  return mode === "enabled" ? "enabled_by_default" : mode;
+}
+function normalizeAutoRenewingMembershipMode(mode) {
+  return mode === "enabled" ? "enabled_by_default" : mode;
+}
+function recurringDonationModeValue(mode) {
+  if (mode === "disabled") return 0;
+  if (mode === "enabled_optional") return 1;
+  return 2;
+}
+function autoRenewingMembershipModeValue(mode) {
+  if (mode === "disabled") return 0;
+  if (mode === "enabled_optional") return 1;
+  if (mode === "required") return 3;
+  return 2;
+}
+function automaticPaymentSettingsConfirmation(target) {
+  const parts = [];
+  if ("AllowAutomaticFundraisingPayments" in target) {
+    parts.push(`recurringDonations=${stateFromAutomaticPaymentValue(target.AllowAutomaticFundraisingPayments)}`);
+  }
+  if ("AllowDonorChangeDonationAmount" in target) {
+    parts.push(`allowDonorChangeDonationAmount=${String(target.AllowDonorChangeDonationAmount)}`);
+  }
+  if ("AllowAutomaticSubscriptionPayments" in target) {
+    parts.push(`autoRenewingMemberships=${stateFromAutomaticPaymentValue(target.AllowAutomaticSubscriptionPayments)}`);
+  }
+  return `Update iMIS automatic payment settings via native Staff Save: ${parts.join("; ")}`;
+}
+function automaticPaymentSettingsSummary(settings) {
+  return {
+    recurringDonations: stateFromAutomaticPaymentValue(settings.AllowAutomaticFundraisingPayments),
+    autoRenewingMemberships: stateFromAutomaticPaymentValue(settings.AllowAutomaticSubscriptionPayments),
+    allowAutomaticFundraisingPayments: settings.AllowAutomaticFundraisingPayments,
+    allowAutomaticFundraisingPaymentsReturned: settings.AllowAutomaticFundraisingPayments !== void 0,
+    allowAutomaticSubscriptionPayments: settings.AllowAutomaticSubscriptionPayments,
+    allowAutomaticSubscriptionPaymentsReturned: settings.AllowAutomaticSubscriptionPayments !== void 0,
+    donationAllowCustomCollectionDate: settings.DonationAllowCustomCollectionDate,
+    donationCollectionDateWindow: settings.DonationCollectionDateWindow,
+    allowDonorChangeDonationAmount: settings.AllowDonorChangeDonationAmount,
+    autoPayEnrollmentTextPresent: typeof settings.AutoPayEnrollmentText === "string" && settings.AutoPayEnrollmentText.trim().length > 0,
+    defaultCurrency: recordValue2(settings.DefaultCurrency),
+    saveOneTimePaymentMethodsEnabled: settings.SaveOneTimePaymentMethodsEnabled
+  };
+}
+function targetSummary(target) {
+  return {
+    ...target.AllowAutomaticFundraisingPayments !== void 0 ? { recurringDonations: stateFromAutomaticPaymentValue(target.AllowAutomaticFundraisingPayments) } : {},
+    ...target.AllowDonorChangeDonationAmount !== void 0 ? { allowDonorChangeDonationAmount: target.AllowDonorChangeDonationAmount } : {},
+    ...target.AllowAutomaticSubscriptionPayments !== void 0 ? { autoRenewingMemberships: stateFromAutomaticPaymentValue(target.AllowAutomaticSubscriptionPayments) } : {}
+  };
+}
+function targetMatchesSummary(target, summary) {
+  if (target.AllowAutomaticFundraisingPayments !== void 0 && summary.recurringDonations !== stateFromAutomaticPaymentValue(target.AllowAutomaticFundraisingPayments)) {
+    return false;
+  }
+  if (target.AllowDonorChangeDonationAmount !== void 0 && summary.allowDonorChangeDonationAmount !== target.AllowDonorChangeDonationAmount) {
+    return false;
+  }
+  if (target.AllowAutomaticSubscriptionPayments !== void 0 && summary.autoRenewingMemberships !== stateFromAutomaticPaymentValue(target.AllowAutomaticSubscriptionPayments)) {
+    return false;
+  }
+  return true;
+}
+function stateFromAutomaticPaymentValue(value) {
+  const primitive = typeof value === "object" && value !== null && "$value" in value ? value.$value : value;
+  const text = typeof primitive === "string" ? primitive.trim().toLowerCase() : void 0;
+  if (primitive === void 0 || primitive === null || primitive === false || primitive === 0 || primitive === "0" || text === "" || text === "disabled" || text === "false") {
+    return "disabled";
+  }
+  if (primitive === true || primitive === 1 || primitive === "1" || text === "enabled" || text === "optional") {
+    return "enabled_optional";
+  }
+  if (primitive === 2 || primitive === "2" || text === "enabled_by_default" || text === "default" || text === "recurringbydefault") {
+    return "enabled_by_default";
+  }
+  if (primitive === 3 || primitive === "3" || text === "required") return "required";
+  return "unclassified";
+}
+function buildNativeSaveSteps(target) {
+  const steps = [{
+    label: "select-automatic-payments-tab",
+    script: buildSelectAutomaticPaymentsTabScript(),
+    waitAfterMs: 2500
+  }];
+  if ("AllowAutomaticFundraisingPayments" in target) {
+    steps.push({
+      label: "set-recurring-donations-section",
+      script: buildTopLevelCheckboxScript(
+        "AllowUsersCreateRecurringDonations",
+        stateFromAutomaticPaymentValue(target.AllowAutomaticFundraisingPayments) !== "disabled"
+      ),
+      waitAfterMs: 2200
+    });
+  }
+  if ("AllowAutomaticSubscriptionPayments" in target) {
+    steps.push({
+      label: "set-auto-renewing-memberships-section",
+      script: buildTopLevelCheckboxScript(
+        "AllowUsersCreateRenewingMemberships",
+        stateFromAutomaticPaymentValue(target.AllowAutomaticSubscriptionPayments) !== "disabled"
+      ),
+      waitAfterMs: 2200
+    });
+  }
+  steps.push({
+    label: "set-options-and-save",
+    script: buildFinalSaveScript(target),
+    waitAfterMs: 3e3
+  });
+  return steps;
+}
+function buildSelectAutomaticPaymentsTabScript() {
+  return `(() => {
+  function hasControl() {
+    return Array.from(document.querySelectorAll("input")).some((el) =>
+      el.id.endsWith("AllowUsersCreateRecurringDonations") ||
+      el.name.endsWith("AllowUsersCreateRecurringDonations") ||
+      el.id.endsWith("AllowUsersCreateRenewingMemberships") ||
+      el.name.endsWith("AllowUsersCreateRenewingMemberships")
+    );
+  }
+  if (hasControl()) return { ok: true, alreadySelected: true, controlsPresent: true };
+
+  function labelOf(el) {
+    return [
+      el.textContent,
+      el.getAttribute("aria-label"),
+      el.getAttribute("title"),
+      el.getAttribute("value"),
+    ].filter(Boolean).join(" ").replace(/\\s+/g, " ").trim();
+  }
+
+  const candidates = Array.from(document.querySelectorAll("a, button, input, [role='tab'], li, span, div"))
+    .map((el) => ({
+      el,
+      label: labelOf(el),
+      visible: Boolean(el.offsetWidth || el.offsetHeight || el.getClientRects().length),
+      tabLike: Boolean(
+        el.getAttribute("role") === "tab" ||
+        String(el.className || "").includes("rts") ||
+        el.closest("[role='tab'], .rtsLI, .rtsLink")
+      ),
+    }))
+    .filter((candidate) => candidate.visible && /automatic\\s+payments/i.test(candidate.label));
+  if (candidates.length === 0) {
+    return {
+      ok: false,
+      error: "automatic_payments_tab_not_found",
+      title: document.title,
+      url: window.location.href,
+    };
+  }
+
+  candidates.sort((a, b) => Number(b.tabLike) - Number(a.tabLike) || a.label.length - b.label.length);
+  const selected = candidates[0];
+  const clickable = selected.el.closest("a, button, [role='tab'], .rtsLink, .rtsLI") || selected.el;
+  clickable.click();
+  return {
+    ok: true,
+    clicked: true,
+    label: selected.label,
+    url: window.location.href,
+    controlsPresentBeforeClick: false,
+  };
+})()`;
+}
+function buildTopLevelCheckboxScript(suffix, desired) {
+  return `(() => {
+  const suffix = ${JSON.stringify(suffix)};
+  const desired = ${JSON.stringify(desired)};
+  const input = Array.from(document.querySelectorAll("input")).find((el) => el.id.endsWith(suffix) || el.name.endsWith(suffix));
+  if (!input) return { ok: false, error: "missing_control", suffix };
+  const checked = Boolean(input.checked);
+  if (checked === desired) return { ok: true, changed: false, suffix, checked };
+  input.click();
+  return { ok: true, changed: true, suffix, checked: desired };
+})()`;
+}
+function buildFinalSaveScript(target) {
+  const recurringState = target.AllowAutomaticFundraisingPayments === void 0 ? void 0 : stateFromAutomaticPaymentValue(target.AllowAutomaticFundraisingPayments);
+  const membershipState = target.AllowAutomaticSubscriptionPayments === void 0 ? void 0 : stateFromAutomaticPaymentValue(target.AllowAutomaticSubscriptionPayments);
+  const payload = {
+    recurringState,
+    membershipState,
+    allowDonorChangeDonationAmount: target.AllowDonorChangeDonationAmount
+  };
+  return `(() => {
+  const desired = ${JSON.stringify(payload)};
+  function input(suffix) {
+    return Array.from(document.querySelectorAll("input")).find((el) => el.id.endsWith(suffix) || el.name.endsWith(suffix));
+  }
+  function setCheckbox(suffix, checked, required) {
+    const el = input(suffix);
+    if (!el) return { suffix, missing: true, required };
+    el.disabled = false;
+    if (Boolean(el.checked) !== checked) {
+      el.checked = checked;
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    return { suffix, checked: Boolean(el.checked), required };
+  }
+  const changes = [];
+  if (desired.recurringState) {
+    const recurringEnabled = desired.recurringState !== "disabled";
+    changes.push(setCheckbox("AllowUsersCreateRecurringDonations", recurringEnabled, true));
+    if (recurringEnabled) {
+      changes.push(setCheckbox("DefaultToRecurring", desired.recurringState === "enabled_by_default", true));
+      if (typeof desired.allowDonorChangeDonationAmount === "boolean") {
+        changes.push(setCheckbox("AllowDonorsChangeAmount", desired.allowDonorChangeDonationAmount, false));
+      }
+    }
+  }
+  if (desired.membershipState) {
+    const membershipEnabled = desired.membershipState !== "disabled";
+    changes.push(setCheckbox("AllowUsersCreateRenewingMemberships", membershipEnabled, true));
+    if (membershipEnabled) {
+      changes.push(setCheckbox("DefaultAutoRenew", desired.membershipState === "enabled_by_default" || desired.membershipState === "required", true));
+      changes.push(setCheckbox("RequiredAutoRenew", desired.membershipState === "required", false));
+    }
+  }
+  const missingRequired = changes.filter((change) => change.required && change.missing);
+  if (missingRequired.length > 0) return { ok: false, error: "missing_required_controls", changes };
+  const save = document.querySelector("#ctl01_SaveButton, input[name='ctl01$SaveButton'][value='Save']");
+  if (!save) return { ok: false, error: "missing_save_button", changes };
+  save.disabled = false;
+  save.click();
+  return { ok: true, saved: true, changes };
+})()`;
+}
+function describeNativeSaveSteps(target) {
+  const summary = targetSummary(target);
+  return [
+    "Open iMIS Staff > Finance > Pay Central settings > Automatic payments.",
+    `Set the automatic-payment controls to: ${JSON.stringify(summary)}.`,
+    "Click the native iMIS Save button.",
+    "Rerun imis_automatic_payment_settings action=read and verify CommerceSettings/0 readback matches the requested target."
+  ];
+}
+function defaultPayCentralSettingsUrl(apiClient) {
+  return `${apiClient.activeInstance.baseUrl.replace(/\/+$/, "")}${PAY_CENTRAL_SETTINGS_PATH}`;
+}
+function isPayCentralSettingsUrl(url) {
+  return /\/iCore\/System_Settings\/Finance\/Pay-Central-settings\.aspx/i.test(url);
+}
+function recordValue2(value) {
+  return typeof value === "object" && value !== null ? value : void 0;
+}
+
 // src/types/intervention.ts
 function buildHierarchyPlacementIntervention(opts) {
   return {
@@ -37122,6 +41190,9 @@ var QUERY_MENU_CONTENT_TYPE_PATH = "$/ContentManagement/DefaultSystem/ContentTyp
 var QUERY_CHART_VIEWER_CONTENT_TYPE_PATH = "$/ContentManagement/DefaultSystem/ContentTypes/Utility/Query Chart Viewer";
 var CONTENT_COLLECTION_ORGANIZER_CONTENT_TYPE_PATH = "$/ContentManagement/DefaultSystem/ContentTypes/Common/Content Collection Organizer";
 var CONTENT_BIG_BUTTON_PANEL_CONTENT_TYPE_PATH = "$/ContentManagement/DefaultSystem/ContentTypes/Content/Big Button Panel";
+var OPEN_CREDIT_DISPLAY_CONTENT_TYPE_PATH = "$/ContentManagement/DefaultSystem/ContentTypes/Finance/Open Credit Display";
+var CART_CHECKOUT_LAYOUT_PATH = "$/ContentManagement/DefaultSystem/ContentLayouts/CartDisplay66-33";
+var DONATION_PAGE_LAYOUT_PATH = "$/ContentManagement/DefaultSystem/ContentLayouts/TwoColumns3366";
 var NATIVE_STAFF_DASHBOARD_LAYOUT_PATH = "$/ContentManagement/DefaultSystem/ContentLayouts/FourOverTwoOverOne-OneRight-TwoBreakpoints";
 var NATIVE_COMMUNICATIONS_DASHBOARD_LAYOUT_PATH = "$/ContentManagement/DefaultSystem/ContentLayouts/OneOverFourOverTwo75-25OverTwo50-50OverOne-TwoBreakpoints";
 var SINGLE_COLUMN_LAYOUT_PATH = "$/ContentManagement/DefaultSystem/ContentLayouts/SingleColumn";
@@ -37240,6 +41311,16 @@ var IPART_REGISTRY = {
     namespace: "http://schemas.datacontract.org/2004/07/Asi.Web.iParts.Commerce.PromotionManager",
     hasCommonBase: true,
     description: "Promo code / coupon entry field"
+  },
+  OpenCreditDisplay: {
+    namespace: "http://schemas.datacontract.org/2004/07/Asi.Web.iParts.Commerce.OpenCreditDisplay",
+    hasCommonBase: true,
+    description: "Available open credit selector/display for checkout"
+  },
+  OrderConfirmationDisplay: {
+    namespace: "http://schemas.datacontract.org/2004/07/Asi.Web.iParts.Commerce.OrderConfirmationDisplay",
+    hasCommonBase: false,
+    description: "Order confirmation display driven by an OrderKey URL parameter"
   },
   // ── Contact Management iParts ──
   ContactSignIn: {
@@ -37783,7 +41864,7 @@ function extractContentItemsXml(dataXml) {
   if (match) return match[0];
   return "(no ContentItems section found \u2014 not a content record)";
 }
-function buildContentHtmlIpartXml(contentKey, html, zone, order, title, cssClass, stylesheet) {
+function buildContentHtmlIpartXml(contentKey, html, zone, order, title, cssClass, stylesheet, showTitle) {
   const key = generateGuid();
   const name = title || "HTML Content";
   let rawHtml = html.trim();
@@ -37802,8 +41883,8 @@ ${rawHtml}` : rawHtml;
     `<a:ContentKey>${contentKey}</a:ContentKey>`,
     `<a:ContentTypeKey>${EMPTY_GUID2}</a:ContentTypeKey>`,
     `<a:IconUrl>~/AsiCommon/Images/icon_con_html.gif</a:IconUrl>`,
-    `<a:LayoutZone>${zone}</a:LayoutZone>`,
-    `<a:ShowTitleFlag>${title ? "true" : "false"}</a:ShowTitleFlag>`,
+    `<a:LayoutZone>${escapeXml(zone)}</a:LayoutZone>`,
+    `<a:ShowTitleFlag>${boolXml(showTitle ?? Boolean(title))}</a:ShowTitleFlag>`,
     `<a:SortOrder>${order}</a:SortOrder>`,
     `<b:Body>${bodyXml}</b:Body>`,
     cssClass ? `<b:CssClass>${escapeXml(cssClass)}</b:CssClass>` : `<b:CssClass i:nil="true"/>`,
@@ -37811,6 +41892,26 @@ ${rawHtml}` : rawHtml;
     `<b:Mode>Advanced</b:Mode>`,
     `<b:ShowBorder>false</b:ShowBorder>`,
     `</a:ContentItem>`
+  ].join("");
+}
+function buildIpartCommonBaseXml(opts = {}) {
+  const ns = "http://schemas.imis.com/2008/01/DataContracts/iPartCommonBase";
+  return [
+    `<Collapsed xmlns="${ns}">${boolXml(opts.collapsed ?? false)}</Collapsed>`,
+    `<Collapsible xmlns="${ns}">${boolXml(opts.collapsible ?? false)}</Collapsible>`,
+    opts.cssClass != null ? `<CssClass xmlns="${ns}">${escapeXml(opts.cssClass)}</CssClass>` : `<CssClass i:nil="true" xmlns="${ns}"/>`,
+    `<DisplayOnExtraSmallScreens xmlns="${ns}">${boolXml(opts.displayOnExtraSmallScreens ?? true)}</DisplayOnExtraSmallScreens>`,
+    `<DisplayOnLargeScreens xmlns="${ns}">${boolXml(opts.displayOnLargeScreens ?? true)}</DisplayOnLargeScreens>`,
+    `<DisplayOnMediumScreens xmlns="${ns}">${boolXml(opts.displayOnMediumScreens ?? true)}</DisplayOnMediumScreens>`,
+    `<DisplayOnSmallScreens xmlns="${ns}">${boolXml(opts.displayOnSmallScreens ?? true)}</DisplayOnSmallScreens>`,
+    `<DoNotRenderInDesignMode xmlns="${ns}">${boolXml(opts.doNotRenderInDesignMode ?? false)}</DoNotRenderInDesignMode>`,
+    `<FeatureDialogUrl i:nil="true" xmlns="${ns}"/>`,
+    `<LicenseKeyRestriction i:nil="true" xmlns="${ns}"/>`,
+    `<ModuleSpecificSetting i:nil="true" xmlns="${ns}"/>`,
+    `<PartDescription i:nil="true" xmlns="${ns}"/>`,
+    opts.partTitle ? `<PartTitle xmlns="${ns}">${escapeXml(opts.partTitle)}</PartTitle>` : `<PartTitle i:nil="true" xmlns="${ns}"/>`,
+    `<PartTitleHeadingLevel xmlns="${ns}">${opts.partTitleHeadingLevel ?? 2}</PartTitleHeadingLevel>`,
+    `<ShowBorder xmlns="${ns}">${boolXml(opts.showBorder ?? false)}</ShowBorder>`
   ].join("");
 }
 function buildTypedIpartXml(opts) {
@@ -37835,45 +41936,18 @@ function buildTypedIpartXml(opts) {
     `<a:ContentItemKey>${key}</a:ContentItemKey>`,
     `<a:ContentItemName>${escapeXml(name)}</a:ContentItemName>`,
     `<a:ContentKey>${opts.contentKey}</a:ContentKey>`,
-    `<a:ContentTypeKey>${opts.contentTypeKey ?? EMPTY_GUID2}</a:ContentTypeKey>`,
+    `<a:ContentTypeKey>${escapeXml(opts.contentTypeKey ?? EMPTY_GUID2)}</a:ContentTypeKey>`,
     `<a:IconUrl i:nil="true"/>`,
-    `<a:LayoutZone>${opts.zone}</a:LayoutZone>`,
+    `<a:LayoutZone>${escapeXml(opts.zone)}</a:LayoutZone>`,
     `<a:ShowTitleFlag>${opts.partTitle ? "true" : "false"}</a:ShowTitleFlag>`,
     `<a:SortOrder>${opts.order}</a:SortOrder>`
   );
   if (typeInfo.hasCommonBase) {
-    const ns = "http://schemas.imis.com/2008/01/DataContracts/iPartCommonBase";
-    parts.push(
-      `<Collapsed xmlns="${ns}">false</Collapsed>`,
-      `<Collapsible xmlns="${ns}">false</Collapsible>`
-    );
-    if (opts.cssClass != null) {
-      parts.push(`<CssClass xmlns="${ns}">${escapeXml(opts.cssClass)}</CssClass>`);
-    } else {
-      parts.push(`<CssClass i:nil="true" xmlns="${ns}"/>`);
-    }
-    parts.push(
-      `<DisplayOnExtraSmallScreens xmlns="${ns}">true</DisplayOnExtraSmallScreens>`,
-      `<DisplayOnLargeScreens xmlns="${ns}">true</DisplayOnLargeScreens>`,
-      `<DisplayOnMediumScreens xmlns="${ns}">true</DisplayOnMediumScreens>`,
-      `<DisplayOnSmallScreens xmlns="${ns}">true</DisplayOnSmallScreens>`,
-      `<DoNotRenderInDesignMode xmlns="${ns}">false</DoNotRenderInDesignMode>`,
-      `<FeatureDialogUrl i:nil="true" xmlns="${ns}"/>`
-    );
-    parts.push(
-      `<LicenseKeyRestriction i:nil="true" xmlns="${ns}"/>`,
-      `<ModuleSpecificSetting i:nil="true" xmlns="${ns}"/>`,
-      `<PartDescription i:nil="true" xmlns="${ns}"/>`
-    );
-    if (opts.partTitle) {
-      parts.push(`<PartTitle xmlns="${ns}">${escapeXml(opts.partTitle)}</PartTitle>`);
-    } else {
-      parts.push(`<PartTitle i:nil="true" xmlns="${ns}"/>`);
-    }
-    parts.push(
-      `<PartTitleHeadingLevel xmlns="${ns}">2</PartTitleHeadingLevel>`,
-      `<ShowBorder xmlns="${ns}">${opts.showBorder ? "true" : "false"}</ShowBorder>`
-    );
+    parts.push(buildIpartCommonBaseXml({
+      cssClass: opts.cssClass,
+      partTitle: opts.partTitle,
+      showBorder: opts.showBorder
+    }));
   }
   let typeElems = opts.typeElements.trim();
   if (typeElems.startsWith("<![CDATA[") && typeElems.endsWith("]]>")) {
@@ -38035,6 +42109,472 @@ function buildContentBigButtonPanelElements(opts) {
     `<b:UsePopup>${boolXml(opts.usePopup ?? false)}</b:UsePopup>`
   ].join("");
 }
+function buildNativeIpartXml(contentKey, contract) {
+  if (contract.typeName === "ContentHtml") {
+    return buildContentHtmlIpartXml(
+      contentKey,
+      contract.html ?? "",
+      contract.layoutZone,
+      contract.sortOrder,
+      contract.name,
+      contract.cssClass,
+      contract.stylesheet,
+      contract.showTitle
+    );
+  }
+  if (contract.useTypedBuilder) {
+    return buildTypedIpartXml({
+      typeName: contract.typeName,
+      contentKey,
+      contentTypeKey: contract.contentTypeKey,
+      zone: contract.layoutZone,
+      order: contract.sortOrder,
+      name: contract.name,
+      typeElements: contract.bodyXml,
+      cssClass: contract.cssClass,
+      partTitle: contract.partTitle,
+      showBorder: contract.showBorder
+    });
+  }
+  const typeInfo = IPART_REGISTRY[contract.typeName];
+  const wcfTypeName = typeInfo?.typeName ?? contract.typeName;
+  return [
+    `<a:ContentItem i:type="b:${wcfTypeName}" xmlns:b="${contract.namespace}">`,
+    `<StatusEvent i:nil="true" xmlns="http://schemas.datacontract.org/2004/07/Asi.Atom"/>`,
+    `<mStateParameters xmlns="http://schemas.datacontract.org/2004/07/Asi.Atom" xmlns:c="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>`,
+    `<a:ContentItemKey>${generateGuid()}</a:ContentItemKey>`,
+    `<a:ContentItemName>${escapeXml(contract.name)}</a:ContentItemName>`,
+    `<a:ContentKey>${escapeXml(contentKey)}</a:ContentKey>`,
+    `<a:ContentTypeKey>${escapeXml(contract.contentTypeKey ?? EMPTY_GUID2)}</a:ContentTypeKey>`,
+    contract.iconUrl ? `<a:IconUrl>${escapeXml(contract.iconUrl)}</a:IconUrl>` : `<a:IconUrl i:nil="true"/>`,
+    `<a:LayoutZone>${escapeXml(contract.layoutZone)}</a:LayoutZone>`,
+    `<a:ShowTitleFlag>${boolXml(contract.showTitle ?? false)}</a:ShowTitleFlag>`,
+    `<a:SortOrder>${contract.sortOrder}</a:SortOrder>`,
+    contract.bodyXml,
+    `</a:ContentItem>`
+  ].join("");
+}
+function buildCheckoutCartContracts(opts) {
+  const itemDetailContentKey = opts.itemDetailContentKey ?? EMPTY_GUID2;
+  const eventDetailContentKey = opts.eventDetailContentKey ?? EMPTY_GUID2;
+  const productDetailContentKey = opts.productDetailContentKey ?? EMPTY_GUID2;
+  const contracts = [
+    {
+      typeName: "ContinueShoppingButtonLink",
+      namespace: IPART_REGISTRY.ContinueShoppingButtonLink.namespace,
+      name: "Continue Shopping Button",
+      layoutZone: "1",
+      sortOrder: 1,
+      bodyXml: [
+        `<b:ContinueShoppingUrl>${escapeXml(opts.continueShoppingUrl)}</b:ContinueShoppingUrl>`,
+        `<b:DisplayButtonInline>true</b:DisplayButtonInline>`,
+        `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+        `<b:PageTitle>Cart</b:PageTitle>`,
+        `<b:ShowBorder>false</b:ShowBorder>`
+      ].join("")
+    },
+    {
+      typeName: "CartDetailsDisplay",
+      namespace: IPART_REGISTRY.CartDetailsDisplay.namespace,
+      name: "Shopping Cart",
+      layoutZone: "1",
+      sortOrder: 2,
+      bodyXml: [
+        `<b:DisplayImage>true</b:DisplayImage>`,
+        `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+        `<b:ItemDetailContent>${escapeXml(itemDetailContentKey)}</b:ItemDetailContent>`,
+        `<b:EmptyCartMessage i:nil="true"/>`,
+        `<b:EventDetailContent>${escapeXml(eventDetailContentKey)}</b:EventDetailContent>`,
+        `<b:ImageSize>50</b:ImageSize>`,
+        `<b:PageTitle i:nil="true"/>`,
+        `<b:ProductDetailContent>${escapeXml(productDetailContentKey)}</b:ProductDetailContent>`,
+        `<b:ShowBorder>false</b:ShowBorder>`
+      ].join("")
+    }
+  ];
+  if (opts.includePromotionCode !== false) {
+    contracts.push({
+      typeName: "PromotionManager",
+      namespace: IPART_REGISTRY.PromotionManager.namespace,
+      name: "PromotionManagerCommon",
+      layoutZone: "1",
+      sortOrder: 3,
+      bodyXml: buildIpartCommonBaseXml({
+        collapsed: true,
+        collapsible: true,
+        cssClass: "PromotionManager",
+        partTitle: "Promotion code",
+        showBorder: false
+      })
+    });
+  }
+  if (opts.includeSignIn !== false) {
+    contracts.push({
+      typeName: "ContactSignIn",
+      namespace: IPART_REGISTRY.ContactSignIn.namespace,
+      name: "New ContactSignInCommon",
+      layoutZone: "1",
+      sortOrder: 4,
+      bodyXml: [
+        `<b:CreateAccountLink>Create a new account</b:CreateAccountLink>`,
+        `<b:DisplayCreateAccount>true</b:DisplayCreateAccount>`,
+        `<b:DisplayForgotPassword>true</b:DisplayForgotPassword>`,
+        `<b:DisplayForgotUserId>true</b:DisplayForgotUserId>`,
+        `<b:DisplaySignInFailedMessageLocal>false</b:DisplaySignInFailedMessageLocal>`,
+        `<b:ForgotPasswordMessage>Enter the Username for your user account, then click Submit. We will email you a link to a page where you can easily create a new password.</b:ForgotPasswordMessage>`,
+        `<b:ForgotUserIdMessage>Enter the email associated with your account, then click Submit. We will email your username to the email address specified.</b:ForgotUserIdMessage>`,
+        `<b:SignInFailedMessageLocal>The username or password you entered is incorrect.</b:SignInFailedMessageLocal>`
+      ].join("")
+    });
+  }
+  if (opts.includeAutoPayPrompt !== false) {
+    contracts.push({
+      typeName: "AutoPayInstructionCreator",
+      namespace: IPART_REGISTRY.AutoPayInstructionCreator.namespace,
+      name: "New AutoPayInstructionCreatorCommon",
+      layoutZone: "1",
+      sortOrder: 5,
+      bodyXml: [
+        `<b:CommitSequence>0</b:CommitSequence>`,
+        `<b:MakeRecurringTextNo>No, this is a one time gift</b:MakeRecurringTextNo>`,
+        `<b:MakeRecurringTextYes>Yes, please make this a recurring gift</b:MakeRecurringTextYes>`
+      ].join("")
+    });
+  }
+  contracts.push({
+    typeName: "ShippingMethodSelector",
+    namespace: IPART_REGISTRY.ShippingMethodSelector.namespace,
+    name: "Shipping Method",
+    layoutZone: "1",
+    sortOrder: 6,
+    bodyXml: [
+      `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+      buildIpartCommonBaseXml({ partTitle: "Shipping details", showBorder: false }),
+      `<b:PageTitle>Shipping details</b:PageTitle>`,
+      `<b:ShowBorder>false</b:ShowBorder>`
+    ].join("")
+  });
+  if (opts.includeOpenCredit !== false) {
+    contracts.push({
+      typeName: "OpenCreditDisplay",
+      namespace: IPART_REGISTRY.OpenCreditDisplay.namespace,
+      name: "OpenCreditDisplayCommon",
+      contentTypeKey: opts.openCreditContentTypeKey ?? EMPTY_GUID2,
+      layoutZone: "1",
+      sortOrder: 7,
+      bodyXml: buildIpartCommonBaseXml({ showBorder: false })
+    });
+  }
+  contracts.push(
+    {
+      typeName: "PaymentCreator",
+      namespace: IPART_REGISTRY.PaymentCreator.namespace,
+      name: "Payment Details",
+      layoutZone: "1",
+      sortOrder: 8,
+      bodyXml: [
+        `<b:CommitSequence>0</b:CommitSequence>`,
+        `<b:DisplayUpdate>false</b:DisplayUpdate>`,
+        `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+        `<b:PageTitle>Payment details</b:PageTitle>`,
+        `<b:PaymentPurpose i:nil="true"/>`,
+        `<b:PurchaseOrderNumberRequired>true</b:PurchaseOrderNumberRequired>`,
+        `<b:ShowBorder>false</b:ShowBorder>`
+      ].join("")
+    },
+    {
+      typeName: "CartChargesDisplay",
+      namespace: IPART_REGISTRY.CartChargesDisplay.namespace,
+      name: "Order summary",
+      layoutZone: "2",
+      sortOrder: 1,
+      bodyXml: [
+        `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+        buildIpartCommonBaseXml({ partTitle: "Order summary", showBorder: false }),
+        `<b:PageTitle>Order summary</b:PageTitle>`,
+        `<b:ShowBorder>false</b:ShowBorder>`
+      ].join("")
+    },
+    {
+      typeName: "SubmitOrderButtonLink",
+      namespace: IPART_REGISTRY.SubmitOrderButtonLink.namespace,
+      name: "New SubmitOrderButtonLinkCommon",
+      layoutZone: "3",
+      sortOrder: 1,
+      bodyXml: [
+        `<b:CommitSequence>0</b:CommitSequence>`,
+        `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+        `<b:HorizontalAlignment>Left</b:HorizontalAlignment>`,
+        `<b:OrderConfirmationContentKey>${escapeXml(opts.orderConfirmationContentKey ?? EMPTY_GUID2)}</b:OrderConfirmationContentKey>`,
+        `<b:OrderConfirmationUrl>${escapeXml(opts.orderConfirmationUrl)}</b:OrderConfirmationUrl>`,
+        `<b:OrderPurpose i:nil="true"/>`,
+        `<b:PageTitle i:nil="true"/>`,
+        `<b:PromptUnauthenticatedUsers>false</b:PromptUnauthenticatedUsers>`,
+        `<b:ShowBorder>false</b:ShowBorder>`
+      ].join("")
+    }
+  );
+  return contracts;
+}
+function buildRecurringDonationContracts(opts) {
+  const contracts = [
+    {
+      typeName: "ContentHtml",
+      namespace: IPART_REGISTRY.ContentHtml.namespace,
+      name: "Gift details",
+      layoutZone: "2",
+      sortOrder: 1,
+      showTitle: false,
+      html: opts.introHtml?.trim() || "<h1>Give Now</h1><p>Your donation is put to use immediately.</p><h2>Gift details</h2>",
+      bodyXml: ""
+    },
+    {
+      typeName: "RecurringDonationCreator",
+      namespace: IPART_REGISTRY.RecurringDonationCreator.namespace,
+      name: "Recurring donation",
+      layoutZone: "2",
+      sortOrder: 2,
+      useTypedBuilder: true,
+      cssClass: "iPartChain MiddlePart",
+      showBorder: false,
+      bodyXml: [
+        `<b:AllowUserToSpecifyFrequency>false</b:AllowUserToSpecifyFrequency>`,
+        `<b:CommitSequence>3</b:CommitSequence>`,
+        `<b:FixedAnnualFrequency>false</b:FixedAnnualFrequency>`,
+        `<b:GiftFrequencyMessage>Select gift frequency</b:GiftFrequencyMessage>`,
+        `<b:MakeRecurringTextNo>One-time</b:MakeRecurringTextNo>`,
+        `<b:MakeRecurringTextYes>Recurring</b:MakeRecurringTextYes>`,
+        `<b:RecurrentGiftFrequency>AllowUserToSpecifyFrequency</b:RecurrentGiftFrequency>`
+      ].join("")
+    },
+    {
+      typeName: "DonationCreator",
+      namespace: IPART_REGISTRY.DonationCreator.namespace,
+      name: "Donation details",
+      layoutZone: "2",
+      sortOrder: 3,
+      useTypedBuilder: true,
+      cssClass: "iPartChain MiddlePart",
+      showBorder: false,
+      bodyXml: [
+        `<b:AddToCartButtonLocation>InPanel</b:AddToCartButtonLocation>`,
+        `<b:AllowSoftCreditAssignment>false</b:AllowSoftCreditAssignment>`,
+        `<b:ChooseNoPremium>true</b:ChooseNoPremium>`,
+        `<b:CommitSequence>2</b:CommitSequence>`,
+        `<b:DisplayImage>false</b:DisplayImage>`,
+        `<b:DisplayItemDescription>true</b:DisplayItemDescription>`,
+        `<b:DisplayPremiums>false</b:DisplayPremiums>`,
+        `<b:DistributionMode>SelectFromList</b:DistributionMode>`,
+        `<b:DistributionValue>${escapeXml(opts.giftItemId)}</b:DistributionValue>`,
+        `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+        `<b:GiftArrayIQAQueryPath/>`,
+        `<b:ImageSize>0</b:ImageSize>`,
+        `<b:ItemAddedLabel i:nil="true"/>`,
+        `<b:NoPremiumDescription>I would like the entire amount of my contribution to benefit the organization.</b:NoPremiumDescription>`,
+        `<b:NoPremiumTitle>No thank you gift</b:NoPremiumTitle>`,
+        `<b:PageTitle i:nil="true"/>`,
+        `<b:PaymentTermOption>None</b:PaymentTermOption>`,
+        `<b:PaymentTermOptionsValue i:nil="true"/>`,
+        `<b:PremiumDisplayMode>EnterAmountFirst</b:PremiumDisplayMode>`,
+        `<b:PremiumGiftAmountLabel>Gift Amount</b:PremiumGiftAmountLabel>`,
+        `<b:PremiumSectionTitle>Select a thank you gift</b:PremiumSectionTitle>`,
+        `<b:ProcessingMode>GiveNGo</b:ProcessingMode>`,
+        `<b:ShowBorder>false</b:ShowBorder>`
+      ].join("")
+    }
+  ];
+  if (opts.includeTribute !== false) {
+    contracts.push({
+      typeName: "TributeGiftEditorCommon",
+      namespace: IPART_REGISTRY.TributeGiftEditorCommon.namespace,
+      name: "Tribute gift",
+      layoutZone: "2",
+      sortOrder: 4,
+      useTypedBuilder: true,
+      cssClass: "iPartChain LastPart",
+      showBorder: false,
+      bodyXml: [
+        `<b:CommitSequence>4</b:CommitSequence>`,
+        `<b:CreateAddressPurpose>Address</b:CreateAddressPurpose>`,
+        `<b:HonoreeQueryKey>${EMPTY_GUID2}</b:HonoreeQueryKey>`,
+        `<b:HonoreeQueryPath/>`,
+        `<b:IncludeAddress_x0020_>true</b:IncludeAddress_x0020_>`,
+        `<b:IncludeEmailForIndividual_x0020__x0020_>true</b:IncludeEmailForIndividual_x0020__x0020_>`,
+        `<b:MultipleAddressLines>true</b:MultipleAddressLines>`,
+        `<b:RequireAddress>false</b:RequireAddress>`,
+        `<b:RequireEmailForIndividual_x0020_>false</b:RequireEmailForIndividual_x0020_>`,
+        `<b:ShowNotifyDetails>true</b:ShowNotifyDetails>`,
+        `<b:ShowNotifyText> Notify the following person about my gift</b:ShowNotifyText>`
+      ].join("")
+    });
+  }
+  if (opts.includeGuestAccountCreator !== false) {
+    contracts.push(
+      {
+        typeName: "ContentHtml",
+        namespace: IPART_REGISTRY.ContentHtml.namespace,
+        name: "Personal details heading",
+        layoutZone: "2",
+        sortOrder: 5,
+        showTitle: false,
+        html: `<h2 class="AddPaddingHorizontal">Personal details</h2>`,
+        bodyXml: ""
+      },
+      {
+        typeName: "ContactAccountCreator",
+        namespace: IPART_REGISTRY.ContactAccountCreator.namespace,
+        name: "Donation contact",
+        layoutZone: "2",
+        sortOrder: 6,
+        useTypedBuilder: true,
+        cssClass: "iPartChain MiddlePart",
+        showBorder: false,
+        bodyXml: [
+          `<b:AccountTypeAllowed>IndividualOnly</b:AccountTypeAllowed>`,
+          `<b:AddNewContactToHousehold>false</b:AddNewContactToHousehold>`,
+          `<b:AssignCompanyAdministrator>false</b:AssignCompanyAdministrator>`,
+          `<b:AutomaticRolesForNewHousehold/>`,
+          `<b:AvailableRolesToAssign/>`,
+          `<b:ClubListQueryPath i:nil="true"/>`,
+          `<b:ClubListWithIdQueryPath i:nil="true"/>`,
+          `<b:CommitSequence>1</b:CommitSequence>`,
+          `<b:CopyHouseholdAddress>false</b:CopyHouseholdAddress>`,
+          `<b:CreateAddressPurpose>Address</b:CreateAddressPurpose>`,
+          `<b:DisplaySelectedHousehold>false</b:DisplaySelectedHousehold>`,
+          `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+          `<b:DonateAsSomeoneElseMessage>Donate as someone else.</b:DonateAsSomeoneElseMessage>`,
+          `<b:GivingAsMessage>You are giving as [MaskedEmail].</b:GivingAsMessage>`,
+          `<b:HideForAuthenticatedUsers>true</b:HideForAuthenticatedUsers>`,
+          `<b:HouseholdOption/>`,
+          `<b:IncludeAddress>true</b:IncludeAddress>`,
+          `<b:IncludeDesignation>false</b:IncludeDesignation>`,
+          `<b:IncludeEmail>true</b:IncludeEmail>`,
+          `<b:IncludeEmailForIndividual>true</b:IncludeEmailForIndividual>`,
+          `<b:IncludeHouseholdGroupIdAsQueryStringParameter>false</b:IncludeHouseholdGroupIdAsQueryStringParameter>`,
+          `<b:IncludeHouseholdRoleSelect>false</b:IncludeHouseholdRoleSelect>`,
+          `<b:IncludeIdAsQuerystringParameter>false</b:IncludeIdAsQuerystringParameter>`,
+          `<b:IncludeInformalName>false</b:IncludeInformalName>`,
+          `<b:IncludeLogOnLink>true</b:IncludeLogOnLink>`,
+          `<b:IncludeMiddleName>false</b:IncludeMiddleName>`,
+          `<b:IncludeMobilePhone>false</b:IncludeMobilePhone>`,
+          `<b:IncludeOptionToCreateLogon>true</b:IncludeOptionToCreateLogon>`,
+          `<b:IncludePhone>false</b:IncludePhone>`,
+          `<b:IncludePrefix>false</b:IncludePrefix>`,
+          `<b:IncludePrimaryClubSelection>false</b:IncludePrimaryClubSelection>`,
+          `<b:IncludePrimaryOrganizationSelection>false</b:IncludePrimaryOrganizationSelection>`,
+          `<b:IncludeSocialMediaSignupOption>false</b:IncludeSocialMediaSignupOption>`,
+          `<b:IncludeSuffix>false</b:IncludeSuffix>`,
+          `<b:IncludeTitle>false</b:IncludeTitle>`,
+          `<b:InspectUrlForToken>false</b:InspectUrlForToken>`,
+          `<b:MultipleAddressLines>true</b:MultipleAddressLines>`,
+          `<b:NoEmailDuplicates>true</b:NoEmailDuplicates>`,
+          `<b:OrganizationListQueryPath i:nil="true"/>`,
+          `<b:OrganizationListWithIdQueryPath i:nil="true"/>`,
+          `<b:PageTitle i:nil="true"/>`,
+          `<b:RedirectLocation>DoNotRedirect</b:RedirectLocation>`,
+          `<b:RequireAddress>true</b:RequireAddress>`,
+          `<b:RequireAddress2>true</b:RequireAddress2>`,
+          `<b:RequireEmail>true</b:RequireEmail>`,
+          `<b:RequireEmailForIndividual>true</b:RequireEmailForIndividual>`,
+          `<b:RequireMobilePhone>false</b:RequireMobilePhone>`,
+          `<b:RequirePrimaryClubSelection>false</b:RequirePrimaryClubSelection>`,
+          `<b:RequirePrimaryOrganizationSelection>false</b:RequirePrimaryOrganizationSelection>`,
+          `<b:RequireUserToCreateLogon>true</b:RequireUserToCreateLogon>`,
+          `<b:RoleLabelText/>`,
+          `<b:ShowBorder>false</b:ShowBorder>`,
+          `<b:SingleTextAddress>false</b:SingleTextAddress>`,
+          `<b:SpecifyOrgType i:nil="true"/>`,
+          `<b:UrlRedirect/>`,
+          `<b:UseEmailAsLogon>true</b:UseEmailAsLogon>`,
+          `<b:ValidateAddress>false</b:ValidateAddress>`
+        ].join("")
+      }
+    );
+  }
+  if (opts.includeDisplayName !== false) {
+    contracts.push({
+      typeName: "DisplayNameEditorCommon",
+      namespace: IPART_REGISTRY.DisplayNameEditorCommon.namespace,
+      name: "Recognition name",
+      layoutZone: "2",
+      sortOrder: 7,
+      useTypedBuilder: true,
+      cssClass: "iPartChain LastPart",
+      showBorder: false,
+      bodyXml: [
+        `<b:AnonCheckboxText>Make my gift anonymous</b:AnonCheckboxText>`,
+        `<b:CommitSequence>3</b:CommitSequence>`,
+        `<b:DisplayForAuthorizedUsersOnly>true</b:DisplayForAuthorizedUsersOnly>`,
+        `<b:LabelText>Recognition name</b:LabelText>`,
+        `<b:SalutationType>LIST_AS</b:SalutationType>`
+      ].join("")
+    });
+  }
+  contracts.push(
+    {
+      typeName: "PaymentCreator",
+      namespace: IPART_REGISTRY.PaymentCreator.namespace,
+      name: "Donation payment details",
+      layoutZone: "2",
+      sortOrder: 8,
+      useTypedBuilder: true,
+      showBorder: false,
+      bodyXml: [
+        `<b:CommitSequence>5</b:CommitSequence>`,
+        `<b:DisplayUpdate>false</b:DisplayUpdate>`,
+        `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+        `<b:PageTitle>Payment details</b:PageTitle>`,
+        `<b:PaymentPurpose>Donation</b:PaymentPurpose>`,
+        `<b:PurchaseOrderNumberRequired>true</b:PurchaseOrderNumberRequired>`,
+        `<b:ShowBorder>false</b:ShowBorder>`
+      ].join("")
+    },
+    {
+      typeName: "SubmitOrderButtonLink",
+      namespace: IPART_REGISTRY.SubmitOrderButtonLink.namespace,
+      name: "Submit donation",
+      layoutZone: "2",
+      sortOrder: 9,
+      useTypedBuilder: true,
+      showBorder: false,
+      bodyXml: [
+        `<b:CommitSequence>6</b:CommitSequence>`,
+        `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+        `<b:OrderConfirmationContentKey>${escapeXml(opts.orderConfirmationContentKey ?? EMPTY_GUID2)}</b:OrderConfirmationContentKey>`,
+        `<b:OrderConfirmationUrl>${escapeXml(opts.orderConfirmationUrl)}</b:OrderConfirmationUrl>`,
+        `<b:OrderPurpose>Donation</b:OrderPurpose>`,
+        `<b:PageTitle i:nil="true"/>`,
+        `<b:PromptUnauthenticatedUsers>true</b:PromptUnauthenticatedUsers>`,
+        `<b:ShowBorder>false</b:ShowBorder>`
+      ].join("")
+    }
+  );
+  return contracts;
+}
+function buildOrderConfirmationContracts() {
+  return [{
+    typeName: "OrderConfirmationDisplay",
+    namespace: IPART_REGISTRY.OrderConfirmationDisplay.namespace,
+    name: "Order Confirmation",
+    layoutZone: "1",
+    sortOrder: 1,
+    bodyXml: [
+      `<b:DoNotRenderInDesignMode>false</b:DoNotRenderInDesignMode>`,
+      `<b:PageTitle>Order confirmation</b:PageTitle>`,
+      `<b:ShowBorder>true</b:ShowBorder>`,
+      `<b:UrlParameterName>OrderKey</b:UrlParameterName>`
+    ].join("")
+  }];
+}
+function nativeIpartContractSummary(contract) {
+  return {
+    type: contract.typeName,
+    name: contract.name,
+    contentTypeKey: contract.contentTypeKey ?? EMPTY_GUID2,
+    layoutZone: contract.layoutZone,
+    sortOrder: contract.sortOrder
+  };
+}
 function optionalBElement(name, value) {
   if (value === void 0) return `<b:${name} i:nil="true"/>`;
   if (value === "") return `<b:${name}/>`;
@@ -38052,8 +42592,8 @@ function documentSummaryItems3(summary) {
     (item) => !!item && typeof item === "object"
   );
 }
-function joinNavigationPath(parentPath, folderName) {
-  const parent = normalizeNavigationPath(parentPath);
+function joinNavigationPath(parentPath2, folderName) {
+  const parent = normalizeNavigationPath(parentPath2);
   return parent === "~" ? `~/${folderName}` : `${parent}/${folderName}`;
 }
 function safeNavigationFolderName(linkText) {
@@ -38307,8 +42847,8 @@ function buildDashboardShellStyles() {
     `.ifinity-dashboard-shell__sections{font-size:13px;color:#5a6778;margin-top:10px}`
   ].join("\n");
 }
-function isDirectNavigationChild(path3, parentPath) {
-  const parent = normalizeNavigationPath(parentPath);
+function isDirectNavigationChild(path3, parentPath2) {
+  const parent = normalizeNavigationPath(parentPath2);
   if (parent === "~") {
     if (!path3.startsWith("~/")) return false;
     return !path3.slice(2).includes("/");
@@ -38488,8 +43028,8 @@ function navigationDocumentSummary(doc) {
     documentCode: doc.DocumentCode
   };
 }
-function navigationDocumentCreatePath(parentPath) {
-  const normalized = normalizeNavigationPath(parentPath);
+function navigationDocumentCreatePath(parentPath2) {
+  const normalized = normalizeNavigationPath(parentPath2);
   return normalized.endsWith("/") ? normalized : `${normalized}/`;
 }
 function summarizeApiFailure(error2) {
@@ -38538,7 +43078,7 @@ async function attemptRestNavigationHierarchyAttach(apiClient, opts) {
     (max, child) => Math.max(max, Number(genericPropertyValue(child, "SortOrder") ?? 0)),
     0
   );
-  const hierarchyKey = randomUUID3();
+  const hierarchyKey = randomUUID4();
   const updateInfo = createdDoc.UpdateInfo;
   const updatedBy = String(updateInfo?.UpdatedBy ?? "") || String(updateInfo?.CreatedBy ?? "") || EMPTY_GUID2;
   const body = genericEntity("DocumentHierarchy", hierarchyKey, [
@@ -38563,13 +43103,13 @@ async function attemptRestNavigationHierarchyAttach(apiClient, opts) {
     genericProperty("AccessKey", String(createdDoc.AccessId ?? EMPTY_GUID2), "System.Guid")
   ]);
   const validation = await apiClient.post("DocumentHierarchy/_validate", body);
-  const validationErrors = validationErrorValues(validation);
-  if (validationErrors.length > 0) {
+  const validationErrors4 = validationErrorValues(validation);
+  if (validationErrors4.length > 0) {
     return {
       attempted: true,
       state: "validation_failed",
       validation,
-      validationErrors,
+      validationErrors: validationErrors4,
       proposedHierarchyKey: hierarchyKey,
       proposedSortOrder: maxSortOrder + 48
     };
@@ -38737,8 +43277,8 @@ function xmlBoolean2(value, defaultValue) {
   if (normalized === "false") return false;
   return defaultValue;
 }
-function navigationDescendantDepth(path3, parentPath) {
-  const parent = normalizeNavigationPath(parentPath);
+function navigationDescendantDepth(path3, parentPath2) {
+  const parent = normalizeNavigationPath(parentPath2);
   if (path3 === parent) return void 0;
   if (parent === "~") {
     if (!path3.startsWith("~/")) return void 0;
@@ -38805,7 +43345,7 @@ async function fetchPublicPageCheck(url, timeoutMs) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(url, {
+    const response2 = await fetch(url, {
       redirect: "follow",
       signal: controller.signal,
       headers: {
@@ -38813,10 +43353,10 @@ async function fetchPublicPageCheck(url, timeoutMs) {
         "Accept": "text/html,application/xhtml+xml"
       }
     });
-    const contentType = response.headers.get("content-type") ?? void 0;
-    const finalUrl = response.url || url;
+    const contentType = response2.headers.get("content-type") ?? void 0;
+    const finalUrl = response2.url || url;
     const isHtml = !contentType || /html|xhtml/i.test(contentType);
-    const html = isHtml ? await response.text() : "";
+    const html = isHtml ? await response2.text() : "";
     const title = stripHtml(extractHtmlTagText(html, "title"));
     const metaDescription = findHtmlMeta(html, "description");
     const h1 = extractHtmlTagText(html, "h1");
@@ -38827,8 +43367,8 @@ async function fetchPublicPageCheck(url, timeoutMs) {
     const withoutIssues = {
       url,
       finalUrl,
-      status: response.status,
-      ok: response.ok,
+      status: response2.status,
+      ok: response2.ok,
       contentType,
       title,
       metaDescription,
@@ -39021,6 +43561,20 @@ function extractIpartSummaries(contentItemsXml) {
   }
   return summaries;
 }
+function compactIpartSummaries(iparts) {
+  return iparts.map((ipart) => ({
+    type: ipart.type,
+    contentItemKey: ipart.contentItemKey,
+    name: ipart.name,
+    contentTypeKey: ipart.contentTypeKey,
+    layoutZone: ipart.layoutZone,
+    sortOrder: ipart.sortOrder,
+    showTitle: ipart.showTitle,
+    cssClass: ipart.cssClass,
+    duplicateDirectElementNames: ipart.duplicateDirectElementNames,
+    typeSpecificElementNames: ipart.typeSpecificElementNames
+  }));
+}
 function summarizeContentLayout(dataXml, iparts) {
   const layoutDocumentVersionKey = extractXmlText2(dataXml, "LayoutDocumentVersionKey") ?? EMPTY_GUID2;
   const hasLayout = !!layoutDocumentVersionKey && layoutDocumentVersionKey !== EMPTY_GUID2;
@@ -39095,14 +43649,14 @@ function duplicateTypedIpartNames(iparts) {
   return [...counts.values()].filter((entry) => entry.count > 1).sort((left, right) => `${left.type}:${left.name}`.localeCompare(`${right.type}:${right.name}`));
 }
 function duplicateDirectIpartElementNames(contentItemBody) {
-  const names = extractDirectChildElements(contentItemBody).map((element) => element.match(/^<([\w:]+)/)?.[1]).filter((name) => !!name).map((name) => name.replace(/^[^:]+:/, ""));
+  const names = extractDirectChildElements(contentItemBody).map((element2) => element2.match(/^<([\w:]+)/)?.[1]).filter((name) => !!name).map((name) => name.replace(/^[^:]+:/, ""));
   return [...new Set(names.filter((name, index) => names.indexOf(name) !== index))].sort();
 }
 function extractTypeSpecificXml(contentItemBody) {
-  return extractDirectChildElements(contentItemBody).filter((element) => element.startsWith("<b:")).join("");
+  return extractDirectChildElements(contentItemBody).filter((element2) => element2.startsWith("<b:")).join("");
 }
 function extractElementNames(xml) {
-  return extractDirectChildElements(xml).map((element) => element.match(/^<([\w:]+)/)?.[1]).filter((name) => !!name);
+  return extractDirectChildElements(xml).map((element2) => element2.match(/^<([\w:]+)/)?.[1]).filter((name) => !!name);
 }
 function extractDirectChildElements(xml) {
   const elements = [];
@@ -39253,7 +43807,7 @@ function registerContentTools(server, apiClient, companion) {
     const key = String(match?.WebsiteId ?? match?.WebsiteKey ?? "");
     return key || void 0;
   }
-  function extractValidationErrors(validation) {
+  function extractValidationErrors2(validation) {
     const validationResults = validation?.ValidationResults;
     return validationResults?.Errors ?? validationResults?.Errors?.$values ?? [];
   }
@@ -39295,7 +43849,7 @@ function registerContentTools(server, apiClient, companion) {
     };
     if (opts.description) body.Description = opts.description;
     const validation = await apiClient.post("Document/_validate", body);
-    const errors = extractValidationErrors(validation);
+    const errors = extractValidationErrors2(validation);
     if (errors.length > 0) {
       throw new Error(`Dashboard page validation failed:
 ${JSON.stringify(errors, null, 2)}`);
@@ -39352,7 +43906,7 @@ ${JSON.stringify(errors, null, 2)}`);
     };
     if (opts.description) body.Description = opts.description;
     const validation = await apiClient.post("Document/_validate", body);
-    const errors = extractValidationErrors(validation);
+    const errors = extractValidationErrors2(validation);
     if (errors.length > 0) {
       throw new Error(`Content layout validation failed:
 ${JSON.stringify(errors, null, 2)}`);
@@ -39414,6 +43968,34 @@ ${JSON.stringify(errors, null, 2)}`);
     const summary = await findDocumentSummaryByPath2(apiClient, path3).catch(() => void 0);
     const key = String(summary?.DocumentVersionId ?? summary?.DocumentVersionKey ?? "");
     return key || fallback;
+  }
+  async function readAutoPayDonationSettings() {
+    try {
+      const settings = await apiClient.get("CommerceSettings/0");
+      const fundraisingValue = settings.AllowAutomaticFundraisingPayments;
+      const subscriptionValue = settings.AllowAutomaticSubscriptionPayments;
+      const fundraisingState = stateFromAutomaticPaymentValue(fundraisingValue);
+      const subscriptionState = stateFromAutomaticPaymentValue(subscriptionValue);
+      const fundraisingEnabled = fundraisingState === "enabled_optional" || fundraisingState === "enabled_by_default" || fundraisingState === "required";
+      return {
+        status: "read",
+        recurringDonationSetting: fundraisingState,
+        autoRenewingMembershipSetting: subscriptionState,
+        allowAutomaticFundraisingPayments: fundraisingValue,
+        allowAutomaticSubscriptionPayments: subscriptionValue,
+        donationAllowCustomCollectionDate: settings.DonationAllowCustomCollectionDate,
+        donationCollectionDateWindow: settings.DonationCollectionDateWindow,
+        allowDonorChangeDonationAmount: settings.AllowDonorChangeDonationAmount,
+        autoPayEnrollmentTextPresent: typeof settings.AutoPayEnrollmentText === "string" && settings.AutoPayEnrollmentText.trim().length > 0,
+        note: fundraisingEnabled ? "CommerceSettings/0 readback exposes recurring donations as enabled." : "CommerceSettings/0 readback does not expose recurring donations as enabled. The page assembler can still create the native page, but live enrollment requires the tenant setting to be saved in iMIS."
+      };
+    } catch (error2) {
+      return {
+        status: "read_failed",
+        recurringDonationSetting: "unknown",
+        error: error2 instanceof Error ? error2.message : String(error2)
+      };
+    }
   }
   async function resolveDashboardLayoutKey(page) {
     if (page.layoutDocumentVersionKey) return page.layoutDocumentVersionKey;
@@ -39490,12 +44072,12 @@ ${JSON.stringify(errors, null, 2)}`);
       const type = ipart.type ?? "html";
       const zone = ipart.layoutZone ?? "1";
       const order = ipart.sortOrder ?? index + 1;
-      let element;
+      let element2;
       let sourceKey;
       let contentTypeKey;
       if (type === "html") {
         if (!ipart.html) throw new Error(`Dashboard iPart ${index + 1} on '${opts.page.name}' is missing html.`);
-        element = buildContentHtmlIpartXml(
+        element2 = buildContentHtmlIpartXml(
           contentKey,
           ipart.html,
           zone,
@@ -39514,7 +44096,7 @@ ${JSON.stringify(errors, null, 2)}`);
           queryPath: ipart.queryPath,
           fallback: "Query Menu"
         });
-        element = buildTypedIpartXml({
+        element2 = buildTypedIpartXml({
           typeName: "QueryMenu",
           contentKey,
           contentTypeKey,
@@ -39542,7 +44124,7 @@ ${JSON.stringify(errors, null, 2)}`);
         if (!ipart.queryPath) throw new Error(`Dashboard QueryTemplateDisplay iPart '${ipart.title ?? index + 1}' is missing queryPath.`);
         sourceKey = await resolveDocumentVersionKey(ipart.queryPath, ipart.queryDocumentVersionKey);
         contentTypeKey = await resolveContentTypeKey(QUERY_TEMPLATE_DISPLAY_CONTENT_TYPE_PATH);
-        element = buildTypedIpartXml({
+        element2 = buildTypedIpartXml({
           typeName: "QueryTemplateDisplay",
           contentKey,
           contentTypeKey,
@@ -39572,7 +44154,7 @@ ${JSON.stringify(errors, null, 2)}`);
         if (!ipart.queryPath) throw new Error(`Dashboard QueryChartViewer iPart '${ipart.title ?? index + 1}' is missing queryPath.`);
         await resolveDocumentVersionKey(ipart.queryPath, ipart.queryDocumentVersionKey);
         contentTypeKey = ipart.contentTypeKey ?? await resolveContentTypeKey(ipart.contentTypePath ?? QUERY_CHART_VIEWER_CONTENT_TYPE_PATH);
-        element = buildTypedIpartXml({
+        element2 = buildTypedIpartXml({
           typeName: "QueryChartViewer",
           contentKey,
           contentTypeKey,
@@ -39614,7 +44196,7 @@ ${JSON.stringify(errors, null, 2)}`);
       } else if (type === "progress_tracker") {
         if (!ipart.listSourceQuery) throw new Error(`Dashboard ProgressTracker iPart '${ipart.title ?? index + 1}' is missing listSourceQuery.`);
         contentTypeKey = ipart.contentTypeKey ?? EMPTY_GUID2;
-        element = buildTypedIpartXml({
+        element2 = buildTypedIpartXml({
           typeName: "ProgressTracker",
           contentKey,
           contentTypeKey,
@@ -39654,7 +44236,7 @@ ${JSON.stringify(errors, null, 2)}`);
         }).filter((tab) => !!tab);
         contentTypeKey = ipart.contentTypeKey ?? await resolveContentTypeKey(ipart.contentTypePath ?? CONTENT_COLLECTION_ORGANIZER_CONTENT_TYPE_PATH);
         const contentFolderKey = await resolveContentFolderKey(ipart.contentFolderPath, ipart.contentFolderKey);
-        element = buildTypedIpartXml({
+        element2 = buildTypedIpartXml({
           typeName: "ContentCollectionOrganizerCommon",
           contentKey,
           contentTypeKey,
@@ -39684,7 +44266,7 @@ ${JSON.stringify(errors, null, 2)}`);
       } else if (type === "big_button_panel") {
         if (!ipart.navigationIdentifier) throw new Error(`Dashboard ContentBigButtonPanel iPart '${ipart.title ?? index + 1}' is missing navigationIdentifier.`);
         contentTypeKey = ipart.contentTypeKey ?? await resolveContentTypeKey(ipart.contentTypePath ?? CONTENT_BIG_BUTTON_PANEL_CONTENT_TYPE_PATH);
-        element = buildTypedIpartXml({
+        element2 = buildTypedIpartXml({
           typeName: "ContentBigButtonPanel",
           contentKey,
           contentTypeKey,
@@ -39712,7 +44294,7 @@ ${JSON.stringify(errors, null, 2)}`);
         if (!ipart.ipartType) throw new Error(`Dashboard typed iPart ${index + 1} is missing ipartType.`);
         if (!ipart.typeElements) throw new Error(`Dashboard typed iPart '${ipart.ipartType}' is missing typeElements.`);
         contentTypeKey = ipart.contentTypeKey ?? (ipart.contentTypePath ? await resolveContentTypeKey(ipart.contentTypePath) : EMPTY_GUID2);
-        element = buildTypedIpartXml({
+        element2 = buildTypedIpartXml({
           typeName: ipart.ipartType,
           contentKey,
           contentTypeKey,
@@ -39727,7 +44309,7 @@ ${JSON.stringify(errors, null, 2)}`);
       } else {
         throw new Error(`Unsupported dashboard iPart type '${String(type)}'.`);
       }
-      dataXml = insertIpartIntoXml(dataXml, element);
+      dataXml = insertIpartIntoXml(dataXml, element2);
       written.push({
         type,
         title: ipart.title,
@@ -39755,10 +44337,60 @@ ${JSON.stringify(errors, null, 2)}`);
       layoutPlacementSafe: layout.layoutPlacementSafe === true
     };
   }
+  async function writeNativeIparts(opts) {
+    const doc = await apiClient.get(
+      `Document/${encodeURIComponent(opts.documentId)}`
+    );
+    let dataXml = decodeDataBlob(doc.Data);
+    if (!dataXml) {
+      throw new Error(`Content page '${opts.documentId}' has no content Data blob.`);
+    }
+    const contentKey = String(doc.DocumentVersionKey ?? doc.DocumentVersionId ?? "");
+    if (!contentKey) {
+      throw new Error(`Content page '${opts.documentId}' did not expose a DocumentVersionKey.`);
+    }
+    for (const contract of opts.contracts) {
+      dataXml = insertIpartIntoXml(dataXml, buildNativeIpartXml(contentKey, contract));
+    }
+    const result = await apiClient.put(`Document/${encodeURIComponent(opts.documentId)}`, {
+      ...doc,
+      Data: encodeDataBlob(dataXml)
+    });
+    const persisted = await apiClient.get(
+      `Document/${encodeURIComponent(opts.documentId)}`
+    );
+    const persistedXml = decodeDataBlob(persisted.Data) ?? "";
+    const iparts = extractIpartSummaries(extractContentItemsXml(persistedXml));
+    const layout = summarizeContentLayout(persistedXml, iparts);
+    const duplicateTypedContentItemNames = duplicateTypedIpartNames(iparts);
+    return {
+      result: {
+        DocumentId: result.DocumentId,
+        DocumentVersionId: result.DocumentVersionId,
+        Status: result.Status,
+        StatusUpdatedByUserId: result.StatusUpdatedByUserId,
+        StatusUpdatedOn: result.StatusUpdatedOn
+      },
+      contentKey,
+      written: opts.contracts.map(nativeIpartContractSummary),
+      iparts: compactIpartSummaries(iparts),
+      ipartCount: iparts.length,
+      layout,
+      duplicateNameSafe: duplicateTypedContentItemNames.length === 0,
+      duplicateTypedContentItemNames,
+      layoutPlacementSafe: layout.layoutPlacementSafe === true,
+      expectedTypes: opts.contracts.map((contract) => contract.typeName),
+      verified: opts.contracts.every(
+        (contract) => iparts.some(
+          (ipart) => ipart.type === contract.typeName && ipart.layoutZone === contract.layoutZone && String(ipart.sortOrder ?? "") === String(contract.sortOrder)
+        )
+      )
+    };
+  }
   async function createNavigationForDashboardPage(opts) {
-    const parentPath = normalizeNavigationPath(opts.parentNavigationPath);
+    const parentPath2 = normalizeNavigationPath(opts.parentNavigationPath);
     const segment = safeNavigationFolderName(opts.folderName);
-    const newPath = joinNavigationPath(parentPath, segment);
+    const newPath = joinNavigationPath(parentPath2, segment);
     const existing = (await listNavigationSummaries(apiClient, true)).filter(
       (doc) => String(doc.Path ?? "") === newPath && String(doc.Status ?? "") !== "Archived"
     );
@@ -39767,18 +44399,18 @@ ${JSON.stringify(errors, null, 2)}`);
         `Navigation path '${newPath}' already exists as a non-archived NAV document. Use a unique dashboardName or archive the existing item before creating another one.`
       );
     }
-    const parentSummary = await findNavigationParentSummaryByPath(apiClient, parentPath, false).catch(async (error2) => {
-      const archived = await findNavigationParentSummaryByPath(apiClient, parentPath, true).catch(() => void 0);
+    const parentSummary = await findNavigationParentSummaryByPath(apiClient, parentPath2, false).catch(async (error2) => {
+      const archived = await findNavigationParentSummaryByPath(apiClient, parentPath2, true).catch(() => void 0);
       if (archived && String(archived.Status ?? "") === "Archived") {
         throw new Error(
-          `Parent navigation '${parentPath}' exists only as an archived NAV document. Create or select a published/working sitemap parent before installing dashboard navigation.`
+          `Parent navigation '${parentPath2}' exists only as an archived NAV document. Create or select a published/working sitemap parent before installing dashboard navigation.`
         );
       }
       throw error2;
     });
     const parentVersionKey = String(parentSummary.DocumentVersionId ?? parentSummary.DocumentVersionKey ?? "");
     if (!parentVersionKey) {
-      throw new Error(`Parent navigation '${parentPath}' does not expose a DocumentVersionId.`);
+      throw new Error(`Parent navigation '${parentPath2}' does not expose a DocumentVersionId.`);
     }
     const parentHierarchyKey = await getHierarchyKeyByUniformKey(apiClient, parentVersionKey);
     const websiteKey = await resolveWebsiteKey().catch(() => void 0);
@@ -39801,20 +44433,20 @@ ${JSON.stringify(errors, null, 2)}`);
       AlternateName: opts.linkText,
       DocumentTypeId: NAV_DOCUMENT_TYPE3,
       DocumentCode: "",
-      Path: navigationDocumentCreatePath(parentPath),
-      FolderPath: parentPath,
+      Path: navigationDocumentCreatePath(parentPath2),
+      FolderPath: parentPath2,
       IsFolder: false,
       Data: encodeDataBlob(navigationXml)
     };
     const validation = await apiClient.post("Document/_validate", body);
-    const errors = extractValidationErrors(validation);
+    const errors = extractValidationErrors2(validation);
     if (errors.length > 0) {
       throw new Error(`Dashboard navigation validation failed:
 ${JSON.stringify(errors, null, 2)}`);
     }
     if (opts.attemptRestCreate === false) {
       const userIntervention = buildNavigationCreateIntervention({
-        parentNavigationPath: parentPath,
+        parentNavigationPath: parentPath2,
         navigationPath: newPath,
         linkText: opts.linkText,
         folderName: segment,
@@ -39830,7 +44462,7 @@ ${JSON.stringify(errors, null, 2)}`);
         const companionReportedFailure = companionIntervention.result?.success === false;
         return {
           navigationPath: newPath,
-          parentNavigationPath: parentPath,
+          parentNavigationPath: parentPath2,
           targetContentPath: opts.targetContentPath,
           parentHierarchyKey,
           nativeEditorUrl,
@@ -39857,7 +44489,7 @@ ${JSON.stringify(errors, null, 2)}`);
               Name: placedSummary?.name,
               AlternateName: placedSummary?.title,
               Path: newPath,
-              FolderPath: parentPath
+              FolderPath: parentPath2
             },
             {
               expectedStatus: "Published",
@@ -39876,7 +44508,7 @@ ${JSON.stringify(errors, null, 2)}`);
       }
       const navResult2 = {
         navigationPath: newPath,
-        parentNavigationPath: parentPath,
+        parentNavigationPath: parentPath2,
         targetContentPath: opts.targetContentPath,
         parentHierarchyKey,
         nativeEditorUrl,
@@ -39947,7 +44579,7 @@ ${JSON.stringify(errors, null, 2)}`);
     const publishInterventionRequired = !!opts.publish && !createInterventionRequired && publishVerification?.verified !== true;
     const navResult = {
       navigationPath: newPath,
-      parentNavigationPath: parentPath,
+      parentNavigationPath: parentPath2,
       targetContentPath: opts.targetContentPath,
       parentHierarchyKey,
       nativeEditorUrl,
@@ -39965,7 +44597,7 @@ ${JSON.stringify(errors, null, 2)}`);
       publishVerification,
       userInterventionRequired: createInterventionRequired || publishInterventionRequired,
       userIntervention: createInterventionRequired ? buildNavigationCreateIntervention({
-        parentNavigationPath: parentPath,
+        parentNavigationPath: parentPath2,
         navigationPath: newPath,
         linkText: opts.linkText,
         folderName: segment,
@@ -39979,7 +44611,7 @@ ${JSON.stringify(errors, null, 2)}`);
           ...result ?? {},
           DocumentTypeId: NAV_DOCUMENT_TYPE3,
           Path: newPath,
-          FolderPath: parentPath
+          FolderPath: parentPath2
         },
         publishVerification ?? {
           expectedStatus: "Published",
@@ -40014,7 +44646,7 @@ ${JSON.stringify(errors, null, 2)}`);
       });
       const folderItems = folderResult.Items?.$values ?? folderResult.Items ?? [];
       const folder = folderItems.find(
-        (d) => d.Path === browsePath || d.Name === browsePath
+        (d) => !!d && (d.Path === browsePath || d.Name === browsePath)
       );
       if (!folder?.DocumentId) {
         return {
@@ -40158,8 +44790,8 @@ Creating the wrong document type in the wrong hierarchy (e.g. FOL in @/) causes 
       data: external_exports.string().optional().describe("JSON string of the document data payload. For CFL/CON, a proper Data blob is auto-generated if not provided. Only supply this if you have a specific payload to use."),
       allowSystemPath: external_exports.boolean().optional().describe("Override the guard that blocks creating under '@/iCore/'. Only use for deliberate edits to system/sample content.")
     },
-    withErrorHandling(async ({ name, title, parentPath, description, isFolder, documentTypeId, data, allowSystemPath }) => {
-      const normalizedPath = parentPath.replace(/\/+$/, "");
+    withErrorHandling(async ({ name, title, parentPath: parentPath2, description, isFolder, documentTypeId, data, allowSystemPath }) => {
+      const normalizedPath = parentPath2.replace(/\/+$/, "");
       const isContentTree = normalizedPath.startsWith("@");
       const isDefTree = normalizedPath.startsWith("$");
       if (normalizedPath === "@" || normalizedPath === "$" || normalizedPath === "") {
@@ -40210,8 +44842,8 @@ Creating the wrong document type in the wrong hierarchy (e.g. FOL in @/) causes 
         AlternateName: title ?? name,
         DocumentTypeId: docType,
         DocumentCode: "",
-        Path: parentPath,
-        FolderPath: parentPath,
+        Path: parentPath2,
+        FolderPath: parentPath2,
         IsFolder: folder
       };
       if (description) body.Description = description;
@@ -40305,7 +44937,7 @@ ${JSON.stringify(errors, null, 2)}`
         );
         const publishInterventionRequired2 = statusVerification2.verified !== true;
         const userIntervention2 = publishInterventionRequired2 ? buildPublishIntervention(body, statusVerification2, apiClient.activeInstance.baseUrl) : void 0;
-        const response2 = {
+        const response3 = {
           action: hasNonStatusUpdates ? "update_publish_handoff" : "publish_handoff",
           backup,
           result: result2,
@@ -40316,12 +44948,12 @@ ${JSON.stringify(errors, null, 2)}`
           userIntervention: userIntervention2,
           message: publishInterventionRequired2 ? "REST publish was skipped because iMIS content publishing is a native RiSE workflow. Use the userIntervention packet and verify Published status after the native publish completes." : "Document is already verified as Published; no REST publish attempt was needed."
         };
-        if (publishInterventionRequired2 && response2.userIntervention) {
-          forwardToCompanion(response2.userIntervention).catch(() => {
+        if (publishInterventionRequired2 && response3.userIntervention) {
+          forwardToCompanion(response3.userIntervention).catch(() => {
           });
         }
         return {
-          content: [{ type: "text", text: JSON.stringify(response2, null, 2) }]
+          content: [{ type: "text", text: JSON.stringify(response3, null, 2) }]
         };
       }
       if (status) body.Status = status;
@@ -40334,7 +44966,7 @@ ${JSON.stringify(errors, null, 2)}`
       ) : void 0;
       const publishInterventionRequired = !!statusVerification && isPublishedStatus(status) && statusVerification.verified !== true;
       const userIntervention = publishInterventionRequired ? buildPublishIntervention(body, statusVerification, apiClient.activeInstance.baseUrl) : void 0;
-      const response = {
+      const response2 = {
         action: "update",
         backup,
         result,
@@ -40345,12 +44977,12 @@ ${JSON.stringify(errors, null, 2)}`
         userIntervention,
         message: publishInterventionRequired ? "Document updated, but REST publish did not verify. Use the userIntervention packet for the required native iMIS publish/approval step." : void 0
       };
-      if (publishInterventionRequired && response.userIntervention) {
-        forwardToCompanion(response.userIntervention).catch(() => {
+      if (publishInterventionRequired && response2.userIntervention) {
+        forwardToCompanion(response2.userIntervention).catch(() => {
         });
       }
       return {
-        content: [{ type: "text", text: JSON.stringify(response, null, 2) }]
+        content: [{ type: "text", text: JSON.stringify(response2, null, 2) }]
       };
     })
   );
@@ -40439,9 +45071,9 @@ ${JSON.stringify(errors, null, 2)}`
     }) => {
       switch (action) {
         case "list": {
-          const parentPath = normalizeNavigationPath(parentNavigationPath);
+          const parentPath2 = normalizeNavigationPath(parentNavigationPath);
           const allNavItems = await listNavigationSummaries(apiClient, includeArchived ?? false);
-          const childDocs = allNavItems.filter((doc) => isDirectNavigationChild(String(doc.Path ?? ""), parentPath)).sort((left, right) => String(left.Path ?? "").localeCompare(String(right.Path ?? "")));
+          const childDocs = allNavItems.filter((doc) => isDirectNavigationChild(String(doc.Path ?? ""), parentPath2)).sort((left, right) => String(left.Path ?? "").localeCompare(String(right.Path ?? "")));
           const children = childDocs.map(navigationDocumentSummary);
           const duplicatePathGroups = duplicateNavigationPathGroups(childDocs);
           return {
@@ -40449,7 +45081,7 @@ ${JSON.stringify(errors, null, 2)}`
               type: "text",
               text: JSON.stringify({
                 action: "list",
-                parentNavigationPath: parentPath,
+                parentNavigationPath: parentPath2,
                 count: children.length,
                 children,
                 ...duplicatePathGroups.length > 0 ? {
@@ -40523,12 +45155,12 @@ ${JSON.stringify(errors, null, 2)}`
         }
         case "create": {
           if (!linkText) throw new Error("'linkText' is required for create.");
-          const parentPath = normalizeNavigationPath(parentNavigationPath);
+          const parentPath2 = normalizeNavigationPath(parentNavigationPath);
           const segment = folderName ?? safeNavigationFolderName(linkText);
           if (segment.includes("/")) {
             throw new Error("folderName must be a single navigation path segment and cannot contain '/'.");
           }
-          const newPath = joinNavigationPath(parentPath, segment);
+          const newPath = joinNavigationPath(parentPath2, segment);
           const target = targetContentPath ?? targetUrl ?? "";
           if (targetContentPath && isIcoreContentPath(targetContentPath) && !allowIcoreTarget) {
             throw new Error(
@@ -40546,11 +45178,11 @@ ${JSON.stringify(errors, null, 2)}`
               `Navigation path '${newPath}' already exists as a non-archived NAV document. Inspect or archive the existing item before creating another one.`
             );
           }
-          const parentSummary = await findNavigationParentSummaryByPath(apiClient, parentPath, false).catch(async (error2) => {
-            const archived = await findNavigationParentSummaryByPath(apiClient, parentPath, true).catch(() => void 0);
+          const parentSummary = await findNavigationParentSummaryByPath(apiClient, parentPath2, false).catch(async (error2) => {
+            const archived = await findNavigationParentSummaryByPath(apiClient, parentPath2, true).catch(() => void 0);
             if (archived && String(archived.Status ?? "") === "Archived") {
               throw new Error(
-                `Parent navigation '${parentPath}' exists only as an archived NAV document. Create or select a published/working sitemap parent before installing navigation.`
+                `Parent navigation '${parentPath2}' exists only as an archived NAV document. Create or select a published/working sitemap parent before installing navigation.`
               );
             }
             throw error2;
@@ -40559,7 +45191,7 @@ ${JSON.stringify(errors, null, 2)}`
             parentSummary.DocumentVersionId ?? parentSummary.DocumentVersionKey ?? ""
           );
           if (!parentVersionKey) {
-            throw new Error(`Parent navigation '${parentPath}' does not expose a DocumentVersionId.`);
+            throw new Error(`Parent navigation '${parentPath2}' does not expose a DocumentVersionId.`);
           }
           const parentHierarchyKey = await getHierarchyKeyByUniformKey(apiClient, parentVersionKey);
           const websiteKey = await resolveWebsiteKey().catch(() => void 0);
@@ -40594,8 +45226,8 @@ ${JSON.stringify(errors, null, 2)}`
             AlternateName: linkText,
             DocumentTypeId: NAV_DOCUMENT_TYPE3,
             DocumentCode: navigationCode ?? "",
-            Path: navigationDocumentCreatePath(parentPath),
-            FolderPath: parentPath,
+            Path: navigationDocumentCreatePath(parentPath2),
+            FolderPath: parentPath2,
             IsFolder: false,
             Data: encodeDataBlob(navigationXml)
           };
@@ -40609,7 +45241,7 @@ ${JSON.stringify(errors, null, 2)}`);
           }
           if (attemptRestCreate === false) {
             const userIntervention = buildNavigationCreateIntervention({
-              parentNavigationPath: parentPath,
+              parentNavigationPath: parentPath2,
               navigationPath: newPath,
               linkText,
               folderName: segment,
@@ -40629,7 +45261,7 @@ ${JSON.stringify(errors, null, 2)}`);
                   text: JSON.stringify({
                     action: "create",
                     navigationPath: newPath,
-                    parentNavigationPath: parentPath,
+                    parentNavigationPath: parentPath2,
                     target,
                     parentHierarchyKey,
                     nativeEditorUrl,
@@ -40656,7 +45288,7 @@ ${JSON.stringify(errors, null, 2)}`);
                         Name: placedSummary?.name,
                         AlternateName: placedSummary?.title,
                         Path: newPath,
-                        FolderPath: parentPath
+                        FolderPath: parentPath2
                       },
                       {
                         expectedStatus: "Published",
@@ -40675,10 +45307,10 @@ ${JSON.stringify(errors, null, 2)}`);
                 }]
               };
             }
-            const response = {
+            const response2 = {
               action: "create",
               navigationPath: newPath,
-              parentNavigationPath: parentPath,
+              parentNavigationPath: parentPath2,
               target,
               parentHierarchyKey,
               nativeEditorUrl,
@@ -40700,7 +45332,7 @@ ${JSON.stringify(errors, null, 2)}`);
             return {
               content: [{
                 type: "text",
-                text: JSON.stringify(response, null, 2)
+                text: JSON.stringify(response2, null, 2)
               }]
             };
           }
@@ -40762,7 +45394,7 @@ ${JSON.stringify(errors, null, 2)}`);
           const publishInterventionRequired = !!publish && !createInterventionRequired && publishVerification?.verified !== true;
           const createdDocument = result ? navigationDocumentSummary(result) : void 0;
           logger.info("Created iMIS navigation item", {
-            parentNavigationPath: parentPath,
+            parentNavigationPath: parentPath2,
             navigationPath: newPath,
             target,
             publishRequested: !!publish,
@@ -40775,7 +45407,7 @@ ${JSON.stringify(errors, null, 2)}`);
               text: JSON.stringify({
                 action: "create",
                 navigationPath: newPath,
-                parentNavigationPath: parentPath,
+                parentNavigationPath: parentPath2,
                 target,
                 parentHierarchyKey,
                 nativeEditorUrl,
@@ -40794,7 +45426,7 @@ ${JSON.stringify(errors, null, 2)}`);
                 publishVerification,
                 userInterventionRequired: createInterventionRequired || publishInterventionRequired,
                 userIntervention: createInterventionRequired ? buildNavigationCreateIntervention({
-                  parentNavigationPath: parentPath,
+                  parentNavigationPath: parentPath2,
                   navigationPath: newPath,
                   linkText,
                   folderName: segment,
@@ -40808,7 +45440,7 @@ ${JSON.stringify(errors, null, 2)}`);
                     ...result ?? {},
                     DocumentTypeId: NAV_DOCUMENT_TYPE3,
                     Path: newPath,
-                    FolderPath: parentPath
+                    FolderPath: parentPath2
                   },
                   publishVerification ?? {
                     expectedStatus: "Published",
@@ -41081,7 +45713,7 @@ ${JSON.stringify(errors, null, 2)}`);
       screenshotLimit,
       includeDiagnostics
     }) => {
-      const parentPath = normalizeNavigationPath(parentNavigationPath);
+      const parentPath2 = normalizeNavigationPath(parentNavigationPath);
       const normalizedTargetContentRoot = normalizeDiscoveryContentRoot(targetContentRoot);
       const normalizedWebsiteKey = normalizeWebsiteKey(websiteKey);
       const resolvedPublicBaseUrl = publicBaseUrl(requestedPublicBaseUrl, apiClient.activeInstance.baseUrl);
@@ -41171,7 +45803,7 @@ ${JSON.stringify(errors, null, 2)}`);
       }
       const navCandidates = allNavItems.filter((doc) => {
         const path3 = String(doc.Path ?? "");
-        const depth = navigationDescendantDepth(path3, parentPath);
+        const depth = navigationDescendantDepth(path3, parentPath2);
         if (depth === void 0) return false;
         if (siteNavigationPaths && !siteNavigationPaths.has(path3)) return false;
         return depthLimit === 0 || depth <= depthLimit;
@@ -41195,7 +45827,7 @@ ${JSON.stringify(errors, null, 2)}`);
           if (navDoc.__error) {
             reasons.push(`Could not fetch NAV document: ${String(navDoc.__error)}`);
           } else {
-            navXml = decodeDataBlob(navDoc.Data);
+            navXml = decodeDataBlob(navDoc.Data) ?? "";
             if (!navXml) reasons.push("NAV document has no Navigation Data blob");
           }
         }
@@ -41212,12 +45844,12 @@ ${JSON.stringify(errors, null, 2)}`);
         const uniformKey = String(navSummary.DocumentVersionId ?? navSummary.DocumentVersionKey ?? navDoc?.DocumentVersionId ?? navDoc?.DocumentVersionKey ?? "");
         const hierarchyEntry = uniformKey ? await getHierarchyEntryByUniformKey(apiClient, uniformKey).catch(() => void 0) : void 0;
         if (shouldRequireHierarchy && !hierarchyEntry) reasons.push("No Hierarchy row found for NAV DocumentVersionId");
-        const targetSummary = target.startsWith("@/") ? await findDocumentSummaryByPath2(apiClient, target).catch(() => void 0) : void 0;
+        const targetSummary2 = target.startsWith("@/") ? await findDocumentSummaryByPath2(apiClient, target).catch(() => void 0) : void 0;
         if (target.startsWith("@/") && shouldRequirePublishedTargets) {
-          if (!targetSummary) {
+          if (!targetSummary2) {
             reasons.push(`Target content path '${target}' was not found`);
-          } else if (!isPublishedStatus(String(targetSummary.Status ?? ""))) {
-            reasons.push(`Target content status is '${String(targetSummary.Status ?? "unknown")}', not Published`);
+          } else if (!isPublishedStatus(String(targetSummary2.Status ?? ""))) {
+            reasons.push(`Target content status is '${String(targetSummary2.Status ?? "unknown")}', not Published`);
           }
         }
         if (reasons.length > 0) {
@@ -41259,7 +45891,7 @@ ${JSON.stringify(errors, null, 2)}`);
         }
         const entry = {
           title: navSummary.AlternateName ?? navSummary.Name,
-          description: recordString2(navDoc, "Description") ?? recordString2(navSummary, "Description") ?? recordString2(targetSummary, "Description"),
+          description: recordString2(navDoc, "Description") ?? recordString2(navSummary, "Description") ?? recordString2(targetSummary2, "Description"),
           url: publicUrl.url,
           urlSource: publicUrl.urlSource,
           navigationUrl,
@@ -41267,11 +45899,11 @@ ${JSON.stringify(errors, null, 2)}`);
           documentId,
           documentVersionId: uniformKey || void 0,
           status: navSummary.Status,
-          depth: navigationDescendantDepth(navigationPath, parentPath),
+          depth: navigationDescendantDepth(navigationPath, parentPath2),
           target,
           targetPublicUrl,
-          targetStatus: targetSummary?.Status,
-          targetDocumentId: targetSummary?.DocumentId,
+          targetStatus: targetSummary2?.Status,
+          targetDocumentId: targetSummary2?.DocumentId,
           flags: {
             isActive,
             isHidden,
@@ -41337,7 +45969,7 @@ ${JSON.stringify(errors, null, 2)}`);
           text: JSON.stringify({
             action: "audit",
             mode: auditMode,
-            parentNavigationPath: parentPath,
+            parentNavigationPath: parentPath2,
             publicBaseUrl: resolvedPublicBaseUrl,
             filters: {
               maxDepth: depthLimit === 0 ? "unlimited" : depthLimit,
@@ -41403,7 +46035,7 @@ ${JSON.stringify(errors, null, 2)}`);
       action,
       layoutName,
       layoutTitle,
-      parentPath,
+      parentPath: parentPath2,
       description,
       layoutMarkup,
       layoutSpec,
@@ -41468,8 +46100,8 @@ ${JSON.stringify(errors, null, 2)}`);
         };
       }
       if (!layoutName) throw new Error("layoutName is required for plan/create.");
-      if (!parentPath) throw new Error("parentPath is required for plan/create.");
-      const normalizedParentPath = parentPath.replace(/\/+$/, "");
+      if (!parentPath2) throw new Error("parentPath is required for plan/create.");
+      const normalizedParentPath = parentPath2.replace(/\/+$/, "");
       const parsedLayoutSpec = parseContentLayoutSpec(layoutSpec);
       const parsedZones = zones ? JSON.parse(zones) : void 0;
       if (parsedZones && !Array.isArray(parsedZones)) {
@@ -41525,7 +46157,7 @@ ${JSON.stringify(errors, null, 2)}`);
         replaceExisting,
         allowSystemPath
       });
-      const response = {
+      const response2 = {
         ...plan,
         action: "create",
         writePrimitive: "imis_content_layouts",
@@ -41549,7 +46181,7 @@ ${JSON.stringify(errors, null, 2)}`);
         }
       };
       return {
-        content: [{ type: "text", text: JSON.stringify(response, null, 2) }]
+        content: [{ type: "text", text: JSON.stringify(response2, null, 2) }]
       };
     })
   );
@@ -41869,7 +46501,7 @@ ${JSON.stringify(errors, null, 2)}`);
         recovery: page.iPartWriteRecovery
       }));
       const hasIpartErrors = iPartWriteErrors.length > 0;
-      const response = {
+      const response2 = {
         ...plan,
         action: "create",
         writePrimitive: "imis_dashboard_pages",
@@ -41917,8 +46549,8 @@ ${JSON.stringify(errors, null, 2)}`);
           publishProof: "Publish each content page with imis_document_update status='Published'. The MCP returns/forwards a browser-native document_publish intervention by default; only claim live after a follow-up status check shows Published."
         }
       };
-      if (navigationInterventionRequired && response.navigationIntervention) {
-        forwardToCompanion(response.navigationIntervention).catch(() => {
+      if (navigationInterventionRequired && response2.navigationIntervention) {
+        forwardToCompanion(response2.navigationIntervention).catch(() => {
         });
       }
       logger.info("Created iMIS dashboard page set", {
@@ -41927,7 +46559,381 @@ ${JSON.stringify(errors, null, 2)}`);
         navigationCount: navigation.length
       });
       return {
-        content: [{ type: "text", text: JSON.stringify(response, null, 2) }]
+        content: [{ type: "text", text: JSON.stringify(response2, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_recurring_donation_pages",
+    `Plan or create an iMIS Give Now page using only native iMIS recurring-donation iParts. This creates a Working content page with RecurringDonationCreator, DonationCreator, optional donor/contact iParts, PaymentCreator, and SubmitOrderButtonLink. It is a production page-assembly primitive, not a custom iPart, browser automation flow, or payment writer: it does not enable Pay Central settings, create AutoPay mandates, submit donations, collect cards, move money, or claim recurring enrollment without live checkout/readback proof.`,
+    {
+      action: external_exports.enum(["plan", "create"]).describe("plan returns the normalized native iPart contract without writing. create writes a Working recurring donation page."),
+      parentContentPath: external_exports.string().describe("Existing @/ content folder for the generated donation page, e.g. '@/iFINITY/BSA/Codex Work'. Do not use @/iCore for custom pages."),
+      donationPageName: external_exports.string().describe("Stable iMIS document name for the donation page."),
+      donationPageTitle: external_exports.string().optional().describe("Donation page title. Defaults to 'Give Now'."),
+      giftItemId: external_exports.string().optional().describe("Fundraising gift item code used by DonationCreator. Defaults to WATER, matching the native sample page."),
+      orderConfirmationUrl: external_exports.string().optional().describe("Native confirmation URL used by SubmitOrderButtonLink. Defaults to '~/DonationThankYou'. Install/publish/verify that route separately."),
+      includeTribute: external_exports.boolean().optional().describe("Include native TributeGiftEditorCommon. Default true."),
+      includeGuestAccountCreator: external_exports.boolean().optional().describe("Include native guest ContactAccountCreator and personal details heading. Default true."),
+      includeDisplayName: external_exports.boolean().optional().describe("Include native recognition/anonymity DisplayNameEditorCommon. Default true."),
+      introHtml: external_exports.string().optional().describe("Optional HTML for the first ContentHtml block. Keep this small; do not include scripts."),
+      allowSystemPath: external_exports.boolean().optional().describe("Override guard against @/iCore content targets. Only use for deliberate system/sample edits.")
+    },
+    withErrorHandling(async ({
+      action,
+      parentContentPath,
+      donationPageName,
+      donationPageTitle,
+      giftItemId,
+      orderConfirmationUrl,
+      includeTribute,
+      includeGuestAccountCreator,
+      includeDisplayName,
+      introHtml,
+      allowSystemPath
+    }) => {
+      const normalizedParentContentPath = parentContentPath.replace(/\/+$/, "");
+      const safeDonationPageName = safeContentDocumentName(donationPageName);
+      const resolvedGiftItemId = giftItemId?.trim() || "WATER";
+      const resolvedOrderConfirmationUrl = orderConfirmationUrl?.trim() || "~/DonationThankYou";
+      const donationContentPath = `${normalizedParentContentPath}/${safeDonationPageName}`;
+      const settingsReadiness = await readAutoPayDonationSettings();
+      const donationContracts = buildRecurringDonationContracts({
+        giftItemId: resolvedGiftItemId,
+        orderConfirmationUrl: resolvedOrderConfirmationUrl,
+        includeTribute,
+        includeGuestAccountCreator,
+        includeDisplayName,
+        introHtml
+      });
+      const plan = {
+        action,
+        intentClass: action === "plan" ? "design" : "write",
+        targetSurfaces: ["content document", "content layout binding", "native iMIS recurring donation iPart chain"],
+        writePrimitive: "imis_recurring_donation_pages",
+        parentContentPath: normalizedParentContentPath,
+        contentPage: {
+          role: "recurring_donation",
+          name: safeDonationPageName,
+          title: donationPageTitle ?? "Give Now",
+          contentPath: donationContentPath,
+          layoutPath: DONATION_PAGE_LAYOUT_PATH,
+          requestedIparts: donationContracts.map(nativeIpartContractSummary)
+        },
+        donationCheckout: {
+          giftItemId: resolvedGiftItemId,
+          orderConfirmationUrl: resolvedOrderConfirmationUrl,
+          requiredTenantSetting: "Settings > Finance > Pay Central > Automatic payments > Allow users to create recurring donations",
+          settingsReadiness
+        },
+        nativeContractSource: {
+          contractKind: "native_iMIS_iPart_chain_not_custom_ipart",
+          nativePagePath: "@/iCore/Fundraising/Donate_Now",
+          nativeLayoutPath: DONATION_PAGE_LAYOUT_PATH,
+          docsRequirement: "Recurring donations can only be entered through a Give Now page with RecurringDonationCreator and the Pay Central recurring-donation setting enabled."
+        },
+        agentUseModel: {
+          agentRole: "Install or inspect the native page surface a real donor will use, then publish/route it when approved.",
+          userClientRole: "A real browser session renders iMIS and Pay Central controls; the MCP does not own the donor card-entry UX.",
+          followOnTools: "After hosted checkout, use readback tools/reports to verify AutoPayInstruction, PaymentSummary, invoice, and DataVault state before claiming lifecycle equivalency."
+        },
+        boundary: "This assembles the native hosted recurring donation page only. Recurring mandate creation, initial payment capture, invoice generation, and later AutoPay collection require a rendered hosted checkout run plus AutoPay/PaymentSummary/DataVault readback.",
+        publishAndRouteHandoff: {
+          publish: "Publish the returned content page with imis_document_update status='Published' and verify status before claiming it is live.",
+          navigation: "Install a NAV record for the intended ~/ route and verify the rendered route separately."
+        }
+      };
+      if (action === "plan") {
+        return {
+          content: [{ type: "text", text: JSON.stringify(plan, null, 2) }]
+        };
+      }
+      const donationLayoutDocumentVersionKey = await resolveDocumentVersionKey(DONATION_PAGE_LAYOUT_PATH);
+      const donationPage = await createContentRecordDocument({
+        name: safeDonationPageName,
+        title: donationPageTitle ?? "Give Now",
+        parentPath: normalizedParentContentPath,
+        description: "Native iMIS recurring donation Give Now page assembled by iFINITY MCP.",
+        layoutDocumentVersionKey: donationLayoutDocumentVersionKey,
+        allowSystemPath
+      });
+      const donationDocumentId = String(donationPage.DocumentId ?? "");
+      if (!donationDocumentId) {
+        throw new Error("Recurring donation page was created without a DocumentId.");
+      }
+      const donationWrite = await writeNativeIparts({
+        documentId: donationDocumentId,
+        contracts: donationContracts
+      });
+      const response2 = {
+        ...plan,
+        action: "create",
+        contentPage: {
+          role: "recurring_donation",
+          name: safeDonationPageName,
+          title: donationPageTitle ?? "Give Now",
+          contentPath: donationContentPath,
+          documentId: donationPage.DocumentId,
+          documentVersionId: donationPage.DocumentVersionId ?? donationPage.DocumentVersionKey,
+          layoutPath: DONATION_PAGE_LAYOUT_PATH,
+          layoutDocumentVersionKey: donationLayoutDocumentVersionKey,
+          status: donationPage.Status ?? "Working",
+          iPartWrite: donationWrite
+        },
+        contentAssemblyState: donationWrite.verified === true ? "native_recurring_donation_iparts_written" : "native_recurring_donation_ipart_verification_failed",
+        contentPublishSummary: buildContentPublishSummary([
+          {
+            name: safeDonationPageName,
+            title: donationPageTitle ?? "Give Now",
+            role: "recurring_donation",
+            contentPath: donationContentPath,
+            documentId: donationPage.DocumentId,
+            status: donationPage.Status ?? "Working"
+          }
+        ]),
+        deliveryWarnings: [
+          "Created content page is Working, not live. Publish and route it before claiming member-facing recurring donation checkout is installed.",
+          "This is native iMIS page assembly, not a custom iPart or payment writer. It does not prove the Pay Central setting is enabled, a donor enrolled, a mandate was created, or a payment/collection completed."
+        ],
+        verification: {
+          contentDataXmlInspection: "Use imis_page_iparts action='inspect' on the returned DocumentId; this response already includes parsed native iPart summaries.",
+          hostedCheckoutProof: "After publish/route, use a real hosted checkout run to prove AutoPayInstruction, PaymentSummary, invoice, and DataVault readback before claiming recurring-gift lifecycle equivalency."
+        }
+      };
+      logger.info("Created iMIS recurring donation page", {
+        donationPageName: safeDonationPageName,
+        parentContentPath: normalizedParentContentPath
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(response2, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_cart_checkout_pages",
+    `Plan or create an iMIS cart checkout page pair from the native Store checkout iPart contract. This is the production checkout-page assembler: it creates a Working cart page and Working order-confirmation page under a caller-selected @/ content folder, binds the native CartDisplay66-33 and SingleColumn layouts, writes the native checkout iParts, and returns exact content/iPart proof plus the publish/navigation handoff. It does not create carts, submit orders, collect cards, move money, expose raw Cart JSON, expose raw iPart XML, or publish pages without follow-up verification.`,
+    {
+      action: external_exports.enum(["plan", "create"]).describe("plan returns the normalized page/iPart contract without writing. create writes Working content pages and native checkout iParts."),
+      parentContentPath: external_exports.string().describe("Existing @/ content folder for the generated checkout pages, e.g. '@/iFINITY/BSA/Codex Work'. Do not use @/iCore for custom checkout pages."),
+      cartPageName: external_exports.string().describe("Stable iMIS document name for the cart page."),
+      confirmationPageName: external_exports.string().describe("Stable iMIS document name for the order-confirmation page."),
+      cartPageTitle: external_exports.string().optional().describe("Cart page title. Defaults to 'Cart'."),
+      confirmationPageTitle: external_exports.string().optional().describe("Order confirmation page title. Defaults to 'Order Confirmation'."),
+      continueShoppingUrl: external_exports.string().optional().describe("Native Continue Shopping URL. Defaults to '~/Store'."),
+      orderConfirmationUrl: external_exports.string().optional().describe("Native confirmation URL used by SubmitOrderButtonLink after order submit. Defaults to '~/<confirmationPageName>'. Install matching navigation before claiming the route is live."),
+      includePromotionCode: external_exports.boolean().optional().describe("Include the native Promotion Manager iPart. Default true."),
+      includeSignIn: external_exports.boolean().optional().describe("Include the native Contact Sign In iPart. Default true."),
+      includeAutoPayPrompt: external_exports.boolean().optional().describe("Include the native AutoPayInstructionCreator checkout prompt iPart. Default true; this is page UI only, not AutoPay account mutation or collection."),
+      includeOpenCredit: external_exports.boolean().optional().describe("Include the native Open Credit Display iPart. Default true."),
+      itemDetailContentKey: external_exports.string().optional().describe("Optional content key used by CartDetailsDisplay for item detail links. Defaults to empty GUID."),
+      eventDetailContentKey: external_exports.string().optional().describe("Optional content key used by CartDetailsDisplay for event detail links. Defaults to empty GUID."),
+      productDetailContentKey: external_exports.string().optional().describe("Optional content key used by CartDetailsDisplay for product detail links. Defaults to empty GUID."),
+      allowSystemPath: external_exports.boolean().optional().describe("Override guard against @/iCore content targets. Only use for deliberate system/sample edits.")
+    },
+    withErrorHandling(async ({
+      action,
+      parentContentPath,
+      cartPageName,
+      confirmationPageName,
+      cartPageTitle,
+      confirmationPageTitle,
+      continueShoppingUrl,
+      orderConfirmationUrl,
+      includePromotionCode,
+      includeSignIn,
+      includeAutoPayPrompt,
+      includeOpenCredit,
+      itemDetailContentKey,
+      eventDetailContentKey,
+      productDetailContentKey,
+      allowSystemPath
+    }) => {
+      const normalizedParentContentPath = parentContentPath.replace(/\/+$/, "");
+      const safeCartPageName = safeContentDocumentName(cartPageName);
+      const safeConfirmationPageName = safeContentDocumentName(confirmationPageName);
+      const resolvedContinueShoppingUrl = continueShoppingUrl?.trim() || "~/Store";
+      const resolvedOrderConfirmationUrl = orderConfirmationUrl?.trim() || `~/${safeNavigationFolderName(safeConfirmationPageName)}`;
+      const cartContentPath = `${normalizedParentContentPath}/${safeCartPageName}`;
+      const confirmationContentPath = `${normalizedParentContentPath}/${safeConfirmationPageName}`;
+      const confirmationContracts = buildOrderConfirmationContracts();
+      const cartContractsForPlan = buildCheckoutCartContracts({
+        continueShoppingUrl: resolvedContinueShoppingUrl,
+        orderConfirmationUrl: resolvedOrderConfirmationUrl,
+        itemDetailContentKey,
+        eventDetailContentKey,
+        productDetailContentKey,
+        includePromotionCode,
+        includeSignIn,
+        includeAutoPayPrompt,
+        includeOpenCredit
+      });
+      const plan = {
+        action,
+        intentClass: action === "plan" ? "design" : "write",
+        targetSurfaces: ["content document", "content layout binding", "native checkout iPart"],
+        writePrimitive: "imis_cart_checkout_pages",
+        parentContentPath: normalizedParentContentPath,
+        contentPages: [
+          {
+            role: "cart",
+            name: safeCartPageName,
+            title: cartPageTitle ?? "Cart",
+            contentPath: cartContentPath,
+            layoutPath: CART_CHECKOUT_LAYOUT_PATH,
+            requestedIparts: cartContractsForPlan.map(nativeIpartContractSummary)
+          },
+          {
+            role: "order_confirmation",
+            name: safeConfirmationPageName,
+            title: confirmationPageTitle ?? "Order Confirmation",
+            contentPath: confirmationContentPath,
+            layoutPath: SINGLE_COLUMN_LAYOUT_PATH,
+            requestedIparts: confirmationContracts.map(nativeIpartContractSummary)
+          }
+        ],
+        checkoutLinks: {
+          continueShoppingUrl: resolvedContinueShoppingUrl,
+          orderConfirmationUrl: resolvedOrderConfirmationUrl,
+          orderConfirmationContentKey: action === "create" ? "resolved-after-confirmation-page-create" : "resolved-on-create"
+        },
+        nativeContractSource: {
+          cartTemplatePath: "@/iCore/Store/StoreLayouts/Cart_Home",
+          confirmationTemplatePath: "@/iCore/Store/StoreLayouts/Order_Confirmation",
+          cartLayoutPath: CART_CHECKOUT_LAYOUT_PATH,
+          confirmationLayoutPath: SINGLE_COLUMN_LAYOUT_PATH
+        },
+        boundary: "This assembles native checkout pages only. Cart/order creation, gateway checkout, receipt, return, refund, and AutoPay collection remain handled by their separate purpose-built tools.",
+        publishAndRouteHandoff: {
+          publish: "Publish each returned content page with imis_document_update status='Published' and verify status before claiming it is live.",
+          navigation: "Install NAV records for the cart and confirmation URLs when the pages need routable ~/ paths; verify hierarchy and rendered route separately."
+        }
+      };
+      if (action === "plan") {
+        return {
+          content: [{ type: "text", text: JSON.stringify(plan, null, 2) }]
+        };
+      }
+      const confirmationLayoutDocumentVersionKey = await resolveDocumentVersionKey(SINGLE_COLUMN_LAYOUT_PATH);
+      const confirmationPage = await createContentRecordDocument({
+        name: safeConfirmationPageName,
+        title: confirmationPageTitle ?? "Order Confirmation",
+        parentPath: normalizedParentContentPath,
+        description: "Native iMIS order confirmation page assembled by iFINITY MCP.",
+        layoutDocumentVersionKey: confirmationLayoutDocumentVersionKey,
+        allowSystemPath
+      });
+      const confirmationDocumentId = String(confirmationPage.DocumentId ?? "");
+      if (!confirmationDocumentId) {
+        throw new Error("Order confirmation page was created without a DocumentId.");
+      }
+      const confirmationWrite = await writeNativeIparts({
+        documentId: confirmationDocumentId,
+        contracts: confirmationContracts
+      });
+      const confirmationDocumentVersionKey = String(confirmationWrite.contentKey ?? "");
+      if (!confirmationDocumentVersionKey) {
+        throw new Error("Order confirmation page was created without a DocumentVersionId.");
+      }
+      const openCreditContentTypeKey = includeOpenCredit === false ? void 0 : await resolveContentTypeKey(OPEN_CREDIT_DISPLAY_CONTENT_TYPE_PATH);
+      const cartLayoutDocumentVersionKey = await resolveDocumentVersionKey(CART_CHECKOUT_LAYOUT_PATH);
+      const cartPage = await createContentRecordDocument({
+        name: safeCartPageName,
+        title: cartPageTitle ?? "Cart",
+        parentPath: normalizedParentContentPath,
+        description: "Native iMIS cart checkout page assembled by iFINITY MCP.",
+        layoutDocumentVersionKey: cartLayoutDocumentVersionKey,
+        allowSystemPath
+      });
+      const cartDocumentId = String(cartPage.DocumentId ?? "");
+      if (!cartDocumentId) {
+        throw new Error("Cart checkout page was created without a DocumentId.");
+      }
+      const cartContracts = buildCheckoutCartContracts({
+        continueShoppingUrl: resolvedContinueShoppingUrl,
+        orderConfirmationUrl: resolvedOrderConfirmationUrl,
+        orderConfirmationContentKey: confirmationDocumentVersionKey,
+        itemDetailContentKey,
+        eventDetailContentKey,
+        productDetailContentKey,
+        openCreditContentTypeKey,
+        includePromotionCode,
+        includeSignIn,
+        includeAutoPayPrompt,
+        includeOpenCredit
+      });
+      const cartWrite = await writeNativeIparts({
+        documentId: cartDocumentId,
+        contracts: cartContracts
+      });
+      const response2 = {
+        ...plan,
+        action: "create",
+        checkoutLinks: {
+          continueShoppingUrl: resolvedContinueShoppingUrl,
+          orderConfirmationUrl: resolvedOrderConfirmationUrl,
+          orderConfirmationContentKey: confirmationDocumentVersionKey
+        },
+        contentPages: [
+          {
+            role: "cart",
+            name: safeCartPageName,
+            title: cartPageTitle ?? "Cart",
+            contentPath: cartContentPath,
+            documentId: cartPage.DocumentId,
+            documentVersionId: cartPage.DocumentVersionId ?? cartPage.DocumentVersionKey,
+            layoutPath: CART_CHECKOUT_LAYOUT_PATH,
+            layoutDocumentVersionKey: cartLayoutDocumentVersionKey,
+            status: cartPage.Status ?? "Working",
+            iPartWrite: cartWrite
+          },
+          {
+            role: "order_confirmation",
+            name: safeConfirmationPageName,
+            title: confirmationPageTitle ?? "Order Confirmation",
+            contentPath: confirmationContentPath,
+            documentId: confirmationPage.DocumentId,
+            documentVersionId: confirmationDocumentVersionKey,
+            layoutPath: SINGLE_COLUMN_LAYOUT_PATH,
+            layoutDocumentVersionKey: confirmationLayoutDocumentVersionKey,
+            status: confirmationPage.Status ?? "Working",
+            iPartWrite: confirmationWrite
+          }
+        ],
+        contentAssemblyState: cartWrite.verified === true && confirmationWrite.verified === true ? "native_checkout_iparts_written" : "native_checkout_ipart_verification_failed",
+        contentPublishSummary: buildContentPublishSummary([
+          {
+            name: safeCartPageName,
+            title: cartPageTitle ?? "Cart",
+            role: "cart",
+            contentPath: cartContentPath,
+            documentId: cartPage.DocumentId,
+            status: cartPage.Status ?? "Working"
+          },
+          {
+            name: safeConfirmationPageName,
+            title: confirmationPageTitle ?? "Order Confirmation",
+            role: "order_confirmation",
+            contentPath: confirmationContentPath,
+            documentId: confirmationPage.DocumentId,
+            status: confirmationPage.Status ?? "Working"
+          }
+        ]),
+        deliveryWarnings: [
+          "Created content pages are Working, not live. Publish and route them before claiming member-facing checkout is installed.",
+          "This tool proves native checkout page/iPart assembly only; use existing commerce/payment tools for order creation, settlement, return, and refund proof."
+        ],
+        verification: {
+          contentDataXmlInspection: "Use imis_page_iparts action='inspect' on the returned DocumentIds; this response already includes parsed native checkout iPart summaries.",
+          routeProof: "Create/verify NAV for the returned cart and confirmation URLs, publish both pages, then use imis_rendered_page_audit on the ~/ route before claiming live route equivalency."
+        }
+      };
+      logger.info("Created iMIS cart checkout page pair", {
+        cartPageName: safeCartPageName,
+        confirmationPageName: safeConfirmationPageName,
+        parentContentPath: normalizedParentContentPath
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(response2, null, 2) }]
       };
     })
   );
@@ -41936,7 +46942,7 @@ ${JSON.stringify(errors, null, 2)}`);
     `Manage iParts (content items) on an iMIS content record (page). iParts are the building blocks of iMIS pages \u2014 ContentHtml for HTML, QueryTemplateDisplay for query results, Search for site search, SocialShare for sharing buttons, and many more. The ContentItem API is GET-only (POST/PUT return 501), so this tool manages iParts by editing the Document Data XML blob directly.
 
 Actions:
-- list_types: List all 71 registered iPart types with correct WCF namespaces (no documentId needed)
+- list_types: List registered iPart types with correct WCF namespaces (no documentId needed)
 - inspect: Decode and display the ContentItems XML from a page's Data blob to see its structure
 - add_html: Add a ContentHtml iPart with HTML content to a page
 - add_query_menu: Add a Query Menu iPart wired to an IQD query or query folder
@@ -42632,6 +47638,801 @@ Recommended workflow for page placement:
   );
 }
 
+// src/tools/client-ipart-tools.ts
+import { readFile as readFile2 } from "fs/promises";
+
+// src/services/client-ipart-package.service.ts
+import { createHash as createHash4, randomUUID as randomUUID5 } from "crypto";
+import { basename } from "path";
+var DEFAULT_IPART_SOURCE_PATH = "$/iPartSource";
+var DEFAULT_CLIENT_IPART_CONTENT_TYPE_FOLDER = "$/ContentManagement/DefaultSystem/ContentTypes/Custom";
+var EMPTY_GUID3 = "00000000-0000-0000-0000-000000000000";
+var REGISTRY_NS = "http://schemas.imis.com/2008/01/DataContracts/Registry";
+var CLIENT_BASED_ASSEMBLY = "Asi.Web";
+var CLIENT_BASED_TYPE_NAME = "Asi.Web.Mvc.ClientSideContentItem";
+var CLIENT_BASED_CONTENT_TYPE_ASSEMBLY = "Asi.Business.ContentManagement";
+var CLIENT_BASED_CONTENT_TYPE_NAME = "Asi.Business.ContentManagement.ContentType.ContentTypeBase";
+var CLIENT_SIDE_DISPLAY_ASCX = "~/iParts/ClientSide/ClientSideDisplay.ascx";
+var CLIENT_SIDE_CONFIG_EDIT_ASCX = "~/iParts/ClientSide/ClientSideConfigEdit.ascx";
+var SERVER_SIDE_PATTERNS = [
+  /\.ascx(?:\.cs|\.vb)?$/i,
+  /\.aspx(?:\.cs|\.vb)?$/i,
+  /\.dll$/i,
+  /(^|\/)App_Code\//i,
+  /(^|\/)AppCode\//i,
+  /(^|\/)bin\//i,
+  /(^|\/)web\.config$/i
+];
+function buildClientIpartPackagePlan(options) {
+  const packageName = normalizePackageName(
+    options.packageName ?? (options.zipPath ? basename(options.zipPath) : "client-ipart.zip")
+  );
+  const ipartSourcePath = normalizeDocumentPath(options.ipartSourcePath ?? DEFAULT_IPART_SOURCE_PATH);
+  const contentTypeFolderPath = normalizeDocumentPath(
+    options.contentTypeFolderPath ?? DEFAULT_CLIENT_IPART_CONTENT_TYPE_FOLDER
+  );
+  const contentTypeName = normalizeDocumentName(
+    options.contentTypeName ?? packageName.replace(/\.zip$/i, "")
+  );
+  const contentTypeTitle = options.contentTypeTitle ?? contentTypeName;
+  const packageSubfolder = normalizeRelativeFolder(options.packageSubfolder);
+  const runtimeFile = normalizeRelativeFile(options.runtimeFile ?? "index.html");
+  const configFile = options.configFile ? normalizeRelativeFile(options.configFile) : "config.html";
+  const zipEntriesResult = listZipEntries(options.zipBytes);
+  const zipEntries = zipEntriesResult.entries;
+  const runtimeUrl = options.runtimeUrl ?? appendDoNotCache(
+    buildIpartSourceUrl(packageName, resolveZipInnerPath(zipEntries, runtimeFile, packageSubfolder)),
+    options.disableRuntimeCache === true
+  );
+  const configUrl = options.configUrl ?? (zipEntryExists(zipEntries, configFile, packageSubfolder) ? buildIpartSourceUrl(packageName, resolveZipInnerPath(zipEntries, configFile, packageSubfolder)) : void 0);
+  const contentTypePath = `${contentTypeFolderPath}/${contentTypeName}`;
+  const serverSideEntries = findServerSideEntries(zipEntries);
+  const blocked = serverSideEntries.length > 0;
+  const contentTypeRegistryXml = buildClientIpartContentTypeRegistryXml({
+    runtimeUrl,
+    configUrl,
+    parameterUrl: options.parameterUrl,
+    iconUrl: options.iconUrl,
+    helpUrl: options.helpUrl,
+    componentKey: options.componentKey,
+    galleryEntryKey: options.galleryEntryKey
+  });
+  return {
+    packageName,
+    packageSize: options.zipBytes.byteLength,
+    packageSha256: createHash4("sha256").update(options.zipBytes).digest("hex"),
+    zipLooksValid: looksLikeZip(options.zipBytes),
+    zipEntryCount: zipEntries.length > 0 ? zipEntries.length : void 0,
+    zipEntries: zipEntries.length > 0 ? zipEntries.slice(0, 50) : void 0,
+    zipInspectionWarning: zipEntriesResult.warning,
+    serverSideEntries,
+    boundary: blocked ? "server_side_appcode" : "client_based_document_system",
+    blocked,
+    serverSideHandoff: blocked ? buildServerSideIpartHandoff(serverSideEntries) : void 0,
+    ipartSourcePath,
+    packageDocumentPath: `${ipartSourcePath}/${packageName}`,
+    contentTypeFolderPath,
+    contentTypeName,
+    contentTypePath,
+    runtimeUrl,
+    configUrl,
+    folderDocument: buildFolderDocument({
+      name: pathName(ipartSourcePath),
+      parentPath: parentPath(ipartSourcePath),
+      allowedTypes: ["ZIP"],
+      status: options.status
+    }),
+    zipDocument: buildBinaryDocument({
+      name: packageName,
+      parentPath: ipartSourcePath,
+      title: packageName,
+      description: options.contentTypeDescription,
+      documentTypeId: "ZIP",
+      bytes: options.zipBytes,
+      status: options.status
+    }),
+    contentTypeDocument: buildXmlDocument({
+      name: contentTypeName,
+      parentPath: contentTypeFolderPath,
+      title: contentTypeTitle,
+      description: options.contentTypeDescription,
+      documentTypeId: "RCT",
+      xml: contentTypeRegistryXml,
+      status: options.status
+    }),
+    contentTypeRegistryXml
+  };
+}
+function buildServerSideIpartHandoff(serverSideEntries) {
+  return {
+    supportedByMcp: "handoff_only",
+    cloudSupport: "unsupported",
+    reason: `ASCX/DLL/AppCode iParts are webform-based server controls (${serverSideEntries.length} server-side entr${serverSideEntries.length === 1 ? "y" : "ies"} detected: ${serverSideEntries.slice(0, 5).join(", ")}). iMIS Cloud does not support webform-based custom iParts, and the Document System ZIP path only extracts static client-based iPart assets.`,
+    nativeRoute: "On supported self-hosted/on-prem iMIS only: deploy server files to the web server/AppCode path, then register or place the ContentWebUserControl content type.",
+    filesManagerRoute: "If a non-cloud tenant exposes RiSE file management for server files, upload the listed files there and verify the physical control path before page placement.",
+    requiredEvidence: [
+      "Server-side files present in the target AppCode/control path.",
+      "Registered ContentWebUserControl points at that physical ASCX path.",
+      "Working content page contains the control and renders without ASP.NET compilation errors.",
+      "For iMIS Cloud, replace this with a client-based iPart package instead."
+    ],
+    mcpOwnedAlternative: "Use a static client-based iPart ZIP with index.html/config.html/JS/CSS and deploy it through imis_client_ipart_package."
+  };
+}
+function buildFolderAllowedTypesXml(documentTypeCodes) {
+  const codes = documentTypeCodes.map((code) => code.trim().toUpperCase()).filter(Boolean);
+  if (codes.length === 0) throw new Error("At least one document type code is required.");
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    "<FolderAllowedTypes>",
+    ...codes.map((code) => `<DocumentTypeCode>${escapeXml2(code)}</DocumentTypeCode>`),
+    "</FolderAllowedTypes>"
+  ].join("");
+}
+function buildClientIpartContentTypeRegistryXml(opts) {
+  const componentKey = opts.componentKey ?? randomUUID5();
+  const galleryEntryKey = opts.galleryEntryKey ?? randomUUID5();
+  return [
+    '<ContentTypeRegistry xmlns="http://schemas.imis.com/2008/01/DataContracts/ContentTypeRegistry" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">',
+    '<StatusEvent xmlns="http://schemas.datacontract.org/2004/07/Asi.Atom" i:nil="true"/>',
+    '<mStateParameters xmlns="http://schemas.datacontract.org/2004/07/Asi.Atom" xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>',
+    registryElement("AdjacentHierarchyKey", EMPTY_GUID3),
+    registryElement("AssemblyName", CLIENT_BASED_ASSEMBLY),
+    registryElement("ComponentKey", componentKey),
+    registryElement("EditLink", CLIENT_SIDE_CONFIG_EDIT_ASCX),
+    registryElement("ExecuteLink", CLIENT_SIDE_DISPLAY_ASCX),
+    opts.helpUrl ? registryElement("HelpUrl", opts.helpUrl) : nilRegistryElement("HelpUrl"),
+    registryElement("HierarchyKey", EMPTY_GUID3),
+    opts.iconUrl ? registryElement("IconUrl", opts.iconUrl) : nilRegistryElement("IconUrl"),
+    registryElement("NewLink", CLIENT_SIDE_CONFIG_EDIT_ASCX),
+    nilRegistryElement("SummaryLink"),
+    registryElement("TypeName", CLIENT_BASED_TYPE_NAME),
+    opts.configUrl ? element("ConfigHtmlPath", opts.configUrl) : nilElement("ConfigHtmlPath"),
+    element("ContentTypeAssemblyName", CLIENT_BASED_CONTENT_TYPE_ASSEMBLY),
+    element("ContentTypeName", CLIENT_BASED_CONTENT_TYPE_NAME),
+    element("DisplayHtmlPath", opts.runtimeUrl),
+    element("IsNewStyleJPart", "true"),
+    opts.parameterUrl ? element("ParameterLink", opts.parameterUrl) : nilElement("ParameterLink"),
+    element("WebPartGalleryEntryKey", galleryEntryKey),
+    "</ContentTypeRegistry>"
+  ].join("");
+}
+function buildFolderDocument(opts) {
+  return buildXmlDocument({
+    name: opts.name,
+    parentPath: opts.parentPath,
+    documentTypeId: "FOL",
+    xml: buildFolderAllowedTypesXml(opts.allowedTypes),
+    isFolder: true,
+    status: opts.status
+  });
+}
+function buildBinaryDocument(opts) {
+  return {
+    $type: "Asi.Soa.Core.DataContracts.DocumentData, Asi.Contracts",
+    Name: opts.name,
+    AlternateName: opts.title,
+    Description: opts.description,
+    DocumentTypeId: opts.documentTypeId,
+    DocumentCode: "",
+    Path: opts.parentPath,
+    FolderPath: opts.parentPath,
+    IsFolder: false,
+    Status: opts.status,
+    Data: {
+      $type: "System.Byte[], mscorlib",
+      $value: opts.bytes.toString("base64")
+    }
+  };
+}
+function buildXmlDocument(opts) {
+  return {
+    $type: "Asi.Soa.Core.DataContracts.DocumentData, Asi.Contracts",
+    Name: opts.name,
+    AlternateName: opts.title ?? opts.name,
+    Description: opts.description,
+    DocumentTypeId: opts.documentTypeId,
+    DocumentCode: "",
+    Path: opts.parentPath,
+    FolderPath: opts.parentPath,
+    IsFolder: opts.isFolder ?? false,
+    Status: opts.status,
+    Data: {
+      $type: "System.Byte[], mscorlib",
+      $value: Buffer.from(opts.xml, "utf-8").toString("base64")
+    }
+  };
+}
+function listZipEntries(bytes) {
+  try {
+    const eocdOffset = findEndOfCentralDirectory(bytes);
+    if (eocdOffset < 0) return { entries: [], warning: "ZIP central directory was not found." };
+    const entryCount = bytes.readUInt16LE(eocdOffset + 10);
+    const centralDirectoryOffset = bytes.readUInt32LE(eocdOffset + 16);
+    const entries = [];
+    let cursor = centralDirectoryOffset;
+    for (let i = 0; i < entryCount && cursor + 46 <= bytes.length; i += 1) {
+      if (bytes.readUInt32LE(cursor) !== 33639248) break;
+      const fileNameLength = bytes.readUInt16LE(cursor + 28);
+      const extraLength = bytes.readUInt16LE(cursor + 30);
+      const commentLength = bytes.readUInt16LE(cursor + 32);
+      const nameStart = cursor + 46;
+      const nameEnd = nameStart + fileNameLength;
+      if (nameEnd > bytes.length) break;
+      entries.push(bytes.subarray(nameStart, nameEnd).toString("utf-8"));
+      cursor = nameEnd + extraLength + commentLength;
+    }
+    return { entries };
+  } catch (error2) {
+    return {
+      entries: [],
+      warning: error2 instanceof Error ? error2.message : "ZIP inspection failed."
+    };
+  }
+}
+function findServerSideEntries(entries) {
+  return entries.filter(
+    (entry) => SERVER_SIDE_PATTERNS.some((pattern) => pattern.test(entry.replace(/\\/g, "/")))
+  );
+}
+function looksLikeZip(bytes) {
+  return bytes.byteLength >= 4 && bytes[0] === 80 && bytes[1] === 75;
+}
+var CRC32_TABLE = (() => {
+  const table = new Uint32Array(256);
+  for (let n = 0; n < 256; n += 1) {
+    let c = n;
+    for (let k = 0; k < 8; k += 1) c = c & 1 ? 3988292384 ^ c >>> 1 : c >>> 1;
+    table[n] = c >>> 0;
+  }
+  return table;
+})();
+function crc32(buf) {
+  let crc = 4294967295;
+  for (let i = 0; i < buf.length; i += 1) {
+    crc = (CRC32_TABLE[(crc ^ buf[i]) & 255] ^ crc >>> 8) >>> 0;
+  }
+  return (crc ^ 4294967295) >>> 0;
+}
+function normalizeZipEntryName(path3) {
+  const normalized = path3.trim().replace(/\\/g, "/").replace(/^\/+/, "");
+  if (!normalized || normalized.endsWith("/") || normalized.split("/").some((seg) => seg === "..")) {
+    throw new Error(`Invalid ZIP entry path '${path3}'.`);
+  }
+  return normalized;
+}
+function buildStoredZip(files) {
+  if (files.length === 0) throw new Error("At least one file is required to build a ZIP package.");
+  const DOS_DATE = 33;
+  const localParts = [];
+  const centralParts = [];
+  let offset = 0;
+  const seen = /* @__PURE__ */ new Set();
+  for (const file of files) {
+    const entryName = normalizeZipEntryName(file.path);
+    if (seen.has(entryName)) throw new Error(`Duplicate ZIP entry '${entryName}'.`);
+    seen.add(entryName);
+    const name = Buffer.from(entryName, "utf-8");
+    const data = file.data;
+    const crc = crc32(data);
+    const local = Buffer.alloc(30);
+    local.writeUInt32LE(67324752, 0);
+    local.writeUInt16LE(20, 4);
+    local.writeUInt16LE(0, 6);
+    local.writeUInt16LE(0, 8);
+    local.writeUInt16LE(0, 10);
+    local.writeUInt16LE(DOS_DATE, 12);
+    local.writeUInt32LE(crc, 14);
+    local.writeUInt32LE(data.length, 18);
+    local.writeUInt32LE(data.length, 22);
+    local.writeUInt16LE(name.length, 26);
+    local.writeUInt16LE(0, 28);
+    localParts.push(local, name, data);
+    const central = Buffer.alloc(46);
+    central.writeUInt32LE(33639248, 0);
+    central.writeUInt16LE(20, 4);
+    central.writeUInt16LE(20, 6);
+    central.writeUInt16LE(0, 8);
+    central.writeUInt16LE(0, 10);
+    central.writeUInt16LE(0, 12);
+    central.writeUInt16LE(DOS_DATE, 14);
+    central.writeUInt32LE(crc, 16);
+    central.writeUInt32LE(data.length, 20);
+    central.writeUInt32LE(data.length, 24);
+    central.writeUInt16LE(name.length, 28);
+    central.writeUInt16LE(0, 30);
+    central.writeUInt16LE(0, 32);
+    central.writeUInt16LE(0, 34);
+    central.writeUInt16LE(0, 36);
+    central.writeUInt32LE(0, 38);
+    central.writeUInt32LE(offset, 42);
+    centralParts.push(central, name);
+    offset += local.length + name.length + data.length;
+  }
+  const localSection = Buffer.concat(localParts);
+  const centralDirectory = Buffer.concat(centralParts);
+  const end = Buffer.alloc(22);
+  end.writeUInt32LE(101010256, 0);
+  end.writeUInt16LE(files.length, 8);
+  end.writeUInt16LE(files.length, 10);
+  end.writeUInt32LE(centralDirectory.length, 12);
+  end.writeUInt32LE(localSection.length, 16);
+  return Buffer.concat([localSection, centralDirectory, end]);
+}
+function findEndOfCentralDirectory(bytes) {
+  const min = Math.max(0, bytes.length - 65535 - 22);
+  for (let i = bytes.length - 22; i >= min; i -= 1) {
+    if (bytes.readUInt32LE(i) === 101010256) return i;
+  }
+  return -1;
+}
+function buildIpartSourceUrl(packageName, innerPath) {
+  return ["~", "iPartSource", packageName, innerPath].join("/");
+}
+function resolveZipInnerPath(entries, file, subfolder) {
+  if (subfolder) return `${subfolder}/${file}`;
+  const normalized = entries.map((entry) => entry.replace(/\\/g, "/"));
+  if (normalized.includes(file)) return file;
+  const nested = normalized.filter((entry) => entry.endsWith(`/${file}`)).sort((a, b) => a.split("/").length - b.split("/").length || a.length - b.length);
+  return nested[0] ?? file;
+}
+function zipEntryExists(entries, file, subfolder) {
+  if (entries.length === 0) return false;
+  const target = subfolder ? `${subfolder}/${file}` : file;
+  return entries.map((entry) => entry.replace(/\\/g, "/")).some(
+    (entry) => entry === target || entry.endsWith(`/${target}`) || !subfolder && (entry === file || entry.endsWith(`/${file}`))
+  );
+}
+function appendDoNotCache(url, enabled) {
+  if (!enabled) return url;
+  return `${url}${url.includes("?") ? "&" : "?"}DoNotCache=true`;
+}
+function normalizePackageName(name) {
+  const normalized = normalizeDocumentName(name);
+  if (!/\.zip$/i.test(normalized)) {
+    throw new Error(`Client iPart packages must be ZIP files; received '${name}'.`);
+  }
+  return normalized;
+}
+function normalizeDocumentName(name) {
+  const normalized = name.trim();
+  if (!normalized || normalized.includes("/") || normalized.includes("\\")) {
+    throw new Error(`Invalid iMIS document name '${name}'.`);
+  }
+  return normalized;
+}
+function normalizeDocumentPath(value) {
+  const normalized = value.trim().replace(/\/+$/, "");
+  if (!normalized.startsWith("$/")) {
+    throw new Error(`Expected a definition-tree path beginning with '$/'; received '${value}'.`);
+  }
+  return normalized;
+}
+function normalizeRelativeFolder(value) {
+  if (!value) return void 0;
+  const normalized = value.trim().replace(/^\/+|\/+$/g, "");
+  if (!normalized) return void 0;
+  if (normalized.includes("..")) throw new Error("packageSubfolder cannot contain '..'.");
+  return normalized;
+}
+function normalizeRelativeFile(value) {
+  const normalized = value.trim().replace(/^\/+/, "");
+  if (!normalized || normalized.includes("..") || normalized.endsWith("/")) {
+    throw new Error(`Invalid package file path '${value}'.`);
+  }
+  return normalized;
+}
+function parentPath(path3) {
+  const index = path3.lastIndexOf("/");
+  if (index <= 0) throw new Error(`Cannot determine parent path for '${path3}'.`);
+  return path3.slice(0, index);
+}
+function pathName(path3) {
+  const index = path3.lastIndexOf("/");
+  return index >= 0 ? path3.slice(index + 1) : path3;
+}
+function registryElement(name, value) {
+  return `<${name} xmlns="${REGISTRY_NS}">${escapeXml2(value)}</${name}>`;
+}
+function nilRegistryElement(name) {
+  return `<${name} xmlns="${REGISTRY_NS}" i:nil="true"/>`;
+}
+function element(name, value) {
+  return `<${name}>${escapeXml2(value)}</${name}>`;
+}
+function nilElement(name) {
+  return `<${name} i:nil="true"/>`;
+}
+function escapeXml2(value) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+}
+
+// src/tools/client-ipart-tools.ts
+function registerClientIpartTools(server, apiClient) {
+  server.tool(
+    "imis_client_ipart_package",
+    `Plan, validate, or deploy a cloud-safe client-based iPart package. This is the custom iPart binary delivery primitive: it writes a static ZIP as a ZIP Document under '$/iPartSource', creates the iPartSource folder with ZIP-only allowed types when needed, and can create/update the client-based RCT content type that points to the package's runtime/config HTML. It deliberately does not deploy ASCX, DLL, AppCode, or other server-side iPart binaries; those remain a native Files Manager/AppCode boundary on iMIS Cloud. Use imis_page_iparts only after this tool has produced a contentTypeKey/content type path.`,
+    {
+      action: external_exports.enum(["plan", "validate", "deploy"]).describe("plan returns the package/content-type contract, validate calls Document/_validate without saving, deploy writes the ZIP and optional content type."),
+      zipPath: external_exports.string().optional().describe("Local path to the ZIP package. Either zipPath or zipBase64 is required."),
+      zipBase64: external_exports.string().optional().describe("Base64 ZIP bytes. Useful when the MCP server cannot read a local path."),
+      files: external_exports.array(
+        external_exports.object({
+          path: external_exports.string().describe("File path inside the package, e.g. 'index.html' or 'assets/app.js'."),
+          content: external_exports.string().optional().describe("UTF-8 text content of the file."),
+          base64: external_exports.string().optional().describe("Base64 bytes for a binary asset. Supply content OR base64, not both.")
+        })
+      ).optional().describe("Build the ZIP in-process from these files instead of a pre-made zipPath/zipBase64 \u2014 no manual byte assembly. IMPORTANT: index.html must reference its assets by absolute deploy path (e.g. /iPartSource/<packageName>/join.js), not relative, or the iPart will 404 its scripts when iMIS injects it into a page."),
+      packageName: external_exports.string().optional().describe("Document name for the ZIP under iPartSource. Defaults to the basename of zipPath and must end in .zip."),
+      ipartSourcePath: external_exports.string().optional().describe(`Definition-tree folder used by iMIS to extract client iParts. Default '${DEFAULT_IPART_SOURCE_PATH}'.`),
+      contentTypeFolderPath: external_exports.string().optional().describe(`Folder for the registered content type. Default '${DEFAULT_CLIENT_IPART_CONTENT_TYPE_FOLDER}'.`),
+      contentTypeName: external_exports.string().optional().describe("Name of the RCT content type document. Defaults to packageName without .zip."),
+      contentTypeTitle: external_exports.string().optional().describe("Display title for the content type. Defaults to contentTypeName."),
+      contentTypeDescription: external_exports.string().optional().describe("Description stored on both the ZIP and content type documents."),
+      includeContentType: external_exports.boolean().optional().describe("Create/update the client-based RCT content type as well as the ZIP. Default true."),
+      runtimeUrl: external_exports.string().optional().describe("Explicit runtime HTML URL. Defaults to ~/iPartSource/<packageName>/<runtimeFile>."),
+      configUrl: external_exports.string().optional().describe("Explicit config HTML URL. Defaults to ~/iPartSource/<packageName>/<configFile>."),
+      runtimeFile: external_exports.string().optional().describe("Runtime file inside the package. Default index.html."),
+      configFile: external_exports.string().optional().describe("Config file inside the package. Default config.html."),
+      packageSubfolder: external_exports.string().optional().describe("Optional folder inside the ZIP before index.html/config.html, e.g. WidgetWorld/HelloWorld."),
+      parameterUrl: external_exports.string().optional().describe("Optional advanced parameter collection URL for the content type."),
+      iconUrl: external_exports.string().optional().describe("Optional icon URL for the content gallery entry."),
+      helpUrl: external_exports.string().optional().describe("Optional help URL for the content type."),
+      disableRuntimeCache: external_exports.boolean().optional().describe("Append DoNotCache=true to the inferred runtime URL. Use for UAT only."),
+      createMissingFolders: external_exports.boolean().optional().describe("Create missing iPartSource/content-type folders where safe. Default true."),
+      replaceExisting: external_exports.boolean().optional().describe("Update existing ZIP/content-type documents instead of failing. Default false."),
+      allowServerSideFiles: external_exports.boolean().optional().describe("Override the ASCX/DLL/AppCode package guard. Default false; use only for non-cloud research."),
+      status: external_exports.string().optional().describe("Optional Document Status to set on created/updated definition documents.")
+    },
+    withErrorHandling(async (args) => {
+      const zipBytes = args.files && args.files.length > 0 ? buildZipFromFiles(args.files) : await readZipBytes(args.zipPath, args.zipBase64);
+      const includeContentType = args.includeContentType !== false;
+      const createMissingFolders = args.createMissingFolders !== false;
+      const replaceExisting = args.replaceExisting === true;
+      const allowServerSideFiles = args.allowServerSideFiles === true;
+      const planOptions = {
+        zipBytes,
+        zipPath: args.zipPath,
+        packageName: args.packageName,
+        ipartSourcePath: args.ipartSourcePath,
+        contentTypeFolderPath: args.contentTypeFolderPath,
+        contentTypeName: args.contentTypeName,
+        contentTypeTitle: args.contentTypeTitle,
+        contentTypeDescription: args.contentTypeDescription,
+        runtimeUrl: args.runtimeUrl,
+        configUrl: args.configUrl,
+        parameterUrl: args.parameterUrl,
+        iconUrl: args.iconUrl,
+        helpUrl: args.helpUrl,
+        runtimeFile: args.runtimeFile,
+        configFile: args.configFile,
+        packageSubfolder: args.packageSubfolder,
+        disableRuntimeCache: args.disableRuntimeCache,
+        status: args.status
+      };
+      const plan = buildClientIpartPackagePlan(planOptions);
+      if (args.action === "plan") {
+        return response({
+          action: "plan",
+          ...publicPlan(plan, includeContentType)
+        });
+      }
+      assertDeployablePackage(plan, allowServerSideFiles);
+      if (!plan.zipLooksValid) {
+        throw new Error("The supplied bytes do not look like a ZIP package.");
+      }
+      const validation = await validatePackageDocuments(apiClient, plan, includeContentType);
+      if (args.action === "validate") {
+        return response({
+          action: "validate",
+          ...publicPlan(plan, includeContentType),
+          validation,
+          deployable: validation.every((item) => item.isValid)
+        });
+      }
+      if (!validation.every((item) => item.isValid)) {
+        throw new Error(
+          `Document/_validate rejected the package: ${validation.filter((item) => !item.isValid).map((item) => `${item.path}: ${item.errors.join(", ") || "invalid"}`).join("; ")}`
+        );
+      }
+      const writes = [];
+      const warnings = [];
+      writes.push(await ensureFolderDocument(apiClient, plan.folderDocument, {
+        createMissingFolders,
+        replaceExisting: false
+      }));
+      writes.push(await writeDocument(apiClient, plan.zipDocument, {
+        replaceExisting,
+        createIfMissing: true
+      }));
+      if (includeContentType) {
+        writes.push(await ensureContentTypeFolder(apiClient, plan.contentTypeFolderPath, {
+          createMissingFolders
+        }));
+        let contentTypeDoc = plan.contentTypeDocument;
+        const existingCt = await findDocumentByPath(apiClient, plan.contentTypePath);
+        if (existingCt?.DocumentId) {
+          if (!replaceExisting) {
+            throw new Error(
+              `Content type already exists at '${plan.contentTypePath}'. Re-run with replaceExisting=true to update it.`
+            );
+          }
+          const current = await apiClient.get(
+            `Document/${encodeURIComponent(String(existingCt.DocumentId))}`
+          );
+          const keys = extractRegistryKeys(
+            current.Data?.$value
+          );
+          if (keys.componentKey || keys.galleryEntryKey) {
+            contentTypeDoc = buildClientIpartPackagePlan({
+              ...planOptions,
+              componentKey: keys.componentKey,
+              galleryEntryKey: keys.galleryEntryKey
+            }).contentTypeDocument;
+          }
+          warnings.push(
+            "Replaced an existing content-type registration in place. iMIS caches content-type registrations, so a byte update to one that was already rendered may NOT re-register until the app pool recycles or the RiSE cache is cleared. For implementation/registry-shape changes, create a NEW content type instead of replacing an already-rendered one."
+          );
+        }
+        writes.push(await writeDocument(apiClient, contentTypeDoc, {
+          replaceExisting,
+          createIfMissing: true
+        }));
+      }
+      const contentTypeWrite = writes.find((item) => item.path === plan.contentTypePath);
+      const verification = await verifyDeployedDocuments(apiClient, plan, includeContentType);
+      return response({
+        action: "deploy",
+        ...publicPlan(plan, includeContentType),
+        writes,
+        warnings: warnings.length > 0 ? warnings : void 0,
+        verification,
+        contentTypeKey: contentTypeWrite?.documentVersionId ?? contentTypeWrite?.documentId,
+        placementBoundary: "ZIP and content type are deployed. Place the iPart with imis_page_iparts add_typed (ipartType=ClientSideContentItem, contentTypePath=<contentTypePath>); the placement ContentTypeKey resolves to the content type's DocumentVersionId. Confirm rendering with imis_rendered_page_audit on a hosting page (Working page: 404 = composed without error, 500 = content type failed to load)."
+      });
+    })
+  );
+}
+async function readZipBytes(zipPath, zipBase64) {
+  if (zipPath && zipBase64) throw new Error("Supply either zipPath or zipBase64, not both.");
+  if (zipPath) return readFile2(zipPath);
+  if (zipBase64) {
+    const normalized = zipBase64.includes(",") ? zipBase64.split(",").pop() ?? "" : zipBase64;
+    return Buffer.from(normalized, "base64");
+  }
+  throw new Error("Provide files (built in-process), or a zipPath/zipBase64.");
+}
+function buildZipFromFiles(files) {
+  return buildStoredZip(
+    files.map((file) => {
+      if (file.content !== void 0 && file.base64 !== void 0) {
+        throw new Error(`File '${file.path}': supply content OR base64, not both.`);
+      }
+      const data = file.base64 !== void 0 ? Buffer.from(file.base64, "base64") : Buffer.from(file.content ?? "", "utf-8");
+      return { path: file.path, data };
+    })
+  );
+}
+async function validatePackageDocuments(apiClient, plan, includeContentType) {
+  const docs = [
+    plan.folderDocument,
+    plan.zipDocument,
+    ...includeContentType ? [plan.contentTypeDocument] : []
+  ];
+  const results = [];
+  for (const doc of docs) {
+    const result = await apiClient.post("Document/_validate", doc);
+    const errors = extractValidationErrors(result);
+    results.push({
+      path: documentPath(doc),
+      documentTypeId: doc.DocumentTypeId,
+      isValid: errors.length === 0 && result.IsValid !== false,
+      errors,
+      result
+    });
+  }
+  return results;
+}
+async function ensureFolderDocument(apiClient, document, opts) {
+  const path3 = documentPath(document);
+  const existing = await findDocumentByPath(apiClient, path3);
+  if (existing) {
+    return {
+      state: "exists_not_modified",
+      path: path3,
+      documentId: stringValue12(existing.DocumentId),
+      documentVersionId: stringValue12(existing.DocumentVersionId),
+      documentTypeId: stringValue12(existing.DocumentTypeId)
+    };
+  }
+  if (!opts.createMissingFolders) {
+    return { state: "skipped", path: path3, documentTypeId: document.DocumentTypeId };
+  }
+  return writeDocument(apiClient, document, {
+    replaceExisting: opts.replaceExisting,
+    createIfMissing: true
+  });
+}
+async function ensureContentTypeFolder(apiClient, folderPath, opts) {
+  const existing = await findDocumentByPath(apiClient, folderPath);
+  if (existing) {
+    return {
+      state: "exists_not_modified",
+      path: folderPath,
+      documentId: stringValue12(existing.DocumentId),
+      documentVersionId: stringValue12(existing.DocumentVersionId),
+      documentTypeId: stringValue12(existing.DocumentTypeId)
+    };
+  }
+  if (!opts.createMissingFolders) {
+    return { state: "skipped", path: folderPath, documentTypeId: "FOL" };
+  }
+  return writeDocument(apiClient, buildFolderDocument({
+    name: folderPath.slice(folderPath.lastIndexOf("/") + 1),
+    parentPath: folderPath.slice(0, folderPath.lastIndexOf("/")),
+    allowedTypes: ["RCT", "SRT", "FOL"]
+  }), {
+    replaceExisting: false,
+    createIfMissing: true
+  });
+}
+async function writeDocument(apiClient, document, opts) {
+  const path3 = documentPath(document);
+  const validation = await apiClient.post("Document/_validate", document);
+  const validationErrors4 = extractValidationErrors(validation);
+  if (validationErrors4.length > 0) {
+    throw new Error(`Document/_validate rejected '${path3}': ${validationErrors4.join("; ")}`);
+  }
+  const existing = await findDocumentByPath(apiClient, path3);
+  if (existing?.DocumentId) {
+    if (!opts.replaceExisting) {
+      throw new Error(
+        `Document already exists at '${path3}'. Re-run with replaceExisting=true to update it.`
+      );
+    }
+    const current = await apiClient.get(`Document/${encodeURIComponent(String(existing.DocumentId))}`);
+    const body = {
+      ...current,
+      ...document,
+      DocumentId: current.DocumentId,
+      DocumentVersionId: current.DocumentVersionId
+    };
+    const result2 = await apiClient.put(`Document/${encodeURIComponent(String(existing.DocumentId))}`, body);
+    return {
+      state: "updated",
+      path: path3,
+      documentId: stringValue12(existing.DocumentId),
+      documentVersionId: stringValue12(existing.DocumentVersionId),
+      documentTypeId: document.DocumentTypeId,
+      validation,
+      result: result2
+    };
+  }
+  if (!opts.createIfMissing) return { state: "skipped", path: path3, documentTypeId: document.DocumentTypeId };
+  const result = await apiClient.post("Document", document);
+  return {
+    state: "created",
+    path: path3,
+    documentId: stringValue12(result.DocumentId),
+    documentVersionId: stringValue12(result.DocumentVersionId),
+    documentTypeId: stringValue12(result.DocumentTypeId) ?? document.DocumentTypeId,
+    validation,
+    result
+  };
+}
+async function findDocumentByPath(apiClient, path3) {
+  const summary = await apiClient.get("DocumentSummary", { Path: path3 });
+  const direct = documentSummaryItems4(summary).find((item) => item.Path === path3 || item.Name === path3);
+  if (direct) return direct;
+  const name = path3.slice(path3.lastIndexOf("/") + 1);
+  for (const documentTypeId of ["ZIP", "RCT", "SRT", "FOL"]) {
+    const typed = await apiClient.get("DocumentSummary", { DocumentTypeId: documentTypeId, Name: name });
+    const match = documentSummaryItems4(typed).find((item) => item.Path === path3);
+    if (match) return match;
+  }
+  return void 0;
+}
+function documentSummaryItems4(summary) {
+  const raw = summary.Items?.$values ?? summary.Items ?? [];
+  return Array.isArray(raw) ? raw.filter((item) => !!item && typeof item === "object") : [];
+}
+function documentPath(document) {
+  return `${document.FolderPath.replace(/\/+$/, "")}/${document.Name}`;
+}
+function publicPlan(plan, includeContentType) {
+  return {
+    package: {
+      name: plan.packageName,
+      size: plan.packageSize,
+      sha256: plan.packageSha256,
+      zipLooksValid: plan.zipLooksValid,
+      zipEntryCount: plan.zipEntryCount,
+      zipEntries: plan.zipEntries,
+      zipInspectionWarning: plan.zipInspectionWarning,
+      serverSideEntries: plan.serverSideEntries
+    },
+    boundary: {
+      classification: plan.boundary,
+      blocked: plan.blocked,
+      explanation: plan.blocked ? "This ZIP contains ASCX/DLL/AppCode-style server-side files. iMIS Cloud client iPart deployment cannot install those through the Document System." : "This is a static client-based iPart package and can be deployed through Document ZIP plus RCT content type documents."
+    },
+    documents: {
+      ipartSourcePath: plan.ipartSourcePath,
+      packageDocumentPath: plan.packageDocumentPath,
+      contentTypeFolderPath: includeContentType ? plan.contentTypeFolderPath : void 0,
+      contentTypePath: includeContentType ? plan.contentTypePath : void 0,
+      runtimeUrl: includeContentType ? plan.runtimeUrl : void 0,
+      configUrl: includeContentType ? plan.configUrl : void 0
+    },
+    verificationRequired: [
+      "Read back the ZIP Document under $/iPartSource.",
+      "Read back the RCT content type and confirm DisplayHtmlPath/ConfigHtmlPath.",
+      "Place the returned contentTypeKey on a Working content page, inspect ContentItems XML, then render the page."
+    ]
+  };
+}
+function assertDeployablePackage(plan, allowServerSideFiles) {
+  if (allowServerSideFiles) return;
+  if (plan.blocked) {
+    throw new Error(
+      `Refusing to deploy server-side iPart binaries through the Document System. Blocked entries: ${plan.serverSideEntries.join(", ")}. For iMIS Cloud, convert this to a client-based iPart ZIP or use the native Files Manager/AppCode handoff.`
+    );
+  }
+  if (plan.zipEntryCount === void 0) {
+    throw new Error(
+      `Could not parse the ZIP central directory (possibly a Zip64 archive or corrupt file), so the ASCX/DLL/AppCode safety scan could not run${plan.zipInspectionWarning ? `: ${plan.zipInspectionWarning}` : ""}. Re-create the package as a standard (non-Zip64) ZIP, or set allowServerSideFiles=true only if you have independently confirmed it contains no server-side files.`
+    );
+  }
+}
+function response(data) {
+  return {
+    content: [{ type: "text", text: JSON.stringify(data, null, 2) }]
+  };
+}
+function stringValue12(value) {
+  return typeof value === "string" && value ? value : void 0;
+}
+function extractValidationErrors(result) {
+  if (!result || typeof result !== "object") return [];
+  const vr = result.ValidationResults;
+  const rawErrors = vr?.Errors?.$values ?? vr?.Errors ?? [];
+  if (!Array.isArray(rawErrors)) return [];
+  return rawErrors.map((entry) => {
+    if (entry && typeof entry === "object") {
+      const record2 = entry;
+      return String(record2.Message ?? record2.ErrorMessage ?? record2.Description ?? JSON.stringify(record2));
+    }
+    return String(entry);
+  }).filter((message) => message && message !== "undefined");
+}
+function extractRegistryKeys(dataValue) {
+  if (!dataValue) return {};
+  try {
+    const xml = Buffer.from(dataValue, "base64").toString("utf-8");
+    const componentKey = /<ComponentKey[^>]*>([0-9a-fA-F-]{36})<\/ComponentKey>/.exec(xml)?.[1];
+    const galleryEntryKey = /<WebPartGalleryEntryKey[^>]*>([0-9a-fA-F-]{36})<\/WebPartGalleryEntryKey>/.exec(xml)?.[1];
+    return { componentKey, galleryEntryKey };
+  } catch {
+    return {};
+  }
+}
+async function verifyDeployedDocuments(apiClient, plan, includeContentType) {
+  const zip = await findDocumentByPath(apiClient, plan.packageDocumentPath);
+  const verification = {
+    zipDocumentPresent: Boolean(zip),
+    zipDocumentPath: plan.packageDocumentPath,
+    runtimeUrl: plan.runtimeUrl,
+    renderCheck: "Not performed here. Place the content type and run imis_rendered_page_audit: on a Working host page 404 = iParts composed without error, 500 = the content type failed to load."
+  };
+  if (includeContentType) {
+    const contentType = await findDocumentByPath(apiClient, plan.contentTypePath);
+    verification.contentTypePresent = Boolean(contentType);
+    verification.contentTypePath = plan.contentTypePath;
+    verification.contentTypeDocumentVersionId = contentType ? stringValue12(contentType.DocumentVersionId) : void 0;
+  }
+  return verification;
+}
+
 // src/tools/certification-tools.ts
 function registerCertificationTools(server, entityService) {
   server.tool(
@@ -42786,6 +48587,1172 @@ function registerCertificationTools(server, entityService) {
   );
 }
 
+// src/services/gateway-readiness.service.ts
+var GENERIC_EXECUTE_TYPE2 = "Asi.Soa.Core.DataContracts.GenericExecuteRequest, Asi.Contracts";
+var OBJECT_COLLECTION_TYPE3 = "System.Collections.ObjectModel.Collection`1[[System.Object, mscorlib]], mscorlib";
+var STRING_COLLECTION_TYPE2 = "System.Collections.ObjectModel.Collection`1[[System.String, mscorlib]], mscorlib";
+var GatewayReadinessService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async getCheckoutReadiness(input = {}) {
+    const domain = normalizeDomain(input.domain) || normalizeDomain(this.apiClient.activeInstance.baseUrl) || "localhost";
+    const partyId = trimToUndefined(input.partyId)?.slice(0, 36) || "mcp-check";
+    const [
+      paymentMethods,
+      paymentMethodSets,
+      gatewayAccounts,
+      autoPayAccounts,
+      autoPayInstructions,
+      autoPayDueInvoices,
+      autoPayInvoices,
+      recurringProcessingTask,
+      tokenWithoutDomain,
+      domainScopedToken
+    ] = await Promise.all([
+      this.safeList("PaymentMethod", 100),
+      this.safeList("PaymentMethodSet", 50),
+      this.safeList("GatewayAccount", 50),
+      this.safeList("AutoPayAccount", 50),
+      this.safeList("AutoPayInstruction", 50),
+      this.safeRawList("AutoPayInvoicesDues", 50),
+      this.safeRawList("AutoPayInvoices", 50),
+      this.readRecurringProcessingTask(),
+      this.getPayCentralSdkToken({}, input.includeRawResponse === true),
+      this.getPayCentralSdkToken({ domain, partyId }, input.includeRawResponse === true)
+    ]);
+    const paymentMethodSummaries = (paymentMethods.items ?? []).map(paymentMethodSummary).slice(0, 100);
+    const gatewayBackedPaymentMethods = (paymentMethods.items ?? []).filter(paymentMethodLooksGatewayBacked).map(paymentMethodSummary).slice(0, 100);
+    const payCentralCreditCardPaymentMethods = (paymentMethods.items ?? []).filter(paymentMethodLooksPayCentralCreditCard).map(paymentMethodSummary).slice(0, 100);
+    const gatewayAccountSummaries = (gatewayAccounts.items ?? []).map(gatewayAccountSummary).slice(0, 50);
+    const paymentMethodSetSummaries = (paymentMethodSets.items ?? []).map(paymentMethodSetSummary).slice(0, 50);
+    const activeAccountCount = (autoPayAccounts.items ?? []).filter(hasActiveStatus).length;
+    const activeInstructionCount = (autoPayInstructions.items ?? []).filter(hasActiveStatus).length;
+    const gatewayMetadataVisible = paymentMethods.status !== "failed" && paymentMethodSets.status !== "failed" && gatewayAccounts.status !== "failed";
+    const payCentralSdkReachable = tokenWithoutDomain.status === "usable" || domainScopedToken.status === "usable" || domainScopedToken.status === "domain_not_whitelisted";
+    const domainWhitelisted = domainScopedToken.status === "usable";
+    const domainWhitelistBoundary = domainScopedToken.status === "domain_not_whitelisted";
+    const payCentralCreditCardMethodReady = payCentralCreditCardPaymentMethods.length > 0;
+    const gatewayCheckoutHandoffReady = gatewayMetadataVisible && payCentralCreditCardMethodReady && domainScopedToken.status === "usable";
+    const activeRecurringSetupReady = gatewayCheckoutHandoffReady && activeAccountCount > 0 && activeInstructionCount > 0 && recurringProcessingTask.status === "ok";
+    const recurringDueInvoiceReady = (autoPayDueInvoices.totalCount ?? autoPayDueInvoices.count ?? 0) > 0;
+    const activeRecurringCollectionReady = activeRecurringSetupReady && recurringDueInvoiceReady;
+    return {
+      version: "gateway-checkout-readiness.v1",
+      baseUrl: this.apiClient.activeInstance.baseUrl,
+      inputs: { domain, partyId },
+      gatewayConfig: {
+        paymentMethods: paymentMethodSummaries,
+        gatewayBackedPaymentMethods,
+        payCentralCreditCardPaymentMethods,
+        paymentMethodSets: paymentMethodSetSummaries,
+        gatewayAccounts: gatewayAccountSummaries,
+        reads: {
+          paymentMethods: stripListItems(paymentMethods),
+          paymentMethodSets: stripListItems(paymentMethodSets),
+          gatewayAccounts: stripListItems(gatewayAccounts)
+        }
+      },
+      autoPayState: {
+        accountCount: autoPayAccounts.totalCount,
+        instructionCount: autoPayInstructions.totalCount,
+        dueInvoiceCount: autoPayDueInvoices.totalCount,
+        autoPayInvoiceCount: autoPayInvoices.totalCount,
+        activeAccountCount,
+        activeInstructionCount,
+        reads: {
+          accounts: stripListItems(autoPayAccounts),
+          instructions: stripListItems(autoPayInstructions),
+          dueInvoices: stripListItems(autoPayDueInvoices),
+          autoPayInvoices: stripListItems(autoPayInvoices)
+        }
+      },
+      recurringProcessingTask,
+      payCentralSdk: {
+        tokenWithoutDomain,
+        domainScopedToken
+      },
+      readiness: {
+        gatewayMetadataVisible,
+        payCentralSdkReachable,
+        domainWhitelisted,
+        domainWhitelistBoundary,
+        payCentralCreditCardMethodReady,
+        gatewayCheckoutHandoffReady,
+        activeRecurringSetupReady,
+        recurringDueInvoiceReady,
+        activeRecurringCollectionReady
+      },
+      boundaries: readinessBoundaries({
+        domain,
+        gatewayCheckoutHandoffReady,
+        domainWhitelistBoundary,
+        payCentralCreditCardMethodReady,
+        activeRecurringCollectionReady,
+        activeRecurringSetupReady,
+        recurringDueInvoiceReady,
+        activeAccountCount,
+        activeInstructionCount,
+        recurringProcessingTaskVisible: recurringProcessingTask.status === "ok"
+      })
+    };
+  }
+  async getPayCentralSdkToken(input, includeRawResponse) {
+    try {
+      const response2 = await this.apiClient.post(
+        "PayCentralSdk/_execute",
+        buildPayCentralSdkTokenRequest(input)
+      );
+      return classifyPayCentralSdkTokenResponse(response2, input, includeRawResponse);
+    } catch (error2) {
+      return {
+        status: "transport_failed",
+        endpoint: "PayCentralSdk/_execute",
+        operationName: "GetSdkToken",
+        domain: input.domain,
+        partyId: input.partyId,
+        authTokenPresent: false,
+        error: errorMessage6(error2)
+      };
+    }
+  }
+  async safeList(entityName, limit) {
+    try {
+      const result = await this.entityService.list(entityName, { limit });
+      return {
+        status: result.items.length > 0 ? "ok" : "empty",
+        count: result.items.length,
+        totalCount: result.totalCount,
+        items: result.items
+      };
+    } catch (error2) {
+      const message = errorMessage6(error2);
+      return {
+        status: /403|405|permission|OperationNotAvailable|not available|not found|validation/i.test(message) ? "blocked" : "failed",
+        error: message
+      };
+    }
+  }
+  async safeRawList(entityName, limit) {
+    try {
+      const page = await fetchPage(this.apiClient, entityName, 0, limit);
+      return {
+        status: page.Items.length > 0 ? "ok" : "empty",
+        count: page.Items.length,
+        totalCount: page.TotalCount,
+        items: page.Items
+      };
+    } catch (error2) {
+      const message = errorMessage6(error2);
+      return {
+        status: /403|405|permission|OperationNotAvailable|not available|not found|validation/i.test(message) ? "blocked" : "failed",
+        error: message
+      };
+    }
+  }
+  async readRecurringProcessingTask() {
+    try {
+      const tasks = await this.entityService.listAll("TaskDefinition", void 0, 250);
+      const matches = tasks.map(taskSummary).filter((task) => {
+        const haystack = [
+          task.name,
+          task.description,
+          task.taskType,
+          ...Array.isArray(task.actionTypeNames) ? task.actionTypeNames : []
+        ].filter(Boolean).join(" ");
+        return /recurring.*donation|RunGenerateInvoicesProcessing|RunSendInvoicesToDataVaultProcessing/i.test(haystack);
+      });
+      return {
+        status: matches.length > 0 ? "ok" : "empty",
+        count: matches.length,
+        tasks: matches
+      };
+    } catch (error2) {
+      const message = errorMessage6(error2);
+      return {
+        status: /403|405|permission|OperationNotAvailable|not available|not found|validation/i.test(message) ? "blocked" : "failed",
+        tasks: [],
+        error: message
+      };
+    }
+  }
+};
+function buildPayCentralSdkTokenRequest(input) {
+  const request = {
+    $type: GENERIC_EXECUTE_TYPE2,
+    OperationName: "GetSdkToken",
+    EntityTypeName: "PayCentralSdk",
+    UseJson: false
+  };
+  if (input.domain !== void 0 && input.partyId !== void 0) {
+    const values = [
+      { $type: "System.String", $value: input.domain },
+      { $type: "System.String", $value: input.partyId }
+    ];
+    request.Parameters = {
+      $type: OBJECT_COLLECTION_TYPE3,
+      $values: values
+    };
+    request.ParameterTypeName = {
+      $type: STRING_COLLECTION_TYPE2,
+      $values: values.map((value) => value.$type)
+    };
+  }
+  return request;
+}
+function classifyPayCentralSdkTokenResponse(response2, input, includeRawResponse = false) {
+  const result = recordValue3(response2.Result);
+  const message = stringValue13(response2.Message);
+  const statusCode = numberValue8(response2.StatusCode);
+  const isSuccessStatusCode = response2.IsSuccessStatusCode === true;
+  const authToken = stringValue13(result?.AuthToken);
+  const sdkScriptUrl = stringValue13(result?.SdkScriptUrl);
+  let status = "service_rejected";
+  if (isSuccessStatusCode && authToken && sdkScriptUrl) {
+    status = "usable";
+  } else if (statusCode === 9 && /domain .*not whitelisted|not whitelisted in iMIS/i.test(message ?? validationMessages(response2).join(" "))) {
+    status = "domain_not_whitelisted";
+  }
+  return {
+    status,
+    endpoint: "PayCentralSdk/_execute",
+    operationName: "GetSdkToken",
+    domain: input.domain,
+    partyId: input.partyId,
+    isSuccessStatusCode,
+    statusCode,
+    message,
+    sdkScriptUrl,
+    authTokenPresent: Boolean(authToken),
+    rawResponse: includeRawResponse ? redactSensitiveValue(response2) : void 0
+  };
+}
+function redactSensitiveValue(value, parentKey = "") {
+  if (Array.isArray(value)) return value.map((entry) => redactSensitiveValue(entry, parentKey));
+  const record2 = recordValue3(value);
+  if (!record2) {
+    if (parentKey !== "$type" && typeof value === "string" && /(^eyJ|[A-Za-z0-9_-]{32,}\.[A-Za-z0-9_-]{16,})/.test(value)) {
+      return "<redacted-token-like-string>";
+    }
+    return value;
+  }
+  return Object.fromEntries(Object.entries(record2).map(([key, entry]) => {
+    if (/token|secret|password|credential|paymentintent|authorization(?!gateway)/i.test(key) && typeof entry === "string" && entry) {
+      return [key, `<redacted:${key}>`];
+    }
+    return [key, redactSensitiveValue(entry, key)];
+  }));
+}
+function paymentMethodSummary(method) {
+  return {
+    paymentMethodId: stringValue13(method.PaymentMethodId),
+    name: stringValue13(method.Name),
+    displayName: stringValue13(method.DisplayName),
+    paymentType: stringValue13(method.PaymentType),
+    financialEntityId: stringValue13(method.FinancialEntityId),
+    gatewayAccountId: stringValue13(method.GatewayAccountId),
+    dataVaultGatewayAccountId: stringValue13(method.DataVaultGatewayAccountId),
+    dataVaultAuthorizationGateway: stringValue13(method.DataVaultAuthorizationGateway),
+    cscRequired: method.CSCRequired,
+    enableTermsAndConditions: method.EnableTermsAndConditions
+  };
+}
+function paymentMethodLooksGatewayBacked(method) {
+  const summary = paymentMethodSummary(method);
+  const paymentType = String(summary.paymentType ?? "").toLowerCase();
+  if (!summary.gatewayAccountId && !summary.dataVaultGatewayAccountId && !summary.dataVaultAuthorizationGateway && paymentType === "opencredit") {
+    return false;
+  }
+  return Boolean(
+    summary.gatewayAccountId || summary.dataVaultGatewayAccountId || summary.dataVaultAuthorizationGateway || /card|credit|debit|visa|master|amex|gateway|stripe|paycentral|payflow|paypal/i.test(
+      [
+        summary.paymentMethodId,
+        summary.name,
+        summary.displayName,
+        summary.paymentType
+      ].filter(Boolean).join(" ")
+    )
+  );
+}
+function paymentMethodLooksPayCentralCreditCard(method) {
+  const summary = paymentMethodSummary(method);
+  return Boolean(
+    String(summary.paymentType ?? "").toLowerCase() === "creditcard" && summary.dataVaultGatewayAccountId && summary.dataVaultAuthorizationGateway
+  );
+}
+function paymentMethodSetSummary(methodSet) {
+  const details = collectionValues8(recordValue3(methodSet.PaymentMethods)?.$values ?? methodSet.PaymentMethods);
+  return {
+    paymentMethodSetId: stringValue13(methodSet.PaymentMethodSetId),
+    name: stringValue13(methodSet.Name),
+    description: stringValue13(methodSet.Description),
+    contextId: stringValue13(methodSet.ContextId),
+    isDefault: methodSet.IsDefault,
+    isSystem: methodSet.IsSystem,
+    paymentMethodCount: details.length,
+    methodIds: details.map((detail) => stringValue13(recordValue3(recordValue3(detail)?.Method)?.PaymentMethodId)).filter(Boolean).slice(0, 20)
+  };
+}
+function gatewayAccountSummary(account) {
+  return {
+    accountId: stringValue13(account.AccountId),
+    name: stringValue13(account.Name),
+    description: stringValue13(account.Description),
+    gatewayType: stringValue13(account.GatewayType),
+    gatewayName: stringValue13(account.GatewayName),
+    authorizationGateway: stringValue13(account.AuthorizationGateway),
+    authorizationUrl: stringValue13(account.AuthorizationUrl),
+    isActive: account.IsActive,
+    financialEntityId: stringValue13(account.FinancialEntityId)
+  };
+}
+function taskSummary(task) {
+  const actions = collectionValues8(recordValue3(task.Actions)?.$values ?? task.Actions).map((action) => recordValue3(action)).filter((action) => Boolean(action));
+  return {
+    taskDefinitionId: stringValue13(task.TaskDefinitionId),
+    name: stringValue13(task.Name),
+    description: stringValue13(task.Description),
+    taskType: stringValue13(task.TaskType),
+    isActive: task.IsActive,
+    isSystem: task.IsSystem,
+    actionTypeNames: actions.map((action) => stringValue13(action.ActionTypeName)).filter(Boolean),
+    actions: actions.map((action) => ({
+      actionId: stringValue13(action.ActionId),
+      actionTypeName: stringValue13(action.ActionTypeName),
+      description: stringValue13(action.Description),
+      queryDocumentId: stringValue13(action.QueryDocumentID ?? action.QueryDocumentId)
+    }))
+  };
+}
+function readinessBoundaries(input) {
+  const boundaries = [
+    "This check never handles raw card data, creates AutoPay accounts, creates instructions, submits carts, moves money, or runs recurring collection tasks.",
+    "Gateway checkout still requires a client page to load the Pay Central SDK over HTTPS and submit the resulting token through a purpose-built payment workflow."
+  ];
+  if (input.domainWhitelistBoundary) {
+    boundaries.push(`The iMIS tenant rejected domain '${input.domain}' because it is not whitelisted under Staff Site > Settings > Pay Central > SDK.`);
+  }
+  if (!input.gatewayCheckoutHandoffReady) {
+    boundaries.push("Gateway checkout handoff is not ready until a domain-scoped Pay Central SDK token succeeds and an iMIS Pay credit-card PaymentMethod with DataVault gateway fields is visible.");
+  }
+  if (!input.payCentralCreditCardMethodReady) {
+    boundaries.push("Visible gateway methods that are not CreditCard/DataVault methods, such as PayPal service methods, do not prove Pay Central SDK card allocation readiness.");
+  }
+  if (!input.activeRecurringSetupReady) {
+    boundaries.push(
+      `Active recurring setup is not ready until the tenant has an active AutoPayAccount/AutoPayInstruction pair and the recurring processing task is available. Current sampled active counts are accounts=${input.activeAccountCount}, instructions=${input.activeInstructionCount}, recurringTaskVisible=${input.recurringProcessingTaskVisible}.`
+    );
+  }
+  if (input.activeRecurringSetupReady && !input.recurringDueInvoiceReady) {
+    boundaries.push(
+      "Active recurring setup is visible, but no due AutoPay invoice is currently listed in AutoPayInvoicesDues. A collection run needs a generated due invoice before Pay Central send/retrieve processing can be claimed."
+    );
+  }
+  return boundaries;
+}
+function stripListItems(outcome) {
+  const { items: _items, ...rest } = outcome;
+  return rest;
+}
+function hasActiveStatus(record2) {
+  return stringValue13(record2.Status)?.toLowerCase() === "active";
+}
+function validationMessages(response2) {
+  const validationResults = recordValue3(response2.ValidationResults);
+  const errors = collectionValues8(recordValue3(validationResults?.Errors)?.$values ?? validationResults?.Errors);
+  return errors.map((entry) => stringValue13(recordValue3(entry)?.Message)).filter((message) => Boolean(message));
+}
+function normalizeDomain(value) {
+  const trimmed = trimToUndefined(value);
+  if (!trimmed) return void 0;
+  try {
+    return new URL(trimmed.includes("://") ? trimmed : `https://${trimmed}`).hostname;
+  } catch {
+    return trimmed.replace(/^https?:\/\//i, "").split("/")[0].split(":")[0] || void 0;
+  }
+}
+function collectionValues8(value) {
+  if (Array.isArray(value)) return value;
+  const record2 = recordValue3(value);
+  const values = record2?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function recordValue3(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function stringValue13(value) {
+  if (typeof value === "string" && value.trim()) return value.trim();
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  return void 0;
+}
+function numberValue8(value) {
+  return typeof value === "number" && Number.isFinite(value) ? value : void 0;
+}
+function trimToUndefined(value) {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : void 0;
+}
+function errorMessage6(error2) {
+  return error2 instanceof Error ? error2.message : String(error2);
+}
+
+// src/services/autopay-processing.service.ts
+var DEFAULT_MEMBERSHIP_SEND_QUERY_DOCUMENT_ID = "1bb0c9dc-1661-4c06-ac66-5b4ab2c58957";
+var DEFAULT_RECURRING_DONATION_SEND_QUERY_DOCUMENT_ID = "5ba797bc-0365-487b-a7e0-a1b306ead2f5";
+var RECURRING_DONATION_TASK_NAME = "Process recurring donations";
+var TASK_ADHOC_REQUEST_TYPE2 = "Asi.Soa.Communications.DataContracts.TaskAdhocRequest, Asi.Contracts";
+var TASK_DEFINITION_TYPE2 = "Asi.Soa.Communications.DataContracts.TaskDefinitionData, Asi.Contracts";
+var TASK_TRIGGER_COLLECTION_TYPE2 = "Asi.Soa.Communications.DataContracts.TaskDefinitionTriggerDataCollection, Asi.Contracts";
+var TASK_DATASOURCE_COLLECTION_TYPE = "Asi.Soa.Communications.DataContracts.DataSourceDataCollection, Asi.Contracts";
+var TASK_ACTION_COLLECTION_TYPE2 = "Asi.Soa.Communications.DataContracts.TaskDefinitionActionDataCollection, Asi.Contracts";
+var GENERATE_INVOICES_ACTION_TYPE = "Asi.Soa.Communications.DataContracts.TaskDefinitionActionGenerateInvoicesData, Asi.Contracts";
+var SEND_INVOICES_TO_DATAVAULT_ACTION_TYPE = "Asi.Soa.Communications.DataContracts.TaskDefinitionActionSendInvoicesToDataVaultData, Asi.Contracts";
+var RETRIEVE_PAYMENTS_ACTION_TYPE = "Asi.Soa.Communications.DataContracts.TaskDefinitionActionRetrievePaymentsFromDataVaultData, Asi.Contracts";
+var GENERIC_EXECUTE_TYPE3 = "Asi.Soa.Core.DataContracts.GenericExecuteRequest, Asi.Contracts";
+var OBJECT_COLLECTION_TYPE4 = "System.Collections.ObjectModel.Collection`1[[System.Object, mscorlib]], mscorlib";
+var STRING_COLLECTION_TYPE3 = "System.Collections.ObjectModel.Collection`1[[System.String, mscorlib]], mscorlib";
+var AutoPayProcessingService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async getCollectionState(limit = 100) {
+    const [dueInvoices, autoPayInvoices, dataVaultLogs] = await Promise.all([
+      this.safeRawList("AutoPayInvoicesDues", limit),
+      this.safeRawList("AutoPayInvoices", limit),
+      this.safeEntityList("DataVaultLog", limit)
+    ]);
+    const [dataVaultDetails, dataVaultAttempts] = await Promise.all([
+      this.safeRawList("DataVaultLogDetail", limit),
+      this.safeRawList("DataVaultAttempt", limit)
+    ]);
+    return {
+      version: "autopay-collection-state.v1",
+      dueInvoices: {
+        count: dueInvoices.items.length,
+        totalCount: dueInvoices.totalCount,
+        invoiceIds: invoiceIdsFromRows(dueInvoices.items),
+        items: redactSensitiveValue(dueInvoices.items)
+      },
+      autoPayInvoices: {
+        count: autoPayInvoices.items.length,
+        totalCount: autoPayInvoices.totalCount,
+        invoiceIds: invoiceIdsFromRows(autoPayInvoices.items),
+        items: redactSensitiveValue(autoPayInvoices.items)
+      },
+      dataVaultLogs: {
+        count: dataVaultLogs.items.length,
+        totalCount: dataVaultLogs.totalCount,
+        items: redactSensitiveValue(dataVaultLogs.items)
+      },
+      dataVaultDetails: {
+        count: dataVaultDetails.items.length,
+        totalCount: dataVaultDetails.totalCount,
+        invoiceIds: invoiceIdsFromRows(dataVaultDetails.items),
+        items: redactSensitiveValue(dataVaultDetails.items)
+      },
+      dataVaultAttempts: {
+        count: dataVaultAttempts.items.length,
+        totalCount: dataVaultAttempts.totalCount,
+        invoiceIds: invoiceIdsFromRows(dataVaultAttempts.items),
+        messages: dataVaultAttemptMessages(dataVaultAttempts.items),
+        items: redactSensitiveValue(dataVaultAttempts.items)
+      }
+    };
+  }
+  async previewSendDueInvoices(input = {}) {
+    const dueDate = normalizeDueDate(input.dueDate);
+    const memberName = input.memberName?.trim() ?? "";
+    const queryDocumentId = input.queryDocumentId?.trim() || DEFAULT_MEMBERSHIP_SEND_QUERY_DOCUMENT_ID;
+    const stateBefore = await this.getCollectionState();
+    return {
+      version: "autopay-send-due-invoices.v1",
+      mode: "preview",
+      dueDate,
+      memberName,
+      queryDocumentId,
+      dueInvoiceCount: stateBefore.dueInvoices.count,
+      invoiceIds: stateBefore.dueInvoices.invoiceIds,
+      confirmationText: sendConfirmation(dueDate, stateBefore.dueInvoices.invoiceIds),
+      stateBefore,
+      verificationRequired: [
+        "AutoPayInvoicesDues must list the invoice before send.",
+        "TaskDefinition/_execute must accept the fixed AutoPay invoice-processing action.",
+        "DataVaultLog/DataVaultLogDetail/DataVaultAttempt must be checked after send.",
+        "Invoice readback must show a pending payment or cleared balance after send."
+      ]
+    };
+  }
+  async submitSendDueInvoices(input) {
+    const preview = await this.previewSendDueInvoices(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    if (preview.dueInvoiceCount < 1) {
+      throw new Error("No AutoPay due invoices are currently visible in AutoPayInvoicesDues.");
+    }
+    const taskResult = await this.apiClient.post("TaskDefinition/_execute", taskAdhocRequest(
+      "Send Invoice Payments to DataVault",
+      {
+        $type: SEND_INVOICES_TO_DATAVAULT_ACTION_TYPE,
+        ActionId: null,
+        ActionTypeName: "RunSendInvoicesToDataVaultProcessing",
+        Description: null,
+        QueryDocumentID: preview.queryDocumentId,
+        ActionNotification: null
+      }
+    ));
+    await delay3(8e3);
+    const stateAfter = await this.getCollectionState();
+    const invoiceReadback = await this.readInvoices(preview.invoiceIds);
+    const detailInvoiceIds = new Set(stateAfter.dataVaultDetails.invoiceIds);
+    const attemptInvoiceIds = new Set(stateAfter.dataVaultAttempts.invoiceIds);
+    return {
+      ...preview,
+      mode: "submitted",
+      taskResult: redactSensitiveValue(taskResult),
+      stateAfter,
+      invoiceReadback,
+      proof: {
+        taskAccepted: true,
+        dataVaultLogCreatedOrPresent: (stateAfter.dataVaultLogs.totalCount ?? stateAfter.dataVaultLogs.count) >= (preview.stateBefore.dataVaultLogs.totalCount ?? preview.stateBefore.dataVaultLogs.count),
+        dataVaultDetailCreatedForInvoices: preview.invoiceIds.length > 0 && preview.invoiceIds.every((invoiceId) => detailInvoiceIds.has(invoiceId)),
+        dataVaultAttemptCreatedForInvoices: preview.invoiceIds.length > 0 && preview.invoiceIds.some((invoiceId) => attemptInvoiceIds.has(invoiceId)),
+        dueInvoicesNoLongerListed: preview.invoiceIds.every((invoiceId) => !stateAfter.dueInvoices.invoiceIds.includes(invoiceId)),
+        invoicesHavePendingPaymentOrClearedBalance: invoiceReadback.every(
+          (invoice) => monetaryAmount5(invoice.PendingPaymentAmount) > 0 || monetaryAmount5(invoice.Balance) === 0
+        )
+      }
+    };
+  }
+  async previewProcessRecurringDonations(input = {}) {
+    const runDate = normalizeDueDate(input.runDate);
+    const queryDocumentId = input.queryDocumentId?.trim() || DEFAULT_RECURRING_DONATION_SEND_QUERY_DOCUMENT_ID;
+    const stateBefore = await this.getCollectionState();
+    const recurringDonationProfile = await this.readRecurringDonationProfile(queryDocumentId, stateBefore);
+    return {
+      version: "autopay-process-recurring-donations.v1",
+      mode: "preview",
+      runDate,
+      queryDocumentId,
+      confirmationText: recurringDonationConfirmation(runDate, queryDocumentId),
+      recurringDonationProfile,
+      stateBefore,
+      verificationRequired: [
+        "The native Process recurring donations task must expose GenerateInvoices followed by SendInvoicesToDataVault.",
+        "AutoPayProcessor EnsureValidQuery must accept the recurring donation send query.",
+        "Recurring invoice candidates must be read by AutoPayInstructionId and Invoice.ScheduledPayments.",
+        "TaskDefinition/_execute must accept the fixed native generate/send action chain.",
+        "Future-dated schedules remain pending until the native recurring Pay Central query selects them as due.",
+        "DataVaultLog/DataVaultLogDetail/DataVaultAttempt must be checked after processing.",
+        "Invoice readback and PaymentApplication or balance readback are required before claiming settlement."
+      ]
+    };
+  }
+  async submitProcessRecurringDonations(input) {
+    const preview = await this.previewProcessRecurringDonations(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    if (!preview.recurringDonationProfile.nativeTaskShapeMatched) {
+      throw new Error("The native Process recurring donations task shape was not found or did not match generate/send processing.");
+    }
+    if (preview.recurringDonationProfile.queryValidation.status !== "ok") {
+      throw new Error(preview.recurringDonationProfile.queryValidation.reason ?? `AutoPayProcessor EnsureValidQuery did not accept ${preview.queryDocumentId}.`);
+    }
+    const taskResult = await this.apiClient.post("TaskDefinition/_execute", taskAdhocRequest(
+      RECURRING_DONATION_TASK_NAME,
+      [
+        {
+          $type: GENERATE_INVOICES_ACTION_TYPE,
+          ActionId: null,
+          ActionTypeName: "RunGenerateInvoicesProcessing",
+          Description: null,
+          RenewalPolicyID: "",
+          RunDate: preview.runDate,
+          DoNotValidatePolicyId: false,
+          ActionNotification: null
+        },
+        {
+          $type: SEND_INVOICES_TO_DATAVAULT_ACTION_TYPE,
+          ActionId: null,
+          ActionTypeName: "RunSendInvoicesToDataVaultProcessing",
+          Description: null,
+          QueryDocumentID: preview.queryDocumentId,
+          ActionNotification: null
+        }
+      ]
+    ));
+    await delay3(8e3);
+    const stateAfter = await this.getCollectionState();
+    const beforeDataVaultInvoiceIds = /* @__PURE__ */ new Set([
+      ...preview.stateBefore.dataVaultDetails.invoiceIds,
+      ...preview.stateBefore.dataVaultAttempts.invoiceIds
+    ]);
+    const afterDataVaultInvoiceIds = Array.from(/* @__PURE__ */ new Set([
+      ...stateAfter.dataVaultDetails.invoiceIds,
+      ...stateAfter.dataVaultAttempts.invoiceIds
+    ]));
+    const newDataVaultInvoiceIds = afterDataVaultInvoiceIds.filter((invoiceId) => !beforeDataVaultInvoiceIds.has(invoiceId));
+    const invoiceIds = Array.from(/* @__PURE__ */ new Set([
+      ...preview.recurringDonationProfile.recurringInvoiceIds,
+      ...preview.recurringDonationProfile.currentCollectionInvoiceIds,
+      ...newDataVaultInvoiceIds
+    ])).filter(Boolean);
+    const invoiceReadback = await this.readInvoices(invoiceIds);
+    const paymentApplicationReadback = await this.readPaymentApplications(invoiceIds);
+    const invoiceSettlementSummary = summarizeInvoiceSettlement(
+      invoiceIds,
+      invoiceReadback,
+      paymentApplicationReadback,
+      stateAfter.dataVaultDetails.items,
+      stateAfter.dataVaultAttempts.items
+    );
+    const attemptMessages = dataVaultAttemptMessagesForInvoices(
+      stateAfter.dataVaultAttempts.items,
+      invoiceIds
+    );
+    return {
+      ...preview,
+      mode: "submitted",
+      taskResult: redactSensitiveValue(taskResult),
+      stateAfter,
+      invoiceReadback,
+      paymentApplicationReadback,
+      invoiceSettlementSummary,
+      proof: {
+        taskAccepted: true,
+        nativeTaskShapeMatched: preview.recurringDonationProfile.nativeTaskShapeMatched,
+        queryValidated: preview.recurringDonationProfile.queryValidation.status === "ok",
+        activeRecurringInstructionsPresent: preview.recurringDonationProfile.activeInstructionCount > 0,
+        recurringInvoiceReadbackFound: preview.recurringDonationProfile.recurringInvoiceIds.length > 0,
+        dataVaultLogCreatedOrPresent: (stateAfter.dataVaultLogs.totalCount ?? stateAfter.dataVaultLogs.count) > (preview.stateBefore.dataVaultLogs.totalCount ?? preview.stateBefore.dataVaultLogs.count),
+        dataVaultDetailCreatedOrPresent: invoiceIds.length > 0 && stateAfter.dataVaultDetails.invoiceIds.some((invoiceId) => invoiceIds.includes(invoiceId)),
+        dataVaultAttemptCreatedOrPresent: invoiceIds.length > 0 && stateAfter.dataVaultAttempts.invoiceIds.some((invoiceId) => invoiceIds.includes(invoiceId)),
+        settledPaymentReadbackFound: invoiceSettlementSummary.some((invoice) => invoice.settled),
+        pendingInvoicesRemain: invoiceSettlementSummary.some((invoice) => invoice.pending),
+        dataVaultAttemptMessages: attemptMessages
+      }
+    };
+  }
+  async previewRetrieveProcessedPayments() {
+    return {
+      version: "autopay-retrieve-processed-payments.v1",
+      mode: "preview",
+      confirmationText: "Retrieve processed AutoPay payments from Pay Central",
+      stateBefore: await this.getCollectionState(),
+      verificationRequired: [
+        "AutoPayProcessor/_execute RetrieveProcessedPaymentsFromDataVault must return success.",
+        "Invoices with pending AutoPay payments must be re-read after retrieve.",
+        "DataVaultAttempt messages and PaymentApplication readback must be checked before claiming settlement."
+      ]
+    };
+  }
+  async submitRetrieveProcessedPayments(input) {
+    const preview = await this.previewRetrieveProcessedPayments();
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    const processorResult = await this.apiClient.post(
+      "AutoPayProcessor/_execute",
+      genericExecuteRequest("AutoPayProcessor", "RetrieveProcessedPaymentsFromDataVault")
+    );
+    const taskResult = input.runTaskAction ? await this.apiClient.post("TaskDefinition/_execute", taskAdhocRequest(
+      "Retrieve Processed Payments From DataVault",
+      {
+        $type: RETRIEVE_PAYMENTS_ACTION_TYPE,
+        ActionId: null,
+        ActionTypeName: "RunRetrievePaymentsFromDataVaultProcessing",
+        Description: null,
+        ActionNotification: null
+      }
+    )) : void 0;
+    await delay3(8e3);
+    const stateAfter = await this.getCollectionState();
+    const invoiceIds = Array.from(/* @__PURE__ */ new Set([
+      ...input.invoiceIds ?? [],
+      ...preview.stateBefore.autoPayInvoices.invoiceIds,
+      ...preview.stateBefore.dueInvoices.invoiceIds,
+      ...preview.stateBefore.dataVaultDetails.invoiceIds,
+      ...preview.stateBefore.dataVaultAttempts.invoiceIds
+    ]));
+    const invoiceReadback = await this.readInvoices(invoiceIds);
+    const paymentApplicationReadback = await this.readPaymentApplications(invoiceIds);
+    const invoiceSettlementSummary = summarizeInvoiceSettlement(
+      invoiceIds,
+      invoiceReadback,
+      paymentApplicationReadback,
+      stateAfter.dataVaultDetails.items,
+      stateAfter.dataVaultAttempts.items
+    );
+    const attemptMessages = dataVaultAttemptMessagesForInvoices(
+      stateAfter.dataVaultAttempts.items,
+      invoiceIds
+    );
+    return {
+      ...preview,
+      mode: "submitted",
+      processorResult: redactSensitiveValue(processorResult),
+      taskResult: redactSensitiveValue(taskResult),
+      stateAfter,
+      invoiceReadback,
+      paymentApplicationReadback,
+      invoiceSettlementSummary,
+      proof: {
+        processorAccepted: serviceResponseSucceeded(processorResult),
+        pendingInvoicesRemain: invoiceSettlementSummary.some((invoice) => invoice.pending),
+        settledPaymentReadbackFound: invoiceSettlementSummary.some((invoice) => invoice.settled),
+        dataVaultAttemptMessages: attemptMessages
+      }
+    };
+  }
+  async safeRawList(entityName, limit) {
+    try {
+      const page = await fetchPage(this.apiClient, entityName, 0, limit);
+      return {
+        items: page.Items.map(flattenGenericEntity),
+        totalCount: page.TotalCount
+      };
+    } catch {
+      return { items: [], totalCount: 0 };
+    }
+  }
+  async safeEntityList(entityName, limit) {
+    try {
+      return await this.entityService.list(entityName, { limit });
+    } catch {
+      return { items: [], totalCount: 0 };
+    }
+  }
+  async readRecurringDonationProfile(queryDocumentId, collectionState) {
+    const [instructions, scheduledPayments, taskDefinition, queryValidation] = await Promise.all([
+      this.safeEntityList("AutoPayInstruction", 500),
+      this.safeEntityList("ScheduledPayment", 500),
+      this.readRecurringDonationTaskDefinition(),
+      this.ensureValidAutoPayQuery(queryDocumentId)
+    ]);
+    const activeInstructions = instructions.items.filter(isActiveRecurringDonationInstruction);
+    const instructionIds = Array.from(new Set(activeInstructions.map(autoPayInstructionId).filter((value) => Boolean(value))));
+    const partyIds = Array.from(new Set(activeInstructions.map(autoPayInstructionPartyId).filter((value) => Boolean(value))));
+    const productCodes = Array.from(new Set(activeInstructions.map((instruction) => stringValue14(instruction.ProductCode)).filter((value) => Boolean(value))));
+    const recurringInvoices = await this.readInvoiceSummariesByAutoPayInstructionIds(instructionIds);
+    const recurringInvoiceIds = invoiceIdsFromRows(recurringInvoices);
+    const invoiceScheduledPayments = await this.readScheduledPaymentsFromInvoices(recurringInvoiceIds);
+    const matchingScheduledPayments = scheduledPayments.items.filter(
+      (payment) => rowReferencesAny(payment, instructionIds, [
+        "AutoPayInstructionId",
+        "InstructionId",
+        "AutoPayInstruction"
+      ]) || rowReferencesAny(payment, partyIds, [
+        "BillToPartyId",
+        "PartyId",
+        "CustomerId",
+        "PayerId",
+        "BillToParty",
+        "Customer",
+        "Payer"
+      ])
+    );
+    const allScheduledPayments = dedupeRowsById(
+      [...matchingScheduledPayments, ...invoiceScheduledPayments],
+      "ScheduledPaymentId"
+    );
+    const scheduledPaymentIds = allScheduledPayments.map((payment) => stringValue14(payment.ScheduledPaymentId)).filter((value) => Boolean(value));
+    const collectionRows = [
+      ...collectionItems2(collectionState.dueInvoices.items),
+      ...collectionItems2(collectionState.autoPayInvoices.items)
+    ];
+    const currentCollectionInvoiceIds = invoiceIdsFromRows(collectionRows.filter(
+      (row) => rowReferencesAny(row, instructionIds, ["AutoPayInstructionId", "InstructionId", "AutoPayInstruction"]) || rowReferencesAny(row, partyIds, ["PartyId", "CustomerId", "PayerId", "Customer", "Payer"]) || rowReferencesAny(row, productCodes, ["ProductCode", "ItemCode", "ItemId"])
+    ));
+    return {
+      activeInstructionCount: activeInstructions.length,
+      instructionIds,
+      partyIds,
+      productCodes,
+      scheduledPaymentCount: allScheduledPayments.length,
+      scheduledPaymentIds,
+      recurringInvoiceIds,
+      currentCollectionInvoiceIds,
+      taskDefinition,
+      nativeTaskShapeMatched: recurringDonationTaskShapeMatched(taskDefinition, queryDocumentId),
+      queryValidation,
+      instructions: redactSensitiveValue(activeInstructions),
+      invoices: redactSensitiveValue(recurringInvoices),
+      scheduledPayments: redactSensitiveValue(allScheduledPayments)
+    };
+  }
+  async readInvoiceSummariesByAutoPayInstructionIds(instructionIds) {
+    const invoices = [];
+    for (const instructionId of instructionIds) {
+      try {
+        const result = await this.entityService.list("InvoiceSummary", {
+          limit: 50,
+          params: { AutoPayInstructionId: instructionId }
+        });
+        invoices.push(...result.items);
+      } catch {
+      }
+    }
+    return dedupeRowsById(invoices, "InvoiceId");
+  }
+  async readScheduledPaymentsFromInvoices(invoiceIds) {
+    const scheduledPayments = [];
+    for (const invoiceId of invoiceIds) {
+      try {
+        const invoice = await this.entityService.get("Invoice", invoiceId);
+        scheduledPayments.push(...collectionItems2(recordValue4(invoice)?.ScheduledPayments));
+      } catch {
+      }
+    }
+    return dedupeRowsById(scheduledPayments, "ScheduledPaymentId");
+  }
+  async readRecurringDonationTaskDefinition() {
+    const tasks = await this.safeEntityList("TaskDefinition", 250);
+    const task = tasks.items.find((candidate) => stringValue14(candidate.Name) === RECURRING_DONATION_TASK_NAME) ?? tasks.items.find((candidate) => /process recurring donations/i.test(stringValue14(candidate.Name) ?? ""));
+    return task ? summarizeTaskDefinition(task) : void 0;
+  }
+  async ensureValidAutoPayQuery(queryDocumentId) {
+    try {
+      const result = await this.apiClient.post(
+        "AutoPayProcessor/_execute",
+        genericExecuteRequest("AutoPayProcessor", "EnsureValidQuery", [
+          { type: "System.String", value: queryDocumentId }
+        ])
+      );
+      return {
+        status: "ok",
+        queryDocumentId,
+        result: redactSensitiveValue(result)
+      };
+    } catch (error2) {
+      return {
+        status: "error",
+        queryDocumentId,
+        reason: errorMessage7(error2)
+      };
+    }
+  }
+  async readInvoices(invoiceIds) {
+    const invoices = [];
+    for (const invoiceId of Array.from(new Set(invoiceIds)).filter(Boolean)) {
+      try {
+        const invoice = await this.entityService.get("InvoiceSummary", invoiceId);
+        invoices.push(redactSensitiveValue(invoice));
+      } catch {
+      }
+    }
+    return invoices;
+  }
+  async readPaymentApplications(invoiceIds) {
+    const applications = [];
+    for (const invoiceId of Array.from(new Set(invoiceIds)).filter(Boolean)) {
+      try {
+        const result = await this.entityService.list("PaymentApplication", {
+          limit: 50,
+          params: { InvoiceId: invoiceId }
+        });
+        applications.push(...result.items.map((item) => redactSensitiveValue(item)));
+      } catch {
+      }
+    }
+    return applications;
+  }
+};
+function taskAdhocRequest(name, actionOrActions) {
+  const actions = Array.isArray(actionOrActions) ? actionOrActions : [actionOrActions];
+  return {
+    $type: TASK_ADHOC_REQUEST_TYPE2,
+    Task: {
+      $type: TASK_DEFINITION_TYPE2,
+      Name: name,
+      IsActive: true,
+      Priority: 0,
+      TaskType: 2,
+      Triggers: {
+        $type: TASK_TRIGGER_COLLECTION_TYPE2,
+        $values: []
+      },
+      Evaluations: null,
+      DataSources: {
+        $type: TASK_DATASOURCE_COLLECTION_TYPE,
+        $values: []
+      },
+      Actions: {
+        $type: TASK_ACTION_COLLECTION_TYPE2,
+        $values: actions
+      },
+      Notifications: null,
+      UpdateInformation: null
+    },
+    EntityTypeName: "TaskDefinition",
+    OperationName: "TaskAdhocRequest"
+  };
+}
+function genericExecuteRequest(entityTypeName, operationName, params = []) {
+  const request = {
+    $type: GENERIC_EXECUTE_TYPE3,
+    OperationName: operationName,
+    EntityTypeName: entityTypeName,
+    UseJson: false
+  };
+  if (params.length > 0) {
+    request.Parameters = {
+      $type: OBJECT_COLLECTION_TYPE4,
+      $values: params.map((param) => ({
+        $type: param.type,
+        $value: param.value
+      }))
+    };
+    request.ParameterTypeName = {
+      $type: STRING_COLLECTION_TYPE3,
+      $values: params.map((param) => param.type)
+    };
+  }
+  return request;
+}
+function normalizeDueDate(value) {
+  const trimmed = value?.trim();
+  if (trimmed) return trimmed.includes("T") ? trimmed.replace("T", " ").slice(0, 19) : trimmed;
+  return `${localCalendarDate()} 00:00:00`;
+}
+function localCalendarDate() {
+  const now = /* @__PURE__ */ new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+function sendConfirmation(dueDate, invoiceIds) {
+  return `Send ${invoiceIds.length} AutoPay due invoice(s) to Pay Central for ${dueDate}`;
+}
+function recurringDonationConfirmation(runDate, queryDocumentId) {
+  return `Process recurring donation invoices through ${runDate} using query ${queryDocumentId}`;
+}
+function invoiceIdsFromRows(rows) {
+  return rows.map((row) => invoiceIdFromValue(
+    row.code_InvoiceRefNum ?? row.InvoiceId ?? row.ScheduledInvoiceId ?? row.InvoiceRefNum ?? row.ReferenceNum ?? row.InvoiceReferenceNumber ?? recordValue4(row.DataVaultLogDetail)?.InvoiceReferenceNumber ?? recordValue4(row.DataVaultLogDetail)?.InvoiceNumber ?? row.Invoice ?? row.InvoiceNumber ?? row.ScheduledPaymentId
+  )).filter((value) => Boolean(value));
+}
+function invoiceIdFromValue(value) {
+  const invoiceId = stringValue14(value);
+  if (!invoiceId) return void 0;
+  const parts = invoiceId.split(":");
+  const lastPart = parts[parts.length - 1];
+  return parts.length > 1 && /^\d+$/.test(lastPart) ? lastPart : invoiceId;
+}
+function collectionItems2(value) {
+  return collectionValues9(value).filter(isRecord4);
+}
+function isRecord4(value) {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
+function isActiveRecurringDonationInstruction(instruction) {
+  const status = stringValue14(instruction.Status)?.toLowerCase();
+  if (status !== "active") return false;
+  const instructionType = stringValue14(instruction.InstructionType)?.toLowerCase() ?? "";
+  return instructionType.includes("donation") || Boolean(stringValue14(instruction.ProductCode));
+}
+function autoPayInstructionId(instruction) {
+  return stringValue14(
+    instruction.AutoPayInstructionId ?? instruction.InstructionId ?? instruction.Id
+  );
+}
+function autoPayInstructionPartyId(instruction) {
+  return stringValue14(
+    instruction.PartyId ?? instruction.CustomerId ?? instruction.PayerId ?? recordValue4(instruction.Customer)?.PartyId ?? recordValue4(instruction.Customer)?.Id ?? recordValue4(instruction.Payer)?.PartyId ?? recordValue4(instruction.Payer)?.Id
+  );
+}
+function rowReferencesAny(row, values, fields) {
+  if (values.length === 0) return false;
+  const targets = new Set(values);
+  return fields.some((field) => {
+    const value = row[field];
+    if (isRecord4(value)) {
+      return [
+        value.Id,
+        value.PartyId,
+        value.CustomerId,
+        value.PayerId,
+        value.InvoiceId,
+        value.InvoiceNumber,
+        value.AutoPayInstructionId,
+        value.InstructionId,
+        value.ProductCode
+      ].some((candidate) => {
+        const key2 = stringValue14(candidate);
+        return Boolean(key2 && targets.has(key2));
+      });
+    }
+    const key = stringValue14(value);
+    return Boolean(key && targets.has(key));
+  });
+}
+function summarizeTaskDefinition(task) {
+  const actions = collectionValues9(recordValue4(task.Actions)?.$values ?? task.Actions).map((action) => {
+    const record2 = recordValue4(action) ?? {};
+    return {
+      type: stringValue14(record2.$type),
+      actionTypeName: stringValue14(record2.ActionTypeName),
+      queryDocumentId: stringValue14(record2.QueryDocumentID),
+      runDate: stringValue14(record2.RunDate),
+      renewalPolicyId: stringValue14(record2.RenewalPolicyID)
+    };
+  });
+  return {
+    taskDefinitionId: stringValue14(task.TaskDefinitionId),
+    name: stringValue14(task.Name),
+    description: stringValue14(task.Description),
+    isActive: typeof task.IsActive === "boolean" ? task.IsActive : void 0,
+    actions
+  };
+}
+function recurringDonationTaskShapeMatched(task, queryDocumentId) {
+  if (!task) return false;
+  const generate = task.actions.find(
+    (action) => action.type === GENERATE_INVOICES_ACTION_TYPE && action.actionTypeName === "RunGenerateInvoicesProcessing"
+  );
+  const send = task.actions.find(
+    (action) => action.type === SEND_INVOICES_TO_DATAVAULT_ACTION_TYPE && action.actionTypeName === "RunSendInvoicesToDataVaultProcessing" && action.queryDocumentId === queryDocumentId
+  );
+  return Boolean(generate && send);
+}
+function collectionValues9(value) {
+  if (Array.isArray(value)) return value;
+  if (isRecord4(value) && Array.isArray(value.$values)) return value.$values;
+  return [];
+}
+function dedupeRowsById(rows, idField) {
+  const seen = /* @__PURE__ */ new Set();
+  const deduped = [];
+  for (const row of rows) {
+    const id = stringValue14(row[idField]) ?? JSON.stringify(row);
+    if (seen.has(id)) continue;
+    seen.add(id);
+    deduped.push(row);
+  }
+  return deduped;
+}
+function flattenGenericEntity(row) {
+  const properties = row.Properties && typeof row.Properties === "object" && !Array.isArray(row.Properties) ? row.Properties : void 0;
+  const values = properties?.$values;
+  if (!Array.isArray(values)) return row;
+  return Object.fromEntries(values.map((entry) => {
+    const property = entry && typeof entry === "object" && !Array.isArray(entry) ? entry : void 0;
+    const name = stringValue14(property?.Name);
+    if (!name) return void 0;
+    return [name, unwrapPropertyValue(property?.Value)];
+  }).filter((entry) => Boolean(entry)));
+}
+function unwrapPropertyValue(value) {
+  const record2 = value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+  return record2?.$value ?? value;
+}
+function dataVaultAttemptMessages(rows) {
+  return Array.from(new Set(rows.map((row) => stringValue14(row.Message)).filter((message) => Boolean(message))));
+}
+function dataVaultAttemptMessagesForInvoices(rows, invoiceIds) {
+  const targetInvoiceIds = new Set(invoiceIds);
+  const records = Array.isArray(rows) ? rows : [];
+  return Array.from(new Set(records.filter((row) => targetInvoiceIds.has(stringValue14(recordValue4(row.DataVaultLogDetail)?.InvoiceNumber) ?? "")).map((row) => stringValue14(row.Message)).filter((message) => Boolean(message))));
+}
+function summarizeInvoiceSettlement(invoiceIds, invoiceReadback, paymentApplications, dataVaultDetails, dataVaultAttempts) {
+  const invoiceRecords = new Map(invoiceReadback.map((invoice) => [stringValue14(invoice.InvoiceId), invoice]).filter((entry) => Boolean(entry[0])));
+  const detailRecords = Array.isArray(dataVaultDetails) ? dataVaultDetails : [];
+  const attemptRecords = Array.isArray(dataVaultAttempts) ? dataVaultAttempts : [];
+  const applicationRecords = paymentApplications.map(paymentApplicationProperties);
+  return Array.from(new Set(invoiceIds)).filter(Boolean).map((invoiceId) => {
+    const invoice = invoiceRecords.get(invoiceId);
+    const invoiceNumber = stringValue14(invoice?.InvoiceNumber);
+    const matchingDetails = detailRecords.filter((detail) => rowMatchesInvoice(detail, invoiceId));
+    const matchingAttempts = attemptRecords.filter((attempt) => rowMatchesInvoice(recordValue4(attempt.DataVaultLogDetail), invoiceId));
+    const matchingApplications = applicationRecords.filter(
+      (application) => stringValue14(application.InvoiceId) === invoiceId || stringValue14(application.InvoiceReferenceNumber) === invoiceId || (invoiceNumber ? stringValue14(application.InvoiceNumber) === invoiceNumber : false)
+    );
+    const paymentIds = Array.from(new Set(matchingApplications.map((application) => stringValue14(application.PaymentId)).filter((paymentId) => Boolean(paymentId))));
+    const dataVaultMessages = Array.from(new Set(matchingAttempts.map((attempt) => stringValue14(attempt.Message)).filter((message) => Boolean(message))));
+    const pendingPaymentAmount = monetaryAmount5(invoice?.PendingPaymentAmount);
+    const paymentAmount = monetaryAmount5(invoice?.PaymentAmount);
+    const balanceAmount = monetaryAmount5(invoice?.Balance);
+    const invoiceAmount = monetaryAmount5(invoice?.InvoiceAmount);
+    const hasPaymentApplication = matchingApplications.length > 0;
+    const settled = balanceAmount === 0 && (hasPaymentApplication || paymentAmount > 0 || pendingPaymentAmount === 0 && invoiceAmount > 0);
+    return {
+      invoiceId,
+      invoiceNumber,
+      dueDate: stringValue14(invoice?.DueDate),
+      autoPayInstructionId: stringValue14(invoice?.AutoPayInstructionId),
+      pendingPaymentAmount,
+      paymentAmount,
+      balanceAmount,
+      dataVaultDetailFound: matchingDetails.length > 0,
+      dataVaultAttemptCount: matchingAttempts.length,
+      dataVaultApproved: matchingAttempts.some(
+        (attempt) => stringValue14(attempt.Status) === "1" || /^Approved\./i.test(stringValue14(attempt.Message) ?? "")
+      ),
+      dataVaultMessages,
+      paymentApplicationCount: matchingApplications.length,
+      paymentIds,
+      settled,
+      pending: !settled && (pendingPaymentAmount > 0 || balanceAmount > 0)
+    };
+  });
+}
+function rowMatchesInvoice(row, invoiceId) {
+  if (!row) return false;
+  return [
+    row.InvoiceId,
+    row.InvoiceReferenceNumber,
+    row.InvoiceNumber,
+    recordValue4(row.DataVaultLogDetail)?.InvoiceReferenceNumber,
+    recordValue4(row.DataVaultLogDetail)?.InvoiceNumber
+  ].some((value) => stringValue14(value) === invoiceId);
+}
+function paymentApplicationProperties(application) {
+  const properties = recordValue4(application.Properties);
+  const values = properties?.$values;
+  if (!Array.isArray(values)) return application;
+  return Object.fromEntries(values.map((entry) => {
+    const property = recordValue4(entry);
+    const name = stringValue14(property?.Name);
+    if (!name) return void 0;
+    return [name, unwrapPropertyValue(property?.Value)];
+  }).filter((entry) => Boolean(entry)));
+}
+function monetaryAmount5(value) {
+  const record2 = value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+  const amount = record2?.Amount ?? record2?.$value ?? value;
+  if (typeof amount === "number" && Number.isFinite(amount)) return amount;
+  if (typeof amount === "string" && amount.trim()) {
+    const parsed = Number(amount);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+}
+function recordValue4(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function serviceResponseSucceeded(value) {
+  const record2 = value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+  return record2?.IsSuccessStatusCode === true || record2?.StatusCode === 0;
+}
+function stringValue14(value) {
+  const record2 = value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+  const unwrapped = record2?.$value ?? value;
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function errorMessage7(error2) {
+  if (error2 instanceof Error) return error2.message;
+  const message = stringValue14(error2);
+  return message ?? "Unknown iMIS error.";
+}
+function delay3(ms) {
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
+}
+
 // src/tools/autopay-tools.ts
 function filterByPartyReference(items, partyId, refFields) {
   if (!partyId) return items;
@@ -42800,18 +49767,19 @@ function filterByPartyReference(items, partyId, refFields) {
     })
   );
 }
-function registerAutopayTools(server, entityService) {
+function registerAutopayTools(server, entityService, apiClient) {
   server.tool(
     "imis_autopay_summary",
-    `Get auto-pay configuration in iMIS \u2014 active accounts, payment instructions, and scheduled payments. Note: iMIS auto-pay entities use entity references (Payer, Customer) rather than flat PartyId filters \u2014 some queries return all records. Use imis_scheduled_payments to list all scheduled payments if you need them.`,
+    `Get auto-pay configuration in iMIS \u2014 active accounts, payment instructions, scheduled payments, and redacted Pay Central collection state. Note: iMIS auto-pay entities use entity references (Payer, Customer) rather than flat PartyId filters \u2014 some queries return all records. Use imis_scheduled_payments to list all scheduled payments if you need them.`,
     {
       partyId: external_exports.string().optional().describe("Party ID of the member (used to filter results where possible)")
     },
     withErrorHandling(async ({ partyId }) => {
-      const [accounts, instructions, scheduledPayments] = await Promise.all([
+      const [accounts, instructions, scheduledPayments, collectionState] = await Promise.all([
         entityService.list("AutoPayAccount", { limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
         entityService.list("AutoPayInstruction", { limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
-        entityService.list("ScheduledPayment", { limit: 50 }).catch(() => ({ items: [], totalCount: 0 }))
+        entityService.list("ScheduledPayment", { limit: 50 }).catch(() => ({ items: [], totalCount: 0 })),
+        new AutoPayProcessingService(entityService, apiClient).getCollectionState().catch(() => void 0)
       ]);
       const filteredAccounts = filterByPartyReference(accounts.items, partyId, ["Payer", "PayerId", "Customer", "CustomerId", "PartyId"]);
       const filteredInstructions = filterByPartyReference(instructions.items, partyId, ["Customer", "CustomerId", "Payer", "PayerId", "PartyId"]);
@@ -42825,9 +49793,10 @@ function registerAutopayTools(server, entityService) {
           type: "text",
           text: JSON.stringify({
             partyId: partyId ?? "all",
-            accounts: { count: filteredAccounts.length, items: filteredAccounts },
-            instructions: { count: filteredInstructions.length, items: filteredInstructions },
-            scheduledPayments: { count: filteredScheduledPayments.length, items: filteredScheduledPayments }
+            accounts: { count: filteredAccounts.length, items: redactSensitiveValue(filteredAccounts) },
+            instructions: { count: filteredInstructions.length, items: redactSensitiveValue(filteredInstructions) },
+            scheduledPayments: { count: filteredScheduledPayments.length, items: redactSensitiveValue(filteredScheduledPayments) },
+            collectionState
           }, null, 2)
         }]
       };
@@ -42835,7 +49804,7 @@ function registerAutopayTools(server, entityService) {
   );
   server.tool(
     "imis_manage_autopay",
-    "Reserved AutoPay mutation surface. AutoPay reads are available through imis_autopay_summary and imis_scheduled_payments; create/update/deactivate is blocked until active gateway-backed AutoPayAccount and AutoPayInstruction write contracts are live-proven on the target tenant.",
+    "Reserved AutoPay account/instruction mutation surface. AutoPay reads are available through imis_autopay_summary and imis_scheduled_payments; due invoice processing is available through imis_process_autopay_collection. Account create/update/deactivate remains blocked until hosted-payment account lifecycle semantics are fully guarded.",
     {
       action: external_exports.enum(["create", "update", "deactivate"]).describe("Action to perform on auto-pay instruction"),
       instructionId: external_exports.string().optional().describe("Auto-pay instruction ID (required for update/deactivate)"),
@@ -42843,8 +49812,103 @@ function registerAutopayTools(server, entityService) {
     },
     withErrorHandling(async () => {
       throw new Error(
-        "AutoPay mutation is not exposed. Live proof currently covers read-only AutoPay surface mapping plus inert cancelled instruction creation for development evidence only; active mandate creation, update, deactivate, and gateway collection require a proven active AutoPayAccount/token path before this tool can mutate records."
+        "AutoPay account/instruction mutation is not exposed. Use imis_process_autopay_collection for guarded due-invoice send/retrieve processing. Account create/update/deactivate still needs purpose-built hosted-payment lifecycle semantics, confirmation gates, and deactivate/update readback before this tool can mutate records."
       );
+    })
+  );
+  server.tool(
+    "imis_process_autopay_collection",
+    "Preview or run guarded Pay Central AutoPay collection processing for membership renewal and recurring-donation invoices through native iMIS task actions. This does not handle raw card data, create AutoPay accounts, create instructions, or mutate generic payment records.",
+    {
+      action: external_exports.enum([
+        "preview_send_due_invoices",
+        "send_due_invoices",
+        "preview_process_recurring_donations",
+        "process_recurring_donations",
+        "preview_retrieve_processed_payments",
+        "retrieve_processed_payments"
+      ]).describe("Choose preview before submit. Sending invoices, processing recurring donations, and retrieving processed payments require exact confirmation text."),
+      dueDate: external_exports.string().optional().describe("Due date parameter for the membership AutoPay invoice query, for example '2028-06-01 00:00:00'. Defaults to today at 00:00:00."),
+      runDate: external_exports.string().optional().describe("Run date for native recurring-donation invoice generation, for example '2026-06-27 00:00:00'. Defaults to today at 00:00:00; sending still depends on iMIS' native due-invoice query."),
+      memberName: external_exports.string().optional().describe("Optional member-name query parameter. Leave empty to process all currently due AutoPay rows returned by the configured query."),
+      queryDocumentId: external_exports.string().optional().describe("Optional AutoPay IQA document id. Membership send defaults to the standard renewal query; recurring-donation processing defaults to the native recurring-donation Pay Central query."),
+      invoiceIds: external_exports.array(external_exports.string()).optional().describe("Optional invoice ids to re-read after retrieving processed payments."),
+      runTaskAction: external_exports.boolean().optional().describe("For retrieve_processed_payments, also run the TaskDefinition action wrapper after AutoPayProcessor retrieve."),
+      confirmationText: external_exports.string().optional().describe("Exact confirmation text returned by the preview action. Required for submit actions.")
+    },
+    withErrorHandling(async ({
+      action,
+      dueDate,
+      runDate,
+      memberName,
+      queryDocumentId,
+      invoiceIds,
+      runTaskAction,
+      confirmationText: confirmationText3
+    }) => {
+      const service = new AutoPayProcessingService(entityService, apiClient);
+      switch (action) {
+        case "preview_send_due_invoices":
+          return {
+            content: [{
+              type: "text",
+              text: JSON.stringify(await service.previewSendDueInvoices({ dueDate, memberName, queryDocumentId }), null, 2)
+            }]
+          };
+        case "send_due_invoices":
+          if (!confirmationText3) throw new Error("confirmationText is required for send_due_invoices.");
+          return {
+            content: [{
+              type: "text",
+              text: JSON.stringify(await service.submitSendDueInvoices({
+                dueDate,
+                memberName,
+                queryDocumentId,
+                confirmationText: confirmationText3
+              }), null, 2)
+            }]
+          };
+        case "preview_process_recurring_donations":
+          return {
+            content: [{
+              type: "text",
+              text: JSON.stringify(await service.previewProcessRecurringDonations({ runDate, queryDocumentId }), null, 2)
+            }]
+          };
+        case "process_recurring_donations":
+          if (!confirmationText3) throw new Error("confirmationText is required for process_recurring_donations.");
+          return {
+            content: [{
+              type: "text",
+              text: JSON.stringify(await service.submitProcessRecurringDonations({
+                runDate,
+                queryDocumentId,
+                confirmationText: confirmationText3
+              }), null, 2)
+            }]
+          };
+        case "preview_retrieve_processed_payments":
+          return {
+            content: [{
+              type: "text",
+              text: JSON.stringify(await service.previewRetrieveProcessedPayments(), null, 2)
+            }]
+          };
+        case "retrieve_processed_payments":
+          if (!confirmationText3) throw new Error("confirmationText is required for retrieve_processed_payments.");
+          return {
+            content: [{
+              type: "text",
+              text: JSON.stringify(await service.submitRetrieveProcessedPayments({
+                confirmationText: confirmationText3,
+                invoiceIds,
+                runTaskAction
+              }), null, 2)
+            }]
+          };
+        default:
+          throw new Error(`Unknown action: ${action}`);
+      }
     })
   );
   server.tool(
@@ -43129,7 +50193,7 @@ async function getPaymentMethodByListFilter(entityService, methodId, financialEn
   }
   return matches[0];
 }
-function registerGatewayTools(server, entityService) {
+function registerGatewayTools(server, entityService, apiClient, companion) {
   server.tool(
     "imis_gateway_accounts",
     `List or inspect payment gateway configurations in iMIS (Stripe, PayPal, etc.). Gateway accounts define how the organisation processes payments \u2014 which provider, what currencies, and what payment methods are supported. Important for troubleshooting payment failures and verifying gateway setup.`,
@@ -43202,6 +50266,2864 @@ function registerGatewayTools(server, entityService) {
         default:
           throw new Error(`Unknown action: ${action}`);
       }
+    })
+  );
+  server.tool(
+    "imis_gateway_checkout_readiness",
+    `Check whether this iMIS tenant is ready for Pay Central SDK card checkout from an external page. This reads gateway/payment-method setup, tests the documented PayCentralSdk GetSdkToken operation for a supplied page domain and party identifier, and reports active recurring-collection prerequisites without handling raw card data or moving money.`,
+    {
+      domain: external_exports.string().optional().describe("External page domain to test for Pay Central SDK whitelist readiness, without protocol or port. Defaults to the active iMIS API hostname."),
+      partyId: external_exports.string().optional().describe("PartyId or other customer identifier for Pay Central telemetry. Max 36 characters; defaults to 'mcp-check'."),
+      includeRawResponse: external_exports.boolean().optional().describe("Include redacted raw Pay Central service responses for diagnosis. AuthToken and token-like fields remain redacted.")
+    },
+    withErrorHandling(async ({ domain, partyId, includeRawResponse }) => {
+      const service = new GatewayReadinessService(entityService, apiClient);
+      const result = await service.getCheckoutReadiness({
+        domain,
+        partyId,
+        includeRawResponse
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_automatic_payment_settings",
+    "Read, preview, or save the native iMIS Pay Central automatic-payment settings that allow recurring donations and auto-renewing memberships. REST is used only for read/validation; submit requires exact confirmation and a connected companion browser for the native Staff Save path. This does not create mandates, collect card data, submit donations, create invoices, or process AutoPay collections.",
+    {
+      action: external_exports.enum(["read", "preview", "submit"]).describe("read returns current CommerceSettings posture; preview validates requested changes and returns confirmationText; submit saves through the native Staff Pay Central settings form when the companion browser is connected."),
+      recurringDonations: external_exports.enum(["disabled", "enabled", "enabled_optional", "enabled_by_default"]).optional().describe("'enabled' is accepted as an alias for 'enabled_by_default'. 'enabled_optional' allows recurring donations without making them the default."),
+      allowDonorChangeDonationAmount: external_exports.boolean().optional().describe("When recurring donations are enabled, set whether donors may change the amount of their recurring donation. Defaults to true when recurring donations are enabled."),
+      autoRenewingMemberships: external_exports.enum(["disabled", "enabled", "enabled_optional", "enabled_by_default", "required"]).optional().describe("'enabled' is accepted as an alias for 'enabled_by_default'. 'required' maps to the native required auto-renew option."),
+      staffSettingsUrl: external_exports.string().optional().describe("Optional current Staff Pay Central settings URL, useful when iMIS requires WebsiteKey/hkey parameters. If omitted, submit reuses the current companion browser URL when it is already on Pay Central settings, otherwise it opens the default Staff route."),
+      confirmationText: external_exports.string().optional().describe("Required for submit. Must exactly equal the confirmationText returned by preview.")
+    },
+    withErrorHandling(async ({
+      action,
+      recurringDonations,
+      allowDonorChangeDonationAmount,
+      autoRenewingMemberships,
+      staffSettingsUrl,
+      confirmationText: confirmationText3
+    }) => {
+      const service = new AutomaticPaymentSettingsService(apiClient, companion);
+      const input = {
+        recurringDonations,
+        allowDonorChangeDonationAmount,
+        autoRenewingMemberships,
+        staffSettingsUrl
+      };
+      const result = action === "read" ? await service.read() : action === "submit" ? await service.submit({ ...input, confirmationText: confirmationText3 ?? "" }) : await service.preview(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+}
+
+// src/services/commerce-order.service.ts
+var COMBO_ORDER_TYPE = "Asi.Soa.Commerce.DataContracts.ComboOrderData, Asi.Contracts";
+var ORDER_TYPE = "Asi.Soa.Commerce.DataContracts.OrderData, Asi.Contracts";
+var ORDER_LINE_COLLECTION_TYPE2 = "Asi.Soa.Commerce.DataContracts.OrderLineDataCollection, Asi.Contracts";
+var ORDER_LINE_TYPE2 = "Asi.Soa.Commerce.DataContracts.OrderLineData, Asi.Contracts";
+var DELIVERY_COLLECTION_TYPE = "Asi.Soa.Commerce.DataContracts.DeliveryDataCollection, Asi.Contracts";
+var DELIVERY_TYPE = "Asi.Soa.Commerce.DataContracts.DeliveryData, Asi.Contracts";
+var DELIVERY_METHOD_TYPE = "Asi.Soa.Commerce.DataContracts.DeliveryMethodData, Asi.Contracts";
+var CUSTOMER_PARTY_TYPE = "Asi.Soa.Commerce.DataContracts.CustomerPartyData, Asi.Contracts";
+var QUANTITY_TYPE = "Asi.Soa.Commerce.DataContracts.QuantityData, Asi.Contracts";
+var REMITTANCE_COLLECTION_TYPE = "Asi.Soa.Commerce.DataContracts.RemittanceDataCollection, Asi.Contracts";
+var REMITTANCE_TYPE3 = "Asi.Soa.Commerce.DataContracts.RemittanceData, Asi.Contracts";
+var PAYMENT_METHOD_TYPE2 = "Asi.Soa.Commerce.DataContracts.PaymentMethodData, Asi.Contracts";
+var MONEY_TYPE = "Asi.Soa.Core.DataContracts.MonetaryAmountData, Asi.Contracts";
+var CURRENCY_TYPE = "Asi.Soa.Core.DataContracts.CurrencyData, Asi.Contracts";
+var BILLME_PAYMENT_METHOD_ID = "BillMe";
+var DEFAULT_DELIVERY_METHOD_ID = "UPS";
+var CommerceOrderService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async previewBillMeOrder(input) {
+    const resolved = await this.resolveBillMeOrder(input);
+    const validation = await this.validateComboOrder(resolved.payload);
+    assertValidResult(validation, "ComboOrder/_validate");
+    return {
+      version: "billme-product-order.v1",
+      mode: "preview",
+      partyId: input.partyId,
+      itemIds: resolved.itemIds,
+      deliveryMethodId: resolved.deliveryMethodId,
+      paymentMethodId: BILLME_PAYMENT_METHOD_ID,
+      confirmationText: billMeOrderConfirmation(input.partyId, resolved.itemIds),
+      validation: validationSummary(validation),
+      orderIntent: {
+        partyId: input.partyId,
+        itemIds: resolved.itemIds,
+        items: resolved.items.map((item, index) => ({
+          lineNumber: index + 1,
+          itemId: stringValue15(item.ItemId),
+          itemName: stringValue15(item.Name),
+          itemType: stringValue15(item.$type),
+          itemPrice: itemPrice(item)
+        })),
+        orderTotal: resolved.orderTotal,
+        deliveryMethodId: resolved.deliveryMethodId,
+        paymentMethodId: BILLME_PAYMENT_METHOD_ID,
+        lineCount: resolved.items.length,
+        note: "Final invoice amount can include iMIS-calculated shipping/tax."
+      },
+      verificationRequired: [
+        "ComboOrder/_validate must accept the built BillMe payload before submit.",
+        "POST /ComboOrder must return an order number.",
+        "Invoice readback for the Party must show exactly one new invoice for the order."
+      ]
+    };
+  }
+  async submitBillMeOrder(input) {
+    const itemIds = normalizeItemIds(input);
+    const expectedConfirmation = billMeOrderConfirmation(input.partyId, itemIds);
+    if (input.confirmationText !== expectedConfirmation) {
+      throw new Error(`confirmationText must exactly equal: ${expectedConfirmation}`);
+    }
+    await this.previewBillMeOrder(input);
+    const beforeInvoices = await this.listPartyInvoices(input.partyId);
+    const resolved = await this.resolveBillMeOrder(input);
+    const created = await this.apiClient.post("ComboOrder", resolved.payload);
+    const order = orderSummary(created);
+    if (!order.orderNumber) {
+      throw new Error(`ComboOrder create did not return an order number: ${JSON.stringify(order)}`);
+    }
+    const createdInvoice = await this.pollForNewInvoice(beforeInvoices, input.partyId);
+    const invoice = createdInvoice ? invoiceSummary2(createdInvoice) : {};
+    return {
+      version: "billme-product-order.v1",
+      mode: "submitted",
+      partyId: input.partyId,
+      itemIds: resolved.itemIds,
+      deliveryMethodId: resolved.deliveryMethodId,
+      paymentMethodId: BILLME_PAYMENT_METHOD_ID,
+      order,
+      invoice,
+      readbackWarning: createdInvoice ? void 0 : "ComboOrder returned an order number but invoice readback did not find the new invoice after polling. The order was created \u2014 do NOT re-submit; verify the invoice in iMIS.",
+      proof: {
+        orderNumberReturned: Boolean(order.orderNumber),
+        invoiceReadbackVerified: Boolean(createdInvoice && invoice.invoiceId),
+        invoiceBalancePositive: typeof invoice.effectiveBalance === "number" && invoice.effectiveBalance > 0
+      }
+    };
+  }
+  async pollForNewInvoice(before, partyId) {
+    let after = await this.listPartyInvoices(partyId);
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      const found = findNewInvoice(before, after);
+      if (found) return found;
+      await delay4(1e3);
+      after = await this.listPartyInvoices(partyId);
+    }
+    return findNewInvoice(before, after);
+  }
+  async resolveBillMeOrder(input) {
+    const deliveryMethodId = input.deliveryMethodId?.trim() || DEFAULT_DELIVERY_METHOD_ID;
+    const itemIds = normalizeItemIds(input);
+    const [party, items, paymentMethods] = await Promise.all([
+      this.entityService.get("Party", input.partyId),
+      Promise.all(itemIds.map((itemId) => this.entityService.get("Item", itemId))),
+      this.entityService.list("PaymentMethod", {
+        limit: 10,
+        params: { PaymentMethodId: BILLME_PAYMENT_METHOD_ID }
+      }),
+      this.entityService.get("DeliveryMethod", deliveryMethodId)
+    ]);
+    const fullAddress = collectionValues10(party.Addresses)[0];
+    if (!fullAddress) {
+      throw new Error(`Party/${input.partyId} has no address available for BillMe order delivery.`);
+    }
+    if (!paymentMethods.items.some((method) => stringValue15(method.PaymentMethodId) === BILLME_PAYMENT_METHOD_ID)) {
+      throw new Error(`PaymentMethod/${BILLME_PAYMENT_METHOD_ID} was not found on this tenant.`);
+    }
+    for (const item of items) {
+      const itemType = stringValue15(item.$type);
+      if (!itemType?.includes("LegacyProductItemData")) {
+        throw new Error(
+          `imis_create_billme_order only supports the live-proven product order path. Item/${stringValue15(item.ItemId) ?? "<unknown>"} returned type ${itemType ?? "<unknown>"}; subscription, dues, chapter, and fundraising items are not exposed through this tool.`
+        );
+      }
+    }
+    const orderTotal = Number(items.reduce((total, item) => total + itemPrice(item), 0).toFixed(2));
+    return {
+      party,
+      items,
+      itemIds,
+      orderTotal,
+      deliveryMethodId,
+      payload: buildComboOrderPayload({
+        partyId: input.partyId,
+        party,
+        items,
+        fullAddress,
+        deliveryMethodId
+      })
+    };
+  }
+  async validateComboOrder(payload) {
+    return this.apiClient.post("ComboOrder/_validate", payload);
+  }
+  async listPartyInvoices(partyId) {
+    return this.entityService.list("Invoice", {
+      limit: 100,
+      params: { BillToPartyId: partyId }
+    });
+  }
+};
+function buildComboOrderPayload({
+  partyId,
+  party,
+  items,
+  fullAddress,
+  deliveryMethodId
+}) {
+  const prices = items.map(itemPrice);
+  const total = Number(prices.reduce((sum, price) => sum + price, 0).toFixed(2));
+  return {
+    $type: COMBO_ORDER_TYPE,
+    Currency: currency(),
+    Order: {
+      $type: ORDER_TYPE,
+      OrderDate: (/* @__PURE__ */ new Date()).toISOString(),
+      BillToCustomerParty: customerParty(partyId, party),
+      SoldToCustomerParty: customerParty(partyId, party),
+      Lines: {
+        $type: ORDER_LINE_COLLECTION_TYPE2,
+        $values: items.map((item, index) => ({
+          $type: ORDER_LINE_TYPE2,
+          LineNumber: index + 1,
+          Item: item,
+          QuantityOrdered: quantity(1),
+          UnitPrice: money(prices[index]),
+          BaseUnitPrice: money(prices[index]),
+          ExtendedAmount: money(prices[index])
+        }))
+      },
+      Delivery: {
+        $type: DELIVERY_COLLECTION_TYPE,
+        $values: [{
+          $type: DELIVERY_TYPE,
+          Address: fullAddress,
+          DeliveryMethod: {
+            $type: DELIVERY_METHOD_TYPE,
+            DeliveryMethodId: deliveryMethodId
+          }
+        }]
+      }
+    },
+    Payments: {
+      $type: REMITTANCE_COLLECTION_TYPE,
+      $values: [{
+        $type: REMITTANCE_TYPE3,
+        Amount: money(total),
+        PaymentMethod: {
+          $type: PAYMENT_METHOD_TYPE2,
+          PaymentMethodId: BILLME_PAYMENT_METHOD_ID
+        },
+        ReferenceNumber: partyId
+      }]
+    }
+  };
+}
+function billMeOrderConfirmation(partyId, itemIds) {
+  return itemIds.length === 1 ? `CREATE BILLME ORDER FOR PARTY ${partyId} ITEM ${itemIds[0]}` : `CREATE BILLME ORDER FOR PARTY ${partyId} ITEMS ${itemIds.join(",")}`;
+}
+function normalizeItemIds(input) {
+  const itemIds = input.itemIds?.length ? input.itemIds : [input.itemId ?? ""];
+  const normalized = Array.from(new Set(itemIds.map((itemId) => itemId?.trim()).filter(Boolean)));
+  if (normalized.length < 1) {
+    throw new Error("At least one itemId is required.");
+  }
+  return normalized;
+}
+function itemPrice(item) {
+  const price = monetaryAmount6(item.TempDefaultPrice) ?? monetaryAmount6(item.StandardPrice);
+  if (price === void 0) {
+    throw new Error(
+      `Item/${stringValue15(item.ItemId) ?? "<unknown>"} exposes neither TempDefaultPrice nor StandardPrice; refusing to create a BillMe order at a fabricated unit price.`
+    );
+  }
+  return price;
+}
+function customerParty(partyId, party) {
+  return {
+    $type: CUSTOMER_PARTY_TYPE,
+    PartyId: partyId,
+    Party: party
+  };
+}
+function currency() {
+  return {
+    $type: CURRENCY_TYPE,
+    CurrencyCode: "USD",
+    DecimalPositions: 2
+  };
+}
+function delay4(ms) {
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
+}
+function money(amount) {
+  return {
+    $type: MONEY_TYPE,
+    Amount: Number(amount.toFixed(2)),
+    Currency: currency(),
+    IsAmountDefined: true
+  };
+}
+function quantity(amount) {
+  return {
+    $type: QUANTITY_TYPE,
+    Amount: amount
+  };
+}
+function validationErrors(result) {
+  const validation = recordValue5(recordValue5(result)?.ValidationResults);
+  return collectionValues10(recordValue5(validation?.Errors)?.$values ?? validation?.Errors).map((error2) => stringValue15(recordValue5(error2)?.Message) ?? stringValue15(error2)).filter((message) => Boolean(message));
+}
+function assertValidResult(result, context) {
+  const errors = validationErrors(result);
+  const record2 = recordValue5(result);
+  if (record2?.IsValid === false || errors.length > 0) {
+    throw new Error(`${context} returned validation errors: ${errors.join("; ") || JSON.stringify(result)}`);
+  }
+}
+function validationSummary(result) {
+  const record2 = recordValue5(result);
+  return {
+    type: stringValue15(record2?.$type),
+    isValid: record2?.IsValid,
+    errorCount: validationErrors(result).length
+  };
+}
+function invoiceSummary2(invoice) {
+  const record2 = recordValue5(invoice) ?? {};
+  const balance = monetaryAmount6(record2.Balance);
+  return {
+    invoiceId: stringValue15(record2.InvoiceId),
+    invoiceNumber: stringValue15(record2.InvoiceNumber),
+    description: stringValue15(record2.Description),
+    invoiceAmount: monetaryAmount6(record2.InvoiceAmount),
+    balance,
+    effectiveBalance: balance ?? 0,
+    balanceAmountPresent: balance !== void 0
+  };
+}
+function orderSummary(comboOrder) {
+  const order = recordValue5(recordValue5(comboOrder)?.Order);
+  return {
+    orderNumber: stringValue15(order?.OrderNumber),
+    orderId: stringValue15(order?.OrderId),
+    orderTotal: monetaryAmount6(order?.OrderTotal),
+    lineCount: collectionValues10(order?.Lines).length
+  };
+}
+function findNewInvoice(before, after) {
+  const beforeIds = new Set(before.items.map((row) => stringValue15(row.InvoiceId)).filter(Boolean));
+  return after.items.find((row) => {
+    const id = stringValue15(row.InvoiceId);
+    return id && !beforeIds.has(id);
+  });
+}
+function recordValue5(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues10(value) {
+  if (Array.isArray(value)) return value;
+  const record2 = recordValue5(value);
+  const values = record2?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function stringValue15(value) {
+  const unwrapped = recordValue5(value)?.$value ?? value;
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function monetaryAmount6(value) {
+  const record2 = recordValue5(value);
+  const amount = record2?.Amount ?? record2?.$value ?? value;
+  if (typeof amount === "number") return amount;
+  if (typeof amount === "string" && amount.trim()) return Number(amount);
+  return void 0;
+}
+
+// src/services/commerce-payment.service.ts
+import { randomUUID as randomUUID6 } from "crypto";
+var CART_TYPE = "Asi.Soa.Commerce.DataContracts.CartData, Asi.Contracts";
+var CART_SUBMISSION_REQUEST_TYPE = "Asi.Soa.Commerce.DataContracts.CartSubmissionRequest, Asi.Contracts";
+var COMBO_ORDER_TYPE2 = "Asi.Soa.Commerce.DataContracts.ComboOrderData, Asi.Contracts";
+var ORDER_TYPE2 = "Asi.Soa.Commerce.DataContracts.OrderData, Asi.Contracts";
+var ORDER_LINE_COLLECTION_TYPE3 = "Asi.Soa.Commerce.DataContracts.OrderLineDataCollection, Asi.Contracts";
+var INVOICE_SUMMARY_COLLECTION_TYPE = "Asi.Soa.Commerce.DataContracts.InvoiceSummaryDataCollection, Asi.Contracts";
+var REMITTANCE_COLLECTION_TYPE2 = "Asi.Soa.Commerce.DataContracts.RemittanceDataCollection, Asi.Contracts";
+var REMITTANCE_TYPE4 = "Asi.Soa.Commerce.DataContracts.RemittanceData, Asi.Contracts";
+var REMITTANCE_APPLICATION_COLLECTION_TYPE = "Asi.Soa.Commerce.DataContracts.RemittanceApplicationDataCollection, Asi.Contracts";
+var REMITTANCE_APPLICATION_TYPE = "Asi.Soa.Commerce.DataContracts.RemittanceApplicationData, Asi.Contracts";
+var PAYMENT_TOKEN_TYPE = "Asi.Soa.Commerce.DataContracts.AutoPayAccountData, Asi.Contracts";
+var PAYMENT_METHOD_TYPE3 = "Asi.Soa.Commerce.DataContracts.PaymentMethodData, Asi.Contracts";
+var CUSTOMER_PARTY_TYPE2 = "Asi.Soa.Commerce.DataContracts.CustomerPartyData, Asi.Contracts";
+var MONETARY_AMOUNT_TYPE3 = "Asi.Soa.Core.DataContracts.MonetaryAmountData, Asi.Contracts";
+var CURRENCY_TYPE2 = "Asi.Soa.Core.DataContracts.CurrencyData, Asi.Contracts";
+var GENERIC_EXECUTE_TYPE4 = "Asi.Soa.Core.DataContracts.GenericExecuteRequest, Asi.Contracts";
+var OBJECT_COLLECTION_TYPE5 = "System.Collections.ObjectModel.Collection`1[[System.Object, mscorlib]], mscorlib";
+var STRING_COLLECTION_TYPE4 = "System.Collections.ObjectModel.Collection`1[[System.String, mscorlib]], mscorlib";
+var PAYMENT_TYPE = "Asi.Soa.Commerce.DataContracts.PaymentData, Asi.Contracts";
+var NULLABLE_DATE_TYPE = "System.Nullable`1[[System.DateTime, mscorlib, ]]";
+var CommercePaymentService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async previewPledgeInstallmentPayment(input) {
+    const resolved = await this.resolvePledgeInstallment(input);
+    const referenceNumber = cleanReferenceNumber(input.referenceNumber);
+    const amount = input.amount === void 0 ? resolved.scheduledPayment.balance : requirePositiveAmount2(input.amount, "amount");
+    assertCashMethod(input.paymentMethodId);
+    if (amount > resolved.scheduledPayment.balance) {
+      throw new Error(`amount ${amount} exceeds scheduled payment balance ${resolved.scheduledPayment.balance}.`);
+    }
+    return {
+      version: "pledge-installment-payment.v1",
+      mode: "preview",
+      partyId: input.partyId,
+      paymentMethodId: "CASH",
+      amount,
+      referenceNumber,
+      confirmationText: confirmationText2(input.partyId, resolved.scheduledPayment.scheduledPaymentId, amount),
+      selectedScheduledPayment: resolved.scheduledPayment,
+      invoiceBefore: resolved.invoiceSummary,
+      cartIntent: cartIntentSummary(resolved.scheduledPayment, resolved.invoiceSummary, amount, referenceNumber),
+      verificationRequired: [
+        "POST /Cart must stage the cart and Cart/_execute Submit must create a PaymentSummary row with the supplied reference.",
+        "PaymentApplication must reference the selected invoice and scheduled payment.",
+        "Invoice balance must decrease by exactly the payment amount."
+      ]
+    };
+  }
+  async submitPledgeInstallmentPayment(input) {
+    const preview = await this.previewPledgeInstallmentPayment(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    const before = await this.readPaymentState(input.partyId);
+    const invoice = await this.entityService.get("Invoice", String(preview.invoiceBefore.invoiceId));
+    const beforeCartIds = new Set(before.carts.items.map((cart2) => stringValue16(cart2.CartId)).filter((id) => Boolean(id)));
+    const cart = buildPledgeInstallmentCart({
+      partyId: input.partyId,
+      invoice,
+      scheduledPaymentId: String(preview.selectedScheduledPayment.scheduledPaymentId),
+      amount: preview.amount,
+      referenceNumber: preview.referenceNumber,
+      doNotReceipt: input.doNotReceipt ?? true
+    });
+    assertValidResult2(await this.apiClient.post("Cart/_validate", cart), "Cart/_validate");
+    await this.apiClient.post("Cart", cart);
+    const staged = await this.readPaymentState(input.partyId);
+    const stagePayment = findNewPayment(before.payments, staged.payments, preview.referenceNumber);
+    if (stagePayment) {
+      const cleanup2 = await this.cleanupNewCarts(input.partyId, beforeCartIds);
+      throw new Error(`Cart staging unexpectedly created PaymentSummary ${stringValue16(stagePayment.PaymentId) ?? "<unknown>"} with reference ${preview.referenceNumber}; cleanup=${JSON.stringify(cleanup2)}.`);
+    }
+    const stagedCart = findNewCart(staged.carts, beforeCartIds, stringValue16(cart.CartId));
+    if (!stagedCart) {
+      const cleanup2 = await this.cleanupNewCarts(input.partyId, beforeCartIds);
+      throw new Error(`Cart staging did not leave a submit-ready Cart row for ${cart.CartId}; cleanup=${JSON.stringify(cleanup2)}.`);
+    }
+    const submitOutcome = await this.submitCartWithReadbackBoundary(stagedCart, input.partyId);
+    const cleanup = await this.cleanupNewCarts(input.partyId, beforeCartIds);
+    const { payment, after } = await this.pollForPostedPayment(before.payments, input.partyId, preview.referenceNumber);
+    const afterInvoice = await this.entityService.get("Invoice", String(preview.invoiceBefore.invoiceId));
+    const paymentApplications = payment ? await this.findPaymentApplications(
+      before.paymentApplications,
+      after.paymentApplications,
+      payment,
+      String(preview.invoiceBefore.invoiceId),
+      preview.amount
+    ) : [];
+    const beforeBalanceRaw = preview.invoiceBefore.balance;
+    const beforeBalance = typeof beforeBalanceRaw === "number" ? beforeBalanceRaw : void 0;
+    const afterBalance = monetaryAmount7(afterInvoice.Balance);
+    return {
+      version: "pledge-installment-payment.v1",
+      mode: "submitted",
+      partyId: input.partyId,
+      paymentMethodId: "CASH",
+      amount: preview.amount,
+      referenceNumber: preview.referenceNumber,
+      selectedScheduledPayment: preview.selectedScheduledPayment,
+      invoiceBefore: preview.invoiceBefore,
+      invoiceAfter: invoiceSummary3(afterInvoice),
+      payment: payment ? paymentSummary2(payment) : {},
+      paymentApplications,
+      cartCleanup: cleanup,
+      submitOutcome,
+      readbackWarning: payment ? void 0 : `iMIS accepted the Cart submit (${submitOutcome.status}) but no PaymentSummary with reference ${preview.referenceNumber} surfaced after polling${submitOutcome.error ? ` (submit returned: ${submitOutcome.error})` : ""}. Do NOT re-pay; verify the installment in iMIS.`,
+      proof: {
+        invoiceBalanceChangedByAmount: beforeBalance !== void 0 && afterBalance === Number((beforeBalance - preview.amount).toFixed(2)),
+        paymentReadbackVerified: Boolean(payment) && stringValue16(payment?.PaymentReference) === preview.referenceNumber,
+        paymentApplicationVerified: paymentApplications.length > 0
+      }
+    };
+  }
+  async pollForPostedPayment(beforePayments, partyId, referenceNumber) {
+    let after = await this.readPaymentState(partyId);
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      const payment2 = await this.findPostedPayment(beforePayments, after.payments, partyId, referenceNumber);
+      if (payment2) return { payment: payment2, after };
+      await delay5(1e3);
+      after = await this.readPaymentState(partyId);
+    }
+    const payment = await this.findPostedPayment(beforePayments, after.payments, partyId, referenceNumber);
+    return { payment, after };
+  }
+  async reversePayment(paymentId, comment) {
+    const payment = await this.entityService.get("Payment", paymentId);
+    if (payment.IsReversible !== true) {
+      throw new Error(`Payment/${paymentId} is not reversible.`);
+    }
+    const result = await this.apiClient.post("Payment/_execute", {
+      $type: GENERIC_EXECUTE_TYPE4,
+      OperationName: "Reverse",
+      EntityTypeName: "Payment",
+      Parameters: {
+        $type: OBJECT_COLLECTION_TYPE5,
+        $values: [
+          payment,
+          { $type: NULLABLE_DATE_TYPE, $value: paymentDateOrNow(payment) },
+          { $type: "System.String", $value: comment }
+        ]
+      },
+      ParameterTypeName: {
+        $type: STRING_COLLECTION_TYPE4,
+        $values: [PAYMENT_TYPE, NULLABLE_DATE_TYPE, "System.String"]
+      },
+      UseJson: false
+    });
+    assertSuccessServiceResponse(result, "Payment/_execute Reverse");
+    return result;
+  }
+  async submitCartWithReadbackBoundary(cart, partyId) {
+    try {
+      const response2 = await this.apiClient.post("Cart/_execute", buildCartSubmissionRequest(cart, partyId));
+      assertValidResult2(response2, "Cart/_execute Submit");
+      return {
+        status: "ok",
+        route: "Cart/_execute Submit"
+      };
+    } catch (error2) {
+      return {
+        status: "post_commit_readback_required",
+        route: "Cart/_execute Submit",
+        error: errorMessage8(error2)
+      };
+    }
+  }
+  async findPostedPayment(beforePayments, afterPayments, partyId, referenceNumber) {
+    const broadMatch = findNewPayment(beforePayments, afterPayments, referenceNumber);
+    if (broadMatch) return broadMatch;
+    const referenceMatches = await this.entityService.list("PaymentSummary", {
+      limit: 100,
+      params: { "PayorParty.PartyId": partyId, PaymentReference: referenceNumber }
+    });
+    return findNewPayment(beforePayments, referenceMatches, referenceNumber);
+  }
+  async findPaymentApplications(beforeApplications, afterApplications, payment, invoiceId, amount) {
+    const broadMatches = newPaymentApplications(beforeApplications, afterApplications, invoiceId, amount);
+    if (broadMatches.length > 0) return broadMatches;
+    const paymentId = stringValue16(payment.PaymentId);
+    if (!paymentId) return [];
+    const directMatches = await this.entityService.list("PaymentApplication", {
+      limit: 50,
+      params: { PaymentId: paymentId, InvoiceId: invoiceId }
+    });
+    return directMatches.items.map(paymentApplicationSummary).filter((item) => item.invoiceId === invoiceId && item.amount === amount);
+  }
+  async resolvePledgeInstallment(input) {
+    const pledges = await this.entityService.list("PartyPledgeScheduledPayment", {
+      limit: 100,
+      params: { PartyId: input.partyId }
+    });
+    const candidates = pledges.items.map(pledgeScheduledPaymentSummary).filter((row) => row.invoiceId && row.scheduledPaymentId && row.balance !== void 0);
+    const selected = candidates.find(
+      (row) => (!input.scheduledPaymentId || row.scheduledPaymentId === input.scheduledPaymentId) && (!input.invoiceId || row.invoiceId === input.invoiceId || row.invoiceNumber === input.invoiceId)
+    ) ?? (input.scheduledPaymentId || input.invoiceId ? void 0 : candidates[0]);
+    if (!selected?.invoiceId || !selected.scheduledPaymentId || selected.balance === void 0) {
+      throw new Error(`No pledge scheduled payment matched Party ${input.partyId}${input.scheduledPaymentId ? ` and ScheduledPaymentId ${input.scheduledPaymentId}` : ""}${input.invoiceId ? ` and Invoice ${input.invoiceId}` : ""}.`);
+    }
+    const invoice = await this.entityService.get("Invoice", selected.invoiceId);
+    const invoiceData = invoiceSummary3(invoice);
+    return {
+      scheduledPayment: {
+        ...selected,
+        scheduledPaymentId: selected.scheduledPaymentId,
+        invoiceId: selected.invoiceId,
+        balance: selected.balance
+      },
+      invoiceSummary: invoiceData
+    };
+  }
+  async readPaymentState(partyId) {
+    const [payments, paymentApplications, carts] = await Promise.all([
+      this.entityService.list("PaymentSummary", { limit: 100, params: { "PayorParty.PartyId": partyId } }),
+      this.entityService.list("PaymentApplication", { limit: 100, params: { ShipToPartyId: partyId } }),
+      this.entityService.list("Cart", { limit: 100, params: { UserId: partyId } })
+    ]);
+    return { payments, paymentApplications, carts };
+  }
+  async cleanupNewCarts(partyId, beforeCartIds) {
+    const carts = await this.entityService.list("Cart", { limit: 100, params: { UserId: partyId } });
+    const newCartIds = carts.items.map((cart) => stringValue16(cart.CartId)).filter((id) => id !== void 0 && !beforeCartIds.has(id));
+    const deleted = [];
+    const failed = [];
+    for (const cartId of newCartIds) {
+      try {
+        await this.apiClient.delete(`Cart/${encodeURIComponent(cartId)}`);
+        deleted.push(cartId);
+      } catch (error2) {
+        failed.push({ cartId, error: error2 instanceof Error ? error2.message : String(error2) });
+      }
+    }
+    return { deleted, failed };
+  }
+};
+function buildPledgeInstallmentCart(input) {
+  const invoice = cloneRecord2(input.invoice);
+  invoice.PaymentAmount = money2(input.amount, invoice.Balance ?? invoice.InvoiceAmount);
+  return {
+    $type: CART_TYPE,
+    CartId: randomUUID6(),
+    UserId: input.partyId,
+    ComboOrder: {
+      $type: COMBO_ORDER_TYPE2,
+      Currency: currencyFrom(invoice.Balance ?? invoice.InvoiceAmount),
+      Order: {
+        $type: ORDER_TYPE2,
+        Currency: currencyFrom(invoice.Balance ?? invoice.InvoiceAmount),
+        Lines: {
+          $type: ORDER_LINE_COLLECTION_TYPE3,
+          $values: []
+        }
+      },
+      Invoices: {
+        $type: INVOICE_SUMMARY_COLLECTION_TYPE,
+        $values: [invoice]
+      },
+      Payments: {
+        $type: REMITTANCE_COLLECTION_TYPE2,
+        $values: [
+          {
+            $type: REMITTANCE_TYPE4,
+            PaymentToken: {
+              $type: PAYMENT_TOKEN_TYPE,
+              PaymentMethodIsReadOnly: false
+            },
+            PaymentDate: (/* @__PURE__ */ new Date()).toISOString(),
+            PaymentMethod: {
+              $type: PAYMENT_METHOD_TYPE3,
+              Message: "CASH",
+              Name: "",
+              PaymentMethodId: "CASH",
+              PaymentType: "CASH"
+            },
+            PayorParty: {
+              $type: CUSTOMER_PARTY_TYPE2,
+              PartyId: input.partyId
+            },
+            ReferenceNumber: input.referenceNumber,
+            Amount: money2(input.amount, invoice.Balance ?? invoice.InvoiceAmount),
+            Applications: {
+              $type: REMITTANCE_APPLICATION_COLLECTION_TYPE,
+              $values: [
+                {
+                  $type: REMITTANCE_APPLICATION_TYPE,
+                  RemittanceApplicationId: input.scheduledPaymentId,
+                  ApplicationAmount: money2(input.amount, invoice.Balance ?? invoice.InvoiceAmount),
+                  InvoiceId: stringValue16(invoice.InvoiceId),
+                  DoNotReceipt: input.doNotReceipt
+                }
+              ]
+            }
+          }
+        ]
+      },
+      OrderTypeCode: "INV"
+    }
+  };
+}
+function buildCartSubmissionRequest(cart, partyId) {
+  return {
+    $type: CART_SUBMISSION_REQUEST_TYPE,
+    EntityTypeName: "Cart",
+    OperationName: "Submit",
+    Cart: cart,
+    CartId: stringValue16(cart.CartId),
+    UserId: stringValue16(cart.UserId) ?? partyId,
+    RequestCulture: "en-US"
+  };
+}
+function cartIntentSummary(scheduledPayment, invoice, amount, referenceNumber) {
+  return {
+    route: "POST /Cart, then Cart/_execute Submit",
+    invoiceId: invoice.invoiceId,
+    invoiceNumber: invoice.invoiceNumber,
+    scheduledPaymentId: scheduledPayment.scheduledPaymentId,
+    amount,
+    referenceNumber,
+    paymentMethodId: "CASH",
+    note: "This is a settlement route. Submit requires exact confirmation text."
+  };
+}
+function pledgeScheduledPaymentSummary(row) {
+  return {
+    partyId: stringValue16(row.PartyId),
+    invoiceId: stringValue16(row.InvoiceId),
+    invoiceNumber: stringValue16(row.InvoiceNumber),
+    scheduledPaymentId: stringValue16(row.ScheduledPaymentId),
+    paymentNumber: row.PaymentNumber,
+    dueDate: stringValue16(row.DueDate),
+    balance: monetaryAmount7(row.Amount),
+    description: stringValue16(row.Description)
+  };
+}
+function invoiceSummary3(invoice) {
+  const record2 = invoice ?? {};
+  return {
+    invoiceId: stringValue16(record2.InvoiceId),
+    invoiceNumber: stringValue16(record2.InvoiceNumber),
+    description: stringValue16(record2.Description),
+    invoiceAmount: monetaryAmount7(record2.InvoiceAmount),
+    paymentAmount: monetaryAmount7(record2.PaymentAmount),
+    pendingPaymentAmount: monetaryAmount7(record2.PendingPaymentAmount),
+    balance: monetaryAmount7(record2.Balance),
+    scheduledPayments: collectionValues11(record2.ScheduledPayments).map((payment) => {
+      const scheduled = recordValue6(payment) ?? {};
+      return {
+        scheduledPaymentId: stringValue16(scheduled.ScheduledPaymentId),
+        paymentNumber: scheduled.PaymentNumber,
+        dueDate: stringValue16(scheduled.DueDate),
+        balance: monetaryAmount7(scheduled.Balance)
+      };
+    })
+  };
+}
+function paymentSummary2(payment) {
+  return {
+    paymentId: stringValue16(payment.PaymentId),
+    payorPartyId: stringValue16(recordValue6(payment.PayorParty)?.PartyId),
+    amount: monetaryAmount7(payment.Amount),
+    paymentReference: stringValue16(payment.PaymentReference),
+    paymentMethodId: stringValue16(payment.PaymentMethodId),
+    financialEntityId: stringValue16(payment.FinancialEntityId)
+  };
+}
+function findNewPayment(before, after, referenceNumber) {
+  const beforeIds = new Set(before.items.map((item) => stringValue16(item.PaymentId)).filter(Boolean));
+  return after.items.find(
+    (item) => !beforeIds.has(stringValue16(item.PaymentId)) && stringValue16(item.PaymentReference) === referenceNumber
+  );
+}
+function findNewCart(carts, beforeCartIds, preferredCartId) {
+  const newCarts = carts.items.filter((cart) => {
+    const cartId = stringValue16(cart.CartId);
+    return cartId && !beforeCartIds.has(cartId);
+  });
+  return newCarts.find((cart) => stringValue16(cart.CartId) === preferredCartId) ?? newCarts[0];
+}
+function newPaymentApplications(before, after, invoiceId, amount) {
+  const beforeIds = new Set(before.items.map(paymentApplicationId).filter(Boolean));
+  return after.items.filter((item) => !beforeIds.has(paymentApplicationId(item))).map(paymentApplicationSummary).filter((item) => item.invoiceId === invoiceId && item.amount === amount);
+}
+function paymentApplicationSummary(item) {
+  return {
+    paymentApplicationId: paymentApplicationId(item),
+    paymentId: stringProperty(item, "PaymentId"),
+    invoiceId: stringProperty(item, "InvoiceId"),
+    invoiceNumber: stringProperty(item, "InvoiceNumber"),
+    amount: numberProperty(item, "Amount"),
+    adjustedAmount: numberProperty(item, "AdjustedAmount"),
+    invoiceBalance: numberProperty(item, "InvoiceBalance"),
+    description: stringProperty(item, "Description")
+  };
+}
+function paymentApplicationId(item) {
+  return stringValue16(item.PaymentApplicationId) ?? stringProperty(item, "PaymentApplicationId");
+}
+function assertValidResult2(result, operation) {
+  const record2 = recordValue6(result);
+  if (record2?.IsValid === false) {
+    const messages = validationMessages2(record2);
+    throw new Error(`${operation} returned IsValid=false${messages.length ? `: ${messages.join("; ")}` : ""}.`);
+  }
+}
+function assertSuccessServiceResponse(result, operation) {
+  const record2 = recordValue6(result);
+  if (!record2) return;
+  const messages = validationMessages2(record2);
+  if (record2.IsSuccessStatusCode === false || messages.length > 0) {
+    throw new Error(`${operation} returned validation errors: ${messages.join("; ") || stringValue16(record2.Message) || JSON.stringify(record2)}.`);
+  }
+}
+function validationMessages2(record2) {
+  return collectionValues11(recordValue6(record2.ValidationResults)?.Errors).map((entry) => stringValue16(recordValue6(entry)?.Message) ?? stringValue16(entry)).filter((message) => Boolean(message));
+}
+function paymentDateOrNow(payment) {
+  const paymentDate = stringValue16(payment.PaymentDate);
+  const calendarDate = paymentDate?.match(/^(\d{4}-\d{2}-\d{2})/)?.[1];
+  if (calendarDate) return `${calendarDate}T12:00:00`;
+  return (/* @__PURE__ */ new Date()).toISOString();
+}
+function errorMessage8(error2) {
+  return error2 instanceof Error ? error2.message : String(error2);
+}
+function delay5(ms) {
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
+}
+function stringProperty(item, name) {
+  return stringValue16(genericPropertyValue2(item, name));
+}
+function numberProperty(item, name) {
+  const value = genericPropertyValue2(item, name);
+  if (typeof value === "number") return value;
+  return monetaryAmount7(value);
+}
+function genericPropertyValue2(item, name) {
+  if (item[name] !== void 0) return item[name];
+  const property = collectionValues11(recordValue6(item.Properties)?.$values ?? item.Properties).map((entry) => recordValue6(entry)).find((entry) => stringValue16(entry?.Name) === name);
+  const value = property?.Value;
+  const typed = recordValue6(value);
+  return typed?.$value ?? value;
+}
+function confirmationText2(partyId, scheduledPaymentId, amount) {
+  return `PAY ${amount.toFixed(2)} CASH TO PLEDGE INSTALLMENT ${scheduledPaymentId} FOR PARTY ${partyId}`;
+}
+function cleanReferenceNumber(referenceNumber) {
+  const value = referenceNumber?.trim() || `PI${Date.now().toString().slice(-7)}`;
+  if (!/^[A-Za-z0-9-]+$/.test(value)) {
+    throw new Error("referenceNumber may contain only letters, numbers, and hyphens.");
+  }
+  if (value.length > 9) {
+    throw new Error("referenceNumber must be 9 characters or fewer for CASH/check-style iMIS posting.");
+  }
+  return value;
+}
+function assertCashMethod(paymentMethodId) {
+  if (paymentMethodId && paymentMethodId !== "CASH") {
+    throw new Error("Only CASH pledge installment payments are currently live-proven through this tool.");
+  }
+}
+function requirePositiveAmount2(amount, name) {
+  if (!Number.isFinite(amount) || amount <= 0) {
+    throw new Error(`${name} must be a positive number.`);
+  }
+  return Number(amount.toFixed(2));
+}
+function cloneRecord2(value) {
+  return JSON.parse(JSON.stringify(value ?? {}));
+}
+function stringValue16(value) {
+  const unwrapped = value && typeof value === "object" && !Array.isArray(value) ? value.$value ?? value : value;
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function recordValue6(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues11(value) {
+  if (Array.isArray(value)) return value;
+  const record2 = recordValue6(value);
+  const values = record2?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function monetaryAmount7(value) {
+  const record2 = recordValue6(value);
+  const amount = record2?.Amount ?? record2?.$value;
+  if (typeof amount === "number") return Number(amount.toFixed(2));
+  if (typeof amount === "string" && amount.trim()) return Number(Number(amount).toFixed(2));
+  return void 0;
+}
+function currencyFrom(amount) {
+  return recordValue6(recordValue6(amount)?.Currency) ?? {
+    $type: CURRENCY_TYPE2,
+    CurrencyCode: "USD",
+    DecimalPositions: 2
+  };
+}
+function money2(amount, currencySource) {
+  return {
+    $type: MONETARY_AMOUNT_TYPE3,
+    Amount: Number(amount.toFixed(2)),
+    Currency: currencyFrom(currencySource),
+    IsAmountDefined: true
+  };
+}
+
+// src/services/commerce-return-refund.service.ts
+var COMBO_ORDER_TYPE3 = "Asi.Soa.Commerce.DataContracts.ComboOrderData, Asi.Contracts";
+var ORDER_TYPE3 = "Asi.Soa.Commerce.DataContracts.OrderData, Asi.Contracts";
+var INVOICE_SUMMARY_COLLECTION_TYPE2 = "Asi.Soa.Commerce.DataContracts.InvoiceSummaryDataCollection, Asi.Contracts";
+var REMITTANCE_COLLECTION_TYPE3 = "Asi.Soa.Commerce.DataContracts.RemittanceDataCollection, Asi.Contracts";
+var REMITTANCE_TYPE5 = "Asi.Soa.Commerce.DataContracts.RemittanceData, Asi.Contracts";
+var PAYMENT_METHOD_TYPE4 = "Asi.Soa.Commerce.DataContracts.PaymentMethodData, Asi.Contracts";
+var CUSTOMER_PARTY_TYPE3 = "Asi.Soa.Commerce.DataContracts.CustomerPartyData, Asi.Contracts";
+var MONEY_TYPE2 = "Asi.Soa.Core.DataContracts.MonetaryAmountData, Asi.Contracts";
+var CURRENCY_TYPE3 = "Asi.Soa.Core.DataContracts.CurrencyData, Asi.Contracts";
+var GENERIC_PROPERTY_COLLECTION_TYPE2 = "Asi.Soa.Core.DataContracts.GenericPropertyDataCollection, Asi.Contracts";
+var GENERIC_EXECUTE_TYPE5 = "Asi.Soa.Core.DataContracts.GenericExecuteRequest, Asi.Contracts";
+var OBJECT_COLLECTION_TYPE6 = "System.Collections.ObjectModel.Collection`1[[System.Object, mscorlib]], mscorlib";
+var STRING_COLLECTION_TYPE5 = "System.Collections.ObjectModel.Collection`1[[System.String, mscorlib]], mscorlib";
+var INT32_TYPE = "System.Int32";
+var ORDER_REVERSAL_TYPE = "Asi.Soa.Commerce.DataContracts.InvoiceActionOrderReversalData, Asi.Contracts";
+var PAYMENT_REFUND_TYPE = "Asi.Soa.Commerce.DataContracts.PaymentRefundData, Asi.Contracts";
+var PAYMENT_APPLICATION_COLLECTION_TYPE = "Asi.Soa.Commerce.DataContracts.PaymentApplicationDataCollection, Asi.Contracts";
+var LEGACY_PAYMENT_APPLICATION_TYPE = "Asi.Soa.Commerce.DataContracts.LegacyPaymentApplicationData, Asi.Contracts";
+var CommerceReturnRefundService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async previewCashInvoicePayment(input) {
+    const resolved = await this.resolveOpenInvoicePayment(input);
+    assertValidResult3(await this.apiClient.post("ComboOrder/_validate", resolved.payload), "ComboOrder/_validate");
+    return {
+      version: "cash-invoice-payment.v1",
+      mode: "preview",
+      invoiceId: resolved.invoiceId,
+      invoiceNumber: resolved.invoiceNumber,
+      partyId: resolved.partyId,
+      amount: resolved.amount,
+      paymentMethodId: "CASH",
+      referenceNumber: resolved.referenceNumber,
+      confirmationText: cashInvoicePaymentConfirmation(resolved.partyId, resolved.invoiceId, resolved.amount),
+      invoiceBefore: resolved.invoiceSummary,
+      verificationRequired: [
+        "ComboOrder/_validate must accept the fixed invoice-payment payload.",
+        "POST /ComboOrder must create a PaymentSummary row with the supplied reference.",
+        "PaymentApplication must reference the selected invoice and the invoice balance must reduce by the payment amount."
+      ]
+    };
+  }
+  async submitCashInvoicePayment(input) {
+    const preview = await this.previewCashInvoicePayment(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    const resolved = await this.resolveOpenInvoicePayment(input);
+    const before = await this.readPaymentState(resolved.partyId);
+    await this.apiClient.post("ComboOrder", resolved.payload);
+    const { payment, after } = await this.pollForNewPayment(before, resolved.partyId, resolved.referenceNumber);
+    const invoiceAfterRaw = await this.entityService.get("Invoice", resolved.invoiceId);
+    const paymentApplications = payment ? await this.findPaymentApplications(
+      before.paymentApplications,
+      after.paymentApplications,
+      requireString2(payment.PaymentId, "payment id"),
+      resolved.invoiceId
+    ) : [];
+    const beforeBalance = resolved.invoiceSummary.effectiveBalance;
+    const afterBalance = invoiceEffectiveBalance(invoiceAfterRaw);
+    return {
+      version: "cash-invoice-payment.v1",
+      mode: "submitted",
+      invoiceId: resolved.invoiceId,
+      invoiceNumber: resolved.invoiceNumber,
+      partyId: resolved.partyId,
+      amount: resolved.amount,
+      paymentMethodId: "CASH",
+      referenceNumber: resolved.referenceNumber,
+      confirmationText: preview.confirmationText,
+      invoiceBefore: resolved.invoiceSummary,
+      invoiceAfter: invoiceSummary4(invoiceAfterRaw),
+      payment: payment ? paymentSummary3(payment) : {},
+      paymentApplications,
+      readbackWarning: payment ? void 0 : `iMIS accepted the cash payment (ComboOrder POST succeeded) but no new PaymentSummary with reference ${resolved.referenceNumber} surfaced after polling. Do NOT re-post; verify the payment in iMIS.`,
+      proof: {
+        paymentReadbackVerified: Boolean(payment) && stringValue17(payment?.PaymentReference) === resolved.referenceNumber,
+        invoiceBalanceReducedByAmount: afterBalance === Number((beforeBalance - resolved.amount).toFixed(2)),
+        paymentApplicationVerified: paymentApplications.length > 0
+      }
+    };
+  }
+  async previewOrderInvoiceReturn(input) {
+    const invoice = await this.entityService.get("Invoice", input.invoiceId);
+    const invoiceData = invoiceSummary4(invoice);
+    const eligibility = await this.checkInvoiceEligibility(
+      "CanInvoiceBeReturned",
+      requireInvoiceNumberReference(invoice)
+    );
+    assertSuccessServiceResponse2(eligibility, "CanInvoiceBeReturned");
+    return {
+      version: "order-invoice-return.v1",
+      mode: "preview",
+      invoiceId: input.invoiceId,
+      invoiceNumber: stringValue17(invoice.InvoiceNumber),
+      partyId: invoicePartyId(invoice),
+      confirmationText: orderInvoiceReturnConfirmation(input.invoiceId),
+      invoiceBefore: invoiceData,
+      eligibility: serviceResponseSummary(eligibility),
+      verificationRequired: [
+        "CanInvoiceBeReturned must accept the invoice reference before submit.",
+        "ProcessOrderReversal must return success for the invoice.",
+        "Invoice readback must show a credit balance and adjustment after the return."
+      ]
+    };
+  }
+  async submitOrderInvoiceReturn(input) {
+    const preview = await this.previewOrderInvoiceReturn(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    const returnResult = await this.apiClient.post("Invoice/_execute", genericExecuteRequest2(
+      "Invoice",
+      "ProcessOrderReversal",
+      [{
+        $type: ORDER_REVERSAL_TYPE,
+        InvoiceId: input.invoiceId,
+        AdjustmentDate: (/* @__PURE__ */ new Date()).toISOString(),
+        AdjustmentReason: "Order returned",
+        ReverseShipping: true,
+        ReverseHandling: true,
+        AffectsInventory: input.affectsInventory ?? false
+      }],
+      [ORDER_REVERSAL_TYPE]
+    ));
+    assertSuccessServiceResponse2(returnResult, "ProcessOrderReversal");
+    const invoiceAfterRaw = await this.entityService.get("Invoice", input.invoiceId);
+    const after = invoiceSummary4(invoiceAfterRaw);
+    const balance = numberValue9(after.balance);
+    const adjustment = numberValue9(after.adjustmentAmount);
+    return {
+      version: "order-invoice-return.v1",
+      mode: "submitted",
+      invoiceId: input.invoiceId,
+      invoiceNumber: preview.invoiceNumber,
+      partyId: preview.partyId,
+      confirmationText: preview.confirmationText,
+      invoiceBefore: preview.invoiceBefore,
+      eligibility: preview.eligibility,
+      invoiceAfter: after,
+      returnResult: serviceResponseSummary(returnResult),
+      proof: {
+        returnAccepted: returnResult.IsSuccessStatusCode === true,
+        invoiceHasCreditBalance: balance < 0,
+        adjustmentRecorded: adjustment > 0
+      }
+    };
+  }
+  async previewReturnedOrderRefund(input) {
+    const invoice = await this.entityService.get("Invoice", input.invoiceId);
+    const invoiceData = invoiceSummary4(invoice);
+    const creditBalance = numberValue9(invoiceData.balance);
+    if (creditBalance >= 0) {
+      throw new Error(`Invoice/${input.invoiceId} does not have a credit balance to refund.`);
+    }
+    const creditAmount = Math.abs(creditBalance);
+    const refundMethod = input.refundMethod ?? "cash";
+    const originalPayment = await this.resolveOriginalPayment(input.invoiceId, input.originalPaymentId);
+    const paymentId = requireString2(originalPayment.PaymentId, "original payment id");
+    const partyId = invoicePartyId(invoice);
+    const paymentMethodId = refundPaymentMethodId(refundMethod, originalPayment);
+    const gatewayReference = refundMethod === "original_payment_method" ? requireString2(originalPayment.GatewayReference, "original payment gateway reference") : void 0;
+    const originalPaymentRefundableAmount = refundMethod === "original_payment_method" ? await this.originalPaymentRefundableAmount(partyId, originalPayment) : void 0;
+    const amount = input.amount === void 0 ? refundMethod === "original_payment_method" ? Math.min(creditAmount, originalPaymentRefundableAmount ?? creditAmount) : creditAmount : requirePositiveAmount3(input.amount, "amount");
+    if (amount > creditAmount) {
+      throw new Error(`amount ${amount} exceeds credit balance ${creditAmount}.`);
+    }
+    if (refundMethod === "original_payment_method" && originalPaymentRefundableAmount !== void 0) {
+      if (originalPaymentRefundableAmount <= 0) {
+        throw new Error(`Payment/${paymentId} has no remaining refundable amount through its original payment method.`);
+      }
+      if (amount > originalPaymentRefundableAmount) {
+        throw new Error(`amount ${amount} exceeds remaining refundable amount ${originalPaymentRefundableAmount} for Payment/${paymentId}.`);
+      }
+    }
+    const eligibility = await this.checkInvoiceEligibility("CanInvoiceBeRefunded", requireInvoiceIdReference(invoice, input.invoiceId));
+    assertSuccessServiceResponse2(eligibility, "CanInvoiceBeRefunded");
+    return {
+      version: "returned-order-refund.v1",
+      mode: "preview",
+      invoiceId: input.invoiceId,
+      invoiceNumber: stringValue17(invoice.InvoiceNumber),
+      partyId: invoicePartyId(invoice),
+      originalPaymentId: paymentId,
+      amount,
+      refundMethod,
+      paymentMethodId,
+      gatewayReference,
+      originalPaymentRefundableAmount,
+      confirmationText: returnedOrderRefundConfirmation(input.invoiceId, paymentId, amount, refundMethod, paymentMethodId),
+      invoiceBefore: invoiceData,
+      originalPayment: paymentSummary3(originalPayment),
+      eligibility: serviceResponseSummary(eligibility),
+      verificationRequired: [
+        "CanInvoiceBeRefunded must accept the invoice id before submit.",
+        "Payment/_execute Refund must create a refund payment linked to the original payment.",
+        "Invoice readback must show the credit balance cleared."
+      ]
+    };
+  }
+  async submitReturnedOrderRefund(input) {
+    const preview = await this.previewReturnedOrderRefund(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    const invoice = await this.entityService.get("Invoice", input.invoiceId);
+    const originalPayment = await this.entityService.get("Payment", preview.originalPaymentId);
+    const partyId = preview.partyId ?? requireString2(invoicePartyId(invoice), "invoice party id");
+    const before = await this.readPaymentState(partyId);
+    const refundPayload = buildPaymentRefundPayload({
+      invoice,
+      originalPayment,
+      amount: preview.amount,
+      refundMethod: preview.refundMethod,
+      comments: "Order return refund"
+    });
+    const refundResult = await this.apiClient.post("Payment/_execute", genericExecuteRequest2(
+      "Payment",
+      "Refund",
+      [refundPayload],
+      [PAYMENT_REFUND_TYPE]
+    ));
+    assertSuccessServiceResponse2(refundResult, "Payment/_execute Refund");
+    const refundPayment = await this.pollForRefundPayment(before.payments, partyId, preview.originalPaymentId);
+    const invoiceAfterRaw = await this.entityService.get("Invoice", input.invoiceId);
+    return {
+      version: "returned-order-refund.v1",
+      mode: "submitted",
+      invoiceId: input.invoiceId,
+      invoiceNumber: preview.invoiceNumber,
+      partyId,
+      originalPaymentId: preview.originalPaymentId,
+      amount: preview.amount,
+      refundMethod: preview.refundMethod,
+      paymentMethodId: preview.paymentMethodId,
+      gatewayReference: preview.gatewayReference,
+      originalPaymentRefundableAmount: preview.originalPaymentRefundableAmount,
+      confirmationText: preview.confirmationText,
+      invoiceBefore: preview.invoiceBefore,
+      invoiceAfter: invoiceSummary4(invoiceAfterRaw),
+      originalPayment: preview.originalPayment,
+      refundPayment: refundPayment ? paymentSummary3(refundPayment) : {},
+      eligibility: preview.eligibility,
+      refundResult: serviceResponseSummary(refundResult),
+      readbackWarning: refundPayment ? void 0 : `iMIS accepted the refund (Payment/_execute Refund succeeded) but the negative PaymentSummary row for original payment ${preview.originalPaymentId} had not appeared after polling. Do NOT re-submit the refund; verify it in iMIS.`,
+      proof: {
+        refundAccepted: refundResult.IsSuccessStatusCode === true,
+        refundPaymentReadbackVerified: Boolean(refundPayment) && stringValue17(refundPayment?.OriginalPaymentId) === preview.originalPaymentId,
+        invoiceCreditCleared: invoiceEffectiveBalance(invoiceAfterRaw) === 0
+      }
+    };
+  }
+  async pollForRefundPayment(beforePayments, partyId, originalPaymentId) {
+    let after = await this.readPaymentState(partyId);
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      const found = findRefundPayment(beforePayments, after.payments, originalPaymentId);
+      if (found) return found;
+      await delay6(1e3);
+      after = await this.readPaymentState(partyId);
+    }
+    return findRefundPayment(beforePayments, after.payments, originalPaymentId);
+  }
+  async pollForNewPayment(before, partyId, referenceNumber) {
+    let after = await this.readPaymentState(partyId);
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      const payment = findNewPayment2(before.payments, after.payments, referenceNumber);
+      if (payment) return { payment, after };
+      await delay6(1e3);
+      after = await this.readPaymentState(partyId);
+    }
+    return { payment: findNewPayment2(before.payments, after.payments, referenceNumber), after };
+  }
+  async resolveOpenInvoicePayment(input) {
+    const invoice = await this.entityService.get("Invoice", input.invoiceId);
+    const partyId = requireString2(invoicePartyId(invoice), "invoice BillTo party id");
+    const balance = invoiceEffectiveBalance(invoice);
+    if (balance <= 0) {
+      throw new Error(`Invoice/${input.invoiceId} does not have an open positive balance.`);
+    }
+    const amount = input.amount === void 0 ? balance : requirePositiveAmount3(input.amount, "amount");
+    if (amount > balance) {
+      throw new Error(`amount ${amount} exceeds invoice balance ${balance}.`);
+    }
+    const party = await this.entityService.get("Party", partyId);
+    const referenceNumber = cleanReferenceNumber2(input.referenceNumber);
+    return {
+      invoiceId: input.invoiceId,
+      invoiceNumber: stringValue17(invoice.InvoiceNumber),
+      partyId,
+      amount,
+      referenceNumber,
+      invoiceSummary: invoiceSummary4(invoice),
+      payload: buildCashInvoicePaymentPayload({ invoice, party, partyId, amount, referenceNumber })
+    };
+  }
+  async checkInvoiceEligibility(operationName, reference) {
+    return this.apiClient.post("Invoice/_execute", genericExecuteRequest2(
+      "Invoice",
+      operationName,
+      [{ $type: INT32_TYPE, $value: reference }],
+      [INT32_TYPE]
+    ));
+  }
+  async resolveOriginalPayment(invoiceId, originalPaymentId) {
+    if (originalPaymentId) {
+      return this.entityService.get("Payment", originalPaymentId);
+    }
+    const applications = await this.entityService.list("PaymentApplication", {
+      limit: 100,
+      params: { InvoiceId: invoiceId }
+    });
+    for (const application of applications.items) {
+      const paymentId = stringProperty2(application, "PaymentId");
+      if (!paymentId) continue;
+      const payment = await this.entityService.get("Payment", paymentId);
+      if (!stringValue17(payment.OriginalPaymentId) && numberValue9(monetaryAmount8(payment.Amount)) > 0) {
+        return payment;
+      }
+    }
+    throw new Error(`Could not resolve an original positive payment for Invoice/${invoiceId}. Pass originalPaymentId explicitly.`);
+  }
+  async originalPaymentRefundableAmount(partyId, originalPayment) {
+    const originalPaymentId = requireString2(originalPayment.PaymentId, "original payment id");
+    const originalAmount = Math.abs(numberValue9(monetaryAmount8(originalPayment.Amount)));
+    if (!partyId) return originalAmount;
+    const payments = await this.entityService.list("PaymentSummary", {
+      limit: 100,
+      params: { "PayorParty.PartyId": partyId }
+    });
+    const alreadyRefunded = payments.items.filter((payment) => stringValue17(payment.OriginalPaymentId) === originalPaymentId).map((payment) => numberValue9(monetaryAmount8(payment.Amount))).filter((amount) => amount < 0).reduce((total, amount) => total + Math.abs(amount), 0);
+    return Number(Math.max(0, originalAmount - alreadyRefunded).toFixed(2));
+  }
+  async readPaymentState(partyId) {
+    const [payments, paymentApplications] = await Promise.all([
+      this.entityService.list("PaymentSummary", { limit: 100, params: { "PayorParty.PartyId": partyId } }),
+      this.entityService.list("PaymentApplication", { limit: 100, params: { ShipToPartyId: partyId } })
+    ]);
+    return { payments, paymentApplications };
+  }
+  async findPaymentApplications(beforeApplications, afterApplications, paymentId, invoiceId) {
+    const beforeIds = new Set(beforeApplications.items.map(paymentApplicationId2).filter(Boolean));
+    const broad = afterApplications.items.filter((item) => !beforeIds.has(paymentApplicationId2(item))).map(paymentApplicationSummary2).filter((item) => item.paymentId === paymentId && item.invoiceId === invoiceId);
+    if (broad.length > 0) return broad;
+    const direct = await this.entityService.list("PaymentApplication", {
+      limit: 50,
+      params: { PaymentId: paymentId, InvoiceId: invoiceId }
+    });
+    return direct.items.map(paymentApplicationSummary2);
+  }
+};
+function buildCashInvoicePaymentPayload(input) {
+  const invoice = cloneRecord3(input.invoice);
+  invoice.PaymentAmount = money3(input.amount, invoice.Balance ?? invoice.InvoiceAmount);
+  return {
+    $type: COMBO_ORDER_TYPE3,
+    Currency: currencyFrom2(invoice.Balance ?? invoice.InvoiceAmount),
+    Order: {
+      $type: ORDER_TYPE3,
+      OrderTotal: money3(input.amount, invoice.Balance ?? invoice.InvoiceAmount),
+      BillToCustomerParty: {
+        $type: CUSTOMER_PARTY_TYPE3,
+        PartyId: input.partyId,
+        Party: input.party
+      }
+    },
+    Invoices: {
+      $type: INVOICE_SUMMARY_COLLECTION_TYPE2,
+      $values: [invoice]
+    },
+    Payments: {
+      $type: REMITTANCE_COLLECTION_TYPE3,
+      $values: [{
+        $type: REMITTANCE_TYPE5,
+        ReferenceNumber: input.referenceNumber,
+        PaymentMethod: {
+          $type: PAYMENT_METHOD_TYPE4,
+          Name: "Main Checking Account",
+          PaymentMethodId: "CASH",
+          PaymentType: "Cash",
+          Message: "Cash"
+        },
+        Amount: money3(input.amount, invoice.Balance ?? invoice.InvoiceAmount),
+        AdditionalAttributes: {
+          $type: GENERIC_PROPERTY_COLLECTION_TYPE2,
+          $values: []
+        }
+      }]
+    }
+  };
+}
+function buildPaymentRefundPayload(input) {
+  const application = collectionValues12(input.originalPayment.PaymentApplications).map((item) => nestedObject9(item)).find((item) => stringValue17(item?.InvoiceId) === stringValue17(input.invoice.InvoiceId));
+  if (!application) {
+    throw new Error(`Original payment ${stringValue17(input.originalPayment.PaymentId) ?? "<unknown>"} is not applied to Invoice/${stringValue17(input.invoice.InvoiceId) ?? "<unknown>"}.`);
+  }
+  const paymentMethodId = refundPaymentMethodId(input.refundMethod, input.originalPayment);
+  const gatewayReference = input.refundMethod === "original_payment_method" ? requireString2(input.originalPayment.GatewayReference, "original payment gateway reference") : null;
+  const paymentMethodDescription = input.refundMethod === "original_payment_method" ? stringValue17(input.originalPayment.Description) ?? paymentMethodId : null;
+  return {
+    $type: PAYMENT_REFUND_TYPE,
+    OriginalPayment: input.originalPayment,
+    RefundComments: input.comments,
+    RefundPaymentMethodId: paymentMethodId,
+    RefundPaymentType: input.refundMethod === "original_payment_method" ? "CreditCard" : null,
+    RefundGatewayReference: gatewayReference,
+    RefundPaymentMethodDescription: paymentMethodDescription,
+    RefundDate: refundDate(input.originalPayment),
+    Refunds: {
+      $type: PAYMENT_APPLICATION_COLLECTION_TYPE,
+      $values: [{
+        $type: LEGACY_PAYMENT_APPLICATION_TYPE,
+        SoldToPartyId: invoicePartyId(input.invoice),
+        InvoiceReferenceNumber: stringValue17(application.InvoiceReferenceNumber) ?? stringValue17(input.invoice.InvoiceId),
+        ApplicationAmount: money3(input.amount, input.invoice.Balance ?? input.invoice.InvoiceAmount),
+        InvoiceId: stringValue17(input.invoice.InvoiceId),
+        InvoiceNumber: stringValue17(input.invoice.InvoiceNumber)
+      }]
+    },
+    RefundType: 1
+  };
+}
+function refundDate(originalPayment) {
+  const paymentDate = stringValue17(originalPayment.PaymentDate);
+  const calendarDate = paymentDate?.match(/^(\d{4}-\d{2}-\d{2})/)?.[1];
+  if (calendarDate) return `${calendarDate}T12:00:00`;
+  return (/* @__PURE__ */ new Date()).toISOString();
+}
+function genericExecuteRequest2(entityTypeName, operationName, values, parameterTypes) {
+  return {
+    $type: GENERIC_EXECUTE_TYPE5,
+    OperationName: operationName,
+    EntityTypeName: entityTypeName,
+    Parameters: {
+      $type: OBJECT_COLLECTION_TYPE6,
+      $values: values
+    },
+    ParameterTypeName: {
+      $type: STRING_COLLECTION_TYPE5,
+      $values: parameterTypes
+    },
+    UseJson: false
+  };
+}
+function invoiceSummary4(invoice) {
+  const balance = monetaryAmount8(invoice.Balance);
+  return {
+    invoiceId: stringValue17(invoice.InvoiceId),
+    invoiceNumber: stringValue17(invoice.InvoiceNumber),
+    partyId: invoicePartyId(invoice),
+    description: stringValue17(invoice.Description),
+    invoiceAmount: monetaryAmount8(invoice.InvoiceAmount),
+    paymentAmount: monetaryAmount8(invoice.PaymentAmount),
+    adjustmentAmount: monetaryAmount8(invoice.AdjustmentAmount),
+    balance,
+    effectiveBalance: balance ?? 0
+  };
+}
+function paymentSummary3(payment) {
+  return {
+    paymentId: stringValue17(payment.PaymentId),
+    originalPaymentId: stringValue17(payment.OriginalPaymentId),
+    payorPartyId: stringValue17(nestedObject9(payment.PayorParty)?.PartyId),
+    amount: monetaryAmount8(payment.Amount),
+    adjustedAmount: monetaryAmount8(payment.AdjustedAmount),
+    paymentReference: stringValue17(payment.PaymentReference),
+    paymentMethodId: stringValue17(payment.PaymentMethodId),
+    gatewayReference: stringValue17(payment.GatewayReference),
+    description: stringValue17(payment.Description)
+  };
+}
+function paymentApplicationSummary2(item) {
+  return {
+    paymentApplicationId: paymentApplicationId2(item),
+    paymentId: stringProperty2(item, "PaymentId"),
+    invoiceId: stringProperty2(item, "InvoiceId"),
+    invoiceNumber: stringProperty2(item, "InvoiceNumber"),
+    amount: numberProperty2(item, "Amount") ?? numberProperty2(item, "ApplicationAmount"),
+    adjustedAmount: numberProperty2(item, "AdjustedAmount"),
+    invoiceBalance: numberProperty2(item, "InvoiceBalance"),
+    description: stringProperty2(item, "Description")
+  };
+}
+function serviceResponseSummary(response2) {
+  return {
+    result: response2.Result,
+    isSuccessStatusCode: response2.IsSuccessStatusCode,
+    statusCode: response2.StatusCode,
+    message: stringValue17(response2.Message),
+    errors: validationErrors2(response2)
+  };
+}
+function assertSuccessServiceResponse2(response2, operation) {
+  if (response2.IsSuccessStatusCode === false || validationErrors2(response2).length > 0) {
+    throw new Error(`${operation} returned validation errors: ${validationErrors2(response2).join("; ") || stringValue17(response2.Message) || JSON.stringify(response2)}`);
+  }
+}
+function assertValidResult3(result, operation) {
+  const record2 = nestedObject9(result);
+  if (record2?.IsValid === false || validationErrors2(record2 ?? {}).length > 0) {
+    throw new Error(`${operation} returned validation errors: ${validationErrors2(record2 ?? {}).join("; ") || JSON.stringify(result)}`);
+  }
+}
+function validationErrors2(result) {
+  const validation = nestedObject9(result.ValidationResults);
+  return collectionValues12(nestedObject9(validation?.Errors)?.$values ?? validation?.Errors).map((error2) => stringValue17(nestedObject9(error2)?.Message) ?? stringValue17(error2)).filter((message) => Boolean(message));
+}
+function findNewPayment2(before, after, referenceNumber) {
+  const beforeIds = new Set(before.items.map((item) => stringValue17(item.PaymentId)).filter(Boolean));
+  return after.items.find(
+    (item) => !beforeIds.has(stringValue17(item.PaymentId)) && stringValue17(item.PaymentReference) === referenceNumber
+  );
+}
+function findRefundPayment(before, after, originalPaymentId) {
+  const beforeIds = new Set(before.items.map((item) => stringValue17(item.PaymentId)).filter(Boolean));
+  return after.items.find(
+    (item) => !beforeIds.has(stringValue17(item.PaymentId)) && stringValue17(item.OriginalPaymentId) === originalPaymentId && numberValue9(monetaryAmount8(item.Amount)) < 0
+  );
+}
+function paymentApplicationId2(item) {
+  return stringProperty2(item, "PaymentApplicationId");
+}
+function invoicePartyId(invoice) {
+  return stringValue17(invoice.BillToPartyId) ?? stringValue17(nestedObject9(invoice.BillToParty)?.PartyId);
+}
+function delay6(ms) {
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
+}
+function requireInvoiceNumberReference(invoice) {
+  const invoiceNumber = stringValue17(invoice.InvoiceNumber)?.replace(/^R/, "");
+  const parsed = Number(invoiceNumber);
+  if (!Number.isInteger(parsed)) {
+    throw new Error(`Invoice/${stringValue17(invoice.InvoiceId) ?? "<unknown>"} does not expose an integer invoice reference number.`);
+  }
+  return parsed;
+}
+function requireInvoiceIdReference(invoice, fallbackInvoiceId) {
+  const invoiceId = stringValue17(invoice.InvoiceId) ?? fallbackInvoiceId;
+  const parsed = Number(invoiceId);
+  if (!Number.isInteger(parsed)) {
+    throw new Error(`Invoice/${invoiceId || "<unknown>"} does not expose an integer invoice id.`);
+  }
+  return parsed;
+}
+function invoiceEffectiveBalance(invoice) {
+  return monetaryAmount8(invoice.Balance) ?? 0;
+}
+function cashInvoicePaymentConfirmation(partyId, invoiceId, amount) {
+  return `PAY ${amount.toFixed(2)} CASH TO INVOICE ${invoiceId} FOR PARTY ${partyId}`;
+}
+function orderInvoiceReturnConfirmation(invoiceId) {
+  return `RETURN ORDER INVOICE ${invoiceId}`;
+}
+function returnedOrderRefundConfirmation(invoiceId, paymentId, amount, refundMethod, paymentMethodId) {
+  return refundMethod === "original_payment_method" ? `REFUND ${amount.toFixed(2)} VIA ${paymentMethodId} FROM PAYMENT ${paymentId} FOR RETURNED INVOICE ${invoiceId}` : `REFUND ${amount.toFixed(2)} CASH FROM PAYMENT ${paymentId} FOR RETURNED INVOICE ${invoiceId}`;
+}
+function refundPaymentMethodId(refundMethod, originalPayment) {
+  if (refundMethod === "cash") return "CASH";
+  const paymentMethodId = requireString2(originalPayment.PaymentMethodId, "original payment method id");
+  requireString2(originalPayment.GatewayReference, "original payment gateway reference");
+  return paymentMethodId;
+}
+function cleanReferenceNumber2(referenceNumber) {
+  const value = referenceNumber?.trim() || `OP${Date.now().toString().slice(-7)}`;
+  if (!/^[A-Za-z0-9-]+$/.test(value)) {
+    throw new Error("referenceNumber may contain only letters, numbers, and hyphens.");
+  }
+  if (value.length > 9) {
+    throw new Error("referenceNumber must be 9 characters or fewer for CASH/check-style iMIS posting.");
+  }
+  return value;
+}
+function requirePositiveAmount3(amount, name) {
+  if (!Number.isFinite(amount) || amount <= 0) {
+    throw new Error(`${name} must be a positive number.`);
+  }
+  return Number(amount.toFixed(2));
+}
+function requireString2(value, name) {
+  const resolved = stringValue17(value);
+  if (!resolved) throw new Error(`Missing ${name}.`);
+  return resolved;
+}
+function cloneRecord3(value) {
+  return JSON.parse(JSON.stringify(value ?? {}));
+}
+function stringProperty2(item, name) {
+  return stringValue17(genericPropertyValue3(item, name));
+}
+function numberProperty2(item, name) {
+  const value = genericPropertyValue3(item, name);
+  return monetaryAmount8(value) ?? (typeof value === "number" ? value : void 0);
+}
+function genericPropertyValue3(item, name) {
+  if (item[name] !== void 0) return item[name];
+  const property = collectionValues12(nestedObject9(item.Properties)?.$values ?? item.Properties).map((entry) => nestedObject9(entry)).find((entry) => stringValue17(entry?.Name) === name);
+  const value = property?.Value;
+  const typed = nestedObject9(value);
+  return typed?.$value ?? value;
+}
+function nestedObject9(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues12(value) {
+  if (Array.isArray(value)) return value;
+  const values = nestedObject9(value)?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function unwrapValue9(value) {
+  const object3 = nestedObject9(value);
+  return object3 && "$value" in object3 ? object3.$value : value;
+}
+function stringValue17(value) {
+  const unwrapped = unwrapValue9(value);
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function numberValue9(value) {
+  if (typeof value === "number" && Number.isFinite(value)) return Number(value.toFixed(2));
+  if (typeof value === "string" && value.trim()) return Number(Number(value).toFixed(2));
+  return 0;
+}
+function monetaryAmount8(value) {
+  const record2 = nestedObject9(value);
+  const amount = record2?.Amount ?? record2?.$value ?? value;
+  if (typeof amount === "number") return Number(amount.toFixed(2));
+  if (typeof amount === "string" && amount.trim()) return Number(Number(amount).toFixed(2));
+  return void 0;
+}
+function currencyFrom2(amount) {
+  return nestedObject9(nestedObject9(amount)?.Currency) ?? {
+    $type: CURRENCY_TYPE3,
+    CurrencyCode: "USD",
+    DecimalPositions: 2
+  };
+}
+function money3(amount, currencySource) {
+  return {
+    $type: MONEY_TYPE2,
+    Amount: Number(amount.toFixed(2)),
+    Currency: currencyFrom2(currencySource),
+    IsAmountDefined: true
+  };
+}
+
+// src/services/fundraising-pledge.service.ts
+var COMBO_ORDER_TYPE4 = "Asi.Soa.Commerce.DataContracts.ComboOrderData, Asi.Contracts";
+var ORDER_TYPE4 = "Asi.Soa.Commerce.DataContracts.OrderData, Asi.Contracts";
+var GIFT_ORDER_LINE_TYPE = "Asi.Soa.Fundraising.DataContracts.GiftOrderLineData, Asi.Contracts";
+var ORDER_LINE_COLLECTION_TYPE4 = "Asi.Soa.Commerce.DataContracts.OrderLineDataCollection, Asi.Contracts";
+var ORDER_LINE_PAYMENT_TERMS_TYPE = "Asi.Soa.Commerce.DataContracts.OrderLinePaymentTermsData, Asi.Contracts";
+var INVOICE_SUMMARY_COLLECTION_TYPE3 = "Asi.Soa.Commerce.DataContracts.InvoiceSummaryDataCollection, Asi.Contracts";
+var REMITTANCE_COLLECTION_TYPE4 = "Asi.Soa.Commerce.DataContracts.RemittanceDataCollection, Asi.Contracts";
+var DELIVERY_COLLECTION_TYPE2 = "Asi.Soa.Commerce.DataContracts.DeliveryDataCollection, Asi.Contracts";
+var DELIVERY_TYPE2 = "Asi.Soa.Commerce.DataContracts.DeliveryData, Asi.Contracts";
+var CUSTOMER_PARTY_TYPE4 = "Asi.Soa.Commerce.DataContracts.CustomerPartyData, Asi.Contracts";
+var QUANTITY_TYPE2 = "Asi.Soa.Commerce.DataContracts.QuantityData, Asi.Contracts";
+var MONEY_TYPE3 = "Asi.Soa.Core.DataContracts.MonetaryAmountData, Asi.Contracts";
+var CURRENCY_TYPE4 = "Asi.Soa.Core.DataContracts.CurrencyData, Asi.Contracts";
+var DEFAULT_PAYMENT_TERMS_NAME = "monthly";
+var FundraisingPledgeService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async previewInstallmentSchedule(input) {
+    const resolved = await this.resolveInstallmentSchedule(input);
+    const validation = await this.apiClient.post("ComboOrder/_validate", resolved.payload);
+    assertValidResult4(validation, "ComboOrder/_validate");
+    return {
+      version: "pledge-installment-schedule.v1",
+      mode: "preview",
+      partyId: input.partyId,
+      giftItemId: input.giftItemId,
+      amount: resolved.amount,
+      installmentCount: resolved.installmentCount,
+      firstPaymentDueDate: resolved.firstPaymentDueDate,
+      paymentTerms: paymentTermsSummary(resolved.paymentTerms),
+      confirmationText: pledgeScheduleConfirmation({
+        partyId: input.partyId,
+        giftItemId: input.giftItemId,
+        amount: resolved.amount,
+        installmentCount: resolved.installmentCount,
+        firstPaymentDueDate: resolved.firstPaymentDueDate,
+        paymentTermsId: requiredString(resolved.paymentTerms.PaymentTermsId, "PaymentTerms.PaymentTermsId")
+      }),
+      validation: validationSummary2(validation),
+      scheduleIntent: {
+        route: "POST /ComboOrder using GiftOrderLineData.LinePaymentTerms",
+        partyId: input.partyId,
+        giftItemId: input.giftItemId,
+        giftItemName: stringValue18(resolved.giftItem.Name),
+        amount: resolved.amount,
+        installmentCount: resolved.installmentCount,
+        firstPaymentDueDate: resolved.firstPaymentDueDate,
+        paymentTermsId: stringValue18(resolved.paymentTerms.PaymentTermsId),
+        paymentTermsName: stringValue18(resolved.paymentTerms.Name),
+        doNotReceipt: resolved.doNotReceipt,
+        note: "This creates the pledge schedule only. Use imis_pay_pledge_installment to settle scheduled payments."
+      },
+      verificationRequired: [
+        "ComboOrder/_validate must accept the GiftOrderLineData pledge payload before submit.",
+        "POST /ComboOrder must create a new invoice for the donor.",
+        "PartyPledgeScheduledPayment readback must return the requested number of scheduled rows on one invoice."
+      ]
+    };
+  }
+  async submitInstallmentSchedule(input) {
+    const preview = await this.previewInstallmentSchedule(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    const resolved = await this.resolveInstallmentSchedule(input);
+    const [beforePledges, beforeInvoices] = await Promise.all([
+      this.listPartyPledgeRows(input.partyId),
+      this.listPartyInvoices(input.partyId)
+    ]);
+    const created = await this.apiClient.post("ComboOrder", resolved.payload);
+    const [afterPledges, afterInvoices] = await Promise.all([
+      this.listPartyPledgeRows(input.partyId),
+      this.listPartyInvoices(input.partyId)
+    ]);
+    const newPledgeRows = newRows2(beforePledges.items, afterPledges.items, "ScheduledPaymentId");
+    const newInvoices = newRows2(beforeInvoices.items, afterInvoices.items, "InvoiceId");
+    const createdInvoiceIds = new Set(newInvoices.map((invoice2) => stringValue18(invoice2.InvoiceId)).filter((id) => Boolean(id)));
+    const schedule = findInstallmentSchedule(newPledgeRows, resolved.installmentCount, createdInvoiceIds);
+    if (!schedule) {
+      throw new Error(
+        `ComboOrder create returned but pledge schedule readback did not find ${resolved.installmentCount} scheduled rows on one new invoice.`
+      );
+    }
+    const invoice = await this.entityService.get("Invoice", schedule.invoiceId);
+    const invoiceData = invoiceSummary5(invoice);
+    const invoiceSchedule = invoiceData.scheduledPayments;
+    const invoiceScheduleIds = new Set(invoiceSchedule.map((row) => stringValue18(row.scheduledPaymentId)).filter(Boolean));
+    const scheduleRows = schedule.rows.map(pledgeScheduledPaymentSummary2);
+    return {
+      version: "pledge-installment-schedule.v1",
+      mode: "submitted",
+      partyId: input.partyId,
+      giftItemId: input.giftItemId,
+      amount: resolved.amount,
+      installmentCount: resolved.installmentCount,
+      firstPaymentDueDate: resolved.firstPaymentDueDate,
+      paymentTerms: paymentTermsSummary(resolved.paymentTerms),
+      order: orderSummary2(created),
+      invoice: invoiceData,
+      schedule: scheduleRows,
+      verification: {
+        invoiceReadbackVerified: stringValue18(invoiceData.invoiceId) === schedule.invoiceId,
+        scheduledPaymentRowsVerified: scheduleRows.length === resolved.installmentCount,
+        scheduledPaymentInvoiceMatched: scheduleRows.every((row) => invoiceScheduleIds.has(stringValue18(row.scheduledPaymentId)))
+      }
+    };
+  }
+  async resolveInstallmentSchedule(input) {
+    const amount = requirePositiveAmount4(input.amount, "amount");
+    const installmentCount = requireInstallmentCount(input.installmentCount);
+    const firstPaymentDueDate = normalizeDueDate2(input.firstPaymentDueDate);
+    const [party, giftItem, paymentTerms] = await Promise.all([
+      this.entityService.get("Party", input.partyId),
+      this.entityService.get("Item", input.giftItemId),
+      this.resolvePaymentTerms(input.paymentTermsId)
+    ]);
+    if (!isFundraisingGiftItem2(giftItem)) {
+      throw new Error(
+        `Item "${input.giftItemId}" is not a fundraising GiftItemData record. Use a tenant fundraising gift item rather than a commerce product.`
+      );
+    }
+    return {
+      party,
+      giftItem,
+      paymentTerms,
+      amount,
+      installmentCount,
+      firstPaymentDueDate,
+      doNotReceipt: input.doNotReceipt ?? true,
+      payload: buildInstallmentPledgeComboOrder({
+        partyId: input.partyId,
+        party,
+        giftItem,
+        amount,
+        installmentCount,
+        firstPaymentDueDate,
+        paymentTermsId: requiredString(paymentTerms.PaymentTermsId, "PaymentTerms.PaymentTermsId"),
+        doNotReceipt: input.doNotReceipt ?? true
+      })
+    };
+  }
+  async resolvePaymentTerms(paymentTermsId) {
+    if (paymentTermsId?.trim()) {
+      return this.entityService.get("PaymentTerms", paymentTermsId.trim());
+    }
+    const terms = await this.entityService.list("PaymentTerms", { limit: 50 });
+    const selected = terms.items.find((term) => stringValue18(term.Name)?.toLowerCase() === DEFAULT_PAYMENT_TERMS_NAME) ?? terms.items[0];
+    if (!selected) {
+      throw new Error("No PaymentTerms rows are available to create an installment pledge schedule.");
+    }
+    return selected;
+  }
+  async listPartyPledgeRows(partyId) {
+    return this.entityService.list("PartyPledgeScheduledPayment", {
+      limit: 100,
+      params: { PartyId: partyId }
+    });
+  }
+  async listPartyInvoices(partyId) {
+    return this.entityService.list("Invoice", {
+      limit: 100,
+      params: { BillToPartyId: partyId }
+    });
+  }
+};
+function buildInstallmentPledgeComboOrder(input) {
+  const address = collectionValues13(input.party.Addresses)[0];
+  const order = {
+    $type: ORDER_TYPE4,
+    OrderDate: (/* @__PURE__ */ new Date()).toISOString(),
+    IsOrderDateOverridden: true,
+    BillToCustomerParty: customerParty2(input.partyId, input.party),
+    SoldToCustomerParty: customerParty2(input.partyId, input.party),
+    OriginatorCustomerParty: {
+      $type: CUSTOMER_PARTY_TYPE4,
+      PartyId: input.partyId
+    },
+    Currency: currency2(),
+    Lines: {
+      $type: ORDER_LINE_COLLECTION_TYPE4,
+      $values: [{
+        $type: GIFT_ORDER_LINE_TYPE,
+        LineNumber: 1,
+        Item: input.giftItem,
+        QuantityOrdered: quantity2(1),
+        UnitPrice: money4(input.amount),
+        BaseUnitPrice: money4(input.amount),
+        ExtendedAmount: money4(input.amount),
+        IsPledge: true,
+        DoNotReceipt: input.doNotReceipt,
+        CanCombine: true,
+        LinePaymentTerms: {
+          $type: ORDER_LINE_PAYMENT_TERMS_TYPE,
+          PaymentTermsId: input.paymentTermsId,
+          FirstPaymentDueDate: input.firstPaymentDueDate,
+          NumberOfPayments: input.installmentCount
+        }
+      }]
+    }
+  };
+  if (address) {
+    order.Delivery = {
+      $type: DELIVERY_COLLECTION_TYPE2,
+      $values: [{
+        $type: DELIVERY_TYPE2,
+        Address: address,
+        CustomerParty: {
+          $type: CUSTOMER_PARTY_TYPE4,
+          PartyId: input.partyId
+        }
+      }]
+    };
+  }
+  return {
+    $type: COMBO_ORDER_TYPE4,
+    Currency: currency2(),
+    Order: order,
+    Invoices: {
+      $type: INVOICE_SUMMARY_COLLECTION_TYPE3,
+      $values: []
+    },
+    Payments: {
+      $type: REMITTANCE_COLLECTION_TYPE4,
+      $values: []
+    }
+  };
+}
+function findInstallmentSchedule(rows, installmentCount, createdInvoiceIds) {
+  const groups = /* @__PURE__ */ new Map();
+  for (const row of rows) {
+    const invoiceId = stringValue18(row.InvoiceId);
+    if (!invoiceId || createdInvoiceIds.size > 0 && !createdInvoiceIds.has(invoiceId)) continue;
+    groups.set(invoiceId, [...groups.get(invoiceId) ?? [], row]);
+  }
+  for (const [invoiceId, groupRows] of groups) {
+    const paymentNumbers = new Set(groupRows.map((row) => row.PaymentNumber).filter((value) => typeof value === "number"));
+    if (groupRows.length === installmentCount && paymentNumbers.size === installmentCount) {
+      return {
+        invoiceId,
+        rows: groupRows.sort((left, right) => numberValue10(left.PaymentNumber) - numberValue10(right.PaymentNumber))
+      };
+    }
+  }
+  return void 0;
+}
+function pledgeScheduleConfirmation(input) {
+  return `CREATE PLEDGE SCHEDULE FOR PARTY ${input.partyId} ITEM ${input.giftItemId} AMOUNT ${input.amount.toFixed(2)} INSTALLMENTS ${input.installmentCount} FIRST DUE ${input.firstPaymentDueDate.slice(0, 10)} TERMS ${input.paymentTermsId}`;
+}
+function paymentTermsSummary(paymentTerms) {
+  return {
+    paymentTermsId: stringValue18(paymentTerms.PaymentTermsId),
+    name: stringValue18(paymentTerms.Name),
+    description: stringValue18(paymentTerms.Description),
+    paymentIntervalCount: paymentTerms.PaymentIntervalCount,
+    firstPaymentDateTypeCode: paymentTerms.FirstPaymentDateTypeCode
+  };
+}
+function pledgeScheduledPaymentSummary2(row) {
+  return {
+    scheduledPaymentId: stringValue18(row.ScheduledPaymentId),
+    invoiceId: stringValue18(row.InvoiceId),
+    invoiceNumber: stringValue18(row.InvoiceNumber),
+    paymentNumber: row.PaymentNumber,
+    dueDate: stringValue18(row.DueDate),
+    amount: monetaryAmount9(row.Amount),
+    description: stringValue18(row.Description)
+  };
+}
+function invoiceSummary5(invoice) {
+  return {
+    invoiceId: stringValue18(invoice.InvoiceId),
+    invoiceNumber: stringValue18(invoice.InvoiceNumber),
+    description: stringValue18(invoice.Description),
+    invoiceAmount: monetaryAmount9(invoice.InvoiceAmount),
+    balance: monetaryAmount9(invoice.Balance),
+    scheduledPayments: collectionValues13(invoice.ScheduledPayments).map((payment) => {
+      const scheduled = recordValue7(payment) ?? {};
+      return {
+        scheduledPaymentId: stringValue18(scheduled.ScheduledPaymentId),
+        paymentNumber: scheduled.PaymentNumber,
+        dueDate: stringValue18(scheduled.DueDate),
+        balance: monetaryAmount9(scheduled.Balance)
+      };
+    })
+  };
+}
+function orderSummary2(comboOrder) {
+  const order = recordValue7(recordValue7(comboOrder)?.Order);
+  return {
+    orderId: stringValue18(order?.OrderId),
+    orderNumber: stringValue18(order?.OrderNumber),
+    orderTotal: monetaryAmount9(order?.OrderTotal),
+    lineCount: collectionValues13(order?.Lines).length
+  };
+}
+function newRows2(beforeRows, afterRows, idField) {
+  const beforeIds = new Set(beforeRows.map((row) => stringValue18(row[idField])).filter(Boolean));
+  return afterRows.filter((row) => {
+    const id = stringValue18(row[idField]);
+    return id && !beforeIds.has(id);
+  });
+}
+function validationSummary2(result) {
+  const record2 = recordValue7(result);
+  return {
+    type: stringValue18(record2?.$type),
+    isValid: record2?.IsValid,
+    errorCount: validationErrors3(result).length
+  };
+}
+function validationErrors3(result) {
+  const validation = recordValue7(recordValue7(result)?.ValidationResults);
+  return collectionValues13(recordValue7(validation?.Errors)?.$values ?? validation?.Errors).map((error2) => stringValue18(recordValue7(error2)?.Message) ?? stringValue18(error2)).filter((message) => Boolean(message));
+}
+function assertValidResult4(result, context) {
+  const errors = validationErrors3(result);
+  const record2 = recordValue7(result);
+  if (record2?.IsValid === false || errors.length > 0) {
+    throw new Error(`${context} returned validation errors: ${errors.join("; ") || JSON.stringify(result)}`);
+  }
+}
+function isFundraisingGiftItem2(value) {
+  return stringValue18(recordValue7(value)?.$type)?.includes("GiftItemData") === true;
+}
+function requirePositiveAmount4(value, fieldName) {
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new Error(`${fieldName} must be a positive number.`);
+  }
+  return Number(value.toFixed(2));
+}
+function requireInstallmentCount(value) {
+  if (!Number.isInteger(value) || value < 2 || value > 60) {
+    throw new Error("installmentCount must be an integer between 2 and 60.");
+  }
+  return value;
+}
+function normalizeDueDate2(value) {
+  if (!value) return defaultFirstPaymentDueDate().toISOString();
+  const isoDate = value.trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (isoDate) {
+    const [, year, month, day] = isoDate;
+    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day), 12, 0, 0)).toISOString();
+  }
+  const date3 = new Date(value);
+  if (Number.isNaN(date3.getTime())) {
+    throw new Error("firstPaymentDueDate must be a valid ISO date or date-time.");
+  }
+  return date3.toISOString();
+}
+function defaultFirstPaymentDueDate() {
+  const date3 = /* @__PURE__ */ new Date();
+  date3.setUTCDate(date3.getUTCDate() + 30);
+  date3.setUTCHours(12, 0, 0, 0);
+  return date3;
+}
+function requiredString(value, fieldName) {
+  const result = stringValue18(value);
+  if (!result) throw new Error(`${fieldName} is required.`);
+  return result;
+}
+function customerParty2(partyId, party) {
+  return {
+    $type: CUSTOMER_PARTY_TYPE4,
+    PartyId: partyId,
+    Party: party
+  };
+}
+function currency2() {
+  return {
+    $type: CURRENCY_TYPE4,
+    CurrencyCode: "USD",
+    DecimalPositions: 2
+  };
+}
+function money4(amount) {
+  return {
+    $type: MONEY_TYPE3,
+    Amount: Number(amount.toFixed(2)),
+    Currency: currency2(),
+    IsAmountDefined: true
+  };
+}
+function quantity2(amount) {
+  return {
+    $type: QUANTITY_TYPE2,
+    Amount: amount
+  };
+}
+function recordValue7(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues13(value) {
+  if (Array.isArray(value)) return value;
+  const record2 = recordValue7(value);
+  const values = record2?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function stringValue18(value) {
+  const unwrapped = recordValue7(value)?.$value ?? value;
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function numberValue10(value) {
+  return typeof value === "number" && Number.isFinite(value) ? value : 0;
+}
+function monetaryAmount9(value) {
+  const record2 = recordValue7(value);
+  const amount = record2?.Amount ?? record2?.$value ?? value;
+  if (typeof amount === "number") return Number(amount.toFixed(2));
+  if (typeof amount === "string" && amount.trim()) return Number(Number(amount).toFixed(2));
+  return void 0;
+}
+
+// src/services/fundraising-paycentral-gift.service.ts
+var COMBO_ORDER_TYPE5 = "Asi.Soa.Commerce.DataContracts.ComboOrderData, Asi.Contracts";
+var ORDER_TYPE5 = "Asi.Soa.Commerce.DataContracts.OrderData, Asi.Contracts";
+var GIFT_ORDER_LINE_TYPE2 = "Asi.Soa.Fundraising.DataContracts.GiftOrderLineData, Asi.Contracts";
+var ORDER_LINE_COLLECTION_TYPE5 = "Asi.Soa.Commerce.DataContracts.OrderLineDataCollection, Asi.Contracts";
+var DELIVERY_COLLECTION_TYPE3 = "Asi.Soa.Commerce.DataContracts.DeliveryDataCollection, Asi.Contracts";
+var DELIVERY_TYPE3 = "Asi.Soa.Commerce.DataContracts.DeliveryData, Asi.Contracts";
+var CUSTOMER_PARTY_TYPE5 = "Asi.Soa.Commerce.DataContracts.CustomerPartyData, Asi.Contracts";
+var QUANTITY_TYPE3 = "Asi.Soa.Commerce.DataContracts.QuantityData, Asi.Contracts";
+var REMITTANCE_COLLECTION_TYPE5 = "Asi.Soa.Commerce.DataContracts.RemittanceDataCollection, Asi.Contracts";
+var REMITTANCE_TYPE6 = "Asi.Soa.Commerce.DataContracts.RemittanceData, Asi.Contracts";
+var PAYMENT_TOKEN_TYPE2 = "Asi.Soa.Commerce.DataContracts.AutoPayAccountData, Asi.Contracts";
+var PAYMENT_METHOD_TYPE5 = "Asi.Soa.Commerce.DataContracts.PaymentMethodData, Asi.Contracts";
+var CREDIT_CARD_INFORMATION_TYPE = "Asi.Soa.Commerce.DataContracts.CreditCardInformationData, Asi.Contracts";
+var MONEY_TYPE4 = "Asi.Soa.Core.DataContracts.MonetaryAmountData, Asi.Contracts";
+var CURRENCY_TYPE5 = "Asi.Soa.Core.DataContracts.CurrencyData, Asi.Contracts";
+var FundraisingPayCentralGiftService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async previewOneTimeGift(input) {
+    const resolved = await this.resolveGift(input);
+    return {
+      version: "paycentral-one-time-gift.v1",
+      mode: "preview",
+      partyId: input.partyId,
+      giftItemId: input.giftItemId,
+      amount: resolved.amount,
+      paymentMethodId: resolved.paymentMethodId,
+      doNotReceipt: resolved.doNotReceipt,
+      confirmationText: payCentralGiftConfirmation(input.partyId, input.giftItemId, resolved.amount, resolved.paymentMethodId),
+      giftIntent: {
+        route: "Pay Central SDK hosted token + direct POST /ComboOrder with GiftOrderLineData",
+        partyId: input.partyId,
+        giftItemId: input.giftItemId,
+        giftItemName: stringValue19(resolved.giftItem.Name),
+        giftItemType: stringValue19(resolved.giftItem.$type),
+        amount: resolved.amount,
+        paymentMethod: paymentMethodSummary(resolved.paymentMethod),
+        handoffModel: {
+          agentRole: "Preview intent, require approval, then submit the iMIS gift only after the caller supplies a fresh hosted Pay Central token.",
+          clientRole: "Render the hosted Pay Central SDK payment control in a whitelisted user-facing page and return only DataVaultPaymentIntentId.",
+          mcpBoundary: "No raw card data, hosted control rendering, iframe automation, token storage, or token echoing inside the MCP."
+        },
+        doNotReceipt: resolved.doNotReceipt,
+        tokenHandling: "Capture DataVaultPaymentIntentId through the hosted Pay Central SDK after preview; submit does not accept raw card data and does not echo the token.",
+        validationNote: "Do not run ComboOrder/_validate after capturing the hosted token; live proof showed gateway duplicate handling can reject the later create."
+      },
+      verificationRequired: [
+        "The supplied payment method must be a Pay Central CreditCard/DataVault method.",
+        "Submit must include a fresh DataVaultPaymentIntentId captured by the hosted Pay Central SDK.",
+        "POST /ComboOrder must create a fundraising invoice and a Pay Central PaymentSummary row with matching amount and payment method."
+      ]
+    };
+  }
+  async submitOneTimeGift(input) {
+    const preview = await this.previewOneTimeGift(input);
+    if (input.confirmationText !== preview.confirmationText) {
+      throw new Error(`confirmationText must exactly equal: ${preview.confirmationText}`);
+    }
+    const paymentIntentId = input.dataVaultPaymentIntentId.trim();
+    if (!paymentIntentId) {
+      throw new Error("dataVaultPaymentIntentId is required for submit and must come from the hosted Pay Central SDK.");
+    }
+    const resolved = await this.resolveGift(input);
+    const before = await this.readPartyGiftPaymentState(input.partyId);
+    const created = await this.apiClient.post("ComboOrder", buildPayCentralGiftComboOrderPayload({
+      partyId: input.partyId,
+      party: resolved.party,
+      giftItem: resolved.giftItem,
+      fullAddress: resolved.fullAddress,
+      cardAddress: resolved.cardAddress,
+      paymentMethod: resolved.paymentMethod,
+      amount: resolved.amount,
+      doNotReceipt: resolved.doNotReceipt,
+      dataVaultPaymentIntentId: paymentIntentId
+    }));
+    let after = await this.readPartyGiftPaymentState(input.partyId);
+    let invoice = selectGiftInvoice(newRows3(before.invoices, after.invoices, "InvoiceId"), input.giftItemId, resolved.amount);
+    let payment = selectGiftPayment(newRows3(before.payments, after.payments, "PaymentId"), resolved.paymentMethodId, resolved.amount);
+    for (let attempt = 0; attempt < 6 && (!invoice || !payment); attempt += 1) {
+      await delay7(1e3);
+      after = await this.readPartyGiftPaymentState(input.partyId);
+      invoice = invoice ?? selectGiftInvoice(newRows3(before.invoices, after.invoices, "InvoiceId"), input.giftItemId, resolved.amount);
+      payment = payment ?? selectGiftPayment(newRows3(before.payments, after.payments, "PaymentId"), resolved.paymentMethodId, resolved.amount);
+    }
+    const newGifts = newRows3(before.gifts, after.gifts, "TransactionNumber");
+    const newGiftSummaries = newRows3(before.giftSummaries, after.giftSummaries, "OriginalTransaction");
+    return {
+      version: "paycentral-one-time-gift.v1",
+      mode: "submitted",
+      partyId: input.partyId,
+      giftItemId: input.giftItemId,
+      amount: resolved.amount,
+      paymentMethodId: resolved.paymentMethodId,
+      doNotReceipt: resolved.doNotReceipt,
+      confirmationText: preview.confirmationText,
+      giftIntent: preview.giftIntent,
+      order: orderSummary3(created),
+      invoice: invoice ? invoiceSummary6(invoice) : {},
+      payment: payment ? paymentSummary4(payment) : {},
+      giftRows: newGifts.map(genericGiftSummary),
+      giftSummaryRows: newGiftSummaries.map(genericGiftSummary),
+      readbackWarning: invoice && payment ? void 0 : `iMIS accepted the Pay Central gift charge (ComboOrder POST succeeded) but readback could not confirm ${[!invoice ? "the gift invoice" : null, !payment ? "the payment" : null].filter(Boolean).join(" and ")} after polling. The card was charged \u2014 do NOT re-submit; verify the gift in iMIS.`,
+      proof: {
+        route: "Pay Central SDK hosted token + direct POST /ComboOrder with GiftOrderLineData",
+        invoiceReadbackVerified: Boolean(invoice && stringValue19(invoice.InvoiceId)),
+        paymentReadbackVerified: Boolean(payment && stringValue19(payment.PaymentId)),
+        paymentMethodVerified: Boolean(payment) && stringValue19(payment?.PaymentMethodId) === resolved.paymentMethodId,
+        tokenNotEchoed: true
+      }
+    };
+  }
+  async resolveGift(input) {
+    const amount = requirePositiveAmount5(input.amount);
+    const requestedPaymentMethodId = input.paymentMethodId?.trim();
+    const [party, giftItem, paymentMethods] = await Promise.all([
+      this.entityService.get("Party", input.partyId),
+      this.entityService.get("Item", input.giftItemId),
+      this.entityService.list("PaymentMethod", requestedPaymentMethodId ? { limit: 20, params: { PaymentMethodId: requestedPaymentMethodId } } : { limit: 100 })
+    ]);
+    if (!isFundraisingGiftItem3(giftItem)) {
+      throw new Error(`Item "${input.giftItemId}" is not a fundraising GiftItemData record.`);
+    }
+    const paymentMethod = requestedPaymentMethodId ? paymentMethods.items.find((method) => stringValue19(method.PaymentMethodId) === requestedPaymentMethodId) : paymentMethods.items.find(paymentMethodLooksPayCentralCreditCard);
+    const paymentMethodId = stringValue19(paymentMethod?.PaymentMethodId);
+    if (!paymentMethod) {
+      throw new Error(requestedPaymentMethodId ? `PaymentMethod/${requestedPaymentMethodId} was not found.` : "No Pay Central CreditCard/DataVault payment method was found; supply paymentMethodId or configure a tenant payment method.");
+    }
+    if (!paymentMethodId) throw new Error("Resolved Pay Central payment method has no PaymentMethodId.");
+    if (!paymentMethodLooksPayCentralCreditCard(paymentMethod)) {
+      throw new Error(`PaymentMethod/${paymentMethodId} is not a live-proven Pay Central CreditCard/DataVault method.`);
+    }
+    const fullAddress = collectionValues14(party.Addresses)[0];
+    if (!fullAddress) throw new Error(`Party/${input.partyId} has no address available for Pay Central gift checkout.`);
+    const cardAddress = recordValue8(recordValue8(fullAddress)?.Address ?? fullAddress);
+    if (!cardAddress) throw new Error(`Party/${input.partyId} has no card billing address available for Pay Central gift checkout.`);
+    return {
+      party,
+      giftItem,
+      paymentMethod,
+      fullAddress,
+      cardAddress,
+      amount,
+      paymentMethodId,
+      doNotReceipt: input.doNotReceipt ?? true
+    };
+  }
+  async readPartyGiftPaymentState(partyId) {
+    const [invoices, payments, gifts, giftSummaries] = await Promise.all([
+      this.entityService.list("Invoice", { limit: 500, params: { BillToPartyId: partyId } }),
+      this.entityService.list("PaymentSummary", { limit: 500, params: { "PayorParty.PartyId": partyId } }),
+      this.entityService.list("Gift", { limit: 500, params: { ID: partyId } }),
+      this.entityService.list("GiftSummary", { limit: 500, params: { ID: partyId } })
+    ]);
+    return {
+      invoices: invoices.items,
+      payments: payments.items,
+      gifts: gifts.items,
+      giftSummaries: giftSummaries.items
+    };
+  }
+};
+function buildPayCentralGiftComboOrderPayload(input) {
+  return {
+    $type: COMBO_ORDER_TYPE5,
+    Currency: currency3(),
+    Order: {
+      $type: ORDER_TYPE5,
+      OrderDate: (/* @__PURE__ */ new Date()).toISOString(),
+      IsOrderDateOverridden: true,
+      BillToCustomerParty: customerParty3(input.partyId, input.party),
+      SoldToCustomerParty: customerParty3(input.partyId, input.party),
+      OriginatorCustomerParty: {
+        $type: CUSTOMER_PARTY_TYPE5,
+        PartyId: input.partyId
+      },
+      Currency: currency3(),
+      LineTotal: money5(input.amount),
+      OrderTotal: money5(input.amount),
+      TotalBasePrice: money5(input.amount),
+      Lines: {
+        $type: ORDER_LINE_COLLECTION_TYPE5,
+        $values: [{
+          $type: GIFT_ORDER_LINE_TYPE2,
+          LineNumber: 1,
+          Item: input.giftItem,
+          QuantityOrdered: quantity3(1),
+          UnitPrice: money5(input.amount),
+          BaseUnitPrice: money5(input.amount),
+          ExtendedAmount: money5(input.amount),
+          CanCombine: true,
+          DoNotReceipt: input.doNotReceipt
+        }]
+      },
+      Delivery: {
+        $type: DELIVERY_COLLECTION_TYPE3,
+        $values: [{
+          $type: DELIVERY_TYPE3,
+          Address: input.fullAddress,
+          CustomerParty: {
+            $type: CUSTOMER_PARTY_TYPE5,
+            PartyId: input.partyId
+          }
+        }]
+      }
+    },
+    Payments: {
+      $type: REMITTANCE_COLLECTION_TYPE5,
+      $values: [{
+        $type: REMITTANCE_TYPE6,
+        Amount: money5(input.amount),
+        PaymentDate: (/* @__PURE__ */ new Date()).toISOString(),
+        CreditCardInformation: {
+          $type: CREDIT_CARD_INFORMATION_TYPE,
+          HoldersName: "Pay Central Gift",
+          Address: input.cardAddress
+        },
+        PaymentToken: {
+          $type: PAYMENT_TOKEN_TYPE2,
+          PaymentMethodIsReadOnly: false
+        },
+        PaymentMethod: {
+          ...input.paymentMethod,
+          $type: PAYMENT_METHOD_TYPE5
+        },
+        PayorParty: {
+          $type: CUSTOMER_PARTY_TYPE5,
+          PartyId: input.partyId
+        },
+        DataVaultPaymentIntentId: input.dataVaultPaymentIntentId
+      }]
+    }
+  };
+}
+function payCentralGiftConfirmation(partyId, giftItemId, amount, paymentMethodId) {
+  return `CREATE PAYCENTRAL GIFT FOR PARTY ${partyId} ITEM ${giftItemId} AMOUNT ${amount.toFixed(2)} METHOD ${paymentMethodId}`;
+}
+function delay7(ms) {
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
+}
+function selectGiftInvoice(rows, giftItemId, amount) {
+  const byItemAndAmount = rows.find(
+    (row) => monetaryAmount10(row.InvoiceAmount) === amount && invoiceReferencesItem(row, giftItemId)
+  );
+  if (byItemAndAmount) return byItemAndAmount;
+  const byItem = rows.find((row) => invoiceReferencesItem(row, giftItemId));
+  if (byItem) return byItem;
+  if (rows.length === 1 && monetaryAmount10(rows[0].InvoiceAmount) === amount) return rows[0];
+  return void 0;
+}
+function invoiceReferencesItem(invoice, giftItemId) {
+  return containsExactStringValue(invoice, giftItemId);
+}
+function containsExactStringValue(value, target) {
+  if (typeof value === "string") return value === target;
+  if (Array.isArray(value)) return value.some((entry) => containsExactStringValue(entry, target));
+  if (value && typeof value === "object") {
+    return Object.values(value).some((entry) => containsExactStringValue(entry, target));
+  }
+  return false;
+}
+function selectGiftPayment(rows, paymentMethodId, amount) {
+  return rows.find(
+    (row) => stringValue19(row.PaymentMethodId) === paymentMethodId && monetaryAmount10(row.Amount) === amount
+  );
+}
+function newRows3(beforeRows, afterRows, fieldName) {
+  const beforeIds = new Set(beforeRows.map((row) => rowIdentity(row, fieldName)).filter(Boolean));
+  return afterRows.filter((row) => {
+    const id = rowIdentity(row, fieldName);
+    return id && !beforeIds.has(id);
+  });
+}
+function rowIdentity(row, fieldName) {
+  return stringValue19(row[fieldName]) ?? stringValue19(genericProperty2(row, fieldName));
+}
+function genericProperty2(row, name) {
+  return collectionValues14(recordValue8(row.Properties)?.$values ?? row.Properties).map((property) => recordValue8(property)).find((property) => stringValue19(property?.Name) === name)?.Value;
+}
+function genericGiftSummary(row) {
+  return {
+    id: stringValue19(genericProperty2(row, "ID")),
+    amount: monetaryAmount10(genericProperty2(row, "Amount")),
+    transactionNumber: stringValue19(genericProperty2(row, "TransactionNumber")),
+    originalTransaction: stringValue19(genericProperty2(row, "OriginalTransaction")),
+    invoiceReferenceNumber: stringValue19(genericProperty2(row, "InvoiceReferenceNumber")),
+    transactionDate: stringValue19(genericProperty2(row, "TransactionDate")),
+    fund: stringValue19(genericProperty2(row, "Fund")),
+    productCode: stringValue19(genericProperty2(row, "ProductCode")),
+    paymentType: stringValue19(genericProperty2(row, "PaymentType"))
+  };
+}
+function invoiceSummary6(invoice) {
+  return {
+    invoiceId: stringValue19(invoice.InvoiceId),
+    invoiceNumber: stringValue19(invoice.InvoiceNumber),
+    description: stringValue19(invoice.Description),
+    invoiceAmount: monetaryAmount10(invoice.InvoiceAmount),
+    paymentAmount: monetaryAmount10(invoice.PaymentAmount),
+    balance: monetaryAmount10(invoice.Balance) ?? 0
+  };
+}
+function paymentSummary4(payment) {
+  return {
+    paymentId: stringValue19(payment.PaymentId),
+    amount: monetaryAmount10(payment.Amount),
+    method: stringValue19(payment.PaymentMethodId),
+    reference: stringValue19(payment.PaymentReference),
+    gatewayReferencePresent: Boolean(stringValue19(payment.GatewayReference))
+  };
+}
+function orderSummary3(comboOrder) {
+  const order = recordValue8(recordValue8(comboOrder)?.Order);
+  return {
+    orderId: stringValue19(order?.OrderId),
+    orderNumber: stringValue19(order?.OrderNumber),
+    orderTotal: monetaryAmount10(order?.OrderTotal),
+    lineCount: collectionValues14(order?.Lines).length
+  };
+}
+function isFundraisingGiftItem3(value) {
+  return stringValue19(recordValue8(value)?.$type)?.includes("GiftItemData") === true;
+}
+function customerParty3(partyId, party) {
+  return {
+    $type: CUSTOMER_PARTY_TYPE5,
+    PartyId: partyId,
+    Party: party
+  };
+}
+function currency3() {
+  return {
+    $type: CURRENCY_TYPE5,
+    CurrencyCode: "USD",
+    DecimalPositions: 2
+  };
+}
+function money5(amount) {
+  return {
+    $type: MONEY_TYPE4,
+    Amount: Number(amount.toFixed(2)),
+    Currency: currency3(),
+    IsAmountDefined: true
+  };
+}
+function quantity3(amount) {
+  return {
+    $type: QUANTITY_TYPE3,
+    Amount: amount
+  };
+}
+function requirePositiveAmount5(value) {
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new Error("amount must be a positive number.");
+  }
+  return Number(value.toFixed(2));
+}
+function recordValue8(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function collectionValues14(value) {
+  if (Array.isArray(value)) return value;
+  const record2 = recordValue8(value);
+  const values = record2?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function stringValue19(value) {
+  const unwrapped = recordValue8(value)?.$value ?? value;
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function monetaryAmount10(value) {
+  const record2 = recordValue8(value);
+  const amount = record2?.Amount ?? record2?.$value ?? value;
+  if (typeof amount === "number" && Number.isFinite(amount)) return Number(amount.toFixed(2));
+  if (typeof amount === "string" && amount.trim()) return Number(Number(amount).toFixed(2));
+  return void 0;
+}
+
+// src/services/recurring-donation-hosted-checkout.service.ts
+var RecurringDonationHostedCheckoutService = class {
+  constructor(entityService, apiClient) {
+    this.entityService = entityService;
+    this.apiClient = apiClient;
+  }
+  async prepare(input = {}) {
+    const donationUrl = optionalUrl(input.donationUrl);
+    const paymentMethodId = optionalText(input.paymentMethodId);
+    const readiness = await this.readReadiness(donationUrl, paymentMethodId);
+    if (!donationUrl) {
+      return {
+        version: "recurring-donation-hosted-checkout.v1",
+        mode: "prepare_url_required",
+        canProceed: false,
+        readiness,
+        requiredInput: {
+          donationUrl: "Supply the tenant's actual hosted iMIS donor recurring-donation URL, such as an existing Give Now/Give to a Cause page or a published route created by imis_recurring_donation_pages."
+        },
+        handoff: {
+          agentRole: "Find or create the tenant's native hosted donation page first, then rerun prepare with that URL.",
+          mcpBoundary: "The MCP does not assume sample donor routes, sample item codes, or demo content exists on every iMIS system."
+        },
+        boundary: "No hosted URL was assumed. Prepare did not create donors, mandates, invoices, payments, gifts, or DataVault rows."
+      };
+    }
+    return {
+      version: "recurring-donation-hosted-checkout.v1",
+      mode: "prepare",
+      donationUrl,
+      intendedGift: {
+        amount: input.amount,
+        paymentSchedule: "Hosted donor page controls the recurring schedule and first-payment amount.",
+        paymentMethodId: readiness.paymentMethodId
+      },
+      readiness,
+      handoff: {
+        agentRole: "Check settings, give the user the hosted iMIS donor URL, then verify iMIS readback after the donor completes Pay Central card entry.",
+        donorRole: "Open the hosted iMIS donor page, choose recurring payment options, enter details in the Pay Central-hosted card control, and submit.",
+        mcpBoundary: "The MCP does not render the payment UI, accept raw card data, capture tokens, or automate donor card entry as a production path."
+      },
+      verification: {
+        followUpAction: "verify",
+        requiredInputs: "partyId or email from the donor checkout.",
+        expectedReadback: ["Party", "AutoPayAccount", "AutoPayInstruction", "Invoice or PaymentSummary"]
+      },
+      boundary: "Prepare does not create donors, mandates, invoices, payments, gifts, or DataVault rows."
+    };
+  }
+  async verify(input = {}) {
+    const donationUrl = optionalUrl(input.donationUrl);
+    const paymentMethodId = optionalText(input.paymentMethodId);
+    const readiness = await this.readReadiness(donationUrl, paymentMethodId);
+    const resolvedPaymentMethodId = stringValue20(readiness.paymentMethodId);
+    const donor = await this.resolveDonor(input);
+    const donorPartyId = stringValue20(donor?.PartyId) ?? stringValue20(donor?.Id);
+    if (!donor || !donorPartyId) {
+      return {
+        version: "recurring-donation-hosted-checkout.v1",
+        mode: "verify",
+        donationUrl,
+        readiness,
+        lookup: {
+          partyId: input.partyId,
+          email: input.email,
+          donorFound: false
+        },
+        verification: {
+          recurringMandateFound: false,
+          initialPaymentOrInvoiceFound: false,
+          verified: false
+        },
+        boundary: "No donor Party record was found for the supplied verifier. Hosted checkout may not have completed, or a different email/Party ID was used."
+      };
+    }
+    const [accounts, instructions, invoices, payments, gifts, giftSummaries] = await Promise.all([
+      this.entityService.list("AutoPayAccount", { limit: 250 }),
+      this.entityService.list("AutoPayInstruction", { limit: 250 }),
+      this.entityService.list("Invoice", { limit: 100, params: { BillToPartyId: donorPartyId } }),
+      this.entityService.list("PaymentSummary", { limit: 100, params: { "PayorParty.PartyId": donorPartyId } }),
+      this.entityService.list("Gift", { limit: 100, params: { ID: donorPartyId } }).catch(() => ({ items: [], totalCount: 0 })),
+      this.entityService.list("GiftSummary", { limit: 100, params: { ID: donorPartyId } }).catch(() => ({ items: [], totalCount: 0 }))
+    ]);
+    const partyAccounts = rowsForParty(accounts.items, donorPartyId);
+    const partyInstructions = rowsForParty(instructions.items, donorPartyId);
+    const partyInvoices = rowsForParty(invoices.items, donorPartyId);
+    const partyGifts = rowsForParty(gifts.items, donorPartyId);
+    const partyGiftSummaries = rowsForParty(giftSummaries.items, donorPartyId);
+    const paymentRows = rowsForParty(payments.items, donorPartyId).filter(
+      (payment) => !resolvedPaymentMethodId || stringValue20(payment.PaymentMethodId) === resolvedPaymentMethodId
+    );
+    const recurringMandateFound = partyAccounts.length > 0 && partyInstructions.length > 0;
+    const initialPaymentOrInvoiceFound = paymentRows.length > 0 || partyInvoices.length > 0 || partyGifts.length > 0 || partyGiftSummaries.length > 0;
+    return {
+      version: "recurring-donation-hosted-checkout.v1",
+      mode: "verify",
+      donationUrl,
+      readiness,
+      lookup: {
+        partyId: donorPartyId,
+        email: input.email ?? firstEmail3(donor),
+        donorFound: true,
+        donorName: stringValue20(donor.Name)
+      },
+      readback: {
+        autoPayAccounts: partyAccounts.map(autoPayAccountSummary),
+        autoPayInstructions: partyInstructions.map(autoPayInstructionSummary),
+        invoices: partyInvoices.map(invoiceSummary7),
+        payments: paymentRows.map(paymentSummary5),
+        gifts: partyGifts.map(giftSummary),
+        giftSummaries: partyGiftSummaries.map(giftSummary)
+      },
+      verification: {
+        recurringMandateFound,
+        initialPaymentOrInvoiceFound,
+        paymentMethodVerified: paymentRows.length === 0 ? void 0 : !resolvedPaymentMethodId || paymentRows.some((payment) => stringValue20(payment.PaymentMethodId) === resolvedPaymentMethodId),
+        verified: recurringMandateFound && initialPaymentOrInvoiceFound
+      },
+      boundary: "Verification reads the native hosted checkout result. It does not create, update, cancel, or collect recurring payment instructions."
+    };
+  }
+  async readReadiness(donationUrl, requestedPaymentMethodId) {
+    const [commerceSettings, paymentMethods, paymentMethodSets, gatewayReadiness] = await Promise.all([
+      this.apiClient.get("CommerceSettings/0").catch((error2) => ({ error: errorMessage9(error2) })),
+      this.entityService.list("PaymentMethod", { limit: 100 }),
+      this.entityService.list("PaymentMethodSet", { limit: 50 }),
+      donationUrl ? new GatewayReadinessService(this.entityService, this.apiClient).getCheckoutReadiness({
+        domain: new URL(donationUrl).hostname,
+        partyId: "mcp-check"
+      }) : Promise.resolve(void 0)
+    ]);
+    const settings = recordValue9(commerceSettings) ?? {};
+    const payCentralMethods = paymentMethods.items.filter(paymentMethodLooksPayCentralCreditCard);
+    const paymentMethod = requestedPaymentMethodId ? paymentMethods.items.find((method) => stringValue20(method.PaymentMethodId) === requestedPaymentMethodId) : payCentralMethods[0];
+    const paymentMethodId = stringValue20(paymentMethod?.PaymentMethodId);
+    const publicPaymentMethodSet = paymentMethodSets.items.find(
+      (set) => stringValue20(set.Name)?.toLowerCase() === "public"
+    );
+    const publicSetMethods = collectionValues15(publicPaymentMethodSet?.PaymentMethods).map((detail) => recordValue9(recordValue9(detail)?.Method)).filter((method) => Boolean(method));
+    const publicSetHasPaymentMethod = publicSetMethods.some((method) => stringValue20(method.PaymentMethodId) === paymentMethodId);
+    const recurringSetting = stateFromAutomaticPaymentValue(settings.AllowAutomaticFundraisingPayments);
+    return {
+      recurringDonations: recurringSetting,
+      allowAutomaticFundraisingPayments: settings.AllowAutomaticFundraisingPayments,
+      allowDonorChangeDonationAmount: settings.AllowDonorChangeDonationAmount,
+      donationUrlProvided: Boolean(donationUrl),
+      domain: donationUrl ? new URL(donationUrl).hostname : void 0,
+      paymentMethodId,
+      paymentMethod: paymentMethod ? paymentMethodSummary(paymentMethod) : void 0,
+      paymentMethodReady: Boolean(paymentMethod && paymentMethodLooksPayCentralCreditCard(paymentMethod)),
+      publicPaymentMethodSet: publicPaymentMethodSet ? paymentMethodSetSummary(publicPaymentMethodSet) : void 0,
+      publicSetHasPaymentMethod,
+      gatewayCheckoutHandoffReady: gatewayReadiness?.readiness.gatewayCheckoutHandoffReady,
+      domainWhitelisted: gatewayReadiness?.readiness.domainWhitelisted,
+      ready: Boolean(donationUrl) && (recurringSetting === "enabled_optional" || recurringSetting === "enabled_by_default") && Boolean(paymentMethod && paymentMethodLooksPayCentralCreditCard(paymentMethod)) && publicSetHasPaymentMethod && gatewayReadiness?.readiness.gatewayCheckoutHandoffReady === true,
+      boundaries: [
+        "No sample donor page is assumed; pass a real hosted iMIS donor URL for this tenant.",
+        "Readiness means the hosted donor page can present Pay Central recurring checkout; it does not mean a donor has enrolled.",
+        "Use verify after hosted submission to prove AutoPayAccount, AutoPayInstruction, invoice, and payment readback."
+      ]
+    };
+  }
+  async resolveDonor(input) {
+    const partyId = input.partyId?.trim();
+    if (partyId) {
+      return await this.entityService.get("Party", partyId);
+    }
+    const email2 = input.email?.trim();
+    if (!email2) {
+      throw new Error("verify requires partyId or email.");
+    }
+    const result = await this.entityService.list("Party", { limit: 10, params: { Email: email2 } });
+    return result.items[0];
+  }
+};
+function optionalText(value) {
+  const trimmed = value?.trim();
+  return trimmed || void 0;
+}
+function optionalUrl(value) {
+  const trimmed = optionalText(value);
+  if (!trimmed) return void 0;
+  return trimmed;
+}
+function rowsForParty(rows, partyId) {
+  return (rows ?? []).filter((row) => partyReferenceIds(row).has(partyId));
+}
+function partyReferenceIds(record2) {
+  const ids2 = /* @__PURE__ */ new Set();
+  const visit = (value) => {
+    const current = recordValue9(value);
+    if (!current) return;
+    for (const key of ["PartyId", "Id", "ID", "PayerId", "CustomerId", "ContactId", "BillToPartyId"]) {
+      const id = stringValue20(current[key]);
+      if (id) ids2.add(id);
+    }
+    for (const key of ["Payer", "Customer", "Party", "PayorParty", "BillToParty", "AutoPayAccount"]) {
+      visit(current[key]);
+    }
+  };
+  visit(record2);
+  return ids2;
+}
+function autoPayAccountSummary(account) {
+  const payer = recordValue9(account.Payer);
+  return redactSensitiveValue({
+    autoPayAccountId: stringValue20(account.AutoPayAccountId),
+    status: stringValue20(account.Status),
+    paymentMethodId: stringValue20(account.PaymentMethodId),
+    payerId: stringValue20(payer?.PayerId),
+    payerName: stringValue20(payer?.PayerName)
+  });
+}
+function autoPayInstructionSummary(instruction) {
+  const customer = recordValue9(instruction.Customer);
+  return {
+    instructionId: stringValue20(instruction.InstructionId),
+    instructionType: stringValue20(instruction.InstructionType),
+    status: stringValue20(instruction.Status),
+    customerId: stringValue20(customer?.PartyId) ?? stringValue20(customer?.Id),
+    startDate: stringValue20(instruction.StartDate),
+    endDate: stringValue20(instruction.EndDate),
+    collectionDay: stringValue20(instruction.CollectionDay),
+    autoPayAccountId: stringValue20(instruction.AutoPayAccountId)
+  };
+}
+function invoiceSummary7(invoice) {
+  return {
+    invoiceId: stringValue20(invoice.InvoiceId),
+    invoiceNumber: stringValue20(invoice.InvoiceNumber),
+    description: stringValue20(invoice.Description),
+    invoiceAmount: monetaryAmount11(invoice.InvoiceAmount),
+    balance: monetaryAmount11(invoice.Balance),
+    billToPartyId: stringValue20(invoice.BillToPartyId)
+  };
+}
+function paymentSummary5(payment) {
+  return {
+    paymentId: stringValue20(payment.PaymentId),
+    amount: monetaryAmount11(payment.Amount),
+    reference: stringValue20(payment.PaymentReference),
+    method: stringValue20(payment.PaymentMethodId),
+    payorPartyId: stringValue20(recordValue9(payment.PayorParty)?.PartyId)
+  };
+}
+function giftSummary(gift) {
+  return {
+    transactionNumber: stringValue20(gift.TransactionNumber),
+    id: stringValue20(gift.ID),
+    amount: monetaryAmount11(gift.Amount),
+    giftItemId: stringValue20(gift.ItemId) ?? stringValue20(gift.ItemCode)
+  };
+}
+function firstEmail3(record2) {
+  const direct = stringValue20(record2.Email);
+  if (direct) return direct;
+  const first = collectionValues15(record2.Emails)[0];
+  return stringValue20(recordValue9(first)?.Address) ?? stringValue20(first);
+}
+function monetaryAmount11(value) {
+  const record2 = recordValue9(value);
+  const amount = record2?.Amount ?? record2?.$value ?? value;
+  if (typeof amount === "number" && Number.isFinite(amount)) return Number(amount.toFixed(2));
+  if (typeof amount === "string" && amount.trim()) return Number(Number(amount).toFixed(2));
+  return void 0;
+}
+function collectionValues15(value) {
+  if (Array.isArray(value)) return value;
+  const record2 = recordValue9(value);
+  const values = record2?.$values;
+  return Array.isArray(values) ? values : [];
+}
+function recordValue9(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : void 0;
+}
+function stringValue20(value) {
+  const unwrapped = recordValue9(value)?.$value ?? value;
+  if (typeof unwrapped === "string" && unwrapped.trim()) return unwrapped.trim();
+  if (typeof unwrapped === "number" || typeof unwrapped === "boolean") return String(unwrapped);
+  return void 0;
+}
+function errorMessage9(error2) {
+  return error2 instanceof Error ? error2.message : String(error2);
+}
+
+// src/tools/commerce-tools.ts
+function registerCommerceTools(server, entityService, apiClient) {
+  const commercePayments = new CommercePaymentService(entityService, apiClient);
+  const commerceOrders = new CommerceOrderService(entityService, apiClient);
+  const commerceReturns = new CommerceReturnRefundService(entityService, apiClient);
+  const fundraisingPledges = new FundraisingPledgeService(entityService, apiClient);
+  const fundraisingPayCentralGifts = new FundraisingPayCentralGiftService(entityService, apiClient);
+  const recurringDonationCheckout = new RecurringDonationHostedCheckoutService(entityService, apiClient);
+  server.tool(
+    "imis_create_billme_order",
+    "Preview or create a BillMe product order through the live-proven ComboOrder workflow. Preview validates the built payload and returns exact confirmation text; submit requires that text, creates the order/invoice, and verifies invoice readback. It only accepts the live-proven product item shape and rejects dues, chapter, subscription, and fundraising items. Payment, return, and refund settlement are handled by separate verified tools; this tool does not handle raw card data, gateway tokens, subscriptions, or generic carts.",
+    {
+      action: external_exports.enum(["preview", "submit"]).describe("Use preview first. Submit creates a BillMe order and requires exact confirmationText from preview."),
+      partyId: external_exports.string().describe("Bill-to/sold-to Party ID."),
+      itemId: external_exports.string().optional().describe("Single orderable commerce item ID. Use either itemId or itemIds."),
+      itemIds: external_exports.array(external_exports.string()).optional().describe("One or more orderable commerce product item IDs for a multi-line BillMe product order."),
+      deliveryMethodId: external_exports.string().optional().describe("Delivery method ID. Defaults to UPS, the live-proven demo route."),
+      confirmationText: external_exports.string().optional().describe("Required for submit. Must exactly equal the confirmationText returned by preview.")
+    },
+    withErrorHandling(async ({ action, partyId, itemId, itemIds, deliveryMethodId, confirmationText: confirmationText3 }) => {
+      const input = { partyId, itemId, itemIds, deliveryMethodId };
+      const result = action === "submit" ? await commerceOrders.submitBillMeOrder({
+        ...input,
+        confirmationText: confirmationText3 ?? ""
+      }) : await commerceOrders.previewBillMeOrder(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_create_pledge_installment_schedule",
+    "Preview or create a posted fundraising pledge installment schedule through the live-proven ComboOrder GiftOrderLineData.LinePaymentTerms workflow. Preview validates the payload and returns exact confirmation text; submit requires that text, creates one pledge invoice with scheduled payment rows, and verifies Invoice plus PartyPledgeScheduledPayment readback. This creates the schedule only; use imis_pay_pledge_installment to settle individual installments. It does not use GiftInformationBatch pledge candidates, raw ScheduledPayment mutation, card data, or gateway tokens.",
+    {
+      action: external_exports.enum(["preview", "submit"]).describe("Use preview first. Submit creates a posted pledge installment schedule and requires exact confirmationText from preview."),
+      partyId: external_exports.string().describe("Donor/member Party ID for the pledge schedule."),
+      giftItemId: external_exports.string().describe("Tenant-specific fundraising GiftItemData item ID/code. Resolve the gift item first; commerce product items are rejected."),
+      amount: external_exports.number().positive().describe("Total pledge amount across all installments."),
+      installmentCount: external_exports.number().int().min(2).max(60).describe("Number of scheduled pledge payments to create."),
+      firstPaymentDueDate: external_exports.string().optional().describe("First scheduled payment due date as ISO date or date-time. Defaults to 30 days from now."),
+      paymentTermsId: external_exports.string().optional().describe("Optional PaymentTermsId. Defaults to the tenant's Monthly payment terms when available."),
+      doNotReceipt: external_exports.boolean().optional().describe("Whether to suppress receipt generation on the pledge order line. Defaults true."),
+      confirmationText: external_exports.string().optional().describe("Required for submit. Must exactly equal the confirmationText returned by preview.")
+    },
+    withErrorHandling(async ({
+      action,
+      partyId,
+      giftItemId,
+      amount,
+      installmentCount,
+      firstPaymentDueDate,
+      paymentTermsId,
+      doNotReceipt,
+      confirmationText: confirmationText3
+    }) => {
+      const input = {
+        partyId,
+        giftItemId,
+        amount,
+        installmentCount,
+        firstPaymentDueDate,
+        paymentTermsId,
+        doNotReceipt
+      };
+      const result = action === "submit" ? await fundraisingPledges.submitInstallmentSchedule({
+        ...input,
+        confirmationText: confirmationText3 ?? ""
+      }) : await fundraisingPledges.previewInstallmentSchedule(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_submit_paycentral_gift",
+    "Preview or submit a one-time non-CASH fundraising gift using the live-proven Pay Central SDK plus ComboOrder GiftOrderLineData route. Preview resolves the donor, gift item, and Pay Central payment method and returns exact confirmation text. A client, companion app, or other member-facing page must render the hosted Pay Central SDK control and supply a fresh DataVaultPaymentIntentId; submit requires that token plus the exact confirmation text. This tool does not render or automate the payment UI, accept raw card data, create recurring gift mandates, use GiftInformationBatch token posting, or echo the payment token.",
+    {
+      action: external_exports.enum(["preview", "submit"]).describe("Use preview first. Submit creates the gift invoice/payment and requires exact confirmationText plus a fresh hosted Pay Central SDK payment intent token."),
+      partyId: external_exports.string().describe("Donor/member Party ID."),
+      giftItemId: external_exports.string().describe("Tenant-specific fundraising GiftItemData item ID/code. Resolve the gift item first; commerce product items are rejected."),
+      amount: external_exports.number().positive().describe("One-time gift amount."),
+      paymentMethodId: external_exports.string().optional().describe("Pay Central CreditCard/DataVault payment method. If omitted, the first configured Pay Central card method is used."),
+      doNotReceipt: external_exports.boolean().optional().describe("Whether to suppress receipt generation on the gift line. Defaults true."),
+      dataVaultPaymentIntentId: external_exports.string().optional().describe("Required for submit. Fresh one-time token returned by a client-hosted Pay Central SDK PaymentRequest.submit(); never raw card data and never browser automation output from the MCP itself."),
+      confirmationText: external_exports.string().optional().describe("Required for submit. Must exactly equal the confirmationText returned by preview.")
+    },
+    withErrorHandling(async ({
+      action,
+      partyId,
+      giftItemId,
+      amount,
+      paymentMethodId,
+      doNotReceipt,
+      dataVaultPaymentIntentId,
+      confirmationText: confirmationText3
+    }) => {
+      const input = { partyId, giftItemId, amount, paymentMethodId, doNotReceipt };
+      const result = action === "submit" ? await fundraisingPayCentralGifts.submitOneTimeGift({
+        ...input,
+        dataVaultPaymentIntentId: dataVaultPaymentIntentId ?? "",
+        confirmationText: confirmationText3 ?? ""
+      }) : await fundraisingPayCentralGifts.previewOneTimeGift(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_recurring_donation_checkout",
+    "Prepare or verify a tenant-specific native hosted iMIS donor recurring-donation checkout. Prepare requires the tenant's real hosted donation URL, then checks CommerceSettings, Public payment methods, and Pay Central domain readiness for that URL. Verify reads back a completed hosted submission by Party ID or email through Party, AutoPayAccount, AutoPayInstruction, Invoice, PaymentSummary, and gift rows. This tool does not assume demo sample pages or item codes, render the payment UI, accept raw card data, capture tokens, automate card-entry browsers as production, mutate AutoPay records, or submit GiftInformationBatch recurring gifts.",
+    {
+      action: external_exports.enum(["prepare", "verify"]).describe("prepare checks readiness and returns the hosted handoff; verify reads back a completed hosted checkout by partyId or email."),
+      donationUrl: external_exports.string().optional().describe("Tenant-specific hosted donor checkout URL. Required for prepare/domain readiness. For verify, omit only when you only need readback by partyId/email."),
+      partyId: external_exports.string().optional().describe("Donor Party ID to verify after hosted checkout. Required for verify unless email is supplied."),
+      email: external_exports.string().optional().describe("Donor email to resolve and verify after hosted checkout. Required for verify unless partyId is supplied."),
+      amount: external_exports.number().positive().optional().describe("Optional expected intended amount for prepare context. The hosted page controls actual recurring schedule and first payment amount."),
+      paymentMethodId: external_exports.string().optional().describe("Expected Pay Central CreditCard/DataVault payment method. If omitted, the first configured Pay Central card method is used for readiness/payment filtering.")
+    },
+    withErrorHandling(async ({ action, donationUrl, partyId, email: email2, amount, paymentMethodId }) => {
+      const input = { donationUrl, partyId, email: email2, amount, paymentMethodId };
+      const result = action === "verify" ? await recurringDonationCheckout.verify(input) : await recurringDonationCheckout.prepare(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_pay_pledge_installment",
+    "Preview or submit a CASH payment against an existing pledge scheduled payment. This is a purpose-built settlement tool for PartyPledgeScheduledPayment rows; preview returns the exact confirmation text, and submit requires that exact text before staging the cart and executing Cart/_execute Submit. It does not handle raw card data, gateway tokens, new pledge creation, or subscription/order checkout.",
+    {
+      action: external_exports.enum(["preview", "submit"]).describe("Use preview first. Submit performs money movement and requires exact confirmationText from preview."),
+      partyId: external_exports.string().describe("Donor/member Party ID that owns the pledge scheduled payment."),
+      scheduledPaymentId: external_exports.string().optional().describe("ScheduledPaymentId such as 275:309. If omitted, invoiceId or the first pledge row for the party is used."),
+      invoiceId: external_exports.string().optional().describe("InvoiceId or InvoiceNumber for the pledge invoice. Used to select the scheduled payment when scheduledPaymentId is omitted."),
+      amount: external_exports.number().positive().optional().describe("Amount to pay. Defaults to the scheduled payment balance."),
+      referenceNumber: external_exports.string().optional().describe("Short CASH/check reference, 9 characters or fewer. A safe short reference is generated when omitted."),
+      doNotReceipt: external_exports.boolean().optional().describe("Whether to suppress receipt generation on the remittance application. Defaults true."),
+      confirmationText: external_exports.string().optional().describe("Required for submit. Must exactly equal the confirmationText returned by preview.")
+    },
+    withErrorHandling(async ({
+      action,
+      partyId,
+      scheduledPaymentId,
+      invoiceId,
+      amount,
+      referenceNumber,
+      doNotReceipt,
+      confirmationText: confirmationText3
+    }) => {
+      const input = {
+        partyId,
+        scheduledPaymentId,
+        invoiceId,
+        amount,
+        paymentMethodId: "CASH",
+        referenceNumber,
+        doNotReceipt
+      };
+      const result = action === "submit" ? await commercePayments.submitPledgeInstallmentPayment({
+        ...input,
+        confirmationText: confirmationText3 ?? ""
+      }) : await commercePayments.previewPledgeInstallmentPayment(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_pay_open_invoice",
+    "Preview or submit a CASH payment against an existing open iMIS invoice through the documented ComboOrder invoice-payment workflow. Preview validates the fixed payload and returns exact confirmation text; submit requires that text, posts the payment, and verifies invoice/payment readback. It does not accept overpayments, card data, gateway tokens, raw carts, or arbitrary payment JSON.",
+    {
+      action: external_exports.enum(["preview", "submit"]).describe("Use preview first. Submit performs money movement and requires exact confirmationText from preview."),
+      invoiceId: external_exports.string().describe("Open positive-balance InvoiceId to pay."),
+      amount: external_exports.number().positive().optional().describe("Amount to pay. Defaults to the invoice balance and cannot exceed the balance."),
+      referenceNumber: external_exports.string().optional().describe("Short CASH/check reference, 9 characters or fewer. A safe short reference is generated when omitted."),
+      confirmationText: external_exports.string().optional().describe("Required for submit. Must exactly equal the confirmationText returned by preview.")
+    },
+    withErrorHandling(async ({ action, invoiceId, amount, referenceNumber, confirmationText: confirmationText3 }) => {
+      const input = { invoiceId, amount, referenceNumber };
+      const result = action === "submit" ? await commerceReturns.submitCashInvoicePayment({
+        ...input,
+        confirmationText: confirmationText3 ?? ""
+      }) : await commerceReturns.previewCashInvoicePayment(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_return_order_invoice",
+    "Preview or submit a paid order-invoice return through the live-proven Invoice/_execute ProcessOrderReversal workflow. Preview checks iMIS return eligibility and returns exact confirmation text; submit requires that text and verifies the returned invoice credit state. It does not expose generic invoice execute, dues/fundraising reversal, inventory-affecting returns by default, or refund settlement.",
+    {
+      action: external_exports.enum(["preview", "submit"]).describe("Use preview first. Submit performs the return and requires exact confirmationText from preview."),
+      invoiceId: external_exports.string().describe("Paid order InvoiceId to return."),
+      affectsInventory: external_exports.boolean().optional().describe("Whether iMIS should update inventory during the return. Defaults false."),
+      confirmationText: external_exports.string().optional().describe("Required for submit. Must exactly equal the confirmationText returned by preview.")
+    },
+    withErrorHandling(async ({ action, invoiceId, affectsInventory, confirmationText: confirmationText3 }) => {
+      const input = { invoiceId, affectsInventory };
+      const result = action === "submit" ? await commerceReturns.submitOrderInvoiceReturn({
+        ...input,
+        confirmationText: confirmationText3 ?? ""
+      }) : await commerceReturns.previewOrderInvoiceReturn(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
+    })
+  );
+  server.tool(
+    "imis_refund_returned_order_payment",
+    "Preview or submit a refund for a returned order invoice through Payment/_execute Refund. Preview checks refund eligibility, resolves the original positive payment when possible, and returns exact confirmation text; submit requires that text, creates the refund payment, and verifies invoice/payment readback. refundMethod defaults to CASH recording; use original_payment_method for the live-proven Pay Central/gateway refund path against the original gateway payment. It does not expose generic payment execute or unrelated credit allocation.",
+    {
+      action: external_exports.enum(["preview", "submit"]).describe("Use preview first. Submit performs the refund and requires exact confirmationText from preview."),
+      invoiceId: external_exports.string().describe("Returned order InvoiceId with a credit balance."),
+      originalPaymentId: external_exports.string().optional().describe("Original positive payment to refund. If omitted, the tool resolves it from PaymentApplication readback."),
+      amount: external_exports.number().positive().optional().describe("Refund amount. Defaults to the invoice credit balance and cannot exceed it."),
+      refundMethod: external_exports.enum(["cash", "original_payment_method"]).optional().describe("Refund route. cash records a CASH refund; original_payment_method refunds through the original gateway/payment method when the original payment has a gateway reference."),
+      confirmationText: external_exports.string().optional().describe("Required for submit. Must exactly equal the confirmationText returned by preview.")
+    },
+    withErrorHandling(async ({ action, invoiceId, originalPaymentId, amount, refundMethod, confirmationText: confirmationText3 }) => {
+      const input = { invoiceId, originalPaymentId, amount, refundMethod };
+      const result = action === "submit" ? await commerceReturns.submitReturnedOrderRefund({
+        ...input,
+        confirmationText: confirmationText3 ?? ""
+      }) : await commerceReturns.previewReturnedOrderRefund(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
+      };
     })
   );
 }
@@ -44011,10 +53933,12 @@ function registerTools(server, entityService, metadataService, apiClient, iqaSer
   registerIqaTools(server, iqaService, apiClient);
   registerPanelTools(server, apiClient);
   registerContentTools(server, apiClient, companion);
+  registerClientIpartTools(server, apiClient);
   registerCertificationTools(server, entityService);
-  registerAutopayTools(server, entityService);
+  registerAutopayTools(server, entityService, apiClient);
   registerUkTools(server, entityService, apiClient, iqaService);
-  registerGatewayTools(server, entityService);
+  registerGatewayTools(server, entityService, apiClient, companion);
+  registerCommerceTools(server, entityService, apiClient);
   registerSecurityTools(server, entityService);
   registerImportTools(server, entityService);
   registerDuplicateTools(server, entityService);
@@ -44626,13 +54550,19 @@ function registerContentPrompts(server) {
           `3. If the page is query-backed or custom-panel-backed, use imis_iqa_content_plan before choosing the IQD and iPart shape.`
         );
         steps.push(
-          `4. If this is a multi-page section, navigation-aware section, or iPart-heavy content set, use imis_dashboard_pages with a pages/iParts/navigation JSON spec so the agent gets one delivery packet. Pick a content root that belongs to the intended website/sitemap branch; a raw @/ proof-folder page can render without the staff/site shell even when the ~/ NAV record exists. If NAV returns api_created_orphan_without_hierarchy, treat the returned native Site Builder packet as the required next action rather than claiming sidebar placement. If the layout is novel, include a stable customLayout with reuseExisting=true or create it first with imis_content_layouts instead of copying a native dashboard preset or generating a new timestamped layout each run.`
+          `4. If this is a cart checkout or order-confirmation page set, use imis_cart_checkout_pages instead of raw typed iPart XML. It assembles the native checkout iPart set and returns the publish/navigation handoff; order, payment, refund, receipt, and AutoPay behavior still belong to their separate commerce/finance tools.`
         );
         steps.push(
-          `5. Otherwise use imis_document_create to create a new content record or folder at "${targetPath}".`
+          `5. If this is a recurring donation/Give Now page, use imis_recurring_donation_pages instead of raw typed iPart XML. It assembles the native iMIS recurring donation iPart chain, not a custom iPart; mandate creation, initial payment, invoice generation, and collection still require hosted checkout plus AutoPay/payment readback.`
         );
         steps.push(
-          `6. After creation, request publish only when explicitly asked. imis_document_update status="Published" returns/forwards the native publish intervention by default; AgentZ/browser automation is a valid agent path when connected, but do not claim live until a follow-up status check verifies Published.`
+          `6. If this is a multi-page section, navigation-aware section, or iPart-heavy content set, use imis_dashboard_pages with a pages/iParts/navigation JSON spec so the agent gets one delivery packet. Pick a content root that belongs to the intended website/sitemap branch; a raw @/ proof-folder page can render without the staff/site shell even when the ~/ NAV record exists. If NAV returns api_created_orphan_without_hierarchy, treat the returned native Site Builder packet as the required next action rather than claiming sidebar placement. If the layout is novel, include a stable customLayout with reuseExisting=true or create it first with imis_content_layouts instead of copying a native dashboard preset or generating a new timestamped layout each run.`
+        );
+        steps.push(
+          `7. Otherwise use imis_document_create to create a new content record or folder at "${targetPath}".`
+        );
+        steps.push(
+          `8. After creation, request publish only when explicitly asked. imis_document_update status="Published" returns/forwards the native publish intervention by default; AgentZ/browser automation is a valid agent path when connected, but do not claim live until a follow-up status check verifies Published.`
         );
       }
       if (op === "update") {
@@ -44856,14 +54786,14 @@ function createHubActivatedClient() {
     }
     real.setExternalToken(baseUrl, token);
     connInfo = { baseUrl, source: "iFINITY AgentZ (OAuth)" };
-    process.stderr.write(`[ifinity-imis-mcp] Token received from AgentZ \u2014 API active for ${baseUrl}
+    process.stderr.write(`[agentz-mcp] Token received from AgentZ \u2014 API active for ${baseUrl}
 `);
   }
   function clearHubToken(baseUrl) {
     real?.clearExternalToken();
     real = null;
     connInfo = { baseUrl: baseUrl ?? "", source: "" };
-    process.stderr.write("[ifinity-imis-mcp] AgentZ token cleared \u2014 API inactive.\n");
+    process.stderr.write("[agentz-mcp] AgentZ token cleared \u2014 API inactive.\n");
   }
   return {
     client,
@@ -44884,10 +54814,10 @@ async function createServer() {
     pkgVersion = pkg.version;
   } catch {
   }
-  process.stderr.write(`[ifinity-imis-mcp] v${pkgVersion} \u2014 waiting for iFINITY AgentZ connection.
+  process.stderr.write(`[agentz-mcp] v${pkgVersion} \u2014 waiting for iFINITY AgentZ connection.
 `);
   const server = new McpServer(
-    { name: "ifinity-imis-mcp", version: pkgVersion },
+    { name: "agentz-mcp", version: pkgVersion },
     { capabilities: { logging: {} } }
   );
   const { client: apiClient, isConfigured, getConnectionInfo, activateWithToken, clearHubToken } = createHubActivatedClient();
@@ -44899,7 +54829,7 @@ async function createServer() {
     clearHubToken(baseUrl);
   });
   companion.connect().then((ok) => {
-    if (ok) process.stderr.write("[ifinity-imis-mcp] Connected to iFINITY AgentZ.\n");
+    if (ok) process.stderr.write("[agentz-mcp] Connected to iFINITY AgentZ.\n");
   }).catch(() => {
   });
   installToolTelemetry(server, companion, apiClient);
@@ -44933,14 +54863,26 @@ try {
   }
 } catch {
 }
+process.on("unhandledRejection", (reason) => {
+  process.stderr.write(
+    `[agentz-mcp] Unhandled rejection: ${reason instanceof Error ? reason.stack ?? reason.message : String(reason)}
+`
+  );
+});
+process.on("uncaughtException", (error2) => {
+  process.stderr.write(
+    `[agentz-mcp] Uncaught exception: ${error2 instanceof Error ? error2.stack ?? error2.message : String(error2)}
+`
+  );
+});
 async function main() {
   const server = await createServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  process.stderr.write("[ifinity-imis-mcp] Server started on stdio transport\n");
+  process.stderr.write("[agentz-mcp] Server started on stdio transport\n");
 }
 main().catch((error2) => {
-  process.stderr.write(`[ifinity-imis-mcp] Fatal error: ${error2}
+  process.stderr.write(`[agentz-mcp] Fatal error: ${error2}
 `);
   process.exit(1);
 });

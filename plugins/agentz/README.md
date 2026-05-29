@@ -24,18 +24,28 @@ AgentZ works as the signed-in user. Actions run with that user's iMIS permission
 
 ### Prerequisites
 
-- **Claude Code** (CLI, Desktop, or Cowork)
+- **Claude Code**, **Claude Desktop**, or **Claude Cowork**
 - **iFINITY AgentZ** desktop app
 - **iMIS EMS Cloud instance** with staff-level access
 
-### Install via iFINITY AgentZ (recommended)
+### Install in Cowork or Claude Desktop (recommended)
+
+1. In Claude, click **Customize** then click the **+** next to Personal plugins
+2. Select **Add marketplace**
+3. Enter the URL `https://github.com/iFINITY-Ltd/ifinity-marketplace` and click **Sync**
+4. Click **Browse plugins** → **Personal** tab → **ifinity-marketplace**
+5. Click the **Ifinity imis** plugin card, then click **Install**
+
+For step-by-step screenshots, see the [marketplace install guide](https://github.com/iFINITY-Ltd/ifinity-marketplace#install-in-cowork-or-claude-desktop).
+
+### Install via iFINITY AgentZ
 
 1. Download AgentZ from your organisation's iFINITY download page
 2. Open AgentZ and sign in
 3. Go to **Settings > Agent Plugin — Claude Code**
 4. Click **Install Plugin**
 
-AgentZ handles plugin installation and updates automatically.
+AgentZ handles marketplace registration, installation, and updates automatically.
 
 ### Install via Claude Code CLI
 

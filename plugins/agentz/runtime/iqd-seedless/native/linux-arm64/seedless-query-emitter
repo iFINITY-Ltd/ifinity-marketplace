@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+runtime_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export MONO_CFG_DIR="$runtime_dir/etc"
+export LD_LIBRARY_PATH="$runtime_dir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+mono_path="$runtime_dir:$runtime_dir/lib/mono/4.5"
+export MONO_PATH="$mono_path${MONO_PATH:+:$MONO_PATH}"
+exec "$runtime_dir/mono" "$runtime_dir/SeedlessQueryEmitter.exe" "$@"
