@@ -1,6 +1,6 @@
 {
   "name": "@ifinity/imis-mcp",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "iFINITY AgentZ iMIS agent plugin for Claude-compatible runtimes",
   "type": "module",
   "bin": {
