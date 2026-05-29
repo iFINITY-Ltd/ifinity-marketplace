@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "agentz": {
-      "command": "sh",
-      "args": ["-c", "ROOT=\"${PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-$PWD}}\"; ENTRY=\"$ROOT/dist/index.js\"; if [ -n \"$AGENTZ_NODE\" ] && [ -f \"$AGENTZ_NODE\" ]; then export ELECTRON_RUN_AS_NODE=1; exec \"$AGENTZ_NODE\" \"$ENTRY\"; fi; if command -v node >/dev/null 2>&1; then if node --use-env-proxy --version >/dev/null 2>&1; then exec node --use-env-proxy --use-system-ca \"$ENTRY\"; fi; exec node \"$ENTRY\"; fi; RT=\"\"; if [ -f \"$HOME/.ifinity-agentz/node-runtime\" ]; then RT=$(cat \"$HOME/.ifinity-agentz/node-runtime\" 2>/dev/null); fi; for c in \"$RT\" \"$HOME/AppData/Local/Programs/@ifinitycompanion/iFINITY AgentZ.exe\" \"$LOCALAPPDATA/Programs/@ifinitycompanion/iFINITY AgentZ.exe\" \"/Applications/iFINITY AgentZ.app/Contents/MacOS/iFINITY AgentZ\" \"$HOME/Applications/iFINITY AgentZ.app/Contents/MacOS/iFINITY AgentZ\"; do if [ -n \"$c\" ] && [ -f \"$c\" ]; then export ELECTRON_RUN_AS_NODE=1; exec \"$c\" \"$ENTRY\"; fi; done; echo \"[agentz-mcp] Cannot start: no Node runtime found and the iFINITY AgentZ desktop app was not located. Open or install iFINITY AgentZ (https://ifinityagentz.co.uk), or install Node.js.\" >&2; exit 1"]
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/agentz-mcp",
+      "args": []
     },
     "imis-docs": {
       "type": "http",
