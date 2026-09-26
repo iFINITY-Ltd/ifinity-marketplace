@@ -1,0 +1,115 @@
+{
+  "schema": "ifinity.buildhub.preview-renderer.v1",
+  "rendererVersion": "1.5.1",
+  "stylesheetVersion": "2026-09-23.ukdemoaisp9",
+  "pluginVersion": "0.7.14",
+  "bundle": {
+    "file": "buildhub-preview.js",
+    "bytes": 1421756,
+    "sha256": "290c49b5403a48ccd9a5f6e112308f129b02d1501563e61b363693959a843a7c"
+  },
+  "catalogue": {
+    "file": "stock-layouts.json",
+    "version": "2026-09-12.ukdemoaisp9",
+    "layouts": 48,
+    "sha256": "ded1ad1a0ae17fc989ade7af0b3018f44d24a822c66692be31bcbf8513de88db"
+  },
+  "shellCatalogue": {
+    "file": "stock-shells.json",
+    "version": "2026-09-22.ukdemoaisp9",
+    "websiteLayouts": 5,
+    "websiteTemplates": 4,
+    "themes": 10,
+    "sha256": "dc4690b3790872848208e3d146e02a16e794847ab1f4ba91688beb09d95d0dd6"
+  },
+  "fonts": {
+    "file": "fonts/fonts-manifest.json",
+    "sha256": "6f71c625bb220497da0d50e3378eb7a2ed334521d73f07eb61bba0efd9ded84b",
+    "licence": "SIL Open Font License 1.1 (per-family OFL.txt beside the faces)",
+    "families": [
+      {
+        "family": "Red Hat Display",
+        "faces": 2,
+        "bytes": 62732
+      },
+      {
+        "family": "Open Sans",
+        "faces": 2,
+        "bytes": 88036
+      },
+      {
+        "family": "Inter",
+        "faces": 2,
+        "bytes": 152760
+      },
+      {
+        "family": "Montserrat",
+        "faces": 2,
+        "bytes": 72628
+      },
+      {
+        "family": "Poppins",
+        "faces": 10,
+        "bytes": 82592
+      }
+    ],
+    "totalBytes": 458748,
+    "licences": [
+      "inter.OFL.txt",
+      "montserrat.OFL.txt",
+      "opensans.OFL.txt",
+      "poppins.OFL.txt",
+      "redhatdisplay.OFL.txt"
+    ]
+  },
+  "shellAssets": {
+    "file": "shell-assets/shell-assets-manifest.json",
+    "sha256": "adff4c817e2022d38ae42f82abf6fb29052d26d823c81da8818b6d3fc3e886a8",
+    "derived": {
+      "file": "src/buildhub-preview/shell-assets.json",
+      "sha256": "f262afd336766d28b3cc6a69ecc4d1776b7604bb91bec787f81da8481777c5ea"
+    },
+    "sources": [
+      {
+        "file": "shell-assets/NavbarSprite.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/Orion/images/NavbarSprite.svg",
+        "bytes": 72340,
+        "sha256": "5d8c3114d5ad906067fe4217341502a2904afaea92b015ef8ac48597623bb731",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/IconSprite.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/Assets/images/IconSprite.svg",
+        "bytes": 85810,
+        "sha256": "340521497bc0b98cafb1b050be4eebb9a5ce7e25d082f64d4d302a6b5e713904",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/bento-menu.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/Assets/images/Icons/SVG/bento-menu.svg",
+        "bytes": 978,
+        "sha256": "e8b08750e70271d7b5e0be23572271c0630281581a5e8d0470815df21a81572f",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/auxIcons.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/Flat_White/images/auxIcons.svg",
+        "bytes": 6165,
+        "sha256": "b42dbaede12c3410457cd3e3dc0c60bf5013cd81f1574a6f3e57c133bcfcb7b7",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/imis-logo-full-colour.png",
+        "url": "ifinity-licensing/public/assets/brand/imis-logo-full-colour.png",
+        "bytes": 52578,
+        "sha256": "cbffd8b17f3d553af7d072b026a993dc8c35e1b7d2999f9892706e61006618d0",
+        "ownership": "the iMIS logo, a trademark of Advanced Solutions International; this copy is the iFINITY brand folder's (ifinity-licensing), supplied by William for the header",
+        "licence": "none declared"
+      }
+    ]
+  }
+}

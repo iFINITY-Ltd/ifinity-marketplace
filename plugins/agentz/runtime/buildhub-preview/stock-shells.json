@@ -1,0 +1,1294 @@
+{
+ "schema": "ifinity.buildhub.stock-shell-catalogue.v1",
+ "version": "2026-09-22.ukdemoaisp9",
+ "provenance": {
+  "source": "https://ukdemoaisp9.imiscloud.com",
+  "capturedOn": {
+   "corpus": "2026-09-12",
+   "live": "2026-09-22"
+  },
+  "method": "read-only REST reads (DocumentSummary, Document/{id}, Themes) through a client whose POST/PUT/DELETE throw, and anonymous HTTPS GETs of member-site homes; nothing was created, changed or published",
+  "capture": "tests/fixtures/buildhub-preview-corpus/site-shells",
+  "note": "The platform website layouts and templates (IsSystem=true on the source tenant, named in STOCK_WEBSITE_LAYOUT_NAMES / STOCK_WEBSITE_TEMPLATE_NAMES) and the Themes records with no ATH document (platform App_Themes). Stock template ContentHtml bodies are recorded by size and hash only."
+ },
+ "websiteLayouts": [
+  {
+   "path": "$/ContentManagement/DefaultSystem/WebsiteLayouts/Default",
+   "name": "Default",
+   "documentId": "590f67ee-2943-453b-a5c2-3221c6b60dc8",
+   "documentVersionId": "506917e3-0211-41d7-ad15-c0f8febdd486",
+   "layoutMarkup": "<div>&#xD;\n\t<div class=\"row\">&#xD;\n    <div class=\"col-sm-4\">&#xD;\n{1}    </div>&#xD;\n    <div class=\"col-sm-8\">&#xD;\n{2}    </div>&#xD;\n</div>&#xD;\n<div class=\"row\">&#xD;\n    <div class=\"col-sm-12\">&#xD;\n{3}    </div>&#xD;\n</div>&#xD;\n<div class=\"row\">&#xD;\n    <div class=\"col-sm-12\">&#xD;\n{4}    </div>&#xD;\n</div>&#xD;\n<div class=\"row\">&#xD;\n    <div class=\"col-sm-6\">&#xD;\n{5}    </div>&#xD;\n    <div class=\"col-sm-6\">&#xD;\n{6}    </div>&#xD;\n</div>&#xD;\n&#xD;\n\t</div>&#xD;",
+   "zones": [
+    {
+     "zone": "1",
+     "chain": [
+      "div",
+      "div.row",
+      "div.col-sm-4"
+     ]
+    },
+    {
+     "zone": "2",
+     "chain": [
+      "div",
+      "div.row",
+      "div.col-sm-8"
+     ]
+    },
+    {
+     "zone": "3",
+     "chain": [
+      "div",
+      "div.row",
+      "div.col-sm-12"
+     ]
+    },
+    {
+     "zone": "4",
+     "chain": [
+      "div",
+      "div.row",
+      "div.col-sm-12"
+     ]
+    },
+    {
+     "zone": "5",
+     "chain": [
+      "div",
+      "div.row",
+      "div.col-sm-6"
+     ]
+    },
+    {
+     "zone": "6",
+     "chain": [
+      "div",
+      "div.row",
+      "div.col-sm-6"
+     ]
+    }
+   ],
+   "markupSha256": "fcbbed89690b9f72d58abdd857645b9f07d6c33d39579b3972148294903d1750",
+   "payloadSha256": "c0fe02cf0332e52f551ca5537d92a4fd6f8205d9f8a99b921c5b6ce9306eafec"
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/WebsiteLayouts/Coffee",
+   "name": "Coffee",
+   "documentId": "7ce565e3-72f3-4238-8460-f77ee0a8d547",
+   "documentVersionId": "56d7d4fe-21ed-4b07-abf0-5a2644689521",
+   "layoutMarkup": "<div id=\"masterWrapper\" class=\"wrapper\">&#xD;\n\t<a id=\"PageTop\" class=\"sr-only\">Top of the Page</a>&#xD;\n&#xD;\n\t<header id=\"hd\" class=\"header ClearFix\">\t&#xD;\n<div class=\"header-background-container\" data-label=\"Background\">{1}</div>&#xD;\n\t\t<div class=\"header-logo-container\" data-label=\"Logo\">&#xD;\n\t\t\t{2}&#xD;\n\t\t</div>\t  &#xD;\n\t\t<div class=\"header-aux-container\" data-label=\"Aux\">&#xD;\n\t\t\t{3}&#xD;\n\t\t</div>&#xD;\n\t\t<div class=\"header-primary-nav-container\" data-label=\"Primary\">&#xD;\n\t\t\t{4}&#xD;\n\t\t</div>&#xD;\n\t\t<div class=\"home-page-header-container\" data-label=\"Home Content\">\t&#xD;\n\t\t\t{5}&#xD;\n\t\t</div>&#xD;\n\t\t<div class=\"internal-header-container\" data-label=\"Internal Header\">&#xD;\n\t\t\t{6}&#xD;\n\t\t</div>&#xD;\n\t</header>&#xD;\n&#xD;\n\t<div class=\"container main-container ClearFix\">&#xD;\n\t\t<main class=\"body-container\" id=\"ContentPanel\">&#xD;\n\t\t\t<div data-label=\"Secondary Navigation\" class=\"col-secondary cs-right d-none\">&#xD;\n\t\t\t\t{7}&#xD;\n\t\t\t</div>&#xD;\n\t\t\t<div class=\"col-primary\" data-label=\"Main Content\">&#xD;\n\t\t\t\t{8}&#xD;\n\t\t\t</div>&#xD;\n\t\t</main>&#xD;\n\t</div>&#xD;\n\t&#xD;\n\t<a class=\"backToTop\" href=\"#PageTop\">Back to Top</a>&#xD;\n\t<footer id=\"ft\" class=\"footer ClearFix\">&#xD;\n<div class=\"footer-banner\">{9}</div>&#xD;\n\t\t<div class=\"footer-content\">&#xD;\n\t\t\t<div class=\"container\">&#xD;\n<div class=\"footer-column\" data-label=\"Footer Column 1\">{10}</div>&#xD;\n<div class=\"footer-column\" data-label=\"Footer Column 2\">{11}</div>&#xD;\n<div class=\"footer-column\" data-label=\"Footer Column 3\">{12}</div>&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t</footer>&#xD;\n</div>",
+   "zones": [
+    {
+     "zone": "1",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix",
+      "div.header-background-container"
+     ],
+     "label": "Background"
+    },
+    {
+     "zone": "2",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix",
+      "div.header-logo-container"
+     ],
+     "label": "Logo"
+    },
+    {
+     "zone": "3",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix",
+      "div.header-aux-container"
+     ],
+     "label": "Aux"
+    },
+    {
+     "zone": "4",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix",
+      "div.header-primary-nav-container"
+     ],
+     "label": "Primary"
+    },
+    {
+     "zone": "5",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix",
+      "div.home-page-header-container"
+     ],
+     "label": "Home Content"
+    },
+    {
+     "zone": "6",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix",
+      "div.internal-header-container"
+     ],
+     "label": "Internal Header"
+    },
+    {
+     "zone": "7",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div.container.main-container.ClearFix",
+      "main#ContentPanel.body-container",
+      "div.col-secondary.cs-right.d-none"
+     ],
+     "label": "Secondary Navigation"
+    },
+    {
+     "zone": "8",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div.container.main-container.ClearFix",
+      "main#ContentPanel.body-container",
+      "div.col-primary"
+     ],
+     "label": "Main Content"
+    },
+    {
+     "zone": "9",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "footer#ft.footer.ClearFix",
+      "div.footer-banner"
+     ]
+    },
+    {
+     "zone": "10",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "footer#ft.footer.ClearFix",
+      "div.footer-content",
+      "div.container",
+      "div.footer-column"
+     ],
+     "label": "Footer Column 1"
+    },
+    {
+     "zone": "11",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "footer#ft.footer.ClearFix",
+      "div.footer-content",
+      "div.container",
+      "div.footer-column"
+     ],
+     "label": "Footer Column 2"
+    },
+    {
+     "zone": "12",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "footer#ft.footer.ClearFix",
+      "div.footer-content",
+      "div.container",
+      "div.footer-column"
+     ],
+     "label": "Footer Column 3"
+    }
+   ],
+   "markupSha256": "9d594e77b987253b885d7559a907c23134b3715014ca1582166d88066234a54d",
+   "payloadSha256": "e32dbd0d5fc5696a1094d299af9812e43e7db38bec16874dec9bbf704bca9b0b"
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/WebsiteLayouts/CitiesResponsiveLayout",
+   "name": "CitiesResponsiveLayout",
+   "documentId": "e1db48c8-01c3-492b-a2a6-2b7c07e258f9",
+   "documentVersionId": "b884cdc0-1ab0-49c0-8a72-292f339c6ec2",
+   "layoutMarkup": "<div id=\"masterWrapper\" class=\"wrapper\">&#xD;\n\t<header id=\"hd\" class=\"header ClearFix navbar\" data-height-offset=\"true\">&#xD;\n\t\t<div class=\"header-top-container\">&#xD;\n\t\t\t<div class=\"header-container\">&#xD;\n\t\t\t\t<div id=\"masterLogoArea\" class=\"header-logo-container d-flex justify-content-start\" data-label=\"Logo\">&#xD;\n\t\t\t\t\t{1}&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t\t<div class=\"navbar-header nav-auxiliary d-flex justify-content-end\" id=\"auxiliary-container\" data-label=\"Utility\">&#xD;\n\t\t\t\t\t{2}&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t\t<div class=\"header-bottom-container\">&#xD;\n\t\t\t<div class=\"header-container\">&#xD;\n\t\t\t\t<div data-label=\"Primary\" class=\"clear-right\">&#xD;\n\t\t\t\t\t{3}&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t</header>&#xD;\n\t<div id=\"HomePageContent\" class=\"HomePageFullWidthArea\" data-label=\"Home Content\">&#xD;\n\t\t{4}&#xD;\n\t</div>&#xD;\n\t<div id=\"masterContentArea\" class=\"container\">&#xD;\n\t\t<div role=\"main\" class=\"body-container\" id=\"ContentPanel\">&#xD;\n\t\t\t<div data-label=\"On Behalf Of\" class=\"d-flex justify-content-end\">&#xD;\n\t\t\t\t{5}&#xD;\n\t\t\t</div>&#xD;\n\t\t\t<div class=\"col-primary\" data-label=\"Main Content\">&#xD;\n\t\t\t\t{6}&#xD;\n\t\t\t</div>&#xD;\n\t\t\t<div data-label=\"Secondary Navigation\" class=\"col-secondary cs-right d-none\">&#xD;\n\t\t\t\t{7}&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t</div>&#xD;\n\t<footer id=\"ft\" class=\"footer\">&#xD;\n\t\t<div class=\"footer-content ClearFix\">&#xD;\n\t\t\t<div class=\"container\" data-label=\"Footer 1\">&#xD;\n\t\t\t\t{8}&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t\t<div class=\"footer-nav-copyright\">&#xD;\n\t\t\t<div class=\"container\" role=\"navigation\">&#xD;\n\t\t\t\t<div class=\"footer-copyright\" data-label=\"Footer 2\">&#xD;\n\t\t\t\t\t{9}&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t</footer>&#xD;\n</div>",
+   "zones": [
+    {
+     "zone": "1",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix.navbar",
+      "div.header-top-container",
+      "div.header-container",
+      "div#masterLogoArea.header-logo-container.d-flex.justify-content-start"
+     ],
+     "label": "Logo"
+    },
+    {
+     "zone": "2",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix.navbar",
+      "div.header-top-container",
+      "div.header-container",
+      "div#auxiliary-container.navbar-header.nav-auxiliary.d-flex.justify-content-end"
+     ],
+     "label": "Utility"
+    },
+    {
+     "zone": "3",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix.navbar",
+      "div.header-bottom-container",
+      "div.header-container",
+      "div.clear-right"
+     ],
+     "label": "Primary"
+    },
+    {
+     "zone": "4",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div#HomePageContent.HomePageFullWidthArea"
+     ],
+     "label": "Home Content"
+    },
+    {
+     "zone": "5",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div#masterContentArea.container",
+      "div#ContentPanel.body-container",
+      "div.d-flex.justify-content-end"
+     ],
+     "label": "On Behalf Of"
+    },
+    {
+     "zone": "6",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div#masterContentArea.container",
+      "div#ContentPanel.body-container",
+      "div.col-primary"
+     ],
+     "label": "Main Content"
+    },
+    {
+     "zone": "7",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div#masterContentArea.container",
+      "div#ContentPanel.body-container",
+      "div.col-secondary.cs-right.d-none"
+     ],
+     "label": "Secondary Navigation"
+    },
+    {
+     "zone": "8",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "footer#ft.footer",
+      "div.footer-content.ClearFix",
+      "div.container"
+     ],
+     "label": "Footer 1"
+    },
+    {
+     "zone": "9",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "footer#ft.footer",
+      "div.footer-nav-copyright",
+      "div.container",
+      "div.footer-copyright"
+     ],
+     "label": "Footer 2"
+    }
+   ],
+   "markupSha256": "22ed7d816f8cbc74aba9e4f9024fffaa0f1db17eaa7e2ff0dde6adcbf96cd372",
+   "payloadSha256": "c13d6065d691dde5db724db2f91f38ffde2394b87d3b0a0f9004a212bfb012ef"
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/WebsiteLayouts/CitiesStandardLayout",
+   "name": "CitiesStandardLayout",
+   "documentId": "9d430c67-8428-460a-a5d8-eb5e49a051d8",
+   "documentVersionId": "a1109f3b-e8f0-419e-96ae-a0ffb3c1de6a",
+   "layoutMarkup": "<div class=\"FullSize\">&#xD;\n\t<div id=\"masterWrapper\">&#xD;\n\t\t<header id=\"hd\" class=\"ClearFix\" data-height-offset=\"true\">&#xD;\n\t\t\t<div id=\"masterHeaderBackground\" class=\"ClearFix\">&#xD;\n\t\t\t\t<div id=\"masterLogoArea\" class=\"pull-left\" data-label=\"Logo\">&#xD;\n\t\t\t\t\t<!-- Logo -->&#xD;\n\t\t\t\t\t{1}&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t\t<div id=\"Menu\" class=\"ClearFix\">&#xD;\n\t\t\t\t\t<div id=\"masterTopBarAuxiliary\" class=\"ClearFix pull-right\" data-label=\"Utility Navigation\">&#xD;\n\t\t\t\t\t\t<!-- Auxiliary area -->&#xD;\n\t\t\t\t\t\t{2}&#xD;\n\t\t\t\t\t</div>&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t\t<div class=\"PrimaryNavPanel\" role=\"navigation\" data-label=\"Primary Navigation\">&#xD;\n\t\t\t\t\t<!-- Primary navigation -->&#xD;\n\t\t\t\t\t{3}&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t</div>&#xD;\n\t\t</header>&#xD;\n\t\t<div class=\"HomePageFullWidthArea\" data-label=\"Content\">&#xD;\n\t\t\t{4}&#xD;\n\t\t</div>&#xD;\n\t\t<div id=\"bd\">&#xD;\n\t\t\t<div id=\"masterContentArea\">&#xD;\n\t\t\t\t<div id=\"yui-main\">&#xD;\n\t\t\t\t\t<div class=\"yui-b\" data-label=\"Main Content\">&#xD;\n\t\t\t\t\t\t<!-- Main content -->&#xD;\n\t\t\t\t\t\t{5}&#xD;\n\t\t\t\t\t</div>&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t\t<div id=\"masterFooterPush\">&#xD;\n\t\t</div>&#xD;\n\t</div>&#xD;\n\t<footer id=\"ft\">&#xD;\n\t\t<div id=\"masterFooterContent\" class=\"ClearFix\">&#xD;\n\t\t\t<div id=\"masterFooterNavigation\" role=\"navigation\"  data-label=\"Footer\">&#xD;\n\t\t\t\t{6}&#xD;\n\t\t\t</div>&#xD;\n\t\t\t<div id=\"masterFooterCommunications\">&#xD;\n\t\t\t\t{7}&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t\t<div id=\"masterFooterCopyright\">&#xD;\n\t\t\t{8}&#xD;\n\t\t</div>&#xD;\n\t</footer>&#xD;\n</div>",
+   "zones": [
+    {
+     "zone": "1",
+     "chain": [
+      "div.FullSize",
+      "div#masterWrapper",
+      "header#hd.ClearFix",
+      "div#masterHeaderBackground.ClearFix",
+      "div#masterLogoArea.pull-left"
+     ],
+     "label": "Logo"
+    },
+    {
+     "zone": "2",
+     "chain": [
+      "div.FullSize",
+      "div#masterWrapper",
+      "header#hd.ClearFix",
+      "div#masterHeaderBackground.ClearFix",
+      "div#Menu.ClearFix",
+      "div#masterTopBarAuxiliary.ClearFix.pull-right"
+     ],
+     "label": "Utility Navigation"
+    },
+    {
+     "zone": "3",
+     "chain": [
+      "div.FullSize",
+      "div#masterWrapper",
+      "header#hd.ClearFix",
+      "div#masterHeaderBackground.ClearFix",
+      "div.PrimaryNavPanel"
+     ],
+     "label": "Primary Navigation"
+    },
+    {
+     "zone": "4",
+     "chain": [
+      "div.FullSize",
+      "div#masterWrapper",
+      "div.HomePageFullWidthArea"
+     ],
+     "label": "Content"
+    },
+    {
+     "zone": "5",
+     "chain": [
+      "div.FullSize",
+      "div#masterWrapper",
+      "div#bd",
+      "div#masterContentArea",
+      "div#yui-main",
+      "div.yui-b"
+     ],
+     "label": "Main Content"
+    },
+    {
+     "zone": "6",
+     "chain": [
+      "div.FullSize",
+      "footer#ft",
+      "div#masterFooterContent.ClearFix",
+      "div#masterFooterNavigation"
+     ],
+     "label": "Footer"
+    },
+    {
+     "zone": "7",
+     "chain": [
+      "div.FullSize",
+      "footer#ft",
+      "div#masterFooterContent.ClearFix",
+      "div#masterFooterCommunications"
+     ]
+    },
+    {
+     "zone": "8",
+     "chain": [
+      "div.FullSize",
+      "footer#ft",
+      "div#masterFooterCopyright"
+     ]
+    }
+   ],
+   "markupSha256": "7a2525ee8d91dac734c2ddb6648bc4a634e81f1add637741c6b047f43ef89103",
+   "payloadSha256": "ab139d374d5db37f4aca5404f7eb00d561774b061fe4e7e0260a0b697127f4fb"
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/WebsiteLayouts/NaturalHeritageSitesResponsiveLayout",
+   "name": "NaturalHeritageSitesResponsiveLayout",
+   "documentId": "2c4e6e9d-1e35-45d8-8403-515e5572be11",
+   "documentVersionId": "e8d8c984-9dad-4875-ba80-f7ef77a25116",
+   "layoutMarkup": "<div id=\"masterWrapper\" class=\"wrapper\">&#xD;\n<a id=\"PageTop\" class=\"sr-only\">Top of the Page</a>&#xD;\n      <header id=\"hd\" class=\"header ClearFix navbar\" data-height-offset=\"true\">\t     &#xD;\n\t\t\t<div class=\"header-top-container\">&#xD;\n\t\t\t\t<div class=\"header-container\">&#xD;\n\t\t\t\t\t<div id=\"masterLogoArea\" class=\"header-logo-container pull-left\" data-label=\"Logo\">&#xD;\n\t\t\t\t\t\t{1}&#xD;\n\t\t\t\t\t</div>&#xD;\n\t\t\t\t\t<div class=\"navbar-header nav-auxiliary pull-right\" id=\"auxiliary-container\" data-label=\"Utility\">&#xD;\n\t\t\t\t\t\t{2}&#xD;\n\t\t\t\t\t</div>&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t</div>&#xD;\n\t\t\t<div data-label=\"Primary\" class=\"ClearFix header-bottom-container\">&#xD;\n\t\t\t\t<div class=\"header-container\">&#xD;\n\t\t\t\t\t{3}&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t</div>&#xD;\n                <div id=\"HomePageContent\" class=\"HomePageFullWidthArea\" data-label=\"Home Content\">\t&#xD;\n\t\t\t{4}&#xD;\n                </div>&#xD;\n                <div class=\"InternalHeaderArea\" data-label=\"Internal Header\">&#xD;\n                         {5}&#xD;\n                </div>&#xD;\n      </header>&#xD;\n      <div id=\"masterContentArea\" class=\"container ClearFix\">&#xD;\n\t\t<div role=\"main\" class=\"body-container\" id=\"ContentPanel\">&#xD;\n\t\t\t<div data-label=\"On Behalf Of\" class=\"ClearFix OnBehalfOfContainer\">&#xD;\n\t\t\t\t{6}&#xD;\n\t\t\t</div>&#xD;\n\t\t\t<div class=\"col-primary\" data-label=\"Main Content\">&#xD;\n\t\t\t\t{7}&#xD;\n\t\t\t</div>&#xD;\n\t\t\t<div data-label=\"Secondary Navigation\" class=\"col-secondary cs-right d-none\">&#xD;\n\t\t\t\t{8}&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t</div>&#xD;\n\t<a class=\"backToTop\" href=\"#PageTop\">Back to Top</a>&#xD;\n\t<footer id=\"ft\" class=\"footer ClearFix\">&#xD;\n\t\t<div class=\"footer-content\">&#xD;\n\t\t\t<div class=\"container\" data-label=\"Footer 1\">&#xD;\n\t\t\t\t{9}&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t\t<div class=\"footer-nav-copyright\">&#xD;\n\t\t\t<div class=\"container\" role=\"navigation\">&#xD;\n\t\t\t\t<div class=\"footer-copyright\" data-label= \"Footer 2\">&#xD;\n\t\t\t\t\t{10}&#xD;\n\t\t\t\t</div>&#xD;\n\t\t\t</div>&#xD;\n\t\t</div>&#xD;\n\t</footer>&#xD;\n</div>",
+   "zones": [
+    {
+     "zone": "1",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix.navbar",
+      "div.header-top-container",
+      "div.header-container",
+      "div#masterLogoArea.header-logo-container.pull-left"
+     ],
+     "label": "Logo"
+    },
+    {
+     "zone": "2",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix.navbar",
+      "div.header-top-container",
+      "div.header-container",
+      "div#auxiliary-container.navbar-header.nav-auxiliary.pull-right"
+     ],
+     "label": "Utility"
+    },
+    {
+     "zone": "3",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix.navbar",
+      "div.ClearFix.header-bottom-container",
+      "div.header-container"
+     ]
+    },
+    {
+     "zone": "4",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix.navbar",
+      "div#HomePageContent.HomePageFullWidthArea"
+     ],
+     "label": "Home Content"
+    },
+    {
+     "zone": "5",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "header#hd.header.ClearFix.navbar",
+      "div.InternalHeaderArea"
+     ],
+     "label": "Internal Header"
+    },
+    {
+     "zone": "6",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div#masterContentArea.container.ClearFix",
+      "div#ContentPanel.body-container",
+      "div.ClearFix.OnBehalfOfContainer"
+     ],
+     "label": "On Behalf Of"
+    },
+    {
+     "zone": "7",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div#masterContentArea.container.ClearFix",
+      "div#ContentPanel.body-container",
+      "div.col-primary"
+     ],
+     "label": "Main Content"
+    },
+    {
+     "zone": "8",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "div#masterContentArea.container.ClearFix",
+      "div#ContentPanel.body-container",
+      "div.col-secondary.cs-right.d-none"
+     ],
+     "label": "Secondary Navigation"
+    },
+    {
+     "zone": "9",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "footer#ft.footer.ClearFix",
+      "div.footer-content",
+      "div.container"
+     ],
+     "label": "Footer 1"
+    },
+    {
+     "zone": "10",
+     "chain": [
+      "div#masterWrapper.wrapper",
+      "footer#ft.footer.ClearFix",
+      "div.footer-nav-copyright",
+      "div.container",
+      "div.footer-copyright"
+     ],
+     "label": "Footer 2"
+    }
+   ],
+   "markupSha256": "8a501ead5072433f4c3fbe7eb4fd2d19d0e0c7210892a69e63e393344277455c",
+   "payloadSha256": "14f26ef58a7b5c952009b8ad702fb754d05a1402023769954be08e43cbc35da1"
+  }
+ ],
+ "websiteTemplates": [
+  {
+   "path": "@/Website_Templates/Samples/Coffee",
+   "name": "Coffee",
+   "documentId": "d13b508a-7195-47c3-8b8d-6290714cff3c",
+   "documentVersionId": "ddb0c7ef-44fa-421f-80c6-a907afd750e1",
+   "masterPage": "WST-Coffee.master",
+   "layoutDocumentVersionKey": "56d7d4fe-21ed-4b07-abf0-5a2644689521",
+   "mainContentZone": "8",
+   "items": [
+    {
+     "zone": "1",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Homepage Header Background",
+     "contentItemKey": "dcea9f40-fcb7-4f89-b005-2ddff56d4e83",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "HomeHeaderBackground",
+      "recordType": "Dynamic"
+     }
+    },
+    {
+     "zone": "1",
+     "sortOrder": 2,
+     "type": "ContentDisplay",
+     "name": "Internal Page Header Background",
+     "contentItemKey": "e921b9ee-89f2-478e-ab47-911e55547ee5",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "cssClass": "internal-header-wrapper",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "InternalHeaderBackground",
+      "recordType": "Dynamic",
+      "recordPath": "InteriorBannerBackground"
+     }
+    },
+    {
+     "zone": "2",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Logo Content",
+     "contentItemKey": "3a4b80d8-43ae-45e1-8a2b-fd91c58ef839",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "HeaderLogo",
+      "recordType": "Dynamic"
+     }
+    },
+    {
+     "zone": "3",
+     "sortOrder": 1,
+     "type": "UtilityNavigation",
+     "name": "Utility Navigation",
+     "contentItemKey": "0b5b7b99-f15c-42a1-9ce0-5edc14ad849a",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "4",
+     "sortOrder": 1,
+     "type": "PrimaryNavigation",
+     "name": "Primary Navigation",
+     "contentItemKey": "b8760bce-87ca-495e-9c17-f0808b823a2c",
+     "contentTypeKey": "07b427c1-7ae5-49ae-b2bd-796059cdfcd0",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-primary"
+    },
+    {
+     "zone": "5",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Full Width Content",
+     "contentItemKey": "168e2ebe-2ca2-4f42-8351-1782d455dc76",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Home_Page_Full_Width_Area",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/Home_Page_Full_Width_Area",
+      "recordKey": "baecc557-d0b8-4257-ab6d-117189f7118e"
+     }
+    },
+    {
+     "zone": "6",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Internal Full Width Header",
+     "contentItemKey": "ec46f266-b9a1-463e-98aa-d0f6c3bdb8b5",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Internal_Full_Width_Area",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/Home_Page_Full_Width_Area",
+      "recordKey": "baecc557-d0b8-4257-ab6d-117189f7118e"
+     }
+    },
+    {
+     "zone": "7",
+     "sortOrder": 1,
+     "type": "SecondaryNavigation",
+     "name": "Secondary",
+     "contentItemKey": "8688006a-07d3-4960-a685-5f0ad2aab4f7",
+     "contentTypeKey": "23bf6887-1222-4921-9723-5ee3882663b6",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-secondary"
+    },
+    {
+     "zone": "7",
+     "sortOrder": 2,
+     "type": "ContentDisplay",
+     "name": "Side Content",
+     "contentItemKey": "4a0cf8ae-b207-4fac-b896-4588965fe19d",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "SideBarContent",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/SideBarContent",
+      "recordKey": "938b16c5-a5d2-4d51-9b7a-b12a481ddae5"
+     }
+    },
+    {
+     "zone": "8",
+     "sortOrder": 1,
+     "type": "MainContentPlaceholder",
+     "name": "Main Content",
+     "contentItemKey": "2683499a-047f-444a-be2d-658d67ea4e65",
+     "contentTypeKey": "3a79277b-fc8e-4bdc-a551-d5d241f5b68b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "main-content"
+    },
+    {
+     "zone": "9",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Banner",
+     "contentItemKey": "2000db6a-e184-486e-bccf-6ee5133633a5",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "FooterBanner",
+      "recordType": "Dynamic"
+     }
+    },
+    {
+     "zone": "10",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Content 1",
+     "contentItemKey": "396a046d-97e2-431a-b3e1-ab888b79f346",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "FooterContent",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/FooterContent",
+      "recordKey": "a6b4393b-7f2d-49d3-8ffa-6b3441e4ad19"
+     }
+    },
+    {
+     "zone": "11",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Content 2",
+     "contentItemKey": "39696ce3-3e95-4326-af61-c37e1e467580",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "FooterColumn1",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/Footer_Copyright",
+      "recordKey": "44eb39c8-a534-4736-8981-bd79c027a998"
+     }
+    },
+    {
+     "zone": "11",
+     "sortOrder": 2,
+     "type": "UtilityNavigation",
+     "name": "New UtilityNavigationCommon",
+     "contentItemKey": "98e8a2af-b456-4205-ab83-309034130a5a",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "12",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Content 3",
+     "contentItemKey": "634a427c-0093-48e0-96a2-01cedf35e0fa",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "FooterColumn2",
+      "recordType": "Dynamic"
+     }
+    },
+    {
+     "zone": "12",
+     "sortOrder": 2,
+     "type": "UtilityNavigation",
+     "name": "New UtilityNavigationCommon_2",
+     "contentItemKey": "e2d70072-6489-41f7-8bbe-f1926b0cf887",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "12",
+     "sortOrder": 3,
+     "type": "ContentHtml",
+     "name": "New ContentHtml",
+     "contentItemKey": "da104cc0-ba75-4ed8-9057-758cd120f88f",
+     "contentTypeKey": "711da922-125b-4194-9668-b132b5989daa",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-html",
+     "contentHtml": {
+      "bytes": 2341,
+      "sha256": "dfdad6b2288105780e5509d58eaa2d292156e809762d37d39207c7e287a46ca1"
+     }
+    }
+   ],
+   "payloadSha256": "6efcb967c4fca18909186fa6612fe55adb660c48fb677647dfc7130d5664f6e2"
+  },
+  {
+   "path": "@/Website_Templates/Samples/CitiesResponsive",
+   "name": "CitiesResponsive",
+   "documentId": "46b64e88-ddb1-4e4c-9a2c-1535f9c722ab",
+   "documentVersionId": "d5dc6f91-b745-4c77-a0d3-6e1488f92453",
+   "masterPage": "WST-CitiesResponsive.master",
+   "layoutDocumentVersionKey": "b884cdc0-1ab0-49c0-8a72-292f339c6ec2",
+   "mainContentZone": "6",
+   "items": [
+    {
+     "zone": "1",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Logo Content",
+     "contentItemKey": "a3c48dfb-fcc6-4140-8eaa-921fa60a21f9",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "HeaderLogo",
+      "recordType": "Dynamic",
+      "recordPath": "HeaderLogo"
+     }
+    },
+    {
+     "zone": "2",
+     "sortOrder": 1,
+     "type": "UtilityNavigation",
+     "name": "Utility Navigation",
+     "contentItemKey": "0b5b7b99-f15c-42a1-9ce0-5edc14ad849a",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "3",
+     "sortOrder": 1,
+     "type": "PrimaryNavigation",
+     "name": "Primary Navigation",
+     "contentItemKey": "b8760bce-87ca-495e-9c17-f0808b823a2c",
+     "contentTypeKey": "07b427c1-7ae5-49ae-b2bd-796059cdfcd0",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-primary"
+    },
+    {
+     "zone": "4",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Full Width Content",
+     "contentItemKey": "168e2ebe-2ca2-4f42-8351-1782d455dc76",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Home_Page_Full_Width_Area",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/Home_Page_Full_Width_Area",
+      "recordKey": "baecc557-d0b8-4257-ab6d-117189f7118e"
+     }
+    },
+    {
+     "zone": "5",
+     "sortOrder": 1,
+     "type": "UtilityNavigation",
+     "name": "OBO",
+     "contentItemKey": "de8cce21-c5b2-473f-b0a9-a9e3cecbabd1",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "cssClass": "FloatRight",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "6",
+     "sortOrder": 1,
+     "type": "MainContentPlaceholder",
+     "name": "Main Content",
+     "contentItemKey": "2683499a-047f-444a-be2d-658d67ea4e65",
+     "contentTypeKey": "3a79277b-fc8e-4bdc-a551-d5d241f5b68b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "main-content"
+    },
+    {
+     "zone": "7",
+     "sortOrder": 1,
+     "type": "SecondaryNavigation",
+     "name": "Secondary",
+     "contentItemKey": "8688006a-07d3-4960-a685-5f0ad2aab4f7",
+     "contentTypeKey": "23bf6887-1222-4921-9723-5ee3882663b6",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-secondary"
+    },
+    {
+     "zone": "7",
+     "sortOrder": 2,
+     "type": "ContentDisplay",
+     "name": "Side Content",
+     "contentItemKey": "4a0cf8ae-b207-4fac-b896-4588965fe19d",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "SideBarContent",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/SideBarContent",
+      "recordKey": "938b16c5-a5d2-4d51-9b7a-b12a481ddae5"
+     }
+    },
+    {
+     "zone": "8",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Content 1",
+     "contentItemKey": "396a046d-97e2-431a-b3e1-ab888b79f346",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "FooterContent",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/FooterContent",
+      "recordKey": "a6b4393b-7f2d-49d3-8ffa-6b3441e4ad19"
+     }
+    },
+    {
+     "zone": "9",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Content 2",
+     "contentItemKey": "39696ce3-3e95-4326-af61-c37e1e467580",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Footer_Copyright",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/Footer_Copyright",
+      "recordKey": "44eb39c8-a534-4736-8981-bd79c027a998"
+     }
+    }
+   ],
+   "payloadSha256": "27f3526da6c8cd3cd14244f06d8439e8e082ff325442d29dc2c4484bfad8c12d"
+  },
+  {
+   "path": "@/Website_Templates/Samples/CitiesStandard",
+   "name": "CitiesStandard",
+   "documentId": "bde5e393-fe26-4c12-9d6f-bcf72a42a701",
+   "documentVersionId": "01639493-5455-4661-88f7-e0680696b178",
+   "masterPage": "WST-CitiesStandard.master",
+   "layoutDocumentVersionKey": "a1109f3b-e8f0-419e-96ae-a0ffb3c1de6a",
+   "mainContentZone": "5",
+   "items": [
+    {
+     "zone": "1",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Logo Content",
+     "contentItemKey": "b2440215-42e7-44ed-b1a6-3a45060aa496",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "HeaderLogo",
+      "recordType": "Dynamic",
+      "recordPath": "HeaderLogo"
+     }
+    },
+    {
+     "zone": "2",
+     "sortOrder": 1,
+     "type": "UtilityNavigation",
+     "name": "Auxiliary Navigation",
+     "contentItemKey": "b5cc4e88-aa11-4ed1-9085-3083f9356d0a",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "3",
+     "sortOrder": 1,
+     "type": "PrimaryNavigation",
+     "name": "Navigation",
+     "contentItemKey": "9a8fb8ea-c7b1-425c-a928-f5a36dc3fb68",
+     "contentTypeKey": "07b427c1-7ae5-49ae-b2bd-796059cdfcd0",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-primary"
+    },
+    {
+     "zone": "4",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Homepage Only Content",
+     "contentItemKey": "6a627bb6-9faa-4deb-95a3-01d8ca3ed688",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "cssClass": "HomePageFullWidthArea",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Home_Page_Full_Width_Area",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/Member/ContentAreas/Home_Page_Full_Width_Area",
+      "recordKey": "148c0393-4881-442b-8041-37f67071d48c"
+     }
+    },
+    {
+     "zone": "5",
+     "sortOrder": 1,
+     "type": "UtilityNavigation",
+     "name": "New UtilityNavigationCommon",
+     "contentItemKey": "3f276637-58f4-42cc-a9c7-3d7e09ac0d01",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "cssClass": "FloatRight",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "5",
+     "sortOrder": 2,
+     "type": "MainContentPlaceholder",
+     "name": "Master Content",
+     "contentItemKey": "862425f0-cbef-484f-a61a-62456802137e",
+     "contentTypeKey": "3a79277b-fc8e-4bdc-a551-d5d241f5b68b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "main-content"
+    },
+    {
+     "zone": "6",
+     "sortOrder": 1,
+     "type": "UtilityNavigation",
+     "name": "Footer Navigation",
+     "contentItemKey": "3d8ff75e-aded-4dbd-9cef-aabe66915527",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "7",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Content",
+     "contentItemKey": "7c2dcbab-0a5b-49e8-b83f-e52feb740356",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "FooterContent",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/Member/ContentAreas/Footer_Communications",
+      "recordKey": "7c640a87-8331-46dd-aab2-10258765e861"
+     }
+    },
+    {
+     "zone": "8",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Copyright",
+     "contentItemKey": "c8cfed86-d5a8-4606-b28e-2bab1912e791",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Footer_Copyright",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/Member/ContentAreas/Footer_Copyright",
+      "recordKey": "64d3e272-25ec-4a51-b55d-d6c69cbf3865"
+     }
+    }
+   ],
+   "payloadSha256": "60f74be7568fb42e94384d689d8c903c2f7c66ddeb362d43a021655bf5115cc2"
+  },
+  {
+   "path": "@/Website_Templates/Samples/NaturalHeritageSitesResponsive",
+   "name": "NaturalHeritageSitesResponsive",
+   "documentId": "5584e794-0ba5-4ec1-8767-251a9231a7f2",
+   "documentVersionId": "5707590d-5d58-4006-b7a8-07d927b06520",
+   "masterPage": "WST-NaturalHeritageSitesResponsive.master",
+   "layoutDocumentVersionKey": "e8d8c984-9dad-4875-ba80-f7ef77a25116",
+   "mainContentZone": "7",
+   "items": [
+    {
+     "zone": "1",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Logo Content",
+     "contentItemKey": "3a4b80d8-43ae-45e1-8a2b-fd91c58ef839",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "HeaderLogo",
+      "recordType": "Dynamic"
+     }
+    },
+    {
+     "zone": "2",
+     "sortOrder": 1,
+     "type": "UtilityNavigation",
+     "name": "Utility Navigation",
+     "contentItemKey": "0b5b7b99-f15c-42a1-9ce0-5edc14ad849a",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "3",
+     "sortOrder": 1,
+     "type": "PrimaryNavigation",
+     "name": "Primary Navigation",
+     "contentItemKey": "b8760bce-87ca-495e-9c17-f0808b823a2c",
+     "contentTypeKey": "07b427c1-7ae5-49ae-b2bd-796059cdfcd0",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-primary"
+    },
+    {
+     "zone": "4",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Full Width Content",
+     "contentItemKey": "168e2ebe-2ca2-4f42-8351-1782d455dc76",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Home_Page_Full_Width_Area",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/Home_Page_Full_Width_Area",
+      "recordKey": "baecc557-d0b8-4257-ab6d-117189f7118e"
+     }
+    },
+    {
+     "zone": "5",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Internal Full Width Header",
+     "contentItemKey": "ec46f266-b9a1-463e-98aa-d0f6c3bdb8b5",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Internal_Full_Width_Area",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/Home_Page_Full_Width_Area",
+      "recordKey": "baecc557-d0b8-4257-ab6d-117189f7118e"
+     }
+    },
+    {
+     "zone": "6",
+     "sortOrder": 1,
+     "type": "UtilityNavigation",
+     "name": "OBO",
+     "contentItemKey": "de8cce21-c5b2-473f-b0a9-a9e3cecbabd1",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "cssClass": "FloatRight",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    },
+    {
+     "zone": "7",
+     "sortOrder": 1,
+     "type": "MainContentPlaceholder",
+     "name": "Main Content",
+     "contentItemKey": "2683499a-047f-444a-be2d-658d67ea4e65",
+     "contentTypeKey": "3a79277b-fc8e-4bdc-a551-d5d241f5b68b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "main-content"
+    },
+    {
+     "zone": "8",
+     "sortOrder": 1,
+     "type": "SecondaryNavigation",
+     "name": "Secondary",
+     "contentItemKey": "8688006a-07d3-4960-a685-5f0ad2aab4f7",
+     "contentTypeKey": "23bf6887-1222-4921-9723-5ee3882663b6",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-secondary"
+    },
+    {
+     "zone": "8",
+     "sortOrder": 2,
+     "type": "ContentDisplay",
+     "name": "Side Content",
+     "contentItemKey": "4a0cf8ae-b207-4fac-b896-4588965fe19d",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "SideBarContent",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/SideBarContent",
+      "recordKey": "938b16c5-a5d2-4d51-9b7a-b12a481ddae5"
+     }
+    },
+    {
+     "zone": "9",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Content 1",
+     "contentItemKey": "396a046d-97e2-431a-b3e1-ab888b79f346",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "FooterContent",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/FooterContent",
+      "recordKey": "a6b4393b-7f2d-49d3-8ffa-6b3441e4ad19"
+     }
+    },
+    {
+     "zone": "10",
+     "sortOrder": 1,
+     "type": "ContentDisplay",
+     "name": "Footer Content 2",
+     "contentItemKey": "39696ce3-3e95-4326-af61-c37e1e467580",
+     "contentTypeKey": "680d926b-3294-4d74-9cd5-2b99199e6568",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "content-area",
+     "contentArea": {
+      "name": "Footer_Copyright",
+      "recordType": "Dynamic",
+      "recordPath": "@/iSamples/MemberR/ContentAreas/Footer_Copyright",
+      "recordKey": "44eb39c8-a534-4736-8981-bd79c027a998"
+     }
+    },
+    {
+     "zone": "10",
+     "sortOrder": 2,
+     "type": "UtilityNavigation",
+     "name": "New UtilityNavigationCommon",
+     "contentItemKey": "2375d398-5da3-4c36-a767-70ba4281cd1d",
+     "contentTypeKey": "c7638d43-8326-4f4a-834d-18c9b668751b",
+     "showTitle": false,
+     "showBorder": false,
+     "role": "navigation-utility"
+    }
+   ],
+   "payloadSha256": "ee490a4b521ff637911469c5b8c98f4d786d294da2ebd9313ced8dce0f57b5ed"
+  }
+ ],
+ "themes": [
+  {
+   "name": "Austin",
+   "masterPage": "Cities.master",
+   "ultrawave": true
+  },
+  {
+   "name": "Austin_Mobile",
+   "masterPage": "Sapling.master",
+   "ultrawave": true
+  },
+  {
+   "name": "Austin_Responsive",
+   "masterPage": "WST-CitiesResponsive.master",
+   "responsive": true,
+   "ultrawave": true
+  },
+  {
+   "name": "Flat_White",
+   "masterPage": "WST-Coffee.master",
+   "responsive": true,
+   "ultrawave": true,
+   "reproducedAs": "Flat_White"
+  },
+  {
+   "name": "GlacierBay_Responsive",
+   "masterPage": "WST-NaturalHeritageSitesResponsive.master",
+   "responsive": true,
+   "ultrawave": true
+  },
+  {
+   "name": "GreatBarrierReef_Responsive",
+   "masterPage": "WST-NaturalHeritageSitesResponsive.master",
+   "responsive": true,
+   "ultrawave": true
+  },
+  {
+   "name": "London_Responsive",
+   "masterPage": "WST-CitiesResponsive.master",
+   "responsive": true,
+   "ultrawave": true
+  },
+  {
+   "name": "Mocha",
+   "masterPage": "WST-Coffee.master",
+   "responsive": true,
+   "ultrawave": true
+  },
+  {
+   "name": "Orion",
+   "masterPage": "Constellations.master",
+   "responsive": true,
+   "ultrawave": true,
+   "reproducedAs": "Orion"
+  },
+  {
+   "name": "Toronto_Responsive",
+   "masterPage": "WST-CitiesResponsive.master",
+   "responsive": true,
+   "ultrawave": true
+  }
+ ]
+}

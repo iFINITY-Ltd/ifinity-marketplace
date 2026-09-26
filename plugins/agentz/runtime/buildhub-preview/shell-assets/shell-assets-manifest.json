@@ -1,0 +1,51 @@
+{
+ "schema": "ifinity.buildhub.preview-shell-assets-sources.v1",
+ "capturedOn": "2026-09-23",
+ "sources": [
+  {
+   "file": "NavbarSprite.svg",
+   "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/Orion/images/NavbarSprite.svg",
+   "usedBy": "Orion sidebar group icons, sidebar collapse toggle, tree carets",
+   "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+   "bytes": 72340,
+   "sha256": "5d8c3114d5ad906067fe4217341502a2904afaea92b015ef8ac48597623bb731",
+   "licence": "none declared"
+  },
+  {
+   "file": "IconSprite.svg",
+   "url": "https://ukdemoaisp9.imiscloud.com/Assets/images/IconSprite.svg",
+   "usedBy": "Orion header search, cart, easy edit, batch, on-behalf-of and account caret icons",
+   "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+   "bytes": 85810,
+   "sha256": "340521497bc0b98cafb1b050be4eebb9a5ce7e25d082f64d4d302a6b5e713904",
+   "licence": "none declared"
+  },
+  {
+   "file": "bento-menu.svg",
+   "url": "https://ukdemoaisp9.imiscloud.com/Assets/images/Icons/SVG/bento-menu.svg",
+   "usedBy": "Orion header app menu",
+   "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+   "bytes": 978,
+   "sha256": "e8b08750e70271d7b5e0be23572271c0630281581a5e8d0470815df21a81572f",
+   "licence": "none declared"
+  },
+  {
+   "file": "auxIcons.svg",
+   "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/Flat_White/images/auxIcons.svg",
+   "usedBy": "Flat_White utility icons, menu carets, back-to-top",
+   "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+   "bytes": 6165,
+   "sha256": "b42dbaede12c3410457cd3e3dc0c60bf5013cd81f1574a6f3e57c133bcfcb7b7",
+   "licence": "none declared"
+  },
+  {
+   "file": "imis-logo-full-colour.png",
+   "url": "ifinity-licensing/public/assets/brand/imis-logo-full-colour.png",
+   "usedBy": "Orion header logo (the live header draws App_Themes/Orion/images/iMIS-logo.svg#color in a 119 x 35.2 px box)",
+   "ownership": "the iMIS logo, a trademark of Advanced Solutions International; this copy is the iFINITY brand folder's (ifinity-licensing), supplied by William for the header",
+   "bytes": 52578,
+   "sha256": "cbffd8b17f3d553af7d072b026a993dc8c35e1b7d2999f9892706e61006618d0",
+   "licence": "none declared"
+  }
+ ]
+}

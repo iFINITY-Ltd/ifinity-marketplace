@@ -1,0 +1,36 @@
+{
+  "contractVersion": "iqd-native-runtime-manifest-v1",
+  "version": "0.7.14",
+  "targets": {
+    "darwin-arm64": {
+      "url": "https://github.com/iFINITY-Ltd/ifinity-marketplace/releases/download/agentz-native-v0.7.14/agentz-iqd-native-darwin-arm64.tar.gz",
+      "sha256": "1a69a0afd907f2617b01e4033b75ef93dbcbd6a1c9696d8a9430e16653e95957",
+      "bytes": 6415378
+    },
+    "darwin-x64": {
+      "url": "https://github.com/iFINITY-Ltd/ifinity-marketplace/releases/download/agentz-native-v0.7.14/agentz-iqd-native-darwin-x64.tar.gz",
+      "sha256": "10786955620e00410dcc3ee0b041107ddc6e48675a9f4867d53f82fa861b8b19",
+      "bytes": 6415368
+    },
+    "linux-x64": {
+      "url": "https://github.com/iFINITY-Ltd/ifinity-marketplace/releases/download/agentz-native-v0.7.14/agentz-iqd-native-linux-x64.tar.gz",
+      "sha256": "93cd7dd63b378d03df61f9bd1e261ca6d22685338fd13cf76493de769087e8d9",
+      "bytes": 6335335
+    },
+    "linux-arm64": {
+      "url": "https://github.com/iFINITY-Ltd/ifinity-marketplace/releases/download/agentz-native-v0.7.14/agentz-iqd-native-linux-arm64.tar.gz",
+      "sha256": "d88c68cbc18ed509486580a11edc5eda6b0d76ce33d3c4945fe1092a2bd869e4",
+      "bytes": 6038935
+    },
+    "win-x64": {
+      "url": "https://github.com/iFINITY-Ltd/ifinity-marketplace/releases/download/agentz-native-v0.7.14/agentz-iqd-native-win-x64.tar.gz",
+      "sha256": "4d59085d377462ac4d1caa3b4420494ec9e842b0ee56f697439d2dc9f792cd2c",
+      "bytes": 5406106
+    },
+    "win-arm64": {
+      "url": "https://github.com/iFINITY-Ltd/ifinity-marketplace/releases/download/agentz-native-v0.7.14/agentz-iqd-native-win-arm64.tar.gz",
+      "sha256": "95462da92af5f101c87fea8108c6a7431c337e722cedc3bd064f87b86a734efd",
+      "bytes": 5406117
+    }
+  }
+}
