@@ -1,0 +1,215 @@
+{
+  "schema": "ifinity.buildhub.preview-renderer.v1",
+  "rendererVersion": "1.9.3",
+  "stylesheetVersion": "2026-09-23.ukdemoaisp9",
+  "pluginVersion": "0.7.22",
+  "bundle": {
+    "file": "buildhub-preview.js",
+    "bytes": 1541484,
+    "sha256": "8e95ef2c564fcd8f8fcc3b0da2703e94eb6002ffb0f39c60ea7beed7445b754d"
+  },
+  "catalogue": {
+    "file": "stock-layouts.json",
+    "version": "2026-09-12.ukdemoaisp9",
+    "layouts": 48,
+    "sha256": "ded1ad1a0ae17fc989ade7af0b3018f44d24a822c66692be31bcbf8513de88db"
+  },
+  "shellCatalogue": {
+    "file": "stock-shells.json",
+    "version": "2026-09-22.ukdemoaisp9",
+    "websiteLayouts": 5,
+    "websiteTemplates": 4,
+    "themes": 10,
+    "sha256": "ce10fb08a7b4c964cf87ae7dc3736145b98b1768b0ce3e87c16998dcc4681312"
+  },
+  "reportCatalogue": {
+    "file": "stock-reports.json",
+    "version": "2026-09-28.ukdemoaisp9",
+    "counts": {
+      "TCT": 10,
+      "RDL": 154,
+      "RSP": 21,
+      "RPT": 100
+    },
+    "documents": 285,
+    "sha256": "15ff4cd391ff8b1124eb6840597c6dd561acb6abd06e58ea58a3e7894f3c8574"
+  },
+  "fonts": {
+    "file": "fonts/fonts-manifest.json",
+    "sha256": "6f71c625bb220497da0d50e3378eb7a2ed334521d73f07eb61bba0efd9ded84b",
+    "licence": "SIL Open Font License 1.1 (per-family OFL.txt beside the faces)",
+    "families": [
+      {
+        "family": "Red Hat Display",
+        "faces": 2,
+        "bytes": 62732
+      },
+      {
+        "family": "Open Sans",
+        "faces": 2,
+        "bytes": 88036
+      },
+      {
+        "family": "Inter",
+        "faces": 2,
+        "bytes": 152760
+      },
+      {
+        "family": "Montserrat",
+        "faces": 2,
+        "bytes": 72628
+      },
+      {
+        "family": "Poppins",
+        "faces": 10,
+        "bytes": 82592
+      }
+    ],
+    "totalBytes": 458748,
+    "licences": [
+      "inter.OFL.txt",
+      "montserrat.OFL.txt",
+      "opensans.OFL.txt",
+      "poppins.OFL.txt",
+      "redhatdisplay.OFL.txt"
+    ]
+  },
+  "shellAssets": {
+    "file": "shell-assets/shell-assets-manifest.json",
+    "sha256": "aed16b72d161f6480522cba728cf04e2e4424d038490512715731cae1c9d4038",
+    "derived": {
+      "file": "src/buildhub-preview/shell-assets.json",
+      "sha256": "fee5d0d04d162a3a961aef4c6329385c03bb07aab0977023239915481fb16c76"
+    },
+    "sources": [
+      {
+        "file": "shell-assets/NavbarSprite.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/Orion/images/NavbarSprite.svg",
+        "bytes": 72340,
+        "sha256": "5d8c3114d5ad906067fe4217341502a2904afaea92b015ef8ac48597623bb731",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/IconSprite.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/Assets/images/IconSprite.svg",
+        "bytes": 85810,
+        "sha256": "340521497bc0b98cafb1b050be4eebb9a5ce7e25d082f64d4d302a6b5e713904",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/bento-menu.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/Assets/images/Icons/SVG/bento-menu.svg",
+        "bytes": 978,
+        "sha256": "e8b08750e70271d7b5e0be23572271c0630281581a5e8d0470815df21a81572f",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/auxIcons.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/Flat_White/images/auxIcons.svg",
+        "bytes": 6165,
+        "sha256": "b42dbaede12c3410457cd3e3dc0c60bf5013cd81f1574a6f3e57c133bcfcb7b7",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/imis-logo-full-colour.png",
+        "url": "ifinity-licensing/public/assets/brand/imis-logo-full-colour.png",
+        "bytes": 52578,
+        "sha256": "cbffd8b17f3d553af7d072b026a993dc8c35e1b7d2999f9892706e61006618d0",
+        "ownership": "the iMIS logo, a trademark of Advanced Solutions International; this copy is the iFINITY brand folder's (ifinity-licensing), supplied by William for the header",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/GlacierBay_Responsive-ResponsiveHeaderSprite.png",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/GlacierBay_Responsive/images/ResponsiveHeaderSprite.png",
+        "bytes": 3116,
+        "sha256": "671bd05970203fb17e66976ab15aeb472b384f75ce54ee08d6ec5e21a0b3bf96",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/Toronto_Responsive-ResponsiveHeaderSprite.png",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/Toronto_Responsive/images/ResponsiveHeaderSprite.png",
+        "bytes": 1740,
+        "sha256": "c10cbefa7120aaa802351b7d8646fa0ef7f3c0514eca4299d607490ed449f3b1",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/Mocha-ResponsiveHeaderSprite.png",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/Mocha/images/ResponsiveHeaderSprite.png",
+        "bytes": 8585,
+        "sha256": "7247bb964ee887b016a2ba5af627e1df36f217b007df56fad8e640378e441b20",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/GreatBarrierReef_Responsive-ResponsiveHeaderSprite.png",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/GreatBarrierReef_Responsive/images/ResponsiveHeaderSprite.png",
+        "bytes": 3116,
+        "sha256": "671bd05970203fb17e66976ab15aeb472b384f75ce54ee08d6ec5e21a0b3bf96",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/GreatBarrierReef_Responsive-DiamondButton.svg",
+        "url": "https://ukdemoaisp9.imiscloud.com/App_Themes/GreatBarrierReef_Responsive/images/DiamondButton.svg",
+        "bytes": 822,
+        "sha256": "48181070980be8661befdac5b59b6ba92e7ffc2cbfa73b3a0d23567157a77563",
+        "ownership": "Advanced Solutions International (ASI), the maker of iMIS: part of the iMIS product's theme files; the file declares no licence",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/ReportViewer-FirstPageDisabled.gif",
+        "url": "https://ukdemoaisp9.imiscloud.com/Reserved.ReportViewerWebControl.axd?Name=Microsoft.Reporting.WebForms.Icons.FirstPageDisabled.gif",
+        "bytes": 454,
+        "sha256": "c62fd939fce8346b9fafd92326a635935496396ea69ef9d3557f4f9b09742e2f",
+        "ownership": "Microsoft Corporation: the SQL Server Reporting Services ReportViewer web control's own toolbar icons, served by iMIS from Reserved.ReportViewerWebControl.axd; no licence declared",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/ReportViewer-PrevPageDisabled.gif",
+        "url": "https://ukdemoaisp9.imiscloud.com/Reserved.ReportViewerWebControl.axd?Name=Microsoft.Reporting.WebForms.Icons.PrevPageDisabled.gif",
+        "bytes": 315,
+        "sha256": "5647487d9d90e97fbbe61a364f94e008b706b85d8ba206c3c118c52f78cec7a4",
+        "ownership": "Microsoft Corporation: the SQL Server Reporting Services ReportViewer web control's own toolbar icons, served by iMIS from Reserved.ReportViewerWebControl.axd; no licence declared",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/ReportViewer-NextPageDisabled.gif",
+        "url": "https://ukdemoaisp9.imiscloud.com/Reserved.ReportViewerWebControl.axd?Name=Microsoft.Reporting.WebForms.Icons.NextPageDisabled.gif",
+        "bytes": 312,
+        "sha256": "fc40bd9322645372f98391877b923d9ab13af916dc5e14fa3569b659d9ef5b19",
+        "ownership": "Microsoft Corporation: the SQL Server Reporting Services ReportViewer web control's own toolbar icons, served by iMIS from Reserved.ReportViewerWebControl.axd; no licence declared",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/ReportViewer-LastPageDisabled.gif",
+        "url": "https://ukdemoaisp9.imiscloud.com/Reserved.ReportViewerWebControl.axd?Name=Microsoft.Reporting.WebForms.Icons.LastPageDisabled.gif",
+        "bytes": 454,
+        "sha256": "dc13b3083568766034a377dc0864dd9d6bc464c77246d1f0e6cb23273f89c371",
+        "ownership": "Microsoft Corporation: the SQL Server Reporting Services ReportViewer web control's own toolbar icons, served by iMIS from Reserved.ReportViewerWebControl.axd; no licence declared",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/ReportViewer-BackDisabled.gif",
+        "url": "https://ukdemoaisp9.imiscloud.com/Reserved.ReportViewerWebControl.axd?Name=Microsoft.Reporting.WebForms.Icons.BackDisabled.gif",
+        "bytes": 300,
+        "sha256": "0a864ba2c3b2660ebea7d1b9ca29d53d6e8a7b8b886dc8ff3e210fe8f43aa82e",
+        "ownership": "Microsoft Corporation: the SQL Server Reporting Services ReportViewer web control's own toolbar icons, served by iMIS from Reserved.ReportViewerWebControl.axd; no licence declared",
+        "licence": "none declared"
+      },
+      {
+        "file": "shell-assets/ReportViewer-SplitterHorizCollapse.png",
+        "url": "https://ukdemoaisp9.imiscloud.com/Reserved.ReportViewerWebControl.axd?Name=Microsoft.Reporting.WebForms.Icons.SplitterHorizCollapse.png",
+        "bytes": 286,
+        "sha256": "6453ae545c2ce8b19394608d955498d2647dc45bb75befad91bc1bd9e9b7b151",
+        "ownership": "Microsoft Corporation: the SQL Server Reporting Services ReportViewer web control's own toolbar icons, served by iMIS from Reserved.ReportViewerWebControl.axd; no licence declared",
+        "licence": "none declared"
+      }
+    ]
+  }
+}
