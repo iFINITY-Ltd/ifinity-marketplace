@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "agentz": {
+      "type": "stdio",
+      "command": "./servers/agentz-mcp",
+      "args": []
+    },
+    "imis-docs": {
+      "type": "streamable-http",
+      "url": "https://imis-docs-mcp.hrhxyyydnw.workers.dev/mcp"
+    },
+    "imis-docs-dev": {
+      "type": "streamable-http",
+      "url": "https://imis-docs-mcp.hrhxyyydnw.workers.dev/dev-mcp"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agentz",
+  "version": "0.7.40",
+  "description": "iFINITY AgentZ — AI working companion for iMIS. Membership, events, fundraising, billing, reporting, content management, and system configuration for associations and nonprofits.",
+  "author": {
+    "name": "iFINITY",
+    "url": "https://github.com/iFINITY-Ltd"
+  },
+  "homepage": "https://github.com/iFINITY-Ltd/ifinity-mcp",
+  "repository": "https://github.com/iFINITY-Ltd/ifinity-mcp",
+  "license": "MIT",
+  "keywords": [
+    "imis",
+    "ams",
+    "ems",
+    "association",
+    "membership",
+    "nonprofit",
+    "crm",
+    "fundraising",
+    "events",
+    "billing",
+    "rise",
+    "iqa",
+    "reporting",
+    "website"
+  ]
+}

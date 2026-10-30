@@ -1,0 +1,435 @@
+{
+  "id": "agentz",
+  "version": "0.7.40",
+  "generatedBy": "scripts/generate-opencode-adapter.ts",
+  "mcp": {
+    "agentz": {
+      "type": "local",
+      "launcher": "servers/agentz-mcp",
+      "windowsScript": "dist/index.js",
+      "args": [],
+      "environment": {
+        "AGENTZ_RUNTIME": "opencode"
+      }
+    },
+    "imis-docs": {
+      "type": "remote",
+      "url": "https://imis-docs-mcp.hrhxyyydnw.workers.dev/mcp"
+    },
+    "imis-docs-dev": {
+      "type": "remote",
+      "url": "https://imis-docs-mcp.hrhxyyydnw.workers.dev/dev-mcp"
+    }
+  },
+  "skills": [
+    {
+      "id": "advertising-management",
+      "name": "advertising-management",
+      "description": "Manage advertising sales for iMIS publications — media assets, ad orders, inventory, rate cards, and production tracking. This skill should be used when the user says \"advertising\", \"ad sales\", \"media order\", \"publication advertising\", \"rate card\", \"ad inventory\", \"ad placement\", \"media asset\", \"ad booking\", \"advertising revenue\", \"publication issue\", \"ad size\", \"insertion order\", or when working with advertising management in iMIS.",
+      "file": "skills/advertising-management/SKILL.md"
+    },
+    {
+      "id": "billing-management",
+      "name": "billing-management",
+      "description": "Manage billing, payments, auto-pay, and financial operations in iMIS. This skill should be used when the user says \"auto-pay\", \"recurring payment\", \"scheduled payment\", \"automatic billing\", \"payment schedule\", \"why wasn't their payment taken\", \"set up auto-pay\", \"deactivate auto-pay\", \"payment failed\", \"billing automation\", \"post a payment\", \"apply payment\", \"invoice\", \"refund\", \"credit\", \"wrong amount\", \"statement\", \"receipt\", \"outstanding balance\", \"overdue\", or when troubleshooting billing or payment issues.",
+      "file": "skills/billing-management/SKILL.md"
+    },
+    {
+      "id": "bulk-operations",
+      "name": "bulk-operations",
+      "description": "Bulk import and batch data operations in iMIS. This skill should be used when the user says \"import members\", \"bulk upload\", \"batch import\", \"import contacts\", \"import file\", \"bulk data\", \"import status\", \"import log\", or when working with large-scale data loading operations. This skill builds contact import batches from rows, and reads, posts and rolls back ImportBatch records; file formats and the File Importer content item belong to system-configuration, and record merges belong to data-quality.",
+      "file": "skills/bulk-operations/SKILL.md"
+    },
+    {
+      "id": "business-object-design",
+      "name": "business-object-design",
+      "description": "Design, create, and manage custom Business Objects and Panel Sources in iMIS. This skill should be used when the user says \"business object\", \"panel source\", \"custom field\", \"custom data\", \"BO designer\", \"panel designer\", \"create a panel\", \"custom table\", \"extend the data model\", \"add a field\", \"panel source properties\", \"expression builder\", \"calculated field\", \"custom demographics\", \"multi-instance data\", or when working with iMIS data model extensions.",
+      "file": "skills/business-object-design/SKILL.md"
+    },
+    {
+      "id": "certification-management",
+      "name": "certification-management",
+      "description": "Manage certification programs, CPD/CPE credits, and professional development in iMIS. This skill should be used when the user says \"certification\", \"CPD\", \"CPE\", \"continuing education\", \"credits\", \"professional development\", \"enrol in program\", \"certification progress\", \"log experience\", \"CEU\", \"continuing professional development\", or when working with certification programs, enrolments, or unit types. This skill records program registration directly and configures unit types; recording a member's CPD/experience credit is not available yet (the store is not mapped), and there is no automatic event-to-credit posting, so event registration and attendance belong to event-management.",
+      "file": "skills/certification-management/SKILL.md"
+    },
+    {
+      "id": "commerce-operations",
+      "name": "commerce-operations",
+      "description": "iMIS commerce and order operations — product/item catalog, pricing, carts, orders, checkout readiness, and collection runs. This skill should be used when the user says \"product\", \"item catalog\", \"price sheet\", \"shopping cart\", \"order\", \"checkout\", \"can members buy\", \"set up a product\", \"order history\", \"run the autopay collection\", \"recurring donation checkout\", or when working with what the tenant sells and how orders flow. Invoice/billing-cycle questions belong to billing-management; one-off gift processing belongs to fundraising; event registration purchases belong to event-management.",
+      "file": "skills/commerce-operations/SKILL.md"
+    },
+    {
+      "id": "communications-management",
+      "name": "communications-management",
+      "description": "Manage communications, campaigns, and outreach in iMIS. This skill should be used when the user says \"send email\", \"communications history\", \"campaign\", \"appeal\", \"outreach\", \"notification\", \"email history\", \"source code tracking\", \"solicitation\", \"communication log\", \"what emails were sent\", \"create a campaign\", \"set up appeals\", \"thank you letter\", \"donor acknowledgment\", \"notification trigger\", \"automated email\", \"renewal reminder\", or when working with marketing campaigns, fundraising appeals, or member communications. Compose/send and read communication history here; donor and gift records plus campaign giving totals belong to the fundraising skill. Campaign/appeal/source CRUD is shared via imis_campaign_management.",
+      "file": "skills/communications-management/SKILL.md"
+    },
+    {
+      "id": "configuration-packages",
+      "name": "configuration-packages",
+      "description": "Move iMIS configuration between tenants as durable packages. This skill should be used when the user says \"export our configuration\", \"copy this to the other tenant\", \"move queries/pages/forms to production\", \"configuration package\", \"tenant-to-tenant\", \"deploy to the live site\", \"import the package\", \"roll back the import\", or when transporting queries, content pages, layouts, forms, business objects, panels, or client iPart packages from one iMIS instance to another. This is iMIS-to-iMIS transport; migrating an EXTERNAL website into RiSE belongs to website-migration.",
+      "file": "skills/configuration-packages/SKILL.md"
+    },
+    {
+      "id": "content-management",
+      "name": "content-management",
+      "description": "Manage content pages, folders, and the Document System in iMIS. This skill should be used when the user says \"create a page\", \"update content\", \"publish page\", \"browse site\", \"document system\", \"content record\", \"website content\", \"CMS\", \"iParts\", \"content folder\", \"page layout\", \"content type\", \"lookup table\", \"dropdown values\", \"add iPart\", \"theme\", \"template\", \"navigation\", \"redirect\", or when working with the iMIS Document System, website content, or content items. Dropdown/lookup editing here covers GenTable-backed values only; route Activity types and interaction-type catalogs to imis_contact_activity (LegacyActivityType/InteractionType) and message/email template content to communications-management.",
+      "file": "skills/content-management/SKILL.md"
+    },
+    {
+      "id": "data-explorer",
+      "name": "data-explorer",
+      "description": "Discover and explore what data exists in the iMIS instance. This skill should be used when the user says \"what entities are available\", \"show me the schema\", \"what custom fields exist\", \"explore the data model\", \"what panels are there\", \"list lookup tables\", or when they want to understand the iMIS data structure. This skill discovers and reads only; create/edit lookup values belong to content-management, Business Objects to business-object-design, and query authoring/execution to iqa-query-design.",
+      "file": "skills/data-explorer/SKILL.md"
+    },
+    {
+      "id": "data-quality",
+      "name": "data-quality",
+      "description": "Find and manage duplicate contacts and maintain data quality in iMIS. This skill should be used when the user says \"duplicate\", \"merge contacts\", \"clean up data\", \"find duplicates\", \"data quality\", \"duplicate records\", \"same person twice\", \"merge organisations\", or when investigating potential duplicate contacts or planning data cleanup.",
+      "file": "skills/data-quality/SKILL.md"
+    },
+    {
+      "id": "design-system",
+      "name": "design-system",
+      "description": "Resolve, apply, build, and update AgentZ Design — the org-scoped design system whose tokens every AgentZ creation tool applies to generated artifacts. This skill should be used when the user says \"design system\", \"design tokens\", \"brand colours\", \"brand guidelines\", \"our branding\", \"style guide\", \"make it match our brand\", \"change our colours\", \"fonts\", \"theme our dashboards\", \"rebrand\", or before designing/generating ANY visual artifact (dashboard, page, layout, iPart, chart, report, email) in this org.",
+      "file": "skills/design-system/SKILL.md"
+    },
+    {
+      "id": "event-management",
+      "name": "event-management",
+      "description": "Manage iMIS events — create events, register attendees, cancel or transfer registrations, check capacity, handle waitlists, track attendance, and report on event revenue. This skill should be used when the user says \"register someone for an event\", \"cancel registration\", \"create an event\", \"check capacity\", \"waitlist\", \"transfer registration\", \"event attendance\", \"event revenue\", \"bulk register\", \"who's registered\", \"event details\", \"list attendees\", \"check registration\", \"how many spots left\", \"create a session\", \"registration questions\", \"dietary needs\", \"question responses\", \"event page layout\", \"event showcase\", \"member price\", \"free event\", \"delete an event\", or when working with events, conferences, or meetings.",
+      "file": "skills/event-management/SKILL.md"
+    },
+    {
+      "id": "forms",
+      "name": "forms",
+      "description": "Build, edit, place, submit, and verify native iMIS Forms. This skill should be used when the user says \"form builder\", \"form design\", \"create a form\", \"edit a form\", \"form responses\", \"form routing\", \"form submission\", \"form launch\", \"form reporting\", \"form verification\", \"Forms iPart\", \"form placement\", \"form writeback\", \"form approval\", \"form notifications\", \"member form\", \"public form\", \"staff form\", \"survey\", \"contact form\", \"signup form\", \"contact update form\", \"registration form using Forms\", \"application approval form\", \"form health check\", \"form groups\", or \"form security\".",
+      "file": "skills/forms/SKILL.md"
+    },
+    {
+      "id": "fundraising",
+      "name": "fundraising",
+      "description": "Manage donations, gifts, pledges, and fundraising in iMIS. This skill should be used when the user says \"donation\", \"gift\", \"pledge\", \"donor\", \"campaign\", \"fundraising\", \"giving\", \"tribute\", \"memorial gift\", \"soft credit\", \"giving history\", \"record a donation\", \"donor report\", \"pledge payments\", \"thank you letter\", \"acknowledgment\", \"LYBUNT\", \"SYBUNT\", \"lapsed donors\", \"major donor\", \"in-kind gift\", \"donor cultivation\", \"annual fund\", or when working with charitable giving, donor management, or fundraising analytics.",
+      "file": "skills/fundraising/SKILL.md"
+    },
+    {
+      "id": "hub-connection",
+      "name": "hub-connection",
+      "description": "Check and repair the iFINITY AgentZ connection for this plugin. Use when the user says \"setup\", \"connect to iMIS\", \"AgentZ is not connected\", \"plugin not connected\", \"check connection\", \"MCP disconnected\", \"no token\", \"how do I sign in\", or when Claude needs to verify that AgentZ has supplied iMIS instance and OAuth token state.",
+      "file": "skills/hub-connection/SKILL.md"
+    },
+    {
+      "id": "imis-domain-knowledge",
+      "name": "imis-domain-knowledge",
+      "description": "iMIS EMS Cloud domain knowledge and agent routing contract. Use for every iMIS task to classify intent, name target surfaces, discover live shape, choose the lowest-risk MCP writer, verify results, and leave a handoff packet so the next agent does not rediscover iMIS behavior from scratch.",
+      "file": "skills/imis-domain-knowledge/SKILL.md"
+    },
+    {
+      "id": "iqa-query-design",
+      "name": "iqa-query-design",
+      "description": "Design, build, and analyse IQA queries and reports in iMIS. This skill should be used when the user says \"design a query\", \"build a query\", \"create a report\", \"IQA\", \"query builder\", \"business intelligence\", \"reporting\", \"build me a report\", \"create an IQA query\", \"query design\", \"dashboard report\", \"export data\", \"analytics\", \"data extract\", \"member report\", \"financial report\", \"event report\", or when working with iMIS reporting and data analysis.",
+      "file": "skills/iqa-query-design/SKILL.md"
+    },
+    {
+      "id": "member-lifecycle",
+      "name": "member-lifecycle",
+      "description": "Create, onboard, renew, reinstate, cancel, resign, or non-renew iMIS members. Use when the user says \"onboard member\", \"create a member\", \"new member\", \"renew membership\", \"reinstate member\", \"upgrade membership\", \"downgrade membership\", \"cancel membership\", \"resign\", \"non-renew\", \"membership lifecycle\", or asks to change a member's subscription state. Use this skill for intentional, healthy lifecycle changes; when the member reports a problem or symptom, diagnose with troubleshoot-member first and return here only for the deliberate state change.",
+      "file": "skills/member-lifecycle/SKILL.md"
+    },
+    {
+      "id": "process-automation",
+      "name": "process-automation",
+      "description": "Author, run, and monitor iMIS Process Automation tasks and triage the legacy workflow queue. This skill should be used when the user says \"scheduled task\", \"process automation\", \"automated alert\", \"run this nightly\", \"task definition\", \"automation failed\", \"task log\", \"workflow queue\", \"stuck workflow\", \"pending work items\", \"renewal reminder automation\", or when creating, executing, or diagnosing iMIS automation. Sending a one-off communication belongs to communications-management; import batch posting belongs to bulk-operations.",
+      "file": "skills/process-automation/SKILL.md"
+    },
+    {
+      "id": "rise-website-design",
+      "name": "rise-website-design",
+      "description": "Design and manage iMIS RiSE websites — page creation, iPart configuration, navigation design, theming, and content publishing. This skill should be used when the user says \"RiSE\", \"website\", \"web design\", \"page builder\", \"iPart\", \"content item\", \"master page\", \"template\", \"theme\", \"CSS\", \"navigation menu\", \"mega menu\", \"layout\", \"public site\", \"staff site\", \"create a page\", \"add a widget\", \"website navigation\", \"page layout\", \"responsive design\", or when working with iMIS website configuration.",
+      "file": "skills/rise-website-design/SKILL.md"
+    },
+    {
+      "id": "run-query",
+      "name": "run-query",
+      "description": "Execute and analyze existing iMIS IQA queries and reports. Use when the user explicitly asks for an IQA/query/report/export, when the desired output is a reusable report, or when the routing contract selects IQA for broad cohort joins or aggregation. Do not use this merely because the user says \"pull the data\" if a Party/domain workflow tool answers the question more directly. This skill executes existing queries only; to design, build, or edit a query use iqa-query-design.",
+      "file": "skills/run-query/SKILL.md"
+    },
+    {
+      "id": "system-configuration",
+      "name": "system-configuration",
+      "description": "Configure and set up iMIS system features — security, billing cycles, pricing, commerce, process automation, forms, data migration, and integrations. This skill should be used when the user says \"configure iMIS\", \"set up billing\", \"billing cycle\", \"pricing rules\", \"payment gateway\", \"AutoPay configuration\", \"security roles\", \"user access\", \"permissions\", \"data migration\", \"import data\", \"import contacts\", \"configure commerce\", \"order types\", \"shopping cart\", \"SSO\", \"single sign-on\", \"process automation\", \"scheduled task\", \"tax configuration\", \"promotion codes\", \"security groups\", or when working with iMIS system administration and configuration. Form Builder authoring/placement/submission/verification belongs to the forms skill; this skill covers only the Settings > Forms configuration posture.",
+      "file": "skills/system-configuration/SKILL.md"
+    },
+    {
+      "id": "troubleshoot-member",
+      "name": "troubleshoot-member",
+      "description": "Diagnose and resolve iMIS member account issues. This skill should be used when the user says \"why can't this member log in\", \"check member status\", \"investigate billing issue\", \"member has a problem\", \"fix account\", \"membership expired\", \"renewed but still lapsed\", \"auto-pay failing\", \"can't access content\", \"wrong amount charged\", \"double billed\", \"payment failed\", \"account locked\", \"missing from committee\", or when a member reports access, billing, or data issues. Diagnose reported symptoms here; for a pure billing action (configure/repair autopay, post a payment) use billing-management, and for a deliberate healthy lifecycle change (renew, cancel, upgrade) use member-lifecycle.",
+      "file": "skills/troubleshoot-member/SKILL.md"
+    },
+    {
+      "id": "uk-localisation",
+      "name": "uk-localisation",
+      "description": "UK-specific iMIS features — Gift Aid, VAT, UK Direct Debit, and HMRC compliance. This skill should be used when the user says \"Gift Aid\", \"HMRC\", \"VAT\", \"Direct Debit\", \"UK tax\", \"UK charity\", \"Gift Aid declaration\", \"HMRC claim\", \"VAT rules\", \"BACS\", \"UK donations\", \"tax reclaim\", \"25% reclaim\", or when working with UK charity regulations, tax compliance, or UK payment methods. Do Gift Aid, VAT, and Direct Debit configuration checks here; posting the gift itself goes to fundraising and payment gateway setup goes to billing / system-configuration.",
+      "file": "skills/uk-localisation/SKILL.md"
+    },
+    {
+      "id": "website-migration",
+      "name": "website-migration",
+      "description": "Migrate an external client website into iMIS RiSE. This skill should be used when the user says \"migrate our website\", \"move our site into iMIS\", \"website migration\", \"crawl our site\", \"import our web pages\", \"rebuild our site in RiSE\", \"site migration project\", or when moving pages, images, and files from a non-iMIS website into RiSE content. This skill owns the end-to-end migration pipeline (crawl → classify → map → preview → write → rollback); building new pages from scratch belongs to rise-website-design, and moving configuration BETWEEN iMIS tenants belongs to configuration-packages.",
+      "file": "skills/website-migration/SKILL.md"
+    }
+  ],
+  "agents": [
+    {
+      "id": "configuration-specialist",
+      "description": "iMIS configuration and administration specialist — user security, payment gateways, import batches, data quality, lookup tables, and system configuration. Preloads domain knowledge, data quality, bulk operations, and data explorer skills.",
+      "mode": "subagent",
+      "permissions": [
+        {
+          "action": "read",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "grep",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "glob",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "bash",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "skill",
+          "resource": "*",
+          "effect": "allow"
+        }
+      ],
+      "file": ".opencode-plugin/agents/configuration-specialist.md"
+    },
+    {
+      "id": "event-coordinator",
+      "description": "iMIS event management specialist — handles event creation, attendee registration, session management, capacity tracking, waitlists, cancellations, transfers, attendance, and event reporting. Use proactively when the task involves events, registrations, conferences, or event logistics.",
+      "mode": "subagent",
+      "permissions": [
+        {
+          "action": "read",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "grep",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "glob",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "bash",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "skill",
+          "resource": "*",
+          "effect": "allow"
+        }
+      ],
+      "file": ".opencode-plugin/agents/event-coordinator.md"
+    },
+    {
+      "id": "fundraising-specialist",
+      "description": "iMIS fundraising specialist — donations, pledges, campaigns, Gift Aid, donor engagement, and giving reports. Preloads domain knowledge, fundraising, UK localisation, and communications skills.",
+      "mode": "subagent",
+      "permissions": [
+        {
+          "action": "read",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "grep",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "glob",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "bash",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "skill",
+          "resource": "*",
+          "effect": "allow"
+        }
+      ],
+      "file": ".opencode-plugin/agents/fundraising-specialist.md"
+    },
+    {
+      "id": "imis-data-analyst",
+      "description": "iMIS data analyst — runs IQA queries, generates reports, explores entity schemas, analyzes trends, and provides data-driven insights. Use proactively when the task involves reporting, data analysis, queries, metrics, or understanding what data exists in iMIS.",
+      "mode": "subagent",
+      "permissions": [
+        {
+          "action": "read",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "grep",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "glob",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "bash",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "skill",
+          "resource": "*",
+          "effect": "allow"
+        }
+      ],
+      "file": ".opencode-plugin/agents/imis-data-analyst.md"
+    },
+    {
+      "id": "implementation-consultant",
+      "description": "iMIS implementation partner specialist — RiSE website design, IQA query building, Business Object creation, billing/pricing configuration, process automation, commerce setup, theming, forms, security, and data migration. Use when the task involves configuring or designing iMIS, especially when the target surface is unclear or spans IQA, content, iParts, navigation, and custom data.",
+      "mode": "subagent",
+      "permissions": [
+        {
+          "action": "read",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "grep",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "glob",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "bash",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "skill",
+          "resource": "*",
+          "effect": "allow"
+        }
+      ],
+      "file": ".opencode-plugin/agents/implementation-consultant.md"
+    },
+    {
+      "id": "membership-specialist",
+      "description": "iMIS membership operations specialist — handles members, prospects, non-members, subscriptions, billing, renewals, cancellations, conversion opportunities, and group assignments. Use proactively when the task involves membership lifecycle, member/prospect accounts, subscriptions, billing, or non-member spend.",
+      "mode": "subagent",
+      "permissions": [
+        {
+          "action": "read",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "grep",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "glob",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "bash",
+          "resource": "*",
+          "effect": "allow"
+        },
+        {
+          "action": "skill",
+          "resource": "*",
+          "effect": "allow"
+        }
+      ],
+      "file": ".opencode-plugin/agents/membership-specialist.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "certification-enroll",
+      "description": "Enrol a member in a certification program — find member, select program, check prerequisites, enrol",
+      "file": ".opencode-plugin/commands/certification-enroll.md"
+    },
+    {
+      "name": "content-publish",
+      "description": "Create and manage iMIS content pages, folders, and site structure in the Document System",
+      "file": ".opencode-plugin/commands/content-publish.md"
+    },
+    {
+      "name": "donor-management",
+      "description": "Record donations, process gifts, manage pledges, and review giving history in iMIS",
+      "file": ".opencode-plugin/commands/donor-management.md"
+    },
+    {
+      "name": "gift-aid",
+      "description": "Manage Gift Aid declarations and HMRC claims — check declarations, create new ones, preview tax reclaims",
+      "file": ".opencode-plugin/commands/gift-aid.md"
+    },
+    {
+      "name": "iqa-query",
+      "description": "Plan, run, or create an IQA query from a live source profile and a structured query form",
+      "file": ".opencode-plugin/commands/iqa-query.md"
+    },
+    {
+      "name": "member-cancellation",
+      "description": "Process a member cancellation or resignation — verify identity, confirm intent, cancel subscriptions, handle groups, send confirmation, log everything",
+      "file": ".opencode-plugin/commands/member-cancellation.md"
+    },
+    {
+      "name": "membership-renewal",
+      "description": "Process membership renewals, upgrades, downgrades, and lapse management in iMIS",
+      "file": ".opencode-plugin/commands/membership-renewal.md"
+    },
+    {
+      "name": "onboard-member",
+      "description": "Create a new member in iMIS — set up contact, add membership, assign groups, send welcome email",
+      "file": ".opencode-plugin/commands/onboard-member.md"
+    },
+    {
+      "name": "send-communication",
+      "description": "Send a communication to a member — select recipient, compose or choose template, send, and log",
+      "file": ".opencode-plugin/commands/send-communication.md"
+    },
+    {
+      "name": "setup",
+      "description": "Check iMIS connection status and guide the user to the iFINITY AgentZ if not connected",
+      "file": ".opencode-plugin/commands/setup.md"
+    }
+  ],
+  "instructions": ".opencode-plugin/instructions.md"
+}
