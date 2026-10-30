@@ -1,0 +1,1729 @@
+{
+ "schema": "ifinity.buildhub.stock-report-catalogue.v1",
+ "version": "2026-09-28.ukdemoaisp9",
+ "provenance": {
+  "source": "https://ukdemoaisp9.imiscloud.com",
+  "capturedOn": "2026-09-28",
+  "method": "read-only DocumentSummary and Document reads by id from a signed-in staff session; nothing was written to the tenant",
+  "capture": "tests/fixtures/buildhub-preview-corpus/stock-reports",
+  "rule": "A document is stock only at a stock path (a module's /DefaultSystem/ folder, or $/Samples/) whose payload fingerprint (SHA-256 and byte count of the decoded Document.Data) matches. Custom roots and pathless documents are excluded. IsSystem is not read: it is unreliable on the source tenant."
+ },
+ "counts": {
+  "TCT": 10,
+  "RDL": 154,
+  "RSP": 21,
+  "RPT": 100
+ },
+ "documents": [
+  {
+   "path": "$/Accounting/DefaultSystem/BatchReports/Batch Transaction Details by Payment Method.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "7d692303bd89eaf272fece2006db7b766873d65d96d2ea0b7d1b8af4d0c258c5",
+   "dataBytes": 348576
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/BatchReports/Batch Transaction Details.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "36c77b424506ef0e67b3c0c611731dc46ae4f2e6c90f3c8365bfe481bed90345",
+   "dataBytes": 283049
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/BatchReports/Batch Transaction Summary by Payment Method.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "7b46e510b615202e849b3c195d38ca04231c779d0e5ebe236910b7fddb70fee3",
+   "dataBytes": 233802
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/BatchReports/Batch Transaction Summary.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "3c642ceefc83ed54ab0bbe4b1d58006892912838c4dfce48c739ea421e6af712",
+   "dataBytes": 134942
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Account Statement",
+   "documentTypeId": "RDL",
+   "dataSha256": "c2a90cfe12f1fd6c3a554f6867440a428d5e9411ed05a2a1b5ab661cb86f66f4",
+   "dataBytes": 103552
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Account Statement with Parameters",
+   "documentTypeId": "RDL",
+   "dataSha256": "2480f78a12ce3d32778359e1127fe2fa4d5d6e00c8626e798ac8acd56eb60cd9",
+   "dataBytes": 112964
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/AR Cash Daily Distribution Summaries",
+   "documentTypeId": "RDL",
+   "dataSha256": "f5506f900e2218325a48bdde8018658abb27b89073076cc33267a32c2346e1b4",
+   "dataBytes": 74705
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/AR Cash Distribution Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "a76e548f8b6fbaaab3ca7c8d3505bf2523886340e119010030109e2fb698573a",
+   "dataBytes": 121454
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/AR Cash Distribution Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "5553035852b27f3ed6a5ed7dece00e7c041f0c65528d93583bee0cf15879caa0",
+   "dataBytes": 69472
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/AR Cash Transactions",
+   "documentTypeId": "RDL",
+   "dataSha256": "5242bdf1c2bee292ead58641822b0ef447ea5887e51133d9fc0999181c0ed21c",
+   "dataBytes": 124009
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Batch Distribution Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "3531de974bb53aed93042adb3da4fb09cf994ced07a5cdd979c67f5dd0ac6066",
+   "dataBytes": 81936
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Credit Card Authorization Audit",
+   "documentTypeId": "RDL",
+   "dataSha256": "22ade77175907f6e5a512e5ef1af0d5c4c3e28c458827cf4ec5534d532b45d95",
+   "dataBytes": 58485
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Credit Card Post Authorization",
+   "documentTypeId": "RDL",
+   "dataSha256": "6da2d47197b6578f2919cdacd26a08edd6a5afd99dcda7942c5052c971066e95",
+   "dataBytes": 112614
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Deferred Income Analysis Spread",
+   "documentTypeId": "RDL",
+   "dataSha256": "42fe0349de7cd8816cc7dc426e7ad9c18c236195202771185290539a6673dc7f",
+   "dataBytes": 190513
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Deferred Income Audit Trail",
+   "documentTypeId": "RDL",
+   "dataSha256": "096023c06be19fc8972dfb71181046477006d2cefaf6761814cf9ec65640830e",
+   "dataBytes": 138209
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Deferred Income Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "008398b7fffa2087edca472a50e1f94df4cc81abf1faa4c3e7b9626cc19b372a",
+   "dataBytes": 111406
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Deferred Income Matrix Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "2a1078ce2b067cc9a45782d21e356bc809cdf3337471a10d0fc16188f1e70e14",
+   "dataBytes": 99153
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/General Ledger Journal Daily Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "a1464d83f3e519b2040d73f96e1e9ac0acd4963cece4256c3e3e1010f4fbaea5",
+   "dataBytes": 85183
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/General Ledger Journal Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "b0408deabf8cc1bbdd17364090f0939fe4a8efeceb1c06fd70b20bc1b424ac03",
+   "dataBytes": 77613
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/General Ledger Journal Monthly Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "88cfcf66c2da225c52f61dfee4a22447691a8f18e7fa1306edd025d265382fd6",
+   "dataBytes": 77801
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Invoice Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "34d1ec4c6321fcdc20946a863954e885e59617de17f323ae38960240fdfcfc16",
+   "dataBytes": 532892
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/PayPal Reconciliation",
+   "documentTypeId": "RDL",
+   "dataSha256": "3d2dbf9b5e5d73f164f8d3ff82213b6aaa2699ff5734082bcfbde6954fd88e17",
+   "dataBytes": 72201
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Trial Balance",
+   "documentTypeId": "RDL",
+   "dataSha256": "d1e3329d1b2a17d2ae2b453e3d17b6bdd0982d0cb96e30de74ddc3123cc9c9a7",
+   "dataBytes": 135801
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/CertificationProgramList.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "4f38535914613e996e2031612d9956f0dc0e5a43033fe8e6903eba64a79620b2",
+   "dataBytes": 32002
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/CompletedCertificates.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "aee123ebf39d9e6e6deb5603db537a3cb73c5970af95ec44f53bd1f386a57fe9",
+   "dataBytes": 55553
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/ComponentList.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "1c6948d114bc6073ae72f98f274fa72983fad88c2d347d48013ba4945e5365cb",
+   "dataBytes": 32287
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/ExperienceCountSummary.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "a2d534f7fba7e650b8342ace2a7c623167067adf25077c05f474fe79b6c17f86",
+   "dataBytes": 76022
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/ExperienceRoster.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "cfabb0c41285b0131b965f0db09c8eae2cf84b192f88b6380ee055849a7669e2",
+   "dataBytes": 71371
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/OfferingRoster.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "0711d984df450bf268e2fa383293b0a6e7d1897ef32c2f7371dba17e31de1e3c",
+   "dataBytes": 47088
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/ParticipantRoster.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "1c69d35005644d1001cfbcd177a12567396889b2fc8f3f5a023f7a4a2a5aff57",
+   "dataBytes": 63768
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/ProgramRegistrations.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "95c48ce44a16af84646a505d950f2acab480e9f47d4bb15467f88804933e074a",
+   "dataBytes": 76003
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/Transcript.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "1f5077707cb32988e0260f9b6fd7e6ae841b1a44f72a0bf909f5b823a818eef9",
+   "dataBytes": 47278
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Templates/UpcomingDelinquency.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "760b7758e5b75731ff7b0b1d03275525d9624ae79e024856c1488d7c0397cb69",
+   "dataBytes": 75104
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/2 Up Labels A4.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "46fea26152a68125b9ce2b3a23fd5a1bcca80e75ca53a24cf7b16778af5eac72",
+   "dataBytes": 13794
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/2 Up Labels.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "e1927208ba34ebfd69ca240c2927e11ee99b8901293afbfe349f98e60cb2028a",
+   "dataBytes": 13691
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/3 Up Labels A4.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "827ebf0f838a2e71821f647dc6612a5a9031573d4f2b6b0ed1d0588283144c2a",
+   "dataBytes": 13815
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/3 Up Labels.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "d9a9fe832c2dd1f12abfa8213715b16367074bd5b1cc7ebc6435d7f301c26efb",
+   "dataBytes": 13702
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Activity by Name",
+   "documentTypeId": "RDL",
+   "dataSha256": "3276247a578ff34bbc20e83d97026be6d4375ef880c89f3df88ec572f2cb8f14",
+   "dataBytes": 67934
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Activity by Type",
+   "documentTypeId": "RDL",
+   "dataSha256": "0304b6017696e3165d4a80c7febcbb913b3d7f13b610beddf86012281bcfba15",
+   "dataBytes": 63692
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Change Log",
+   "documentTypeId": "RDL",
+   "dataSha256": "b957faad83380af2b8f1187281359a264a8eacee71ccb93760ab8dac9725024e",
+   "dataBytes": 55918
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Committee Minutes Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "7f11bf354d80ab12b87ad3514c74e730d4cfdaca3e7fc8ea929caa437ed3ac5f",
+   "dataBytes": 29087
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Committee Roster",
+   "documentTypeId": "RDL",
+   "dataSha256": "a3a37567fc3e708609b37dea8b2d7472cbd844bf4b4b121b9d5dc8c561c9a7b7",
+   "dataBytes": 61977
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Member Profile/Member Profile",
+   "documentTypeId": "RDL",
+   "dataSha256": "2e42a823cb0ad51b3c3e6bbb5e0148ed9d6f7da2aadbc5ce7a18d2faca1cf337",
+   "dataBytes": 137613
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Member Profile/Subreport-Address2.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "44fd801dad2d1c799476726205e7e543bdbd51347696e8d453680c1c800cca96",
+   "dataBytes": 13439
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Member Profile/Subreport-Address3.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "83d2b43fd0eb5a711994048be1533cf374e4f133afa060f0681b7504e4fce163",
+   "dataBytes": 13341
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Member Profile/Subreport-PrintActivities.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "3af07942bbec0dcde14808648b2f80e8e187ecee501c8f35879b5ab2d703ba9b",
+   "dataBytes": 112287
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Member Profile/Subreport-PrintNotes.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "6f9a6f226195a402bb048fe205d50cde56e0ca6f26a2855886679eab05345d97",
+   "dataBytes": 13365
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Member Profile/Subreport-Roster.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "a489aaad3fc5e8f20556f156b2511e78a6f90a138ca5d725a4936773037dda0b",
+   "dataBytes": 14704
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/MemberProfileTemplate.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "df5e3a8daec35473e565e1b5ed82e400e415b277f6febcb17fdb36c0aa8c1a9e",
+   "dataBytes": 27474
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/Reports/Sitemap Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "2388d1b743a0fea0164e5f37f180307e325717eeb1cc50d71fade2b47a24d186",
+   "dataBytes": 40515
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/Reports/Templates/GroupsByProducer.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "b59e0eae5e5e5a2c170dfa8613827e0306d039d647f3a47f3a967620e7535365",
+   "dataBytes": 14929
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/Reports/Templates/ItemsByTag.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "c23a9735462bbddf70524d82658b68fded7c30d485190f63db759f3b5e6c93c5",
+   "dataBytes": 19676
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Combined Badge and Tickets",
+   "documentTypeId": "RDL",
+   "dataSha256": "094fc79d598aaed5a0a8313285d8f27ae799433ead87086ddc131bb21c6d10e4",
+   "dataBytes": 62007
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Badges 8 per page",
+   "documentTypeId": "RDL",
+   "dataSha256": "3c124381a79526ce5e837c2a5c3dc9f9e3f0630e7d4f9d283da2c9100f17f6d6",
+   "dataBytes": 20035
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Certificates",
+   "documentTypeId": "RDL",
+   "dataSha256": "385ab43d4168442b20675db672cfd313eeac454e2360b122cd66659b23a2e0cd",
+   "dataBytes": 23507
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Invoice",
+   "documentTypeId": "RDL",
+   "dataSha256": "5a156b69e3e1616aec25d4d7dbef75c75656ec4eaf4dc0c51aa66cb300a0fbca",
+   "dataBytes": 300029
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Planning Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "1d2240eb3f811d685523e8e8a0721c7615feba407bfebe9faa95adc1feb62acc",
+   "dataBytes": 234147
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Program Item Certificates",
+   "documentTypeId": "RDL",
+   "dataSha256": "3d3538b6db486fe09425b8580f8fe2302802188b90d60d4e6042813c4388e4d0",
+   "dataBytes": 24516
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Question Response Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "63636817c341cb99b3d9f91fd4c08f83152a21d0a4316f1c301493a10b61e37d",
+   "dataBytes": 41727
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Registration Confirmation.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "280ac9cc4316540142ce15705ebf567baf45256e968b6650cde90b25b4f43f9e",
+   "dataBytes": 129532
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Status Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "215e5b16f27087c6a2587d6383e6435e777a9374b886c5ad9cba92751646fe75",
+   "dataBytes": 60499
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Event Status Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "a9a74b57d30f050b2b65e268bf505c9a221d4763a669a213e516eefaab9829d9",
+   "dataBytes": 57261
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/EventRegistrantsReport.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "292db1b167769004f3ad439ea7d5b121d6a205430fa22d7d821416e1f5a982b3",
+   "dataBytes": 40028
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/EventSimpleBadgesParams.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "7c592a8eb9f9e355a5d7aa48b62afc98555b23ca7ee078c299c39606baa6ec82",
+   "dataBytes": 19796
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Formal Meeting Roster",
+   "documentTypeId": "RDL",
+   "dataSha256": "431a20d003164ed497fc342e59ff2662a4cc066c5da9e75db4884d39450bf40d",
+   "dataBytes": 50999
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Formal Meeting Roster By Organization",
+   "documentTypeId": "RDL",
+   "dataSha256": "e254761094cc479ed319bbddfd8d1336dbda2d9f6a6d8fbd2a81e9fef4820bc5",
+   "dataBytes": 58160
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Function Roster",
+   "documentTypeId": "RDL",
+   "dataSha256": "2cd7a86ba7b6422804f462bbcd5f9ae59f924c71dc38968739fe4b4dd4b9da85",
+   "dataBytes": 82093
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Function Tickets",
+   "documentTypeId": "RDL",
+   "dataSha256": "4a83509a25b1c283dda22ea4f737d136d6596552ab6bbc6029a153ef5a347582",
+   "dataBytes": 36150
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Meeting Index",
+   "documentTypeId": "RDL",
+   "dataSha256": "689c3526080ff419573ae1b54dcf3045333e0e23594e9f56c4fd27c29f062571",
+   "dataBytes": 39657
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Meeting Roster - Order System Style",
+   "documentTypeId": "RDL",
+   "dataSha256": "f9e13f582584ee3aafddb0ec559828c21b67a8797a7ee972f9c54cad4437292f",
+   "dataBytes": 239904
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/ProgramItemRegistrantsReport.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "226ea0f245e4f9e4b858ce76b6c2be29acfc175c9e67da94198a5a688bc7b431",
+   "dataBytes": 74329
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Registration List",
+   "documentTypeId": "RDL",
+   "dataSha256": "d8fb5bfd1570eceabcd20b086f8f7b8f8101ae54fd664450930a96a460c64353",
+   "dataBytes": 35786
+  },
+  {
+   "path": "$/EventManagement/DefaultSystem/Reports/Weeks Out Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "69a3a4b66d4f486d14285b51b8f6910e1212a6b6d418f45c856cab8fb4462b2b",
+   "dataBytes": 100928
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Campaign Activity",
+   "documentTypeId": "RDL",
+   "dataSha256": "d6a18cb3813aca4daa0824ffe5e1dc521d138c403d0beeaf83405a8e3f876151",
+   "dataBytes": 103861
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Donor Profile",
+   "documentTypeId": "RDL",
+   "dataSha256": "e9fa793ba052598ea0a1523bb6dc869be87685f1c846ab8d6e52db4ad74991a6",
+   "dataBytes": 55982
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Subreport-DonorRelationships.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "64cab14e308acb788d5dcb1b855539200f47691a2e7be18ee0bcbf019d1468d2",
+   "dataBytes": 32835
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Subreport-Gifts.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "b01118a7901bc9c988e032274c2c59aeb162e25be55654d24502e1f62175af05",
+   "dataBytes": 48442
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Subreport-GiftSummary.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "56c1c703ab83b0eda3b7307c39959b73263d5440706664fbdd1e99c455401499",
+   "dataBytes": 51528
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Subreport-OutstandingRequests.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "87f0fabb81d8a09a8d0400382c83116bd691ea862bc46951cb05c641e9c94dc7",
+   "dataBytes": 34807
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Subreport-Pledges.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "9fc670d405037c5b8f5abf89531f8a220db181a802747017041df2644da0c162",
+   "dataBytes": 57815
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Subreport-PledgeSummary.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "95a6e2d92cbf850213b084ae18c6ad16067b467ba92d974e1b4354bf0250c83a",
+   "dataBytes": 62145
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Subreport-SoftCredits.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "35f61243da6d10cf6dee64138e443f354e4a6ee95b765613b280b51ef13d558d",
+   "dataBytes": 39729
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Profile/Subreport-YearlyGiftHistory.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "5c842d0ecaf0acb81ef2587320f6760054afcac2804c0dcaedcc76d09394fcca",
+   "dataBytes": 62599
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Renewal Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "e6e27f5f5358a53ec608fb453e98056cea58cc019779372685d1918f6c22c78f",
+   "dataBytes": 179475
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Renewal Analysis by Fiscal Year",
+   "documentTypeId": "RDL",
+   "dataSha256": "5f04e5dcd3d9592f13d7e864742726a4f5479df178aa621358cdcf432fd392ee",
+   "dataBytes": 179901
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Trend Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "8f1bd3ae4891dfe4e4cfadf44d0be7033ba50a7162f6560dd94095ef9894bb2e",
+   "dataBytes": 96000
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Donor Trend Analysis by Fiscal Year",
+   "documentTypeId": "RDL",
+   "dataSha256": "8ea9583d0600f7de8f83f0b92e49f4c5b4c676f3733ed4c63845683ca703d9cf",
+   "dataBytes": 96100
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Fund Activity Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "f42bbd3b5451f2230e06b98edf090ace260471e61a5954b8546b17e97db94dc5",
+   "dataBytes": 103428
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Fund Performance Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "44138549281d6599ad341a9b5c7594cd9055c3cacfbac5114faf1372ff28c4ce",
+   "dataBytes": 226941
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Gift Confirmation Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "32a31faddcdb456cdc3c2f26f16dfaa1673a693771c3b00a55cc4d8055bc67c9",
+   "dataBytes": 132276
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Gift Item Activity By Campaign",
+   "documentTypeId": "RDL",
+   "dataSha256": "395a1d41e9c140503a15bd20d7061c9acd21e81c2a52cd7544d07d5747b89636",
+   "dataBytes": 124907
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Gift Item Activity Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "e77944779b4d0f44de422cc10149974cc46415a649608e45c95fb78cd06fd762",
+   "dataBytes": 93879
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Gift Item Performance Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "0d3509fb3db646e1038160c960163aa119fd7e272f8cdb3c4a9ab4d663be8fe8",
+   "dataBytes": 227192
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Gift Totals by Receiptability and Payment Method",
+   "documentTypeId": "RDL",
+   "dataSha256": "2e6a55d65003186c353ffdf22a5adc92f8168ef7d8956b8311ff55368f02788c",
+   "dataBytes": 48493
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Gift Totals by Receiptability, Financial Entity, and Payment Method",
+   "documentTypeId": "RDL",
+   "dataSha256": "839109a24247d57a94189fd2d78a50f11166b2aa92851e3037b429c3a99aa047",
+   "dataBytes": 65355
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Legacy/Legacy Campaign Performance Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "b7898b903b3707a94a0e4a19122335015a73f12840b40e2315e8956c1f39c6f8",
+   "dataBytes": 610231
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/LYBUNT",
+   "documentTypeId": "RDL",
+   "dataSha256": "affb742ec8a6dc2729e3509c67dd66e7ca5fc98a7a2386f2c684ab0a02752c7c",
+   "dataBytes": 120479
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Meeting Giving Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "859125f82bee7d27549bd05f50e567f8508420c6c0309435b98b58c33735dcad",
+   "dataBytes": 92801
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Meeting Giving Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "29cccd48983459b68fc9acb9bc6df6e3b8d1af2ed5875c0589887e630f9a96c1",
+   "dataBytes": 48107
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Memorial Tributes",
+   "documentTypeId": "RDL",
+   "dataSha256": "de6103948316d969b4c3c994e28b086d59aee04ff4a51bc46ee021a3d2c08cc4",
+   "dataBytes": 63236
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Monthly Donations Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "7528ce92f9032c449339b079cb1b6644e78d6523cadb1063d7639a88a6059f1d",
+   "dataBytes": 174116
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Monthly Donations Summary by Fiscal Year",
+   "documentTypeId": "RDL",
+   "dataSha256": "7528ce92f9032c449339b079cb1b6644e78d6523cadb1063d7639a88a6059f1d",
+   "dataBytes": 174116
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Outstanding Pledges",
+   "documentTypeId": "RDL",
+   "dataSha256": "c3c1bb8cf3336a68cd4053a8d5a8ade725a5854aafe6a62dd800f8ceab9c71ba",
+   "dataBytes": 63461
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Past Due Pledges",
+   "documentTypeId": "RDL",
+   "dataSha256": "efec9468998fa1e1c700a9579dd979f873c597fa98bddb0cdfd831e89a39434a",
+   "dataBytes": 57673
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Pledge Details",
+   "documentTypeId": "RDL",
+   "dataSha256": "4a7457825731bd1d3c27084c9d0c8260fc8b4424a2df75385441393c3490d883",
+   "dataBytes": 106879
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Pledge Income Forecast",
+   "documentTypeId": "RDL",
+   "dataSha256": "d31a4f91137e570b94e566a7c02cdf98eb62962537816261945ff17ddeb64fb9",
+   "dataBytes": 139146
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Previous/Current Event Giving Comparison Details",
+   "documentTypeId": "RDL",
+   "dataSha256": "2f47ca6f37e2a93eb9888f6ec3801cd8542fa17d09c8aa82927e068e0cf32723",
+   "dataBytes": 96253
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Previous/Current Giving Comparison Details",
+   "documentTypeId": "RDL",
+   "dataSha256": "87dff4c5f7e295815aca5da4b52226f2432c57ea7aeed71f46e7cbb98779d65f",
+   "dataBytes": 96025
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Previous/Current Giving Comparison Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "a96a70132a6d9c3a4659cb928bbf0f5b7557b1a8451c6c7d90ddd5b05603b052",
+   "dataBytes": 45429
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Soft Credit Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "998a1df15cde05c67902956a726e811a951ae7c81d9f58c3328dcf53fc0eb5d3",
+   "dataBytes": 134603
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Source Code Activity Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "107f1ba4b0a0a2459b1e9cf6fe49de555d996e832d855a3b2238fe042b1301bf",
+   "dataBytes": 117672
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Source Code Performance Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "82cbc8baa140d486060d6df107a55c2eb725594d2c5e462b0327954775c5cd16",
+   "dataBytes": 228147
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/SYBUNT",
+   "documentTypeId": "RDL",
+   "dataSha256": "0bd0b87789251f14ff1133f62b2fe9249cb5ea5b71427b3b4192be184495ed78",
+   "dataBytes": 50267
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/DonationReceipt.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "88184a7edda0bc6ec4714d4a2ac01461cfee1b87e6b4ac527cae5f5846aa5f6e",
+   "dataBytes": 63874
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/DonationReceiptEnFr.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "05fe015ee4da23ed9d5c0a1272ca51c6625b5377423aaabc4ae6df4da59774da",
+   "dataBytes": 276990
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/DonationReceiptItemized.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "9155218977c05d9fc39df50892792b2da771b89721bc31eed52d2767a8a3c3d8",
+   "dataBytes": 298513
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/DonationReceiptItemizedEnFr.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "d4c5b9c39193114e29c953287eecf4cf2853dd85915ba217c5c1083ed652e4a3",
+   "dataBytes": 295676
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/Memorial Tributes",
+   "documentTypeId": "RDL",
+   "dataSha256": "910872295580d2fc709e7524938baaf0f5e9dd4df8c95834f932d985c5c20c74",
+   "dataBytes": 36463
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/TributeNotifications.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "0afa1556d126c2183fb39f55e6b0a9d9ec895e5587d2bc431ce9e0b68d27fbf3",
+   "dataBytes": 30443
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Top Donors",
+   "documentTypeId": "RDL",
+   "dataSha256": "86be29c54d3570af66dae9487d5ce48248ddaed209858a265e77ed06294ea0fd",
+   "dataBytes": 44190
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Yearly Giving Comparison",
+   "documentTypeId": "RDL",
+   "dataSha256": "29a92184799fc3305c82ff323e8f65f2e6404c8de64bdac7ade56e52203d47ce",
+   "dataBytes": 148611
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Yearly Giving Comparison by Fiscal Year",
+   "documentTypeId": "RDL",
+   "dataSha256": "a2d32269fe746308eef5116d21acf722186d9ad78e38248132b6cb3fc3edf8dd",
+   "dataBytes": 148895
+  },
+  {
+   "path": "$/Membership/DefaultSystem/Reports/Billing Product List",
+   "documentTypeId": "RDL",
+   "dataSha256": "7ee51bfe7122043ae41e1167b55e2e98eedcb74a4759cb7f4539aeba9330a378",
+   "dataBytes": 51052
+  },
+  {
+   "path": "$/Membership/DefaultSystem/Reports/Member Expiration Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "f782ed28d17f707a0e0f0e8acec89ac92caf996ab4d684c21160530930e741bd",
+   "dataBytes": 37927
+  },
+  {
+   "path": "$/Membership/DefaultSystem/Reports/Membership Billing Batch Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "b7dc81499a279e74a16d6760356bf5bc7e4acfd761985a573629776d9e845feb",
+   "dataBytes": 85190
+  },
+  {
+   "path": "$/Membership/DefaultSystem/Reports/Membership Billing Batch Summary",
+   "documentTypeId": "RDL",
+   "dataSha256": "1f983777ed03dddb38b23cdd1ad9c2f80f02655215b0e7f57ec925419c86adab",
+   "dataBytes": 87821
+  },
+  {
+   "path": "$/Membership/DefaultSystem/Reports/Membership Billing Cash Distribution",
+   "documentTypeId": "RDL",
+   "dataSha256": "aaff4486cf9dbff315a52f422d1e3ed3829678aeb87b775150591823a0c8b6b1",
+   "dataBytes": 110734
+  },
+  {
+   "path": "$/Membership/DefaultSystem/Reports/Outstanding Dues Balances by Member",
+   "documentTypeId": "RDL",
+   "dataSha256": "fc2c12f6666d4b8faa441a32b868b25a4c77e7485aa9d5574088b64bf9790de8",
+   "dataBytes": 116819
+  },
+  {
+   "path": "$/Membership/DefaultSystem/Reports/Outstanding Dues Balances by Product",
+   "documentTypeId": "RDL",
+   "dataSha256": "979eda4fbe3599732e5d4e160d110a841b398ae56a038092874d876022823c1c",
+   "dataBytes": 76421
+  },
+  {
+   "path": "$/Membership/DefaultSystem/Reports/Renewal Notice",
+   "documentTypeId": "RDL",
+   "dataSha256": "b26c98cb918e278eba9d529ea5f0c8c42905feff4b8eca250afdfbb34300ae7f",
+   "dataBytes": 127142
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Backorder Summary Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "76cef9019b5a3acb1eb6612ca3245202ce7120bcbbd9615d99229325eec95dee",
+   "dataBytes": 49199
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Inventory Receipt Detail",
+   "documentTypeId": "RDL",
+   "dataSha256": "693c3d2c22c55a87de0e12f8583e7f5d090497b7c4967dbdd112b077680a3d42",
+   "dataBytes": 117519
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Inventory Transactions by Date",
+   "documentTypeId": "RDL",
+   "dataSha256": "1d0af4643551b537648d8d9a28fb6db7bb8d47595df0b96d0f0cb4e07a308711",
+   "dataBytes": 114003
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Order Detail Report",
+   "documentTypeId": "RDL",
+   "dataSha256": "accf722295db4b797fdcc5555f0bdba582560d8f4f3c1146bd8aad5f4048e376",
+   "dataBytes": 311619
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Order Invoice",
+   "documentTypeId": "RDL",
+   "dataSha256": "b4c016aff62662dbf28925a8e178843cbb1fcc0f692c2c5db26a9f4c73eedc9a",
+   "dataBytes": 351339
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Print Order",
+   "documentTypeId": "RDL",
+   "dataSha256": "4a02d958986bcb0af656c66f63b5db737bcee121bcc5f24b4375009077f65e66",
+   "dataBytes": 216011
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Pro-Forma Quotation",
+   "documentTypeId": "RDL",
+   "dataSha256": "e6953755d807b83841f88d73e7c9c2836e12dddf0af827467e7dbe8fa84519ed",
+   "dataBytes": 215464
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Product Inventory List",
+   "documentTypeId": "RDL",
+   "dataSha256": "ddac88408193d4a57f3c0ad9dd44a691935763d5a2178113417e5d9d546b2de2",
+   "dataBytes": 96740
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Product Inventory Quantity Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "915c15cf34302cc7ae214c61d6b9dc2e02903a76b9ff5fb6ea4d78b91a926d99",
+   "dataBytes": 208817
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Product Price List",
+   "documentTypeId": "RDL",
+   "dataSha256": "f381826b1a2816233e7f6945bd093b58cfbce549e89e1b3676f370ec995d93c8",
+   "dataBytes": 58672
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Product Reorder List",
+   "documentTypeId": "RDL",
+   "dataSha256": "8105f3a6b9f740e3671ad070d3cb3aff2aa387efc44309a35cf5feff74fa2b0a",
+   "dataBytes": 61655
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Product Sales by Category",
+   "documentTypeId": "RDL",
+   "dataSha256": "dde13f5fb26e9de87a8f3597ffdc5733d1224cdf643df98c6c1d5a4048e47c98",
+   "dataBytes": 80582
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Promotion Analysis",
+   "documentTypeId": "RDL",
+   "dataSha256": "6a10c6d50e694716e9c69e50c9341c66017d7a88cc602df34e90aba9e06b802f",
+   "dataBytes": 147527
+  },
+  {
+   "path": "$/OrderManagement/DefaultSystem/Reports/Shipping Paper",
+   "documentTypeId": "RDL",
+   "dataSha256": "74d8e5218c0329984cf2e39d551c5ce483d98d16fc59e6577005dfeef138c584",
+   "dataBytes": 237228
+  },
+  {
+   "path": "$/Samples/Dashboards/Events/Specific Events/Reports/Templates/EventFormDDLSubreport.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "b3888c272aafa31cc7119078e3caeb036072807bd7e38076bc10e495e5e3edf2",
+   "dataBytes": 8734
+  },
+  {
+   "path": "$/Samples/Dashboards/Events/Specific Events/Reports/Templates/EventFormResponses.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "209b79114dc8f002267fa6579ea2c0c77798cb885065b95c8415425cdf49651a",
+   "dataBytes": 86814
+  },
+  {
+   "path": "$/Samples/Dashboards/Events/Specific Events/Reports/Templates/EventFormResponsesSimple.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "1124c8e7b265f88ce40433e1bf86729d9def1082d8e4d91291bf2a09c37b5959",
+   "dataBytes": 65353
+  },
+  {
+   "path": "$/Samples/Guided Performance Scorecard/GPS.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "1a577b201f8f85ca098d567c0e484406cf6114edc6a45915ffc2b780574049a7",
+   "dataBytes": 170651
+  },
+  {
+   "path": "$/Samples/ReportingServices/Label Sample.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "87d731c4f9a10109942e4bdd567b2b770eb843ac762ba57b71ded3405c6faf1f",
+   "dataBytes": 2474
+  },
+  {
+   "path": "$/Samples/ReportingServices/MemberIndexTitle.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "3ee0979bbf6c71d55d15d38820af50f3b13bab09a725424bfc31e73fb14e72b8",
+   "dataBytes": 29843
+  },
+  {
+   "path": "$/Samples/ReportingServices/MemberProfileTemplate.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "834d936ca53ea59ad391cd95a7da312be3c6f975e43341563da8dac52f24d3ae",
+   "dataBytes": 67617
+  },
+  {
+   "path": "$/Samples/ReportingServices/SSRS Sample Template",
+   "documentTypeId": "RDL",
+   "dataSha256": "1427b1a123707616569b602266d25d216697ed1e9c3cda0413e80f52ae1f23d2",
+   "dataBytes": 58680
+  },
+  {
+   "path": "$/Samples/ReportingServices/SSRSTraining.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "1afd8cb210513eeaa55cd531f70d25bbfac3c0af8df5c13cc0e276076be6c4cf",
+   "dataBytes": 14530
+  },
+  {
+   "path": "$/Samples/ReportingServices/SSRSTrainingPyramid.rdl",
+   "documentTypeId": "RDL",
+   "dataSha256": "2fcd9fa18f99c67fd886ce4ff3c3967a6a614ec645365a006c66ed8a2e500341",
+   "dataBytes": 14405
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/AdjustmentJournalByInvoice",
+   "documentTypeId": "RPT",
+   "dataSha256": "275887af6cd054df517ba18abf2c12fc5866834426af58df32a0efd0e284e268",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/ARStatement",
+   "documentTypeId": "RPT",
+   "dataSha256": "4421aeb76679cb41c46569eac3602f51f08f081b854de017f3d7b246dc3afba0",
+   "dataBytes": 16384
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/ARTrialBalance",
+   "documentTypeId": "RPT",
+   "dataSha256": "a4bf95667fbd94c77b1531c53d276c0863417e43c4a0c493cdeb6d6f419b0734",
+   "dataBytes": 15872
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/BatchReportPostedInvoices",
+   "documentTypeId": "RPT",
+   "dataSha256": "3a75d80417f4aa31222044475c44209339630e1864d9c6e7e3a43a1ecd875743",
+   "dataBytes": 13824
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/BatchReportPostedPayments",
+   "documentTypeId": "RPT",
+   "dataSha256": "b1d58bf761a2adb87763db202b3a549b8858321e2fb0a66602dc9c612635527f",
+   "dataBytes": 12288
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/BatchReviewUnpostedInvoices",
+   "documentTypeId": "RPT",
+   "dataSha256": "a607324e4b288ecc8885122e6541b6b493cf7c21f48803c87289ee76b63afcfb",
+   "dataBytes": 13824
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/BatchReviewUnpostedPayments",
+   "documentTypeId": "RPT",
+   "dataSha256": "670f123dd2569cf1854be8fa4d12de168f157b0083090994210961cb7fc2f18f",
+   "dataBytes": 12288
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/CashReceiptsJournal",
+   "documentTypeId": "RPT",
+   "dataSha256": "f1dcacc0d0e67e43791cd78b24e10914c38653045d284f291b060f60c2afb93b",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/CollectionsARlBalance",
+   "documentTypeId": "RPT",
+   "dataSha256": "4f0b3fbe918a02f10ddd3be58e481cbe983fbb989bf8d039363989b459dc589a",
+   "dataBytes": 25600
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/DeferredIncomeAudit",
+   "documentTypeId": "RPT",
+   "dataSha256": "f8ce42b9e0c907781c3f6717afe56259a5b3577cd0759c6579530017d130f96b",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/DeferredIncomeDetail",
+   "documentTypeId": "RPT",
+   "dataSha256": "eb72934dc509f1d7df58c00e525af46d9276640a497fc5611801cebc8b3bf821",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/Invoice",
+   "documentTypeId": "RPT",
+   "dataSha256": "87a6716351504c52113cda8c34d0bf8e18cab6a030caf1660c89825a31c1c884",
+   "dataBytes": 22016
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/InvoiceAdjustmentJournal",
+   "documentTypeId": "RPT",
+   "dataSha256": "1244a67e55407641a6e4e2bffc36f4951992c914e502ce67594283330180a3dd",
+   "dataBytes": 10240
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/SalesTaxDetailReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "0eea6c799dd4050b97580bce8636dbcf6e08d1ec574b1d864728ae40abe3d92a",
+   "dataBytes": 12800
+  },
+  {
+   "path": "$/Accounting/DefaultSystem/Reports/Templates/SalesTaxSummaryReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "bd99753fbe638dd8d11698ec7f00e22c76bef216dcda5b1b7512d7aa097e9602",
+   "dataBytes": 12288
+  },
+  {
+   "path": "$/CampaignManagement/DefaultSystem/Reports/Templates/CampaignPerformancePerSolicitation",
+   "documentTypeId": "RPT",
+   "dataSha256": "e26a2a2fe20fa862e05b217c0d5870cd88bda154dfd0bb9fee363b22ef73eed2",
+   "dataBytes": 16896
+  },
+  {
+   "path": "$/CampaignManagement/DefaultSystem/Reports/Templates/CampaignPerformancePerSourceCode",
+   "documentTypeId": "RPT",
+   "dataSha256": "bc70b88839e31e3b8f100e4faa3b8663cb7dcfeaa7b916bae3c631b1a61c034a",
+   "dataBytes": 15872
+  },
+  {
+   "path": "$/CampaignManagement/DefaultSystem/Reports/Templates/CampaignPurge",
+   "documentTypeId": "RPT",
+   "dataSha256": "64a2dd7c71995fc05f31cd0f8a466d8143dfa6416640e72a2fcdb62878ede788",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/CampaignManagement/DefaultSystem/Reports/Templates/CampaignStage",
+   "documentTypeId": "RPT",
+   "dataSha256": "a62891a5499b469ffb6cfbb76819e36728d5110495a7d52515436b2050cc4a78",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/CampaignManagement/DefaultSystem/Reports/Templates/Confirmation",
+   "documentTypeId": "RPT",
+   "dataSha256": "a7805a57616eb3d608a927b846dda3946d72eadfc09c59157f5161d20291c804",
+   "dataBytes": 13312
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/2UpLabelsByZip_113x4",
+   "documentTypeId": "RPT",
+   "dataSha256": "55ab75c2b117f22e12d80027730fb53ebfd911cbce7afb46ae922f85a9441191",
+   "dataBytes": 9216
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/3UpLabelsByZip_1x258",
+   "documentTypeId": "RPT",
+   "dataSha256": "eed08c267afcc77e41fdb2950ace6c991631d60b3383a3d2d58f6eef3c1de952",
+   "dataBytes": 9216
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/ContactGroupProfile",
+   "documentTypeId": "RPT",
+   "dataSha256": "3838a2efbf4331d3bd572f2cf0426717d90504c10878bda229064241d3b3dfbe",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/ContactList",
+   "documentTypeId": "RPT",
+   "dataSha256": "67a83f839056b740008805937152d2e84767d8da80bff93857a4f8df4e9fef17",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/ContactList.rpt",
+   "documentTypeId": "RPT",
+   "dataSha256": "19e2215b7e14cf9321e171b1a2f0ffb07a9c4b0e483fb7cfcbc11faf68a384a5",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/ContactOrderProfile",
+   "documentTypeId": "RPT",
+   "dataSha256": "ef87591da5b0110add159814a7e9500e2b22a87416383c4abd2caa05a0a096f6",
+   "dataBytes": 12288
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/ContactProfile",
+   "documentTypeId": "RPT",
+   "dataSha256": "7d49387f2d183af81ce16ee334ae01a58a31a5e1e5fe2e848a865147d2ef1c5e",
+   "dataBytes": 25088
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/DirectoryByState",
+   "documentTypeId": "RPT",
+   "dataSha256": "6073e74f3924f2de7196bb414b5b0540edf7b0a8ffbc349e94e9962ff7da4346",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/GroupProfile",
+   "documentTypeId": "RPT",
+   "dataSha256": "c0c67e8990a8adad86fbdc78f90abb8261735ad0894e2e933f54eed11dd83442",
+   "dataBytes": 13824
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/InstituteProfile",
+   "documentTypeId": "RPT",
+   "dataSha256": "836afbbf7411aad5e930718f8fe04461da514c5aa95173d616da1f85fb3cfcf6",
+   "dataBytes": 23040
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/NameAndAddressDirectory",
+   "documentTypeId": "RPT",
+   "dataSha256": "b75981563bb9643504e6be5159b1e6f2cd2c6ccdd17fb8845c9f16bbbb11562b",
+   "dataBytes": 8704
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/RecordChangeHistory",
+   "documentTypeId": "RPT",
+   "dataSha256": "69d4d8005d15cea3c794f2cdec2df21ec7198a8a0d572df560494cc0435a39ef",
+   "dataBytes": 10240
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Templates/ReportIndex",
+   "documentTypeId": "RPT",
+   "dataSha256": "27cc7d68aad2d6b8fa537786f9ff1cb38d9d4eedf0b7528ecc796322375ccc77",
+   "dataBytes": 9216
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/DonorClubDetails",
+   "documentTypeId": "RPT",
+   "dataSha256": "250f7437f0a8ffd96dffda0336d1ca9dccd75e0fa0f7ed639da784bc008efc0c",
+   "dataBytes": 10240
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/DonorClubSummary",
+   "documentTypeId": "RPT",
+   "dataSha256": "0df98d2e5a5fe21423fb5c30a7c4a17f8b303269b76a47879655ee27b160854f",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/DonorValue",
+   "documentTypeId": "RPT",
+   "dataSha256": "43bc04f54535507811c3aabc807cd1139ad24783d7babc2e763bbc4f313b77d0",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/FirstGreatLatestGifts",
+   "documentTypeId": "RPT",
+   "dataSha256": "6a28f36fb4501d4684e200e4a992d68681a42c5ded7329589fe0e7c6b191d36c",
+   "dataBytes": 16896
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/FundraisingProfile",
+   "documentTypeId": "RPT",
+   "dataSha256": "e1b42a57e9256406842b4a6cd716428a1695c79b2166216883b4f445d5f77344",
+   "dataBytes": 46592
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/GiftRangeAnalysis",
+   "documentTypeId": "RPT",
+   "dataSha256": "de12d879b7f23fcd79c4b916386cffde1f04d369dd8a83a62e85b6b8756ed475",
+   "dataBytes": 12800
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/GivingDetails",
+   "documentTypeId": "RPT",
+   "dataSha256": "d3df6218ad818629c170583f8031d196b9f96f1eabf3bbc495b027e0636e4ab2",
+   "dataBytes": 10240
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/GivingSummary",
+   "documentTypeId": "RPT",
+   "dataSha256": "91875cf78baa6faad49bf4a7843b73e8a5f96f9128070b64dc499e57bdd60618",
+   "dataBytes": 10240
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/LYBUNT",
+   "documentTypeId": "RPT",
+   "dataSha256": "e4006336be225767e8c72e100c4ce7071fbc41c7124d899786d4d9d598522769",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/MatchingGift",
+   "documentTypeId": "RPT",
+   "dataSha256": "77e25d2de55748b78658afd2641db8adbe3ae03bfeda2efb14d43a67d89d4560",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/MemorialTribute",
+   "documentTypeId": "RPT",
+   "dataSha256": "a2a7d961fb60b66a949c6d69ba909fe755222c06ff86057ccb8a5ba11e235ae0",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/PledgeDetail",
+   "documentTypeId": "RPT",
+   "dataSha256": "e7c9f4549c1b4dee5e01da53f8e6cd3d8c579e462ad57a7722284fc0113e5003",
+   "dataBytes": 10240
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/PledgeSummary",
+   "documentTypeId": "RPT",
+   "dataSha256": "49afe171cc8c044729135fcf818d7567c6bb73a94038ba2776a21cae676aeb4b",
+   "dataBytes": 10240
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/Receipt",
+   "documentTypeId": "RPT",
+   "dataSha256": "ab757f4edf20cc3a460e504fb89d3f7e5c17c623ff80656d475743e926f5020f",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/RegisterDetails",
+   "documentTypeId": "RPT",
+   "dataSha256": "91fb555fe8ffd9b4c9bcc799836ddb6bcdb3c0b44ed19d8f790b4b2473cd1bcc",
+   "dataBytes": 12288
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/RegisterSummary",
+   "documentTypeId": "RPT",
+   "dataSha256": "cb4b0e256e9cf306bb821d2d85f8d74478f84f15c97fb74b4ff8945a583e80d6",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/ReplacementReceipt",
+   "documentTypeId": "RPT",
+   "dataSha256": "e7e972b4ea4301f2ca740728e38ab406f315266678fc8a76b046192da8fdd22b",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/TopNDonor",
+   "documentTypeId": "RPT",
+   "dataSha256": "14d133de98337774005e9e71af02b0764ea9549e5d8ec0a928e53c8f04c2c36f",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Templates/TopNDonorDetails",
+   "documentTypeId": "RPT",
+   "dataSha256": "e24f923664bcbe196c5c31cc857859337c86efa665645983aa64a1f95683c1c7",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/CostOfGoodsSoldDetailReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "a0a4d858647e3c08fdb828419e5a310faeadd0b4d13787e371e0f2f070d57998",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/InventoryClassListing",
+   "documentTypeId": "RPT",
+   "dataSha256": "0d5f0c45c8242074a1c0f1eca96d5b6d31085dc6458f7441aebcbe77fc3c41aa",
+   "dataBytes": 13312
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/InventoryProfitabilityReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "f8c663cb52506764eebe32939c01d5412748266159a3c616ca6e4beda4ecacaa",
+   "dataBytes": 12800
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/InventoryQuantityAuditTrail",
+   "documentTypeId": "RPT",
+   "dataSha256": "5f413b95f903758117ba7a2891094f544f02a71d2808bb67a0cd90319cf0e589",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/InventoryReOrderReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "6ae90a9a25b74b654a1a464c5b2e6cb5398fa2f2df0af527c3d1eb2b3d6f0d8f",
+   "dataBytes": 12288
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/InventoryStockStatusReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "500dea3af2e15064cde3cb164655a332f1fad605c92584c4d27cae85304af086",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/InventoryValuationReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "1391fb95e4e2f10cbeeab2f37866479210bb3348355ec62d36468e7c7fbf62a1",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/PhysicalInventoryList",
+   "documentTypeId": "RPT",
+   "dataSha256": "7857fc82ad0c31a1236467987b951efea3771f2412d87c503d64a5f6787e7d40",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/PriceSheetList",
+   "documentTypeId": "RPT",
+   "dataSha256": "da0509cfe8cf6e3622522c7ac37c26efd83bffe4605ebdfd18521d15ee2d3417",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/ProductListByClass",
+   "documentTypeId": "RPT",
+   "dataSha256": "40b3c21bf424fa1aea3a9523e6f84e7953b8b0e7d29a026ae9674d7612322b5f",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/ProductListByType",
+   "documentTypeId": "RPT",
+   "dataSha256": "7af9c7502241d2a2c03939868c1cfdf10a9f34e14fc8d96442458bb43bcc90dd",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/ProductPriceList",
+   "documentTypeId": "RPT",
+   "dataSha256": "fb359d8a28f6ecf9d875e3680487fb5ba6ddc748277955a8090639b20110df4d",
+   "dataBytes": 11776
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/ProductSetListing",
+   "documentTypeId": "RPT",
+   "dataSha256": "3e6e1f156447c027d17f6d94eac0042cb10ec58a5fd6392f0515003637632635",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/Inventory/DefaultSystem/Reports/Templates/PromotionList",
+   "documentTypeId": "RPT",
+   "dataSha256": "d556be02337082f731c38002f3e71536a4a8a748d024f0724d309c52df3deb40",
+   "dataBytes": 12288
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ActionReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "67633ef6c79b9e4d7687798e53e7f14c2a0976a286f9d5a251f9eefedd070947",
+   "dataBytes": 17408
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/FutureActions",
+   "documentTypeId": "RPT",
+   "dataSha256": "43bbe65751d5d055794ec28c98bc7f9f2d814d07b10f6c5bff564072db81ce45",
+   "dataBytes": 16384
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/IncompleteStage",
+   "documentTypeId": "RPT",
+   "dataSha256": "34de8cf039bc024e5322dfbb9de068d0666a98e8887d6724aa9f883772714255",
+   "dataBytes": 16384
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ManagerActionReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "d09917d9fa7eab0fb2dbb9386d53e8ad20be6c3f52b41191c3dfb91a36d27571",
+   "dataBytes": 17920
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ManagerFutureActions",
+   "documentTypeId": "RPT",
+   "dataSha256": "672abe8ecd1bb1d319643f3b36588d06a37e606c21e24272dc82a80c2ba64ce7",
+   "dataBytes": 16896
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ManagerIncompleteStage",
+   "documentTypeId": "RPT",
+   "dataSha256": "5fbbe596ca76c91241d9640eecf97d1b4895da3c0e644d51ba1eb18bbba98d5d",
+   "dataBytes": 16384
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ManagerOverdueActions",
+   "documentTypeId": "RPT",
+   "dataSha256": "846165b0c679bb282d597b512f6c3d3e43d2aa8f3ae8cdcae8d0ca337893c0f6",
+   "dataBytes": 16896
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ManagerProcessForecast",
+   "documentTypeId": "RPT",
+   "dataSha256": "4c336e5a9cb546972756c661b65ca041893efb63fef72f0b73624a890ab11722",
+   "dataBytes": 13824
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ManagerResponseAnalysis",
+   "documentTypeId": "RPT",
+   "dataSha256": "df0063053c0e074be5abaec7618060daccf3850bced06fb35f2eeb2d0e491b8b",
+   "dataBytes": 14336
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ManagerWonOrLostProcess",
+   "documentTypeId": "RPT",
+   "dataSha256": "fae384571392531d049b1a96fca939077353a7cd900423d967b1c21f0f6d18b5",
+   "dataBytes": 13312
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/OverDueActions",
+   "documentTypeId": "RPT",
+   "dataSha256": "1c1818669f431519b929327e3b9e27731765adef7559f7489046879ae609807e",
+   "dataBytes": 14336
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ProcessForecast",
+   "documentTypeId": "RPT",
+   "dataSha256": "5f14738c816d038dc3c0b06dbfac2a0e73a1ebb1e6bc073f59e0b0620c782a11",
+   "dataBytes": 13312
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ProcessProfile",
+   "documentTypeId": "RPT",
+   "dataSha256": "ab82096f43ccbb32c69f1f9fc6c4abc7f59992a8ee259c8afd128d4e3980c9e3",
+   "dataBytes": 27136
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/ResponseAnalysis",
+   "documentTypeId": "RPT",
+   "dataSha256": "62ddb3acff25c73534ebb821413a4956cd5adf960c37580163d22c139a7903fa",
+   "dataBytes": 14336
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/SalesRepActionReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "420801f6fa43c74798eccde016fe68c33fcd684c430c563f59676e25bff97a2e",
+   "dataBytes": 17408
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/SalesRepFutureActions",
+   "documentTypeId": "RPT",
+   "dataSha256": "75e76bc0b4e49f0df6f6b50bd6f41f3126f1bf5d879f6d2faaadc506d0153861",
+   "dataBytes": 16896
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/SalesRepOverdueActions",
+   "documentTypeId": "RPT",
+   "dataSha256": "a6e5d11c0af91a8fc0dde7732dceb46fe4f5ec4367960c2ae4229ccbe77cc191",
+   "dataBytes": 17408
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/SalesRepProcesses",
+   "documentTypeId": "RPT",
+   "dataSha256": "342ba125474452cadc6ef9d52e20d0875d42a0b79d8f7f1eec21af6565dbc4f2",
+   "dataBytes": 13312
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/SalesRepProcessForecast",
+   "documentTypeId": "RPT",
+   "dataSha256": "e812b34b571474812390b121c23a590a9018018f5cb1e9bc8ab8ca4e353ffa29",
+   "dataBytes": 13824
+  },
+  {
+   "path": "$/OpportunityManagement/DefaultSystem/Reports/Templates/WonOrLostProcess",
+   "documentTypeId": "RPT",
+   "dataSha256": "3b048bf0bbe65783ca0abe9751c3e3369f6b8a79ebe819d05eb6bb7ca7ba2efe",
+   "dataBytes": 17920
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/BackorderNotification",
+   "documentTypeId": "RPT",
+   "dataSha256": "852b967c10ea4e409a2c6338760d5ef0ef8b62ee944bb1c7c5b269d25667410b",
+   "dataBytes": 16384
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/OrderConfirmation",
+   "documentTypeId": "RPT",
+   "dataSha256": "59f8fbe2f177fd5be9f45d264d817ee8d2df2defefbeeca97ef026bd20c574d3",
+   "dataBytes": 22528
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/OrderDetails",
+   "documentTypeId": "RPT",
+   "dataSha256": "2a1767a561c0a8deb0464f1371206fcd4ab6df8532bdf33147853a82723f16a6",
+   "dataBytes": 23552
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/OrderDetailsWithDiscounts",
+   "documentTypeId": "RPT",
+   "dataSha256": "c7af15bf75f8a991e97c9afaf9f3b939e2ab94a38a224a1dc5c24db44a81d863",
+   "dataBytes": 23552
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/OrderSummaryReport",
+   "documentTypeId": "RPT",
+   "dataSha256": "2dfd0eca0093f78953a2cae5ccbbaf4db0e236c776c1ab402d2a848d2e31b1f9",
+   "dataBytes": 19456
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/PickList",
+   "documentTypeId": "RPT",
+   "dataSha256": "23be28dfbddf49af7700dc7e681829808384893c38f173aa2a82598a9ebcbc97",
+   "dataBytes": 11264
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/ShipmentConfirmation",
+   "documentTypeId": "RPT",
+   "dataSha256": "b9ce6aa52cdd6df18edd23029f8d711919025af28f908df595e714536326d5f9",
+   "dataBytes": 13824
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/ShippingLabels",
+   "documentTypeId": "RPT",
+   "dataSha256": "809ab2e6d8cc919c4992e97c34c91793e2ee78d327396f42efc83b76abb166dc",
+   "dataBytes": 8192
+  },
+  {
+   "path": "$/Orders/DefaultSystem/Reports/Templates/ShippingPaperPackingSlip",
+   "documentTypeId": "RPT",
+   "dataSha256": "89d97ae4f0dab1c6bfb405e5f3619a74f37e41d5d9e41ded69be2467800e4b86",
+   "dataBytes": 14848
+  },
+  {
+   "path": "$/RFMAnalysis/DefaultSystem/Reports/Templates/RFMProfile",
+   "documentTypeId": "RPT",
+   "dataSha256": "dda4790a21862221488d0c3de3d80aa730235fb6b34fd233fc31d7a474df4818",
+   "dataBytes": 29696
+  },
+  {
+   "path": "$/RFMAnalysis/DefaultSystem/Reports/Templates/RFMRunPreview",
+   "documentTypeId": "RPT",
+   "dataSha256": "2e4652d1f531ed7ce616b2644d91a3ba15cb18e69564a86b7007fe441ffc1685",
+   "dataBytes": 32256
+  },
+  {
+   "path": "$/SegmentManagement/DefaultSystem/Reports/Templates/SegmentationJob",
+   "documentTypeId": "RPT",
+   "dataSha256": "beb6f5b3bc0eae4378502284b3629ee8cc2ff5fe503736c88d8d4a9c7e94abf3",
+   "dataBytes": 10752
+  },
+  {
+   "path": "$/SegmentManagement/DefaultSystem/Reports/Templates/SegmentDefinition",
+   "documentTypeId": "RPT",
+   "dataSha256": "414344b80cd82c9346f5b81739f3ea5896bf78b578d147e9812599450be05a2c",
+   "dataBytes": 13312
+  },
+  {
+   "path": "$/SegmentManagement/DefaultSystem/Reports/Templates/SegmentDefinitionByJob",
+   "documentTypeId": "RPT",
+   "dataSha256": "85291a1a937aa326c6e1827dbfbaaeb7759572ab5980e28b6c01f85e6bd84616",
+   "dataBytes": 13312
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/CertificationProgramList Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "2a4871d2c16c1e7580a9422f53abc19e96c18345c0480d54dc79b57621ab659d",
+   "dataBytes": 69628
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/CompletedCertificates Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "05ad1fbfe7a8673296c2229b055a2e5376fc4788cc66a9424debe9faaac612ee",
+   "dataBytes": 181402
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/ComponentList Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "7b96dadeecdc35af88897c21a265ebcf4211e70b5e7b95c3886065600f5c6e8d",
+   "dataBytes": 97122
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/ExperienceCountSummary Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "e1e724230489beeafb9462ad2854845a444e79622aaca817dc300364c73f7186",
+   "dataBytes": 229950
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/ExperienceRoster Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "9ff68cbe14ff2e97532f2c47ef541ac20694c0ffc2e4f123d995082c1b3bc407",
+   "dataBytes": 211370
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/OfferingRoster Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "b49deac14f3589705b324c14fed0814ba5c1b7713c0858a429b57bb27fab8640",
+   "dataBytes": 146386
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/ParticipantRoster Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "f7705867f60e055e95851e93074d0d64334e43306a524df40f970816c8e95aa9",
+   "dataBytes": 263746
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/ProgramRegistrations Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "fafed33d683e2ad72ca2de9283238de49abb68a112550d17e6bcc9f772c12a96",
+   "dataBytes": 235350
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/Transcript Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "abe489dbac619b4ee18288f150df1751369e369b1f7307d0b1853ab6795dd120",
+   "dataBytes": 101910
+  },
+  {
+   "path": "$/CertificationManagement/DefaultSystem/Reports/UpcomingDelinquency Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "2a2a14c24798c54e179240d3689757ab72bbf707198143292c5e854c5a1ce2b8",
+   "dataBytes": 221526
+  },
+  {
+   "path": "$/ContactManagement/DefaultSystem/Reports/Reports - Single Contact/MemberProfileQuery Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "75be74d8df17fc63fbb312bfd69f9ea3b9032b79f5550d02c84ba6d30ab23934",
+   "dataBytes": 8192
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/Reports/Groups By Producer Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "f05e9fb7c6642cf1f0d69fd1331ec5e5f3c905df26bc0f0a22f9904c804f9e58",
+   "dataBytes": 75258
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/Reports/Items By Tag Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "9db4d60b1c0c7a28605e745ea2bcc7e283e2bf230034b9480c4cc3cd564eab26",
+   "dataBytes": 84294
+  },
+  {
+   "path": "$/Fundraising/DefaultSystem/Reports/Memorial Tributes with Notify Contact",
+   "documentTypeId": "RSP",
+   "dataSha256": "dc6c9c883671268c660bae11bf1c87fb14ef5861fdbd09d2f21e3dee31efe231",
+   "dataBytes": 6134
+  },
+  {
+   "path": "$/Samples/ReportingServices/Full Roster Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "c7943a5ddfdd4ffab437baee67b67647509aacb2330c77dcdc44d0c59eacf902",
+   "dataBytes": 60756
+  },
+  {
+   "path": "$/Samples/ReportingServices/Label Sample",
+   "documentTypeId": "RSP",
+   "dataSha256": "eedca2dae8dc554cc6c2cb1c71658656d692dcf456e66427e2b6562586ce6209",
+   "dataBytes": 10224
+  },
+  {
+   "path": "$/Samples/ReportingServices/Member Index Sample",
+   "documentTypeId": "RSP",
+   "dataSha256": "6d4f2e652c94faee9d81dcc8a896d4179c9624a2ff22265ae5e04fd033df7ffa",
+   "dataBytes": 126320
+  },
+  {
+   "path": "$/Samples/ReportingServices/MemberProfileQuery_Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "7de55ed6413c714df95efdf218209064d69ca7ea481e98bf03877dfa5ef144bd",
+   "dataBytes": 6134
+  },
+  {
+   "path": "$/Samples/ReportingServices/Membership Pie",
+   "documentTypeId": "RSP",
+   "dataSha256": "823bbf6372f1fa05f6b45211b4060f251008b6dae2493ca906f235f0cbba201e",
+   "dataBytes": 64078
+  },
+  {
+   "path": "$/Samples/ReportingServices/Membership Pyramid",
+   "documentTypeId": "RSP",
+   "dataSha256": "45df636c4611159ca186d2eedccfc996ec7054bb644064d9886db3a0bd058e34",
+   "dataBytes": 63622
+  },
+  {
+   "path": "$/Samples/ReportingServices/Simple Roster Report",
+   "documentTypeId": "RSP",
+   "dataSha256": "606a09c583dcc6c92275be2d6241c6011c3fa742ad8022a1fc599bc5c40a3201",
+   "dataBytes": 60368
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/BlockTaggedList",
+   "documentTypeId": "TCT",
+   "dataSha256": "c8cb54da597b7e778420b16a315936dde8333572f6e6dde4f3a0651f47b61958",
+   "dataBytes": 1358
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/BlockTaggedListNoDate",
+   "documentTypeId": "TCT",
+   "dataSha256": "59d44ee13bd0da7cb89202423cf1177bc6cbfb212d9a9d122723d7d57510ade5",
+   "dataBytes": 1045
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/BlockTaggedListWithThumbnail",
+   "documentTypeId": "TCT",
+   "dataSha256": "7bdb5ca5eed8cdb5763a7c260d6c2049c763558e6be20c17b0bb35e8945b9a1a",
+   "dataBytes": 1934
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/BlockTaggedListWithThumbnailResponsive",
+   "documentTypeId": "TCT",
+   "dataSha256": "793e133eea75d1d576403590dcd5e7f171ecf0579f885970820f43b4213f35cd",
+   "dataBytes": 1638
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/ListWithFeatured",
+   "documentTypeId": "TCT",
+   "dataSha256": "d4066a622be7aebcc21d024f348e35acdb3c5efbb07c75e5d57e8bcbfd7c637a",
+   "dataBytes": 1782
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/Mobile",
+   "documentTypeId": "TCT",
+   "dataSha256": "00b0bdc2a7de13eead2e1a3f2fe41f1219acd41059a9c3bf04a3e7ed4d6ed9cd",
+   "dataBytes": 1818
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/Short",
+   "documentTypeId": "TCT",
+   "dataSha256": "d3979efcfc934208db6adb4959d8105d90d6c45044f5e88fc1a5e780b36bfdf6",
+   "dataBytes": 1563
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/Simple",
+   "documentTypeId": "TCT",
+   "dataSha256": "48ceb2e7392687f74d377b9fbb5c84b7a532df4cb672b68f3197a8fdc841496d",
+   "dataBytes": 2591
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/SimpleWithHtml",
+   "documentTypeId": "TCT",
+   "dataSha256": "e43b05ee426a62eddc28c7a54797610eda01aae0cc63dcfa5885478424b1700e",
+   "dataBytes": 2888
+  },
+  {
+   "path": "$/ContentManagement/DefaultSystem/TaggedListFormats/TimelineTaggedList",
+   "documentTypeId": "TCT",
+   "dataSha256": "51ed837d935791d5d1f1a048b6dd990871bb1dd26c7e25c5dd83868aaba6607f",
+   "dataBytes": 1421
+  }
+ ]
+}

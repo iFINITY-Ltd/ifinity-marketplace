@@ -1,0 +1,11 @@
+{
+  "name": "@ifinity/agentz-opencode",
+  "version": "0.7.40",
+  "description": "iFINITY AgentZ — AI working companion for iMIS. Membership, events, fundraising, billing, reporting, content management, and system configuration for associations and nonprofits.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./server": "./.opencode-plugin/server.js",
+    "./package.json": "./package.json"
+  }
+}
