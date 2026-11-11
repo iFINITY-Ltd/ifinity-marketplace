@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^mcp__(?:agentz|plugin_agentz_agentz)__imis_entity$",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "This is the generic imis_entity escape hatch. ALLOW the call; never block it. You see only this tool call, never the conversation, so you cannot judge whether the person asked for it: consent is asked in the chat, and the MCP's own preview-bound confirmation is the gate. Reads (get, list, changelog) and validate are non-mutating. For create, update, delete, or execute, the MCP enforces a purpose-owner map before network I/O: if a purpose-built tool owns that entity/operation, raw mutation is denied and the returned owner tool/action must be used. Never encourage a retry that bypasses that owner (the same record under another entity name, or another raw route). Removing a contact (Party, Person or Organization) is owned by imis_party_profile action=preview_remove_contact then remove_contact; the raw delete is denied. Raw execute is default-deny unless the operation is explicitly allowlisted. Every raw write is two-step: a call without confirmationText writes nothing and returns the record preview and its exact confirmationText (of the form `DELETE IMIS ENTITY <EntityType>/<id> #<hash>`: the operation, `IMIS ENTITY`, the EntityType/id and a hash binding the record as read); only the second call, carrying that exact text, writes, and the MCP refuses any other text. When this call carries a confirmationText, remind the agent in your response that it sends that text only after asking the person in chat about that EntityType/id, and that it claims success only from the MCP's readback."
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__(?:agentz|plugin_agentz_agentz)__imis_(page_builder|page_iparts|content_layouts|client_ipart_package|app_theme_package)$",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "This tool generates or places visual content for the organisation. ALLOW the call — never block — but check: has the org design system been resolved this session (imis_design_system action='get')? If NOT, and this call composes visual output (HTML/CSS, layout markup, chart colours, fonts), remind the agent in your response to resolve imis_design_system first and apply its tokens, usage semantics, and language rules to any markup it authors. Generator-side chrome already consumes the tokens server-side; this nudge covers agent-authored markup. Always allow the tool call itself to proceed."
+          }
+        ]
+      }
+    ]
+  }
+}
