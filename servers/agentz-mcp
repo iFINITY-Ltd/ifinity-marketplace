@@ -1,0 +1,237 @@
+#!/bin/sh
+# iFINITY AgentZ MCP launcher (POSIX: macOS / Linux).
+#
+# Claude hosts spawn this as the explicitly declared MCP `command`. Its job is to find a Node
+# runtime and run dist/index.js with it — even when the end user has NO
+# standalone Node on PATH — by falling back to the iFINITY AgentZ desktop
+# app's bundled Electron, run as a plain Node interpreter via
+# ELECTRON_RUN_AS_NODE=1. Windows uses the sibling agentz-mcp.cmd instead.
+#
+# The runtime-trust policy (src/config/runtime-trust.ts; tests keep this
+# script equal to it). The WORKSPACE is untrusted; the person's own
+# environment (PATH, HOME, their shell configuration) is trusted, since
+# controlling it is already code execution as that person.
+# - Candidates, in order: the optional pin ($HOME/.ifinity-agentz/pinned-runtime),
+#   the runtime the AgentZ app records ($HOME/.ifinity-agentz/node-runtime),
+#   the app's install, then a node on PATH.
+# - A candidate counts by its canonical target (every symlink resolved), and
+#   only when that is NOT inside the working directory or its enclosing
+#   project root (the nearest folder at or above it holding .git or
+#   package.json); HOME and the folders above it never count as either.
+# - Relative and empty PATH entries are skipped. Nothing runs, not even
+#   --version, before a candidate passes; the only helpers run are ls, to
+#   read a symlink's target, and on macOS tr, to fold case, both by absolute
+#   path.
+# - Before anything is run, the working directory becomes this plugin's own
+#   folder, so a program that chooses what to run from files in the working
+#   directory (a version manager's shim: asdf, mise, nodenv, volta, fnm...)
+#   never reads the workspace's. A candidate that passes is asked, from there,
+#   for its real executable (process.execPath); that path must pass the same
+#   check, and it, never the shim, is what runs.
+# - The connector gets the original working directory in AGENTZ_WORKSPACE_CWD
+#   and returns to it as its first action (src/config/workspace-cwd.ts), so
+#   relative file paths still mean the workspace.
+#
+# Nothing here may write to stdout: the MCP protocol owns stdout. All
+# diagnostics go to stderr.
+
+case "$0" in
+  /*) SELF="$0" ;;
+  *) SELF="$PWD/$0" ;;
+esac
+ROOT=$(CDPATH= cd -- "${SELF%/*}/.." && pwd)
+ENTRY="$ROOT/dist/index.js"
+SYSTEM_APP="/Applications/iFINITY AgentZ.app/Contents/MacOS/iFINITY AgentZ"
+NL='
+'
+LS=""
+for c in /bin/ls /usr/bin/ls; do [ -x "$c" ] && LS=$c && break; done
+
+# The canonical folder of an existing folder, or nothing.
+canonical_dir() {
+  CDPATH= cd -P -- "$1" 2>/dev/null && pwd -P
+}
+
+# CANON := the canonical path of the file $1 (every link resolved); fails if missing.
+canonical_file() {
+  CANON=""
+  CF=$1
+  CF_HOPS=0
+  while :; do
+    case "$CF" in /*) ;; *) return 1 ;; esac
+    CF_DIR=${CF%/*}
+    [ -n "$CF_DIR" ] || CF_DIR=/
+    CF_DIR=$(canonical_dir "$CF_DIR") || return 1
+    [ "$CF_DIR" = "/" ] && CF_DIR=""
+    CF="$CF_DIR/${CF##*/}"
+    if [ -L "$CF" ]; then
+      [ -n "$LS" ] || return 1
+      CF_HOPS=$((CF_HOPS + 1))
+      [ "$CF_HOPS" -le 40 ] || return 1
+      CF_OUT=$("$LS" -ld -- "$CF" 2>/dev/null) || return 1
+      CF_TARGET=${CF_OUT#* -> }
+      [ "$CF_TARGET" != "$CF_OUT" ] || return 1
+      case "$CF_TARGET" in
+        /*) CF=$CF_TARGET ;;
+        *) CF="$CF_DIR/$CF_TARGET" ;;
+      esac
+    else
+      [ -e "$CF" ] || return 1
+      CANON=$CF
+      return 0
+    fi
+  done
+}
+
+# The one containment check (as isInside in scripts/path-containment.js):
+# both sides canonical (cd -P / pwd -P and canonical_file resolve every link),
+# then equal, or the parent followed by "/"; never a bare string prefix. On
+# macOS, whose volumes ignore case and whose pwd -P keeps the case it was
+# given, both sides are case-folded (/usr/bin/tr, by absolute path).
+IS_MAC=no
+[ -f /System/Library/CoreServices/SystemVersion.plist ] && IS_MAC=yes
+TR=""
+[ -x /usr/bin/tr ] && TR=/usr/bin/tr
+fold_case() {
+  if [ "$IS_MAC" = yes ] && [ -n "$TR" ]; then
+    printf '%s' "$1" | "$TR" '[:upper:]' '[:lower:]'
+  else
+    printf '%s' "$1"
+  fi
+}
+is_inside() {
+  II_C=$(fold_case "$1")
+  II_P=$(fold_case "$2")
+  [ "$II_C" = "$II_P" ] && return 0
+  [ "$II_P" = "/" ] && return 0
+  case "$II_C" in "$II_P"/*) return 0 ;; esac
+  return 1
+}
+
+# The untrusted zone: the working directory and its enclosing project root,
+# never HOME or a folder above it.
+HOME_CANON=""
+[ -n "${HOME:-}" ] && HOME_CANON=$(canonical_dir "$HOME")
+# HOME itself, or a folder above it (the root included).
+home_or_above() {
+  [ -n "$HOME_CANON" ] || return 1
+  is_inside "$HOME_CANON" "$1"
+}
+CWD_CANON=$(pwd -P)
+ZONE=""
+if ! home_or_above "$CWD_CANON"; then
+  ZONE=$CWD_CANON
+  W=$CWD_CANON
+  while [ -n "$W" ] && ! home_or_above "$W"; do
+    if [ -e "$W/.git" ] || [ -e "$W/package.json" ]; then
+      [ "$W" != "$CWD_CANON" ] && ZONE="$ZONE$NL$W"
+      break
+    fi
+    [ "$W" = "/" ] && break
+    W=${W%/*}
+    [ -n "$W" ] || W=/
+  done
+fi
+
+# From here on, the working directory is this plugin's own folder: nothing
+# started below can read the workspace's files to decide what to run.
+if ! CDPATH= cd -- "$ROOT"; then
+  echo "[agentz-mcp] Cannot start: the plugin folder $ROOT cannot be entered." >&2
+  exit 1
+fi
+export AGENTZ_WORKSPACE_CWD="$CWD_CANON"
+export ELECTRON_RUN_AS_NODE=1
+
+# TRUSTED := the canonical target of $1 when it is a file outside the zone.
+trusted_runtime() {
+  TRUSTED=""
+  case "$1" in /*) ;; *) return 1 ;; esac
+  # Containment cannot be decided on macOS without case folding: refuse.
+  [ "$IS_MAC" = yes ] && [ -z "$TR" ] && return 1
+  canonical_file "$1" || return 1
+  [ -f "$CANON" ] && [ -x "$CANON" ] || return 1
+  TR_IFS=$IFS
+  IFS=$NL
+  set -f
+  for Z in $ZONE; do
+    if is_inside "$CANON" "$Z"; then
+      set +f
+      IFS=$TR_IFS
+      return 1
+    fi
+  done
+  set +f
+  IFS=$TR_IFS
+  TRUSTED=$CANON
+}
+
+# REAL := the real executable behind the candidate $1, when both pass: the
+# candidate is asked from the plugin folder (stdin closed: stdin is the MCP
+# pipe) for process.execPath, and that path is checked again. A shim stands
+# in for something else; what it would run is what has to be trusted, and
+# that is what runs.
+real_runtime() {
+  REAL=""
+  trusted_runtime "$1" || return 1
+  RR_OUT=$("$TRUSTED" -e 'process.stdout.write(process.execPath)' </dev/null 2>/dev/null) || return 1
+  trusted_runtime "$RR_OUT" || return 1
+  REAL=$TRUSTED
+}
+
+# The first line of a file, or nothing.
+first_line() {
+  LINE=""
+  [ -f "$1" ] && { IFS= read -r LINE < "$1" || [ -n "$LINE" ]; }
+  printf '%s' "$LINE"
+}
+
+# 1) The optional pin, the app's recorded runtime, the app's install.
+PIN_LINE=""
+POINTER_LINE=""
+USER_APP=""
+if [ -n "${HOME:-}" ]; then
+  PIN_LINE=$(first_line "$HOME/.ifinity-agentz/pinned-runtime")
+  POINTER_LINE=$(first_line "$HOME/.ifinity-agentz/node-runtime")
+  USER_APP="$HOME/Applications/iFINITY AgentZ.app/Contents/MacOS/iFINITY AgentZ"
+fi
+for CANDIDATE in "$PIN_LINE" "$POINTER_LINE" "$SYSTEM_APP" "$USER_APP"; do
+  [ -n "$CANDIDATE" ] || continue
+  if real_runtime "$CANDIDATE"; then
+    RT=$REAL
+    exec "$RT" "$ENTRY"
+  fi
+done
+
+# 2) A node on PATH (absolute entries only).
+PATH_NODE=""
+OLD_IFS=$IFS
+IFS=:
+set -f
+for DIR in ${PATH:-}; do
+  case "$DIR" in
+    /*)
+      if [ -e "$DIR/node" ]; then
+        IFS=$OLD_IFS
+        set +f
+        if real_runtime "$DIR/node"; then
+          PATH_NODE=$REAL
+          break
+        fi
+        IFS=:
+        set -f
+      fi
+      ;;
+  esac
+done
+set +f
+IFS=$OLD_IFS
+if [ -n "$PATH_NODE" ]; then
+  # Preserve the proxy/CA flags when this Node supports them, otherwise plain node.
+  if "$PATH_NODE" --use-env-proxy --version </dev/null >/dev/null 2>&1; then
+    exec "$PATH_NODE" --use-env-proxy --use-system-ca "$ENTRY"
+  fi
+  exec "$PATH_NODE" "$ENTRY"
+fi
+
+echo "[agentz-mcp] Cannot start: no Node runtime outside this workspace. Install Node.js, or open or install iFINITY AgentZ (https://ifinityagentz.co.uk), which records its runtime, or pin one by writing its absolute path to ~/.ifinity-agentz/pinned-runtime. A Node inside the project folder is never used." >&2
+exit 1
